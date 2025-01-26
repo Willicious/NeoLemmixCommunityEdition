@@ -213,6 +213,8 @@ var
 const
   TEXT_Y_POSITION = 170;
 begin
+  CurrentScreen := gstPreview;
+
   CustomAssert(GameParams <> nil, 'GameParams not initialized correctly');
 
   SetWindowCaption;

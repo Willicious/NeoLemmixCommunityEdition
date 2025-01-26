@@ -45,7 +45,6 @@ type
     gstPreview,
     gstPlay,
     gstPostview,
-    gstSounds,
     gstExit,
     gstText,
     gstReplayTest

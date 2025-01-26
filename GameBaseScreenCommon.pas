@@ -25,6 +25,8 @@ type
     fScreenImg           : TImage32;
     fScreenIsClosing     : Boolean;
     fCloseDelay          : Integer;
+    fCurrentScreen       : TGameScreenType;
+
     procedure CNKeyDown(var Message: TWMKeyDown); message CN_KEYDOWN;
   protected
     procedure CloseScreen(aNextScreen: TGameScreenType); virtual;
@@ -40,6 +42,7 @@ type
     procedure MainFormResized; virtual; abstract;
 
     property ScreenImg: TImage32 read fScreenImg;
+    property CurrentScreen: TGameScreenType read fCurrentScreen write fCurrentScreen;
   end;
 
 implementation

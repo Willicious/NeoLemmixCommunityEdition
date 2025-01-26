@@ -925,9 +925,16 @@ begin
     if ResetWindowPos then TMainForm(GameParams.MainForm).RestoreDefaultPosition;
   end;
 
+  if GameParams.FullScreen <> OldFullScreen then
+    CloseScreen(CurrentScreen);
 
   if GameParams.HighResolution <> OldHighResolution then
+  begin
+    if (CurrentScreen = gstPreview) then
+      CloseScreen(CurrentScreen);
+
     PieceManager.Clear;
+  end;
 
   if GameParams.LinearResampleMenu then
   begin

@@ -482,6 +482,8 @@ end;
 
 procedure TGameReplayCheckScreen.BuildScreen;
 begin
+  CurrentScreen := gstReplayTest;
+
   ScreenImg.BeginUpdate;
   try
     DrawBackground;

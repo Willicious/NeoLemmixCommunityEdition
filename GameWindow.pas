@@ -1102,6 +1102,7 @@ end;
 constructor TGameWindow.Create(aOwner: TComponent);
 begin
   inherited Create(aOwner);
+  CurrentScreen := gstPlay;
 
   Color := $202020;
 
