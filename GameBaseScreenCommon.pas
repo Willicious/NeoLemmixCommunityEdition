@@ -5,6 +5,7 @@ interface
 
 uses
   Windows, Messages, Classes, Controls, Forms, Dialogs,
+  Math,
   GR32, GR32_Image,
   FBaseDosForm,
   GameControl,
@@ -37,6 +38,9 @@ type
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
+    procedure ShowScreen; override;
+
+    procedure FadeIn;
     procedure FadeOut;
 
     procedure MainFormResized; virtual; abstract;
@@ -109,18 +113,64 @@ begin
   inherited Destroy;
 end;
 
+procedure TGameBaseScreen.FadeIn;
+var
+  EndTickCount: Cardinal;
+  TickCount: Cardinal;
+  Progress: Integer;
+  Alpha, LastAlpha: integer;
+const
+  MAX_TIME = 240; // mS
+begin
+  ScreenImg.Bitmap.DrawMode := dmBlend; // So MasterAlpha is used to draw the bitmap
+
+  TickCount := GetTickCount;
+  EndTickCount := TickCount + MAX_TIME;
+  LastAlpha := -1;
+
+  while (TickCount <= EndTickCount) do
+  begin
+    Progress := Min(TickCount - (EndTickCount - MAX_TIME), MAX_TIME);
+
+    Alpha := MulDiv(255, Progress, MAX_TIME);
+
+    if (Alpha <> LastAlpha) then
+    begin
+      ScreenImg.Bitmap.MasterAlpha := Alpha;
+      ScreenImg.Update;
+
+      LastAlpha := Alpha;
+    end else
+      Sleep(1);
+
+    TickCount := GetTickCount;
+  end;
+
+  ScreenImg.Bitmap.MasterAlpha := 255;
+
+//  if GameParams.PlaybackModeActive and GameParams.AutoSkipPreviewPostview then
+//  begin
+//    DelayPlayback(800);
+//    FadeOut;
+//  end;
+
+  Application.ProcessMessages;
+end;
+
 procedure TGameBaseScreen.FadeOut;
 var
   RemainingTime: integer;
   OldRemainingTime: integer;
   EndTickCount: Cardinal;
 const
-  MAX_TIME = 300; // mS
+  MAX_TIME = 320; // mS
 begin
   EndTickCount := GetTickCount + MAX_TIME;
   OldRemainingTime := 0;
   RemainingTime := MAX_TIME;
+
   ScreenImg.Bitmap.DrawMode := dmBlend; // So MasterAlpha is used to draw the bitmap
+
   while (RemainingTime >= 0) do
   begin
     if (RemainingTime <> OldRemainingTime) then
@@ -132,11 +182,13 @@ begin
     end else
       Sleep(1);
 
+    if GetTickCount > EndTickCount then // Prevent integer overflow
+      Break;
+
     RemainingTime := EndTickCount - GetTickCount;
   end;
-
-  Application.ProcessMessages;
 end;
+
 
 function TGameBaseScreen.LoadReplay: Boolean;
 var
@@ -203,6 +255,16 @@ begin
       ShowMessage('Warning: This replay appears to be from a different level. NeoLemmix' + #13 +
                   'will attempt to play the replay anyway.');
   end;
+end;
+
+procedure TGameBaseScreen.ShowScreen;
+begin
+  ScreenImg.Bitmap.MasterAlpha := 0;
+
+  Inherited; // Form is made visible here;
+
+  if CurrentScreen <> gstPlay then
+    FadeIn;
 end;
 
 end.
