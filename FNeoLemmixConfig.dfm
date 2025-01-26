@@ -596,6 +596,7 @@ object FormNXConfig: TFormNXConfig
     Width = 108
     Height = 25
     Anchors = [akLeft, akBottom]
+    Cancel = True
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 2

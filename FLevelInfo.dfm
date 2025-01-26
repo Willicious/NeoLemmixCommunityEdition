@@ -19,6 +19,7 @@ object LevelInfoPanel: TLevelInfoPanel
     Top = 46
     Width = 75
     Height = 25
+    Cancel = True
     Caption = 'Close'
     ModalResult = 1
     TabOrder = 0
