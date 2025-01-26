@@ -119,11 +119,11 @@ begin
       end else
         ShowMessage('Some pieces used by this level are missing. You will not be able to play this level. ' +
                     'Download the missing styles manually, or enable online features in NeoLemmix config to try to auto-download them.');
-    end else begin
-      GameParams.NextScreen2 := gstPlay;
-      inherited CloseScreen(gstText);
-    end;
-  end else
+    end else
+      inherited CloseScreen(gstPlay);
+  end else if NextScreen = gstText then
+    inherited CloseScreen(gstText)
+  else
     inherited;
 end;
 
@@ -166,7 +166,12 @@ end;
 
 procedure TGamePreviewScreen.BeginPlay;
 begin
-  CloseScreen(gstPlay);
+  if (GameParams.Level.PreText.Count > 0) then
+  begin
+    GameParams.IsPreTextScreen := True;
+    CloseScreen(gstText);
+  end else
+    CloseScreen(gstPlay);
 end;
 
 procedure TGamePreviewScreen.OnMouseClick(aPoint: TPoint;

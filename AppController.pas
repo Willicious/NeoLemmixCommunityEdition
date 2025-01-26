@@ -172,12 +172,7 @@ begin
     // game crashes at any point.
     GameParams.Save(TGameParamsSaveCriticality.scNone); // compiler throws a fit without the type specifier here
 
-    // I don't remember why this part is written like this.
-    // Might be so that after the text screen, the right screen out of
-    // gstPlay or gstPostview is shown.
     NewScreen := GameParams.NextScreen;
-    GameParams.NextScreen := GameParams.NextScreen2;
-    GameParams.NextScreen2 := gstUnknown;
 
     case NewScreen of
       gstMenu      : ShowMenuScreen;
@@ -205,26 +200,9 @@ begin
 end;
 
 procedure TAppController.ShowTextScreen;
-var
-  IsPreview: Boolean;
 begin
-  // This function is always called between gstPreview/gstGame, and
-  // between gstGame/gstPostview (if successful). However, if there's
-  // no text to show, it does nothing, and proceeds directly to the
-  // next screen.
-  IsPreview := not (GameParams.NextScreen = gstPostview);
-  if (IsPreview and (GameParams.Level.PreText.Count = 0))
-  or ((not IsPreview) and (GameParams.Level.PostText.Count = 0))
-  or (IsPreview and GameParams.ShownText) then
-  begin
-    if IsPreview then
-      ShowPlayScreen
-    else
-      ShowPostviewScreen;
-  end else begin
-    fActiveForm := TGameTextScreen.Create(nil);
-    fActiveForm.ShowScreen;
-  end;
+  fActiveForm := TGameTextScreen.Create(nil);
+  fActiveForm.ShowScreen;
 end;
 
 procedure TAppController.ShowPostviewScreen;

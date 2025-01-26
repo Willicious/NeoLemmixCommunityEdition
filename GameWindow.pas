@@ -2016,8 +2016,7 @@ procedure TGameWindow.Game_Finished;
 begin
   SoundManager.StopMusic;
 
-  GameParams.NextScreen2 := gstPostview;
-  if Game.CheckPass then
+  if (Game.CheckPass and (Game.Level.PostText.Count > 0)) then
     fCloseToScreen := gstText
   else
     fCloseToScreen := gstPostview;

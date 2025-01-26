@@ -178,8 +178,8 @@ type
     GameResult: TGameResultsRec;
 
     // this is set by the individual screens when closing (if they know)
-    NextScreen: TGameScreenType;
-    NextScreen2: TGameScreenType;
+    NextScreen     : TGameScreenType;
+    IsPreTextScreen: Boolean;
 
     // resource vars
     LemDataInResource   : Boolean;
