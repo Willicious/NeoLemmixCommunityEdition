@@ -1388,10 +1388,10 @@ begin
   S := Uppercase(GetSkillString(Game.RenderInterface.SelectedLemming));
   if S = '' then
     S := StringOfChar(' ', LEN)
-  else if Game.LastHitCount = 0 then
+  else if (Game.GetCursorLemmingCount = 0) then
     S := PadR(S, LEN)
   else
-    S := PadR(S + ' ' + IntToStr(Game.LastHitCount), LEN);
+    S := PadR(S + ' ' + IntToStr(Game.GetCursorLemmingCount), LEN);
 
   ModString(fNewDrawStr, S, Pos);
 end;

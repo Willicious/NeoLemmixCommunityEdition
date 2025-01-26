@@ -404,7 +404,6 @@ type
     fSelectDx                  : Integer;
     fXmasPal                   : Boolean;
     fActiveSkills              : array[0..MAX_SKILL_TYPES_PER_LEVEL-1] of TSkillPanelButton;
-    LastHitCount               : Integer;
     SpawnIntervalModifier      : Integer; //negative = decrease each update, positive = increase each update, 0 = no change
     ReplayInsert               : Boolean;
 
@@ -438,6 +437,8 @@ type
     function GetHighlitLemming: TLemming;
     function GetTargetLemming: TLemming;
     procedure CheckForNewShadow(aForceRedraw: Boolean = False);
+    function LemIsInCursor(L: TLemming; MousePos: TPoint): Boolean;
+    function GetCursorLemmingCount: Integer;
     procedure PlayAssignFailSound(PlayForHighlit: Boolean = False);
     function StateIsUnplayable: Boolean;
 
@@ -2061,6 +2062,34 @@ begin
     LayBrick(NewL);
 end;
 
+function TLemmingGame.LemIsInCursor(L: TLemming; MousePos: TPoint): Boolean;
+  var
+    X, Y: Integer;
+  begin
+    X := L.LemX - ((L.LemDX + 16) div 2);
+    Y := L.LemY - 10;
+    Result := PtInRect(Rect(X, Y, X + 13, Y + 13), MousePos);
+  end;
+
+function TLemmingGame.GetCursorLemmingCount: Integer;
+var
+  L: TLemming;
+  i: Integer;
+  MousePos: TPoint;
+begin
+  Result := 0;
+
+  // Initialize MousePos as Game's CursorPos property
+  MousePos := CursorPoint;
+
+  for i := 0 to (LemmingList.Count - 1) do
+  begin
+    L := LemmingList.List[i];  // Retrieve the lemming from the list
+
+    if LemIsInCursor(L, MousePos) and not (L.LemRemoved or L.LemTeleporting) then
+      Inc(Result);
+  end;
+end;
 
 function TLemmingGame.GetPriorityLemming(out PriorityLem: TLemming;
                                           NewSkillOrig: TBasicLemmingAction;
@@ -2082,16 +2111,6 @@ var
   LemIsInBox: Boolean;
   NumLemInCursor: Integer;
   NewSkill: TBasicLemmingAction;
-
-  function LemIsInCursor(L: TLemming; MousePos: TPoint): Boolean;
-  var
-    X, Y: Integer;
-  begin
-    X := L.LemX - 8;
-    Y := L.LemY - 10;
-    Result := PtInRect(Rect(X, Y, X + 13, Y + 13), MousePos);
-  end;
-
 
   function GetLemDistance(L: TLemming; MousePos: TPoint): Integer;
   begin
@@ -2117,7 +2136,6 @@ var
       NonWalk : Result := not (L.LemAction in [baWalking, baAscending]);
     end;
   end;
-
 begin
   PriorityLem := nil;
 
@@ -5743,7 +5761,6 @@ end;
 
 procedure TLemmingGame.HitTest(Autofail: Boolean = False);
 var
-  HitCount: Integer;
   L, OldLemSelected: TLemming;
 begin
   if Autofail then fHitTestAutoFail := True;
@@ -5754,15 +5771,13 @@ begin
   CheckForNewShadow;
 
   // Get new priority lemming including lems that cannot receive the skill
-  HitCount := GetPriorityLemming(L, baNone, CursorPoint);
+  GetPriorityLemming(L, baNone, CursorPoint);
 
   if L <> OldLemSelected then
   begin
     fLemSelected := L;
     fRenderInterface.SelectedLemming := L;
   end;
-
-  LastHitCount := HitCount;
 end;
 
 function TLemmingGame.ProcessSkillAssignment(IsHighlight: Boolean = False): Boolean;
