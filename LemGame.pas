@@ -5510,7 +5510,11 @@ end;
 function TLemmingGame.HandleShrugging(L: TLemming): Boolean;
 begin
   Result := True;
-  if L.LemEndOfAnimation then Transition(L, baWalking);
+
+  if (L.LemFrame = 7) and fGameCheated then
+    Finish(GM_FIN_TERMINATE)
+  else if L.LemEndOfAnimation then
+    Transition(L, baWalking);
 end;
 
 function TLemmingGame.HandleOhNoing(L: TLemming): Boolean;
@@ -6326,6 +6330,9 @@ begin
     begin
       ContinueWithLem := True;
 
+      if fGameCheated then
+        Transition(CurrentLemming, baShrugging);
+
       if LemParticleTimer >= 0 then
         Dec(LemParticleTimer);
 
@@ -6694,7 +6701,11 @@ end;
 procedure TLemmingGame.Cheat;
 begin
   fGameCheated := True;
-  Finish(GM_FIN_TERMINATE);
+  CueSoundEffect(SFX_OK);
+
+  // Finish immediately if there are no active lemmings (see HandleShrugging)
+  if (LemmingsOut <= 0) then
+    Finish(GM_FIN_TERMINATE);
 end;
 
 procedure TLemmingGame.EnsureCorrectReplayDetails;

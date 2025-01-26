@@ -341,6 +341,7 @@ begin
   Get('neutralize');
   Get('ohno');
   Get('oing2');
+  Get('ok');
   Get('portal');
   Get('skill_add');
   Get('skill_remove');

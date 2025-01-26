@@ -56,6 +56,7 @@ const
   SFX_EXPLOSION = 'explode';
   SFX_HITS_STEEL = 'chink';
   SFX_OHNO = 'ohno';
+  SFX_OK = 'ok';
   SFX_SKILLBUTTON = 'changeop';
   SFX_PICKUP = 'oing2';
   SFX_SWIMMING = 'splash';
