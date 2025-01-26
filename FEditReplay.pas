@@ -1,14 +1,12 @@
 unit FEditReplay;
 
-// known issue - clicking Cancel destroys all replay data (should just revert to
-//               the state of data before opening dialog)
-
 interface
 
 uses
   LemReplay, UMisc, LemCore,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, ExtCtrls;
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls,
+  SharedGlobals;
 
 type
   TFReplayEditor = class(TForm)
@@ -18,6 +16,9 @@ type
     lblLevelName: TLabel;
     btnDelete: TButton;
     lblFrame: TLabel;
+    btnGoToReplayEvent: TButton;
+    cbSelectFutureEvents: TCheckBox;
+    stFocus: TStaticText;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
@@ -25,17 +26,32 @@ type
     procedure btnDeleteClick(Sender: TObject);
     procedure lbReplayActionsDrawItem(Control: TWinControl; Index: Integer;
       Rect: TRect; State: TOwnerDrawState);
-  private
+    procedure lbReplayActionsKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure btnGoToReplayEventClick(Sender: TObject);
+    procedure lbReplayActionsDblClick(Sender: TObject);
+    procedure cbSelectFutureEventsClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+private
     fSavedReplay: TMemoryStream;
     fReplay: TReplay;
     fEarliestChange: Integer;
     fCurrentIteration: Integer;
+    fTargetFrame: Integer;
+    fOriginalSkillEvent: Integer;
 
     procedure ListReplayActions(aSelect: TBaseReplayItem = nil; SelectNil: Boolean = False);
     procedure NoteChangeAtFrame(aFrame: Integer);
+    procedure UpdateFrameLabelCaption(aFrame: Integer);
+    procedure DeleteSelectedReplayEvents;
+    procedure GoToSelectedReplayEvent;
+    procedure SelectFutureEvents;
+    procedure SetControls;
   public
     procedure SetReplay(aReplay: TReplay; aIteration: Integer = -1);
     property EarliestChange: Integer read fEarliestChange;
+    property CurrentIteration: Integer read fCurrentIteration write fCurrentIteration;
+    property TargetFrame: Integer read fTargetFrame write fTargetFrame;
   end;
 
 var
@@ -66,6 +82,8 @@ var
     A: TReplaySkillAssignment absolute aItem;
     R: TReplayChangeSpawnInterval absolute aItem;
     N: TReplayNuke absolute aItem;
+//    F: TReplayInfiniteSkills absolute aItem; // Bookmark - infinite skills/time
+//    T: TReplayInfiniteTime absolute aItem;
 
     function GetSkillString(aSkill: TBasicLemmingAction): String;
     begin
@@ -110,6 +128,12 @@ var
     end else if aItem is TReplayNuke then
     begin
       Result := Result + 'Nuke';
+//    end else if aItem is TReplayInfiniteSkills then // Bookmark - infinite skills/time
+//    begin
+//      Result := Result + 'Infinite Skills';
+//    end else if aItem is TReplayInfiniteTime then
+//    begin
+//      Result := Result + 'Infinite Time';
     end else
       Result := 'Unknown replay action';
   end;
@@ -143,6 +167,14 @@ begin
       Action := fReplay.Assignment[i, 0];
       if Action <> nil then
         AddAction(Action);
+
+//      Action := fReplay.SkillCountChange[i, 0]; // Bookmark - infinite skills/time
+//      if Action <> nil then
+//        AddAction(Action);
+//
+//      Action := fReplay.TimeChange[i, 0];
+//      if Action <> nil then
+//        AddAction(Action);
     end;
   finally
     for i := 0 to lbReplayActions.Items.Count-1 do
@@ -152,9 +184,9 @@ begin
         lbReplayActions.ItemIndex := i;
         Break;
       end;
+
     lbReplayActions.Items.EndUpdate;
     lbReplayActions.OnClick := lbReplayActionsClick;
-    lbReplayActionsClick(lbReplayActions);
   end;
 end;
 
@@ -165,8 +197,10 @@ begin
   fSavedReplay.Clear;
   fReplay.SaveToStream(fSavedReplay, False, True);
   lblLevelName.Caption := Trim(fReplay.LevelName);
-  if fCurrentIteration <> -1 then
-    lblFrame.Caption := 'Current frame: ' + IntToStr(fCurrentIteration);
+
+  if (fCurrentIteration <> -1) then
+    UpdateFrameLabelCaption(fCurrentIteration);
+
   ListReplayActions;
 end;
 
@@ -174,15 +208,20 @@ procedure TFReplayEditor.FormCreate(Sender: TObject);
 begin
   fSavedReplay := TMemoryStream.Create;
   fEarliestChange := -1;
+  fTargetFrame := -1;
+  fOriginalSkillEvent := -1;
 
-  // Temporary stuff
-  lbReplayActions.Height := lbReplayActions.Height + 96;
-  btnDelete.Top := btnDelete.Top + 96;
+  SetControls;
 end;
 
 procedure TFReplayEditor.FormDestroy(Sender: TObject);
 begin
   fSavedReplay.Free;
+end;
+
+procedure TFReplayEditor.FormShow(Sender: TObject);
+begin
+  btnCancel.SetFocus;
 end;
 
 procedure TFReplayEditor.btnCancelClick(Sender: TObject);
@@ -193,8 +232,13 @@ end;
 
 procedure TFReplayEditor.lbReplayActionsClick(Sender: TObject);
 begin
-  btnDelete.Enabled := (lbReplayActions.ItemIndex <> -1) and
-                       (lbReplayActions.Items.Objects[lbReplayActions.ItemIndex] <> nil);
+  SetControls;
+  stFocus.SetFocus;
+end;
+
+procedure TFReplayEditor.lbReplayActionsDblClick(Sender: TObject);
+begin
+  GoToSelectedReplayEvent;
 end;
 
 procedure TFReplayEditor.lbReplayActionsDrawItem(Control: TWinControl;
@@ -226,53 +270,171 @@ begin
   end;
 end;
 
-procedure TFReplayEditor.btnDeleteClick(Sender: TObject);
-var
-  I: TBaseReplayItem;
-  ApplyRRDelete: Boolean;
-
-  function CheckConsecutiveRR: Boolean;
-  var
-    I2: TBaseReplayItem;
-    R1: TReplayChangeSpawnInterval absolute I;
-    R2: TReplayChangeSpawnInterval absolute I2;
-  begin
-    Result := False;
-    I2 := fReplay.SpawnIntervalChange[I.Frame + 1, 0];
-    if I2 = nil then Exit;
-    if Abs(R1.NewSpawnInterval - R2.NewSpawnInterval) <= 1 then
-      Result := True;
+procedure TFReplayEditor.lbReplayActionsKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  case Key of
+    VK_RETURN, VK_SPACE: GoToSelectedReplayEvent;
+    VK_DELETE: DeleteSelectedReplayEvents;
   end;
+end;
+
+procedure TFReplayEditor.btnDeleteClick(Sender: TObject);
+begin
+  DeleteSelectedReplayEvents;
+end;
+
+procedure TFReplayEditor.btnGoToReplayEventClick(Sender: TObject);
+begin
+  GoToSelectedReplayEvent;
+end;
+
+procedure TFReplayEditor.cbSelectFutureEventsClick(Sender: TObject);
+begin
+  SelectFutureEvents;
+end;
+
+procedure TFReplayEditor.SetControls;
+var
+  CurrentItem: TBaseReplayItem;
+  CurrentLemmingIndex: Integer;
+  ItemSelected, SkillEventSelected: Boolean;
+begin
+  ItemSelected := (lbReplayActions.ItemIndex <> -1) and lbReplayActions.Selected[lbReplayActions.ItemIndex] and
+                  (lbReplayActions.Items.Objects[lbReplayActions.ItemIndex] <> nil);
+
+  btnDelete.Enabled := ItemSelected;
+  btnGoToReplayEvent.Enabled := ItemSelected and not (lbReplayActions.SelCount > 1);
+
+  SkillEventSelected := ItemSelected and (not (lbReplayActions.SelCount > 1)) and
+                        (lbReplayActions.Items.Objects[lbReplayActions.ItemIndex] is TReplaySkillAssignment);
+
+  if SkillEventSelected then
+  begin
+    fOriginalSkillEvent := lbReplayActions.ItemIndex;
+
+    CurrentItem := TBaseReplayItem(lbReplayActions.Items.Objects[lbReplayActions.ItemIndex]);
+    CurrentLemmingIndex := TReplaySkillAssignment(CurrentItem).LemmingIndex;
+
+    cbSelectFutureEvents.Visible := True;
+    cbSelectFutureEvents.Checked := False;
+    cbSelectFutureEvents.Caption := 'Select All Future Events for Lemming ' + IntToStr(CurrentLemmingIndex);
+  end else begin
+    cbSelectFutureEvents.Visible := False;
+    cbSelectFutureEvents.Caption := 'Select All Future Events';
+  end;
+end;
+
+
+procedure TFReplayEditor.SelectFutureEvents;
+var
+  I: Integer;
+  CurrentItem: TBaseReplayItem;
+  FutureItem: TBaseReplayItem;
+  CurrentLemmingIndex: Integer;
+
+  procedure ResetSelection;
+  begin
+    lbReplayActions.ClearSelection;
+    lbReplayActions.Selected[fOriginalSkillEvent] := True;
+  end;
+begin
+  // Check if the current item is a skill assignment
+  if not ((lbReplayActions.ItemIndex <> -1) and
+         (lbReplayActions.Items.Objects[lbReplayActions.ItemIndex] is TReplaySkillAssignment)) then
+            Exit;
+
+  CurrentItem := TBaseReplayItem(lbReplayActions.Items.Objects[lbReplayActions.ItemIndex]);
+  CurrentLemmingIndex := TReplaySkillAssignment(CurrentItem).LemmingIndex;
+
+  if cbSelectFutureEvents.Checked then
+  begin
+    ResetSelection;
+
+    // Select any future items with the same lem index
+    for I := lbReplayActions.ItemIndex + 1 to lbReplayActions.Count - 1 do
+    begin
+      FutureItem := TBaseReplayItem(lbReplayActions.Items.Objects[I]);
+      if (FutureItem is TReplaySkillAssignment) and
+         (TReplaySkillAssignment(FutureItem).LemmingIndex = CurrentLemmingIndex) then
+      begin
+        lbReplayActions.Selected[I] := True;
+      end;
+    end;
+  end else
+    ResetSelection;
+end;
+
+procedure TFReplayEditor.UpdateFrameLabelCaption(aFrame: Integer);
+begin
+  lblFrame.Caption := 'Current frame: ' + IntToStr(aFrame);
+end;
+
+procedure TFReplayEditor.GoToSelectedReplayEvent;
+var
+  I: Integer;
+  ReplayItem: TBaseReplayItem;
+begin
+  // Find the first selected item
+  for I := 0 to lbReplayActions.Count - 1 do
+  begin
+    if lbReplayActions.Selected[I] then
+    begin
+      ReplayItem := TBaseReplayItem(lbReplayActions.Items.Objects[I]);
+      if ReplayItem <> nil then
+      begin
+        TargetFrame := ReplayItem.Frame;
+        UpdateFrameLabelCaption(TargetFrame);
+        ModalResult := mrRetry;
+      end;
+
+      Exit;
+    end;
+  end;
+end;
+
+
+procedure TFReplayEditor.DeleteSelectedReplayEvents;
+var
+  I: Integer;
+  CurrentItem: TBaseReplayItem;
+  ApplyRRDelete: Boolean;
 
   procedure HandleRRDelete(StartFrame: Integer);
   var
     Frame: Integer;
+    Item: TBaseReplayItem;
   begin
     Frame := StartFrame;
-    while CheckConsecutiveRR do
-    begin
-      fReplay.Delete(I);
-      Inc(Frame);
-      I := fReplay.SpawnIntervalChange[Frame, 0];
-    end;
-    fReplay.Delete(I);
+    Item := fReplay.SpawnIntervalChange[Frame, 0];
+
+    if Item <> nil then
+      fReplay.Delete(Item);
   end;
 begin
-  ApplyRRDelete := False;
-
   if lbReplayActions.ItemIndex = -1 then Exit;
-  I := TBaseReplayItem(lbReplayActions.Items.Objects[lbReplayActions.ItemIndex]);
-  if I = nil then Exit; // just in case  
 
-  NoteChangeAtFrame(I.Frame);
-  if I is TReplayChangeSpawnInterval then
-    if CheckConsecutiveRR then
-      ApplyRRDelete := MessageDlg('Delete consecutive Spawn Interval changes as well?', mtCustom, [mbYes, mbNo], 0) = mrYes;
+  for I := lbReplayActions.Count - 1 downto 0 do
+  begin
+    if not lbReplayActions.Selected[I] then Continue;
 
-  if ApplyRRDelete then
-    HandleRRDelete(I.Frame)
-  else
-    fReplay.Delete(I);
+    CurrentItem := TBaseReplayItem(lbReplayActions.Items.Objects[I]);
+    if CurrentItem = nil then Continue;
+
+    NoteChangeAtFrame(CurrentItem.Frame);
+
+    ApplyRRDelete := False;
+    if CurrentItem is TReplayChangeSpawnInterval then
+    begin
+      if ApplyRRDelete then
+      begin
+        HandleRRDelete(CurrentItem.Frame);
+        Continue;
+      end;
+    end;
+
+    fReplay.Delete(CurrentItem);
+  end;
 
   ListReplayActions;
 end;
