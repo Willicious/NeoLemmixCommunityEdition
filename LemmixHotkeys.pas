@@ -78,13 +78,14 @@ type
       fKeyFunctions: Array[0..MAX_KEY] of TLemmixHotkey;
       fDisableSaving: Boolean;
 
-      procedure LoadFile;
       function DoCheckForKey(aFunc: TLemmixHotkeyAction; aMod: Integer; CheckMod: Boolean): Boolean;
     public
       constructor Create;
       destructor Destroy; override;
       procedure ClearAllKeys;
+
       procedure SaveFile;
+      procedure LoadFile;
 
       procedure SetDefaultsTraditional;
       procedure SetDefaultsFunctional;
