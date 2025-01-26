@@ -1,6 +1,6 @@
 {$include lem_directives.inc}
 
-program NeoLemmix;
+program NeoLemmixCE;
 
 
 
