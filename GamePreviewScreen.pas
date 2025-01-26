@@ -188,14 +188,14 @@ end;
 procedure TGamePreviewScreen.SetWindowCaption;
 var
   s, Title, Pack: string;
-  CurTheme: TNeoTheme;
-  RescueCount, LemCount, CollectibleCount: Integer;
+//  CurTheme: TNeoTheme;
+  RescueCount, LemCount: Integer;
 begin
   Title := GameParams.Level.Info.Title;
   Pack := GameParams.CurrentLevel.Group.ParentBasePack.Name;
   RescueCount := GameParams.Level.Info.RescueCount;
   LemCount := GameParams.Level.Info.LemmingsCount;
-  CurTheme := GameParams.Renderer.Theme;
+//  CurTheme := GameParams.Renderer.Theme;
 
   s := SProgramName + ' - ' + Pack + ' - ' + Title + ' - Save ' + IntToStr(RescueCount)
        + ' of ' + IntToStr(LemCount) + ' ';
