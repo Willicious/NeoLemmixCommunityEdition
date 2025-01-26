@@ -78,7 +78,8 @@ type
     baJumping,
     baDehoisting,
     baSliding,
-    baLasering
+    baLasering,
+    baSleeping
   );
 
 const
@@ -269,7 +270,8 @@ const
     spbJumper,
     spbNone,
     spbSlider,
-    spbLaserer
+    spbLaserer,
+    spbNone
   );
 
 const

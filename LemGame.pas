@@ -359,6 +359,7 @@ type
     function HandleSliding(L: TLemming) : Boolean;
       function LemSliderTerrainChecks(L: TLemming; MaxYCheckOffset: Integer = 7): Boolean;
     function HandleLasering(L: TLemming) : Boolean;
+    function HandleSleeping(L: TLemming) : Boolean;
 
   { interaction }
     function AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False; IsReplayAssignment: Boolean = False): Boolean;
@@ -950,6 +951,7 @@ begin
   LemmingMethods[baDehoisting] := HandleDehoisting;
   LemmingMethods[baSliding]    := HandleSliding;
   LemmingMethods[baLasering]   := HandleLasering;
+  LemmingMethods[baSleeping]   := HandleSleeping;
 
   NewSkillMethods[baNone]         := nil;
   NewSkillMethods[baWalking]      := nil;
@@ -984,6 +986,7 @@ begin
   NewSkillMethods[baDehoisting]   := nil;
   NewSkillMethods[baSliding]      := MayAssignSlider;
   NewSkillMethods[baLasering]     := MayAssignLaserer;
+  NewSkillMethods[baSleeping]     := nil;
 
   P := AppPath;
 
@@ -1484,7 +1487,8 @@ const
     13, //baJumping
      7, //baDehoisting
      1, //baSliding
-    12  //baLasering - it's, ironically, this high for rendering purposes
+    12, //baLasering - it's, ironically, this high for rendering purposes
+    20  //baSleeping
     );
 begin
   if DoTurn then TurnAround(L);
@@ -1637,7 +1641,15 @@ function TLemmingGame.UpdateExplosionTimer(L: TLemming): Boolean;
 begin
   Result := False;
 
+  // Cancel timer for Sleepers because lem would have exited
+  if (L.LemAction = baSleeping) then
+  begin
+    L.LemExplosionTimer := 0;
+    Exit;
+  end;
+
   Dec(L.LemExplosionTimer);
+
   if L.LemExplosionTimer = 0 then
   begin
     if L.LemAction in [baVaporizing, baDrowning, baFloating, baGliding,
@@ -2251,7 +2263,7 @@ end;
 function TLemmingGame.MayAssignSlider(L: TLemming): Boolean;
 const
   ActionSet = [baOhnoing, baStoning, baExploding, baStoneFinish, baDrowning,
-               baVaporizing, baSplatting, baExiting];
+               baVaporizing, baSplatting, baExiting, baSleeping];
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsSlider;
 end;
@@ -2259,7 +2271,7 @@ end;
 function TLemmingGame.MayAssignClimber(L: TLemming): Boolean;
 const
   ActionSet = [baOhnoing, baStoning, baExploding, baStoneFinish, baDrowning,
-               baVaporizing, baSplatting, baExiting];
+               baVaporizing, baSplatting, baExiting, baSleeping];
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsClimber;
 end;
@@ -2267,7 +2279,7 @@ end;
 function TLemmingGame.MayAssignFloaterGlider(L: TLemming): Boolean;
 const
   ActionSet = [baOhnoing, baStoning, baExploding, baStoneFinish, baDrowning,
-               baVaporizing, baSplatting, baExiting];
+               baVaporizing, baSplatting, baExiting, baSleeping];
 begin
   Result := (not (L.LemAction in ActionSet)) and not (L.LemIsFloater or L.LemIsGlider);
 end;
@@ -2275,7 +2287,7 @@ end;
 function TLemmingGame.MayAssignSwimmer(L: TLemming): Boolean;
 const
   ActionSet = [baOhnoing, baStoning, baExploding, baStoneFinish, baVaporizing,
-               baSplatting, baExiting];   // Does NOT contain baDrowning!
+               baSplatting, baExiting, baSleeping];   // Does NOT contain baDrowning!
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsSwimmer;
 end;
@@ -2283,7 +2295,7 @@ end;
 function TLemmingGame.MayAssignDisarmer(L: TLemming): Boolean;
 const
   ActionSet = [baOhnoing, baStoning, baExploding, baStoneFinish, baDrowning,
-               baVaporizing, baSplatting, baExiting];
+               baVaporizing, baSplatting, baExiting, baSleeping];
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsDisarmer;
 end;
@@ -2299,7 +2311,7 @@ end;
 function TLemmingGame.MayAssignExploderStoner(L: TLemming): Boolean;
 const
   ActionSet = [baOhnoing, baStoning, baDrowning, baExploding, baStoneFinish,
-               baVaporizing, baSplatting, baExiting];
+               baVaporizing, baSplatting, baExiting, baSleeping];
 begin
   Result := not (L.LemAction in ActionSet);
 end;
@@ -3004,7 +3016,14 @@ begin
     end;
 
     Result := True;
-    Transition(L, baExiting);
+
+    if not IsOutOfTime then
+      Transition(L, baExiting)
+    else begin
+      Transition(L, baSleeping);
+      Exit;
+    end;
+
     CueSoundEffect(SFX_YIPPEE, L.Position);
   end;
 end;
@@ -3689,7 +3708,7 @@ function TLemmingGame.HandleLemming(L: TLemming): Boolean;
 const
   OneTimeActionSet = [baDrowning, baHoisting, baSplatting, baExiting,
                       baVaporizing, baShrugging, baOhnoing, baExploding,
-                      baStoning, baReaching, baDehoisting];
+                      baStoning, baReaching, baDehoisting, baSleeping];
 begin
   // Remember old position and action for CheckTriggerArea
   L.LemXOld := L.LemX;
@@ -4001,6 +4020,24 @@ begin
       end else if not HasPixelAt(CurX, L.LemY + n) then
         Break;
   end;
+end;
+
+function TLemmingGame.HandleSleeping(L: TLemming): Boolean;
+begin
+   Result := True;
+
+   // Wait for penultimate animation frame before changing the lem count
+   if L.LemFrame = 19 then
+     Dec(LemmingsOut);
+
+   if ((L.LemX <= 0) and (L.LemDX = -1)) or ((L.LemX >= Level.Info.Width - 1) and (L.LemDX = 1)) then
+     RemoveLemming(L, RM_NEUTRAL); // Shouldn't happen
+
+   // Let lemming fall
+   if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then
+    Inc(L.LemY, MinIntValue([FindGroundPixel(L.LemX, L.LemY), 2]))
+   else
+    Inc(L.LemY, MinIntValue([FindGroundPixel(L.LemX, L.LemY), 3]));
 end;
 
 function TLemmingGame.HandleSliding(L: TLemming): Boolean;
@@ -5562,6 +5599,9 @@ end;
 procedure TLemmingGame.RemoveLemming(L: TLemming; RemMode: Integer = 0; Silent: Boolean = False);
 begin
   if IsSimulating then Exit;
+
+  if L.LemAction = baSleeping then
+    Inc(LemmingsOut); // Keeps the number the same
 
   if L.LemIsZombie then
   begin

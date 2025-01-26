@@ -132,6 +132,7 @@ resourcestring
   SZombie = 'Zombie';
   SNeutral = 'Neutral';
   SNeutralZombie = 'N-Zombie';
+  SSleeper = 'Sleeper';
 
 
   {-------------------------------------------------------------------------------
@@ -197,7 +198,8 @@ const
     SJumper,
     SDehoister,
     SSlider,
-    SLaserer
+    SLaserer,
+    SSleeper
   );
 
 implementation
