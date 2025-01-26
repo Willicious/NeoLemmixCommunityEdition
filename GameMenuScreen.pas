@@ -402,7 +402,7 @@ begin
   else
     PackInfoText := #13 + 'No Pack';
 
-  NLInfoText := SProgramName + ' V' + CurrentVersionString;
+  NLInfoText := SProgramName + ' ' + CurrentVersionString;
   {$ifdef exp}if COMMIT_ID <> '' then NLInfoText := NLInfoText + ':' + Uppercase(COMMIT_ID);{$endif}
 
   MenuFont.DrawTextCentered(ScreenImg.Bitmap, PackInfoText, LayoutInfo.FooterTextY);
