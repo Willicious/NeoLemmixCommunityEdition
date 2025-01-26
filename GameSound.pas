@@ -5,11 +5,11 @@ unit GameSound;
 
 
 // To load a sound:
-//   SoundManager.LoadSoundFromFile(<path relative to "sound\" folder>);
+//   SoundManager.LoadSoundFromFile(<path relative to "sounds\" folder>);
 //   (is also possible to load from streams, but this is mostly for backwards-compatible's use)
 //
 // To play a sound (if not already loaded, will attempt to load it):
-//   SoundManager.PlaySound(<path relative to "sound\" folder>, <balance>);  -- -100 is fully left, 0 is center, +100 is fully right
+//   SoundManager.PlaySound(<path relative to "sounds\" folder>, <balance>);  -- -100 is fully left, 0 is center, +100 is fully right
 //
 // To unload all sounds except the default ones:
 //   SoundManager.PurgeNonDefaultSounds;

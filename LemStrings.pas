@@ -32,7 +32,7 @@ const
 
   SFLevels = 'levels\';
 
-  SFSounds = 'sound\';
+  SFSounds = 'sounds\';
   SFMusic = 'music\';
 
   SFData = 'data\';
