@@ -1610,7 +1610,7 @@ begin
   OpenDlg := TOpenDialog.Create(Self);
   try
     OpenDlg.Title := 'Select any file in the folder containing replays';
-    OpenDlg.InitialDir := AppPath + 'Replay\' + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name, False);
+    OpenDlg.InitialDir := AppPath + SFReplays + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name, False);
     OpenDlg.Filter := SProgramName + ' Replay (*.nxrp)|*.nxrp';
     OpenDlg.Options := [ofHideReadOnly, ofFileMustExist, ofEnableSizing];
     if not OpenDlg.Execute then

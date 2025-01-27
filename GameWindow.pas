@@ -1946,7 +1946,7 @@ var
       end;
     end;
   begin
-    Result := AppPath + 'Replay\' + GetGroupName;
+    Result := AppPath + SFReplays + GetGroupName;
   end;
 
   function GetInitialLoadPath: String;
@@ -1968,9 +1968,9 @@ begin
     Dlg.FilterIndex := 1;
     if LastReplayDir = '' then
     begin
-      Dlg.InitialDir := AppPath + 'Replay\' + GetInitialLoadPath;
+      Dlg.InitialDir := AppPath + SFReplays + GetInitialLoadPath;
       if not DirectoryExists(Dlg.InitialDir) then
-        Dlg.InitialDir := AppPath + 'Replay\';
+        Dlg.InitialDir := AppPath + SFReplays;
       if not DirectoryExists(Dlg.InitialDir) then
         Dlg.InitialDir := AppPath;
     end else
