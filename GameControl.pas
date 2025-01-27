@@ -611,9 +611,6 @@ begin
     UserName := SL.Values['UserName'];
 
     ShowLevelSelectOptions := LoadBoolean('ShowLevelSelectOptions', ShowLevelSelectOptions);
-    // Bookmark - Preserve deprecated option (this can be removed later)
-    if SL.Values['ShowLevelSelectOptions'] = '' then
-      ShowLevelSelectOptions := not LoadBoolean('HideAdvancedOptions', ShowLevelSelectOptions);
 
     LoadExitToPostviewOptions;
 
@@ -627,10 +624,6 @@ begin
     if PostviewSaveReplayPattern = '' then PostviewSaveReplayPattern := DEFAULT_REPLAY_PATTERN_POSTVIEW;
 
     ReplayAfterBackskip := LoadBoolean('ReplayAfterBackskip', ReplayAfterBackskip);
-    // Bookmark - Preserve deprecated option (this can be removed later)
-    if SL.Values['ReplayAfterBackskip'] = '' then
-      ReplayAfterBackskip := not LoadBoolean('NoAutoReplay', ReplayAfterBackskip);
-
     ReplayAfterRestart := LoadBoolean('ReplayAfterRestart', ReplayAfterRestart);
     PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
     NoBackgrounds := LoadBoolean('NoBackgrounds', NoBackgrounds);
