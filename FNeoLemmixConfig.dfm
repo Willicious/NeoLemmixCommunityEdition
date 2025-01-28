@@ -27,7 +27,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 382
     Height = 499
-    ActivePage = TabSheet4
+    ActivePage = TabSheet1
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
     object TabSheet1: TTabSheet
@@ -126,11 +126,11 @@ object FormNXConfig: TFormNXConfig
       end
       object gbInternetOptions: TGroupBox
         Left = 19
-        Top = 165
+        Top = 128
         Width = 336
-        Height = 81
+        Height = 105
         Caption = 'Internet Options'
-        TabOrder = 3
+        TabOrder = 2
         object cbEnableOnline: TCheckBox
           Left = 12
           Top = 23
@@ -141,13 +141,22 @@ object FormNXConfig: TFormNXConfig
           OnClick = cbEnableOnlineClick
         end
         object cbUpdateCheck: TCheckBox
-          Left = 12
-          Top = 46
+          Left = 171
+          Top = 23
           Width = 169
           Height = 17
           Caption = 'Enable Update Check'
           TabOrder = 1
           OnClick = OptionChanged
+        end
+        object btnStyleManager: TButton
+          Left = 12
+          Top = 50
+          Width = 309
+          Height = 42
+          Caption = 'Style Manager'
+          TabOrder = 2
+          OnClick = btnStyleManagerClick
         end
       end
       object btnHotkeys: TButton
@@ -166,15 +175,6 @@ object FormNXConfig: TFormNXConfig
         Height = 21
         TabOrder = 0
       end
-      object btnStyles: TButton
-        Left = 19
-        Top = 107
-        Width = 336
-        Height = 42
-        Caption = 'Style Manager'
-        TabOrder = 2
-        OnClick = btnStylesClick
-      end
       object rgGameLoadingOptions: TRadioGroup
         Left = 19
         Top = 390
@@ -184,7 +184,7 @@ object FormNXConfig: TFormNXConfig
         Items.Strings = (
           'Always Load Next Unsolved Level'
           'Always Load Most Recently Active Level')
-        TabOrder = 5
+        TabOrder = 3
         OnClick = OptionChanged
       end
     end

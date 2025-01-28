@@ -43,7 +43,7 @@ type
     lblUserName: TLabel;
     ebUserName: TEdit;
     cbHighResolution: TCheckBox;
-    btnStyles: TButton;
+    btnStyleManager: TButton;
     cbResetWindowSize: TCheckBox;
     cbResetWindowPosition: TCheckBox;
     cbHideShadows: TCheckBox;
@@ -80,7 +80,7 @@ type
     procedure OptionChanged(Sender: TObject);
     procedure cbEnableOnlineClick(Sender: TObject);
     procedure SliderChange(Sender: TObject);
-    procedure btnStylesClick(Sender: TObject);
+    procedure btnStyleManagerClick(Sender: TObject);
     procedure cbFullScreenClick(Sender: TObject);
     procedure cbAutoSaveReplayClick(Sender: TObject);
     procedure cbReplayPatternEnter(Sender: TObject);
@@ -258,6 +258,7 @@ begin
     cbEnableOnline.Checked := GameParams.EnableOnline;
     cbUpdateCheck.Checked := GameParams.CheckUpdates and GameParams.EnableOnline;
     cbUpdateCheck.Enabled := GameParams.EnableOnline;
+    btnStyleManager.Enabled := GameParams.EnableOnline;
 
     if GameParams.LoadNextUnsolvedLevel then
       rgGameLoadingOptions.ItemIndex := 0
@@ -394,7 +395,7 @@ begin
   HotkeyForm.Free;
 end;
 
-procedure TFormNXConfig.btnStylesClick(Sender: TObject);
+procedure TFormNXConfig.btnStyleManagerClick(Sender: TObject);
 var
   F: TFManageStyles;
   OldEnableOnline: Boolean;
@@ -468,7 +469,12 @@ begin
   if not fIsSetting then
   begin
     cbUpdateCheck.Enabled := cbEnableOnline.Checked;
-    if not cbEnableOnline.Checked then cbUpdateCheck.Checked := False;
+
+    if not cbEnableOnline.Checked then
+      cbUpdateCheck.Checked := False;
+
+    btnStyleManager.Enabled := cbEnableOnline.Checked;
+
     OptionChanged(Sender);
   end;
 end;
