@@ -878,48 +878,49 @@ end;
 
 procedure TGameMenuScreen.HandleUpdateCheckResult;
 var
-  NewVersionStr, OrigVersionStr: String;
-  SL: TStringList;
-  n: Integer;
-  NewestID: Int64;
-  URL: String;
+//  NewVersionStr, OrigVersionStr: String;
+//  SL: TStringList;
+//  n: Integer;
+//  NewestID: Int64;
+//  URL: String;
   F: TFManageStyles;
 begin
-  NewVersionStr := fVersionInfo.Values['game'];
-  if LeftStr(NewVersionStr, 1) = 'V' then
-    NewVersionStr := RightStr(NewVersionStr, Length(NewVersionStr)-1);
-
-  OrigVersionStr := NewVersionStr;
-  NewVersionStr := StringReplace(NewVersionStr, '-', '.', [rfReplaceAll]);
-
-  SL := TStringList.Create;
-  try
+//  NewVersionStr := fVersionInfo.Values['game'];
+//  if LeftStr(NewVersionStr, 1) = 'V' then
+//    NewVersionStr := RightStr(NewVersionStr, Length(NewVersionStr)-1);
+//
+//  OrigVersionStr := NewVersionStr;
+//  NewVersionStr := StringReplace(NewVersionStr, '-', '.', [rfReplaceAll]);
+//
+//  SL := TStringList.Create;
+//  try
     try
-      SL.Delimiter := '.';
-      SL.StrictDelimiter := True;
-      SL.DelimitedText := NewVersionStr;
-
-      if SL.Count < 4 then
-        SL.Add('A');
-
-      SL[3] := Char(Ord(SL[3][1]) - 65);
-
-      NewestID := 0;
-      for n := 0 to 3 do
-        NewestID := (NewestID * 1000) + StrToIntDef(SL[n], 0);
-
-      if (NewestID > CurrentVersionID){$ifdef exp} or (NewestID = CurrentVersionID){$endif} then
-      begin
-        case RunCustomPopup(Self, 'Update', 'A NeoLemmix update, V' + OrigVersionStr + ', is available. Do you want to download it?',
-          'Go to NeoLemmix website|Remind me later') of
-          1: begin
-               URL := 'https://www.neolemmix.com/?page=neolemmix';
-               ShellExecute(0, 'open', PChar(URL), nil, nil, SW_SHOWNORMAL);
-               CloseScreen(gstExit);
-             end;
-           // 2: do nothing;
-        end;
-      end else if CheckStyleUpdates then
+//      SL.Delimiter := '.';
+//      SL.StrictDelimiter := True;
+//      SL.DelimitedText := NewVersionStr;
+//
+//      if SL.Count < 4 then
+//        SL.Add('A');
+//
+//      SL[3] := Char(Ord(SL[3][1]) - 65);
+//
+//      NewestID := 0;
+//      for n := 0 to 3 do
+//        NewestID := (NewestID * 1000) + StrToIntDef(SL[n], 0);
+//
+//      if (NewestID > CurrentVersionID){$ifdef exp} or (NewestID = CurrentVersionID){$endif} then
+//      begin
+//        case RunCustomPopup(Self, 'Update', 'A NeoLemmix update, V' + OrigVersionStr + ', is available. Do you want to download it?',
+//          'Go to NeoLemmix website|Remind me later') of
+//          1: begin
+//               URL := 'https://www.neolemmix.com/?page=neolemmix';
+//               ShellExecute(0, 'open', PChar(URL), nil, nil, SW_SHOWNORMAL);
+//               CloseScreen(gstExit);
+//             end;
+//           // 2: do nothing;
+//        end;
+//      end else
+      if CheckStyleUpdates then
       begin
         // Add cursor stuff here
 
@@ -940,9 +941,9 @@ begin
     except
       // Fail silently.
     end;
-  finally
-    SL.Free;
-  end;
+//  finally
+//    SL.Free;
+//  end;
 end;
 
 end.
