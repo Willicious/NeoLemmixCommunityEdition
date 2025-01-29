@@ -74,6 +74,7 @@ type
     gbMusicOptions: TGroupBox;
     lblSkillQFrames: TLabel;
     seSkillQFrames: TSpinEdit;
+    gbVisualCustomizationOptions: TGroupBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);

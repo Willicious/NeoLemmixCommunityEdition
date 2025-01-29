@@ -6,7 +6,7 @@ object FormNXConfig: TFormNXConfig
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'NeoLemmix Configuration'
-  ClientHeight = 538
+  ClientHeight = 545
   ClientWidth = 382
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -19,14 +19,14 @@ object FormNXConfig: TFormNXConfig
   OnClick = OptionChanged
   DesignSize = (
     382
-    538)
+    545)
   PixelsPerInch = 96
   TextHeight = 13
   object NXConfigPages: TPageControl
     Left = 0
     Top = 0
     Width = 382
-    Height = 499
+    Height = 506
     ActivePage = TabSheet1
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
@@ -193,7 +193,7 @@ object FormNXConfig: TFormNXConfig
       ImageIndex = 2
       object rgWhenNoLemmings: TRadioGroup
         Left = 19
-        Top = 377
+        Top = 397
         Width = 336
         Height = 85
         Caption = 'When No Lemmings Remain'
@@ -206,7 +206,7 @@ object FormNXConfig: TFormNXConfig
       end
       object gbReplayOptions: TGroupBox
         Left = 19
-        Top = 288
+        Top = 309
         Width = 336
         Height = 70
         Caption = 'Replay Options'
@@ -232,7 +232,7 @@ object FormNXConfig: TFormNXConfig
       end
       object gbHelperOptions: TGroupBox
         Left = 19
-        Top = 156
+        Top = 175
         Width = 336
         Height = 119
         Caption = 'Helper Options'
@@ -285,20 +285,11 @@ object FormNXConfig: TFormNXConfig
       end
       object gbInterfaceOptions: TGroupBox
         Left = 19
-        Top = 13
+        Top = 3
         Width = 336
-        Height = 124
+        Height = 75
         Caption = 'Interface Options'
         TabOrder = 0
-        object cbNoBackgrounds: TCheckBox
-          Left = 19
-          Top = 68
-          Width = 193
-          Height = 17
-          Caption = 'Disable Background Images'
-          TabOrder = 2
-          OnClick = OptionChanged
-        end
         object cbEdgeScrolling: TCheckBox
           Left = 19
           Top = 22
@@ -310,20 +301,37 @@ object FormNXConfig: TFormNXConfig
         end
         object cbSpawnInterval: TCheckBox
           Left = 19
-          Top = 91
+          Top = 45
           Width = 294
           Height = 17
           Caption = 'Use Spawn Interval Instead of Release Rate'
-          TabOrder = 3
+          TabOrder = 1
           OnClick = OptionChanged
         end
+      end
+      object gbVisualCustomizationOptions: TGroupBox
+        Left = 19
+        Top = 92
+        Width = 336
+        Height = 77
+        Caption = 'Visual/Customization Options'
+        TabOrder = 4
         object cbForceDefaultLemmings: TCheckBox
           Left = 19
-          Top = 45
+          Top = 21
           Width = 173
           Height = 17
           Caption = 'Force Default Lemming Sprites'
           TabOrder = 1
+          OnClick = OptionChanged
+        end
+        object cbNoBackgrounds: TCheckBox
+          Left = 19
+          Top = 44
+          Width = 193
+          Height = 17
+          Caption = 'Disable Background Images'
+          TabOrder = 0
           OnClick = OptionChanged
         end
       end
@@ -583,7 +591,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnOK: TButton
     Left = 23
-    Top = 505
+    Top = 512
     Width = 108
     Height = 25
     Anchors = [akLeft, akBottom]
@@ -593,7 +601,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnCancel: TButton
     Left = 137
-    Top = 505
+    Top = 512
     Width = 108
     Height = 25
     Anchors = [akLeft, akBottom]
@@ -604,7 +612,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnApply: TButton
     Left = 251
-    Top = 505
+    Top = 512
     Width = 108
     Height = 25
     Anchors = [akLeft, akBottom]
