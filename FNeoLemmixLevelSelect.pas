@@ -50,6 +50,7 @@ type
     lblEditingOptions: TLabel;
     btnEditLevel: TButton;
     btnClose: TButton;
+    btnCancelSearch: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure LoadCurrentLevelToPlayer;
@@ -80,6 +81,7 @@ type
     procedure btnEditLevelClick(Sender: TObject);
     procedure btnPlaybackModeClick(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
+    procedure btnCancelSearchClick(Sender: TObject);
   private
     fLastLevelPath: String;
     fLastGroup: TNeoLevelGroup;
@@ -90,6 +92,7 @@ type
     fTalismanButtons: TObjectList<TSpeedButton>;
     fDisplayRecords: TRecordDisplay;
     fSearchingLevels: Boolean;
+    fSearchCancelled: Boolean;
     fCurrentLevelVersion: Int64; // Used to check if we need to re-load the current level info
     fIsHandlingActivation: Boolean;
 
@@ -120,6 +123,7 @@ type
     procedure MaybeReloadLevelInfo;
 
     property SearchingLevels: Boolean read fSearchingLevels write fSearchingLevels;
+    property SearchCancelled: Boolean read fSearchCancelled write fSearchCancelled;
   public
     property LoadAsPack: Boolean read fLoadAsPack;
     procedure LoadIcons;
@@ -1322,6 +1326,22 @@ begin
   end;
 end;
 
+procedure TFLevelSelect.btnCancelSearchClick(Sender: TObject);
+begin
+  // Set flags
+  SearchCancelled := True;
+  SearchingLevels := False;
+
+  // Reset UI
+  lbSearchResults.Clear;
+  lbSearchResults.Visible := False;
+  sbSearchLevels.Clear;
+  pbSearchProgress.Visible := False;
+  tvLevelSelect.Visible := True;
+  btnCloseSearch.Visible := False;
+  btnCancelSearch.Visible := False;
+end;
+
 procedure TFLevelSelect.sbSearchLevelsInvokeSearch(Sender: TObject);
 begin
   SearchLevels;
@@ -1334,37 +1354,46 @@ begin
 end;
 
 procedure TFLevelSelect.SearchLevels;
+  procedure CollapseAllNodes(TreeView: TTreeView; Node: TTreeNode);
+  begin
+    while Node <> nil do
+    begin
+      Node.Collapse(False);
+      Node := Node.GetNextSibling;
+    end;
+  end;
+
   procedure ExpandAllNodes(TreeView: TTreeView; Node: TTreeNode; var Progress: Integer);
   var
     ChildNode: TTreeNode;
   begin
     while Node <> nil do
     begin
+      if SearchCancelled then
+        Exit;
+
       Node.Expand(False);
 
       // Update progress bar
       Inc(Progress);
       pbSearchProgress.Position := Progress;
-      
+  
       // Keep the UI responsive
       if (Progress mod 100 = 0) then
         Application.ProcessMessages;
+
+      if SearchCancelled then
+        Exit;
 
       if Node.HasChildren then
       begin
         ChildNode := Node.GetFirstChild;
         ExpandAllNodes(TreeView, ChildNode, Progress);
+        
+        if SearchCancelled then
+          Exit;
       end;
 
-      Node := Node.GetNextSibling;
-    end;
-  end;
-
-  procedure CollapseAllNodes(TreeView: TTreeView; Node: TTreeNode);
-  begin
-    while Node <> nil do
-    begin
-      Node.Collapse(False);
       Node := Node.GetNextSibling;
     end;
   end;
@@ -1375,22 +1404,30 @@ var
   Node: TTreeNode;
   Progress: Integer;
 begin
-  // Prevent infinite re-entry
-  if SearchingLevels then
+  // Update flags & prevent infinite re-entry
+  SearchCancelled := False;
+
+  if SearchingLevels or SearchCancelled then
     Exit;
 
   SearchingLevels := True;
-  tvLevelSelect.Visible := False;
 
-  // Prepare search results list
+  // Initialize search results list
   lbSearchResults.Clear;
   SearchText := Trim(sbSearchLevels.Text);
 
+  // Ensure valid search
   if SearchText = '' then
   begin
-    lbSearchResults.Visible := False;
+    SearchingLevels := False;
+    SearchCancelled := True;
     Exit;
-  end;
+  end;  
+
+  // Update UI
+  sbSearchLevels.Enabled := False;
+  btnCancelSearch.Visible := True;
+  tvLevelSelect.Visible := False;
 
   // Initialize progress bar and counter
   pbSearchProgress.Position := 0;
@@ -1412,9 +1449,12 @@ begin
   try
     for i := 0 to tvLevelSelect.Items.Count - 1 do
     begin
+      if SearchCancelled then
+        Break;
+
       Node := tvLevelSelect.Items[i];
 
-       // Add matching nodes to the list
+      // Add matching nodes to the list
       if AnsiContainsText(Node.Text, SearchText) then
         lbSearchResults.Items.AddObject(Node.Text, Node);
     end;
@@ -1422,18 +1462,23 @@ begin
     tvLevelSelect.Items.EndUpdate;
   end;
 
-  // Show no results message if no results found
-  if (lbSearchResults.Items.Count <= 0) then
-    lbSearchResults.Items.Add('No results found for "' + SearchText + '"');
-
   // Collapse all nodes after search
   CollapseAllNodes(tvLevelSelect, tvLevelSelect.Items.GetFirstNode);
-
-  // Finalize UI updates
+  
+  // Update UI & flags
   pbSearchProgress.Visible := False;
-  lbSearchResults.Visible := True;
-  btnCloseSearch.Visible := True;
+  btnCancelSearch.Visible := False;
+  sbSearchLevels.Enabled := True;
 
+  if not SearchCancelled then
+  begin
+    if (lbSearchResults.Items.Count <= 0) then
+      lbSearchResults.Items.Add('No results found for "' + SearchText + '"');
+      
+    lbSearchResults.Visible := True;
+    btnCloseSearch.Visible := True;
+  end;
+  
   SearchingLevels := False;
 end;
 
