@@ -1414,13 +1414,17 @@ begin
     tvLevelSelect.Items.EndUpdate;
   end;
 
+  // Show no results message if no results found
+  if (lbSearchResults.Items.Count <= 0) then
+    lbSearchResults.Items.Add('No results found for "' + SearchText + '"');
+
   // Collapse all nodes after search
   CollapseAllNodes(tvLevelSelect, tvLevelSelect.Items.GetFirstNode);
 
-  // Hide progress bar and show search results
+  // Finalize UI updates
   pbSearchProgress.Visible := False;
-  lbSearchResults.Visible := lbSearchResults.Items.Count > 0;
-  btnCloseSearch.Visible := lbSearchResults.Visible;
+  lbSearchResults.Visible := True;
+  btnCloseSearch.Visible := True;
 
   SearchingLevels := False;
 end;
