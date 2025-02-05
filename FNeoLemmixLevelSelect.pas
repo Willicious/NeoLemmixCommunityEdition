@@ -1345,6 +1345,10 @@ procedure TFLevelSelect.SearchLevels;
       // Update progress bar
       Inc(Progress);
       pbSearchProgress.Position := Progress;
+      
+      // Keep the UI responsive
+      if (Progress mod 100 = 0) then
+        Application.ProcessMessages;
 
       if Node.HasChildren then
       begin
@@ -1371,6 +1375,10 @@ var
   Node: TTreeNode;
   Progress: Integer;
 begin
+  // Prevent infinite re-entry
+  if SearchingLevels then
+    Exit;
+
   SearchingLevels := True;
   tvLevelSelect.Visible := False;
 
