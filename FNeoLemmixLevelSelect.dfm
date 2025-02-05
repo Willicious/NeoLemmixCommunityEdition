@@ -173,9 +173,9 @@ object FLevelSelect: TFLevelSelect
     OnKeyDown = tvLevelSelectKeyDown
   end
   object btnOK: TButton
-    Left = 522
+    Left = 521
     Top = 495
-    Width = 468
+    Width = 469
     Height = 25
     Caption = 'Play'
     TabOrder = 15
@@ -207,7 +207,7 @@ object FLevelSelect: TFLevelSelect
     Top = 233
     Width = 134
     Height = 25
-    Hint = 'Save a copy of this level in the latest SuperLemmix format'
+    Hint = 'Save a copy of this level in the latest NeoLemmix format'
     Caption = 'Cleanse This Level'
     ParentShowHint = False
     ShowHint = True
@@ -220,8 +220,8 @@ object FLevelSelect: TFLevelSelect
     Width = 134
     Height = 25
     Hint = 
-      'Save a copy of all levels in the selected pack in the latest Sup' +
-      'erLemmix format'
+      'Save a copy of all levels in the selected pack in the latest Neo' +
+      'Lemmix format'
     Caption = 'Cleanse All Levels'
     ParentShowHint = False
     ShowHint = True
@@ -245,7 +245,10 @@ object FLevelSelect: TFLevelSelect
     Top = 171
     Width = 134
     Height = 25
+    Hint = 'Save an image of the current level as a .png file'
     Caption = 'Screenshot Level'
+    ParentShowHint = False
+    ShowHint = True
     TabOrder = 10
     OnClick = btnSaveImageClick
   end
@@ -255,8 +258,8 @@ object FLevelSelect: TFLevelSelect
     Width = 134
     Height = 25
     Hint = 
-      'Create a shortcut which opens SuperLemmix to the selected level ' +
-      'pack'
+      'Create a shortcut which opens NeoLemmix to the selected level pa' +
+      'ck'
     Caption = 'Create Shortcut'
     ParentShowHint = False
     ShowHint = True
@@ -268,7 +271,12 @@ object FLevelSelect: TFLevelSelect
     Top = 67
     Width = 134
     Height = 25
+    Hint = 
+      'Reset completion status of all talismans for the current level t' +
+      'o unobtained'
     Caption = 'Reset Talismans'
+    ParentShowHint = False
+    ShowHint = True
     TabOrder = 3
     OnClick = btnResetTalismansClick
   end
@@ -277,13 +285,18 @@ object FLevelSelect: TFLevelSelect
     Top = 338
     Width = 134
     Height = 25
+    Hint = 
+      'Play a full collection of replays for the currently-selected pac' +
+      'k as a continuous playlist'
     Caption = 'Playback Mode'
+    ParentShowHint = False
+    ShowHint = True
     TabOrder = 8
     Visible = False
     OnClick = btnPlaybackModeClick
   end
   object btnShowHideOptions: TButton
-    Left = 382
+    Left = 381
     Top = 495
     Width = 134
     Height = 25
@@ -334,7 +347,9 @@ object FLevelSelect: TFLevelSelect
     Top = 407
     Width = 134
     Height = 25
-    Hint = 'Perform a replay check for every level in the selected pack'
+    Hint = 
+      'Open the current level in the Super/NeoLemmix Editor (whichever ' +
+      'is present in the root folder)'
     Caption = 'Edit Level'
     ParentShowHint = False
     ShowHint = True
