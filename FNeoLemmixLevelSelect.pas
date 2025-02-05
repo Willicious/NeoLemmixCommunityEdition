@@ -51,6 +51,7 @@ type
     btnEditLevel: TButton;
     btnClose: TButton;
     btnCancelSearch: TButton;
+    lblSearchResultsInfo: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure LoadCurrentLevelToPlayer;
@@ -1475,6 +1476,7 @@ begin
     if (lbSearchResults.Items.Count <= 0) then
       lbSearchResults.Items.Add('No results found for "' + SearchText + '"');
       
+    lblSearchResultsInfo.Visible := True;
     lbSearchResults.Visible := True;
     btnCloseSearch.Visible := True;
   end;
@@ -1512,6 +1514,7 @@ begin
   sbSearchLevels.Text := '';
 
   tvLevelSelect.Visible := True;
+  lblSearchResultsInfo.Visible := False;
 end;
 
 procedure TFLevelSelect.btnCloseClick(Sender: TObject);
