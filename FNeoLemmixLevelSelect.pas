@@ -1330,6 +1330,14 @@ begin
 end;
 
 procedure TFLevelSelect.btnCancelSearchClick(Sender: TObject);
+  procedure CollapseAllNodes(TreeView: TTreeView; Node: TTreeNode);
+  begin
+    while Node <> nil do
+    begin
+      Node.Collapse(False);
+      Node := Node.GetNextSibling;
+    end;
+  end;
 begin
   // Set flags
   SearchCancelled := True;
@@ -1339,10 +1347,13 @@ begin
   lbSearchResults.Clear;
   lbSearchResults.Visible := False;
   sbSearchLevels.Clear;
+  sbSearchLevels.Enabled := True;
   pbSearchProgress.Visible := False;
-  tvLevelSelect.Visible := True;
   btnCloseSearch.Visible := False;
   btnCancelSearch.Visible := False;
+
+  CollapseAllNodes(tvLevelSelect, tvLevelSelect.Items.GetFirstNode);
+  tvLevelSelect.Visible := True;
 end;
 
 procedure TFLevelSelect.sbSearchLevelsInvokeSearch(Sender: TObject);
@@ -1377,10 +1388,10 @@ procedure TFLevelSelect.SearchLevels;
 
       Node.Expand(False);
 
-      // Update progress bar
+      // Update progress bar for expansion
       Inc(Progress);
       pbSearchProgress.Position := Progress;
-  
+
       // Keep the UI responsive
       if (Progress mod 100 = 0) then
         Application.ProcessMessages;
@@ -1392,7 +1403,7 @@ procedure TFLevelSelect.SearchLevels;
       begin
         ChildNode := Node.GetFirstChild;
         ExpandAllNodes(TreeView, ChildNode, Progress);
-        
+
         if SearchCancelled then
           Exit;
       end;
@@ -1426,12 +1437,15 @@ begin
     SearchingLevels := False;
     SearchCancelled := True;
     Exit;
-  end;  
+  end;
 
   // Update UI
   sbSearchLevels.Enabled := False;
   btnCancelSearch.Visible := True;
   tvLevelSelect.Visible := False;
+  lblSearchResultsInfo.Visible := False;
+  lbSearchResults.Visible := False;
+  btnCloseSearch.Visible := False;
 
   // Initialize progress bar and counter
   pbSearchProgress.Position := 0;
@@ -1448,7 +1462,7 @@ begin
     tvLevelSelect.Items.EndUpdate;
   end;
 
-  // Perform search
+  // Perform search and update progress bar
   tvLevelSelect.Items.BeginUpdate;
   try
     for i := 0 to tvLevelSelect.Items.Count - 1 do
@@ -1466,6 +1480,17 @@ begin
           lbSearchResults.Items.AddObject(L.Title, Node);
         end;
       end;
+
+      // Update progress bar during the search
+      Inc(Progress);
+      pbSearchProgress.Position := Progress;
+
+      // Keep the UI responsive
+      if (Progress mod 100 = 0) then
+        Application.ProcessMessages;
+
+      if SearchCancelled then
+        Exit;
     end;
   finally
     tvLevelSelect.Items.EndUpdate;
@@ -1473,7 +1498,7 @@ begin
 
   // Collapse all nodes after search
   CollapseAllNodes(tvLevelSelect, tvLevelSelect.Items.GetFirstNode);
-  
+
   // Update UI & flags
   pbSearchProgress.Visible := False;
   btnCancelSearch.Visible := False;
@@ -1483,12 +1508,12 @@ begin
   begin
     if (lbSearchResults.Items.Count <= 0) then
       lbSearchResults.Items.Add('No results found for "' + SearchText + '"');
-      
+
     lblSearchResultsInfo.Visible := True;
     lbSearchResults.Visible := True;
     btnCloseSearch.Visible := True;
   end;
-  
+
   SearchingLevels := False;
 end;
 
