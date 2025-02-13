@@ -66,7 +66,7 @@ type
     gbHelperOptions: TGroupBox;
     gbInterfaceOptions: TGroupBox;
     gbZoomOptions: TGroupBox;
-    gbResolutionOptions: TGroupBox;
+    gbVisualOptions: TGroupBox;
     gbWindowOptions: TGroupBox;
     btnResetWindow: TButton;
     rgSoundScheme: TRadioGroup;
@@ -75,6 +75,7 @@ type
     lblSkillQFrames: TLabel;
     seSkillQFrames: TSpinEdit;
     gbVisualCustomizationOptions: TGroupBox;
+    cbFadeMenuScreens: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -296,6 +297,7 @@ begin
     cbLinearResampleGame.Checked := GameParams.LinearResampleGame;
     cbCompactSkillPanel.Checked := GameParams.CompactSkillPanel;
     cbMinimapHighQuality.Checked := GameParams.MinimapHighQuality;
+    cbFadeMenuScreens.Checked := GameParams.FadeMenuScreens;
 
     // Zoom Dropdown
     SetZoomDropdown;
@@ -367,6 +369,7 @@ begin
   GameParams.LinearResampleGame := cbLinearResampleGame.Checked;
   GameParams.CompactSkillPanel := cbCompactSkillPanel.Checked;
   GameParams.MinimapHighQuality := cbMinimapHighQuality.Checked;
+  GameParams.FadeMenuScreens := cbFadeMenuScreens.Checked;
 
   // Zoom Dropdown
   GameParams.ZoomLevel := cbZoom.ItemIndex + 1;

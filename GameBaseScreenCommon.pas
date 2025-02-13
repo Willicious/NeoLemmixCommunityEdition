@@ -85,7 +85,8 @@ begin
     Sleep(fCloseDelay);
   end;
 
-  FadeOut;
+  if GameParams.FadeMenuScreens then
+    FadeOut;
 
   if GameParams <> nil then
   begin
@@ -259,11 +260,12 @@ end;
 
 procedure TGameBaseScreen.ShowScreen;
 begin
-  ScreenImg.Bitmap.MasterAlpha := 0;
+  if GameParams.FadeMenuScreens then
+    ScreenImg.Bitmap.MasterAlpha := 0;
 
   Inherited; // Form is made visible here;
 
-  if CurrentScreen <> gstPlay then
+  if GameParams.FadeMenuScreens and (CurrentScreen <> gstPlay) then
     FadeIn;
 end;
 

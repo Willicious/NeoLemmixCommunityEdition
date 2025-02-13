@@ -27,7 +27,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 382
     Height = 506
-    ActivePage = TabSheet1
+    ActivePage = TabSheet3
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
     object TabSheet1: TTabSheet
@@ -341,7 +341,7 @@ object FormNXConfig: TFormNXConfig
       ImageIndex = 3
       object gbZoomOptions: TGroupBox
         Left = 19
-        Top = 19
+        Top = 11
         Width = 336
         Height = 142
         Caption = 'Zoom Options'
@@ -388,7 +388,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbIncreaseZoom: TCheckBox
           Left = 28
-          Top = 86
+          Top = 81
           Width = 205
           Height = 17
           Caption = 'Increase Zoom On Small Levels'
@@ -397,7 +397,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbCompactSkillPanel: TCheckBox
           Left = 28
-          Top = 109
+          Top = 104
           Width = 153
           Height = 17
           Caption = 'Compact Skill Panel'
@@ -405,12 +405,12 @@ object FormNXConfig: TFormNXConfig
           OnClick = OptionChanged
         end
       end
-      object gbResolutionOptions: TGroupBox
+      object gbVisualOptions: TGroupBox
         Left = 19
-        Top = 183
+        Top = 173
         Width = 336
-        Height = 129
-        Caption = 'Resolution Options'
+        Height = 153
+        Caption = 'Visual Options'
         TabOrder = 1
         object cbLinearResampleMenu: TCheckBox
           Left = 28
@@ -448,10 +448,19 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 0
           OnClick = OptionChanged
         end
+        object cbFadeMenuScreens: TCheckBox
+          Left = 28
+          Top = 117
+          Width = 253
+          Height = 17
+          Caption = 'Use Fade Transition Between Menu Screens'
+          TabOrder = 4
+          OnClick = OptionChanged
+        end
       end
       object gbWindowOptions: TGroupBox
         Left = 19
-        Top = 332
+        Top = 340
         Width = 336
         Height = 120
         Caption = 'Window Options'
