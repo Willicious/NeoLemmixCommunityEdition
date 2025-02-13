@@ -1028,21 +1028,11 @@ begin
 
   if (SelectedLemming <> nil) then
   begin
-    if  (HasSteelAt(SelectedLemming.LemX, SelectedLemming.LemY)
-    and (RenderInterface.SelectedSkill in [spbMiner, spbDigger])) then
-      CueSoundEffect(SFX_HITS_STEEL, SelectedLemming.Position)
-    else
-      CueSoundEffect(SFX_ASSIGN_FAIL, SelectedLemming.Position);
-
+    CueSoundEffect(SFX_ASSIGN_FAIL, SelectedLemming.Position);
     fAssignFailPlayedThisFrame := True;
   end else if (GetHighlitLemming <> nil) and PlayForHighlit then
     begin
-    if  (HasSteelAt(HighlitLemming.LemX, HighlitLemming.LemY)
-    and (RenderInterface.SelectedSkill in [spbMiner, spbDigger])) then
-      CueSoundEffect(SFX_HITS_STEEL, HighlitLemming.Position)
-    else
-      CueSoundEffect(SFX_ASSIGN_FAIL, HighlitLemming.Position);
-
+    CueSoundEffect(SFX_ASSIGN_FAIL, HighlitLemming.Position);
     fAssignFailPlayedThisFrame := True;
   end;
 end;
