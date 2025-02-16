@@ -112,8 +112,9 @@ type
 
     fSelectedSkill             : TSkillPanelButton; // TUserSelectedSkill; // currently selected skill restricted by F3-F9
 
-    fDoneAssignmentThisFrame   : Boolean;
-    fAssignFailPlayedThisFrame : Boolean;
+    fDoneAssignmentThisFrame       : Boolean;
+    fAssignFailPlayedThisFrame     : Boolean;
+    fFailedBecauseAssignmentExists : Boolean;
 
   { internal objects }
     LemmingList                : TLemmingList; // the list of lemmings
@@ -178,7 +179,6 @@ type
     HatchesOpened              : Boolean;
     LemmingMethods             : TLemmingMethodArray; // a method for each basic lemming state
     NewSkillMethods            : TNewSkillMethodArray; // The replacement of SkillMethods
-    fLemAssigned               : TLemming; // Lemming that has been assigned a skill this frame
     fLemSelected               : TLemming; // Lem under cursor, who would receive the skill
     fLemWithShadow             : TLemming; // Needed for CheckForNewShadow to erase previous shadow
     fLemWithShadowButton       : TSkillPanelButton; // Correct skill to be erased
@@ -1940,7 +1940,7 @@ begin
   begin
     Result := DoSkillAssignment(L, Skill);
     if Result then
-      fLemAssigned := L;
+      CueSoundEffect(SFX_ASSIGN_SKILL, L.Position);
   end
 
   // record new skill assignment to be assigned once we call again UpdateLemmings
@@ -5654,6 +5654,18 @@ begin
 
   fSoundList.Clear(); // Clear list of played sound effects
 
+  // Don't update if an assignment attempt failed for any reason
+  if fAssignFailPlayedThisFrame and fFailedBecauseAssignmentExists then
+  begin
+    fAssignFailPlayedThisFrame := False;
+
+    if fFailedBecauseAssignmentExists then
+    begin
+      fFailedBecauseAssignmentExists := False;
+      Exit;
+    end;
+  end;
+
   CheckAdjustSpawnInterval;
   CheckForQueuedAction; // needs to be done before CheckForReplayAction, because it writes an assignment in the replay
   CheckForReplayAction;
@@ -5682,13 +5694,6 @@ begin
 
   // Check lemmings under cursor
   HitTest;
-
-  // Handle skill assignment sound effect
-  if fDoneAssignmentThisFrame and not fAssignFailPlayedThisFrame then
-    CueSoundEffect(SFX_ASSIGN_SKILL, fLemAssigned.Position);
-
-  fLemAssigned := nil;
-  fAssignFailPlayedThisFrame := False;
 
   fSoundList.Clear();
 end;
@@ -5842,7 +5847,8 @@ begin
     if Sel = baNone then Exit;
 
     Result := AssignNewSkill(Sel, IsHighlight);
-  end;
+  end else
+    fFailedBecauseAssignmentExists := True;
 
   if not Result then PlayAssignFailSound;
 
