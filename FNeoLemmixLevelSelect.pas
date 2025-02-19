@@ -63,7 +63,6 @@ type
     procedure btnCleanseLevelsClick(Sender: TObject);
     procedure btnCleanseOneClick(Sender: TObject);
     procedure btnClearRecordsClick(Sender: TObject);
-    procedure tvLevelSelectChange(Sender: TObject; Node: TTreeNode);
     procedure tvLevelSelectKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnResetTalismansClick(Sender: TObject);
     procedure tvLevelSelectExpanded(Sender: TObject; Node: TTreeNode);
@@ -82,6 +81,9 @@ type
     procedure btnEditLevelClick(Sender: TObject);
     procedure btnPlaybackModeClick(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
+    procedure tvLevelSelectKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure tvLevelSelectClick(Sender: TObject);
   private
     fLastLevelPath: String;
     fLastGroup: TNeoLevelGroup;
@@ -662,25 +664,14 @@ begin
   end;
 end;
 
-procedure TFLevelSelect.tvLevelSelectChange(Sender: TObject; Node: TTreeNode);
+procedure TFLevelSelect.tvLevelSelectClick(Sender: TObject);
 begin
-  // Update the UI first
-  Node.Selected := True;
-  tvLevelSelect.Update;
-  Application.ProcessMessages;
-
   SetInfo;
 end;
 
 procedure TFLevelSelect.tvLevelSelectExpanded(Sender: TObject; Node: TTreeNode);
 begin
-  // Update the UI first
-  Node.Selected := True;
-  tvLevelSelect.Update;
-  Application.ProcessMessages;
-
   LoadNodeLabels;
-  SetInfo;
 end;
 
 // When treeview is active, pressing return loads the currently selected level
@@ -691,22 +682,11 @@ begin
     LoadCurrentLevelToPlayer;
 end;
 
-function TFLevelSelect.GetPackResultsString(G: TNeoLevelGroup): String;
+procedure TFLevelSelect.tvLevelSelectKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
 begin
-  Result := '';
-
-  if G.LevelCount > 0 then
-    Result := IntToStr(G.LevelsCompleted) + ' of ' + IntToStr(G.LevelCount)
-    + ' levels completed';
-
-  if G.Talismans.Count > 0 then
-  begin
-    if Result <> '' then
-      Result := Result + '; ';
-
-    Result := Result + IntToStr(G.TalismansUnlocked) + ' of ' + IntToStr(G.Talismans.Count)
-    + ' talismans unlocked';
-  end;
+  if Key in [VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT] then
+    SetInfo;
 end;
 
 procedure TFLevelSelect.LoadNodeLabels;
@@ -761,6 +741,21 @@ begin
   end;
 end;
 
+function TFLevelSelect.GetPackResultsString(G: TNeoLevelGroup): String;
+begin
+  Result := '';
+  if G.LevelCount > 0 then
+    Result := IntToStr(G.LevelsCompleted) + ' of ' + IntToStr(G.LevelCount)
+    + ' levels completed';
+  if G.Talismans.Count > 0 then
+  begin
+    if Result <> '' then
+      Result := Result + '; ';
+    Result := Result + IntToStr(G.TalismansUnlocked) + ' of ' + IntToStr(G.Talismans.Count)
+    + ' talismans unlocked';
+  end;
+end;
+
 procedure TFLevelSelect.SetInfo;
 var
   Obj: TObject;
@@ -799,7 +794,6 @@ begin
     lblPosition.Caption := GetGroupPositionText;
 
     lblAuthor.Caption := G.Author;
-
     if G.PackVersion <> '' then
       lblAuthor.Caption := lblAuthor.Caption + ' | Version: ' + G.PackVersion;
 
