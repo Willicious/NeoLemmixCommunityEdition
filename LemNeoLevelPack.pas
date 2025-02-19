@@ -5,10 +5,11 @@ interface
 uses
   System.Generics.Collections, System.Generics.Defaults,
   GR32, CRC32, PngInterface, LemLevel,
-  Windows, Dialogs, Classes, SysUtils, StrUtils, Contnrs, Controls, Forms,
+  Windows, Dialogs, Classes, SysUtils, StrUtils, Contnrs, Controls, Forms, ComCtrls, StdCtrls,
   LemTalisman,
   LemStrings, LemTypes, LemNeoParser, LemNeoPieceManager, LemGadgets, LemGadgetsConstants, LemCore,
-  UMisc;
+  UMisc,
+  SharedGlobals;
 
 type
   TNeoLevelStatus = (lst_None, lst_Attempted, lst_Completed_Outdated, lst_Completed);
@@ -196,7 +197,8 @@ type
       function GetStatus: TNeoLevelStatus;
 
       function GetTalismans: TObjectList<TTalisman>;
-      function GetCompleteTalismanCount: Integer;
+      function GetTotalTalismansUnlockedCount: Integer;
+      function GetTotalLevelsCompletedCount: Integer;
 
       function GetParentBasePack: TNeoLevelGroup;
 
@@ -242,7 +244,8 @@ type
       property PostviewTexts: TPostviewTexts read fPostviewTexts;
 
       property Talismans: TObjectList<TTalisman> read GetTalismans;
-      property TalismansUnlocked: Integer read GetCompleteTalismanCount;
+      property TalismansUnlocked: Integer read GetTotalTalismansUnlockedCount;
+      property LevelsCompleted: Integer read GetTotalLevelsCompletedCount;
 
       property LevelIndex[aLevel: TNeoLevelEntry]: Integer read GetLevelIndex;
       property GroupIndex[aGroup: TNeoLevelGroup]: Integer read GetGroupIndex;
@@ -1749,7 +1752,7 @@ begin
   Result := fTalismans;
 end;
 
-function TNeoLevelGroup.GetCompleteTalismanCount: Integer;
+function TNeoLevelGroup.GetTotalTalismansUnlockedCount: Integer;
 var
   i: Integer;
 begin
@@ -1758,6 +1761,17 @@ begin
     Result := Result + Children[i].TalismansUnlocked;
   for i := 0 to Levels.Count-1 do
     Result := Result + Levels[i].UnlockedTalismanList.Count;
+end;
+
+function TNeoLevelGroup.GetTotalLevelsCompletedCount: Integer;
+var
+  i: Integer;
+begin
+  Result := 0;
+  for i := 0 to Children.Count-1 do
+    Result := Result + Children[i].LevelsCompleted;
+  for i := 0 to Levels.Count - 1 do
+    if Levels[i].Status = lst_Completed then Inc(Result);
 end;
 
 function TNeoLevelGroup.GetParentBasePack: TNeoLevelGroup;

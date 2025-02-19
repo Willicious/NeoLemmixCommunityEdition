@@ -365,6 +365,13 @@ object FLevelSelect: TFLevelSelect
     TabOrder = 17
     OnClick = btnCloseClick
   end
+  object pbUIProgress: TProgressBar
+    Left = 389
+    Top = 99
+    Width = 592
+    Height = 17
+    TabOrder = 18
+  end
   object ilStatuses: TImageList
     AllocBy = 8
     Height = 24

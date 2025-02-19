@@ -51,6 +51,7 @@ type
     btnEditLevel: TButton;
     btnClose: TButton;
     lblSearchResultsInfo: TLabel;
+    pbUIProgress: TProgressBar;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure LoadCurrentLevelToPlayer;
@@ -99,7 +100,6 @@ type
     procedure LoadNodeLabels;
     procedure WriteToParams;
 
-    function GetCompletedLevelString(G: TNeoLevelGroup): String;
     function GetPackResultsString(G: TNeoLevelGroup): String;
 
     procedure DisplayLevelInfo(RefreshLevel: Boolean = False);
@@ -121,7 +121,7 @@ type
     procedure MaybeReloadLevelInfo;
 
     property SearchingLevels: Boolean read fSearchingLevels write fSearchingLevels;
-  public
+ public
     property LoadAsPack: Boolean read fLoadAsPack;
     procedure LoadIcons;
 
@@ -381,6 +381,7 @@ end;
 
 procedure TFLevelSelect.FormShow(Sender: TObject);
 begin
+  LoadNodeLabels;
   SetInfo;
 end;
 
@@ -663,11 +664,22 @@ end;
 
 procedure TFLevelSelect.tvLevelSelectChange(Sender: TObject; Node: TTreeNode);
 begin
+  // Update the UI first
+  Node.Selected := True;
+  tvLevelSelect.Update;
+  Application.ProcessMessages;
+
   SetInfo;
 end;
 
 procedure TFLevelSelect.tvLevelSelectExpanded(Sender: TObject; Node: TTreeNode);
 begin
+  // Update the UI first
+  Node.Selected := True;
+  tvLevelSelect.Update;
+  Application.ProcessMessages;
+
+  LoadNodeLabels;
   SetInfo;
 end;
 
@@ -679,77 +691,21 @@ begin
     LoadCurrentLevelToPlayer;
 end;
 
-function TFLevelSelect.GetCompletedLevelString(G: TNeoLevelGroup): String;
-var
-  i, j, CompletedCount: Integer;
-  SubGroup: TNeoLevelGroup;
-//  ProgressDialog: TForm;
-//  ProgressBar: TProgressBar;
-begin
-  Result := '';
-  CompletedCount := 0;
-
-//    // Create the progress dialog
-//  ProgressDialog := TForm.Create(nil);
-//  try
-//    ProgressDialog.Caption := 'Processing Completion Data...';
-//    ProgressDialog.Position := poScreenCenter;
-//    ProgressDialog.BorderStyle := bsDialog;
-//    ProgressDialog.Width := 300;
-//    ProgressDialog.Height := 100;
-//
-//    // Create a progress bar
-//    ProgressBar := TProgressBar.Create(ProgressDialog);
-//    ProgressBar.Parent := ProgressDialog;
-//    ProgressBar.Left := 10;
-//    ProgressBar.Top := 10;
-//    ProgressBar.Width := ProgressDialog.Width - 20;
-//    ProgressBar.Max := G.LevelCount;
-//    ProgressBar.Position := 0;
-
-//    // Show the progress dialog
-//    ProgressDialog.Show;
-
-    for i := 0 to G.Children.Count -1 do
-    begin
-      SubGroup := G.Children[i];
-
-      for j := 0 to SubGroup.Levels.Count -1 do
-      if SubGroup.Levels[j].Status = lst_Completed then
-      begin
-        // Update progress
-        Inc(CompletedCount);
-//          ProgressBar.Position := CompletedCount;
-//          Application.ProcessMessages; // Ensure UI updates are processed
-      end;
-    end;
-
-    Result := IntToStr(CompletedCount) + ' of ' + IntToStr(G.LevelCount) + ' levels ';
-
-//    // Close the progress dialog when finished
-//    ProgressDialog.Close;
-//  finally
-//    ProgressDialog.Free;
-//  end;
-end;
-
-
 function TFLevelSelect.GetPackResultsString(G: TNeoLevelGroup): String;
 begin
   Result := '';
 
   if G.LevelCount > 0 then
-    Result := GetCompletedLevelString(G);
-
-  if Result <> '' then
-    Result := Result + 'completed';
+    Result := IntToStr(G.LevelsCompleted) + ' of ' + IntToStr(G.LevelCount)
+    + ' levels completed';
 
   if G.Talismans.Count > 0 then
   begin
     if Result <> '' then
       Result := Result + '; ';
 
-    Result := Result + IntToStr(G.TalismansUnlocked) + ' of ' + IntToStr(G.Talismans.Count) + ' talismans unlocked';
+    Result := Result + IntToStr(G.TalismansUnlocked) + ' of ' + IntToStr(G.Talismans.Count)
+    + ' talismans unlocked';
   end;
 end;
 
@@ -758,34 +714,14 @@ var
   i: Integer;
   L: TNeoLevelEntry;
   S: String;
-//  ProgressDialog: TForm;
-//  ProgressBar: TProgressBar;
-//  CurrentNode: Integer;
+  CurrentNode: Integer;
 begin
   tvLevelSelect.Items.BeginUpdate;
-//  CurrentNode := 0;
-
-  //    // Create the progress dialog
-//  ProgressDialog := TForm.Create(nil);
+  CurrentNode := 0;
 
   try
-//    ProgressDialog.Caption := 'Processing Level Data...';
-//    ProgressDialog.Position := poScreenCenter;
-//    ProgressDialog.BorderStyle := bsDialog;
-//    ProgressDialog.Width := 300;
-//    ProgressDialog.Height := 100;
-//
-//    // Create a progress bar
-//    ProgressBar := TProgressBar.Create(ProgressDialog);
-//    ProgressBar.Parent := ProgressDialog;
-//    ProgressBar.Left := 10;
-//    ProgressBar.Top := 10;
-//    ProgressBar.Width := ProgressDialog.Width - 20;
-//    ProgressBar.Max := 100; // This will need to be the number of visible Nodes
-//    ProgressBar.Position := 0;
-
-//    // Show the progress dialog
-//    ProgressDialog.Show;
+//    pbUIProgress.Visible := True;
+//    pbUIProgress.Max := tvLevelSelect.Items.Count -1;
 
     for i := 0 to tvLevelSelect.Items.Count-1 do
     begin
@@ -811,16 +747,16 @@ begin
               end;
       end;
 
-//      // Update progress
-//      Inc(CurrentNode);
-//          ProgressBar.Position := CurrentNode;
-//          Application.ProcessMessages; // Ensure UI updates are processed
-    end;
+      // Update progress
+      Inc(CurrentNode);
+      //pbUIProgress.Position := CurrentNode;
 
-//    // Close the progress dialog when finished
-//    ProgressDialog.Close;
+      // Call every 50 nodes to ensure UI responsiveness
+      if (CurrentNode mod 50 = 0) then
+        Application.ProcessMessages;
+    end;
   finally
-//    ProgressDialog.Free;
+    //pbUIProgress.Visible := False;
     tvLevelSelect.Items.EndUpdate;
   end;
 end;
@@ -851,8 +787,6 @@ begin
   if SearchingLevels then
     Exit;
 
-  LoadNodeLabels;
-
   N := tvLevelSelect.Selected;
   if N = nil then Exit;
 
@@ -877,8 +811,9 @@ begin
     GameParams.LoadCurrentLevel(False);
 
     ClearTalismanButtons;
-    DisplayPackTalismanInfo(G);
     fInfoForm.Visible := False;
+
+    DisplayPackTalismanInfo(G);
     SetAdvancedOptionsGroup(G);
   end else if Obj is TNeoLevelEntry then
   begin
@@ -896,8 +831,8 @@ begin
 
     DisplayLevelInfo;
     fPackTalBox.Visible := False;
-    SetAdvancedOptionsLevel(L);
 
+    SetAdvancedOptionsLevel(L);
     fCurrentLevelVersion := GameParams.Level.Info.LevelVersion;
   end;
 end;
@@ -963,10 +898,7 @@ end;
 
 procedure TFLevelSelect.DisplayPackTalismanInfo(Group: TNeoLevelGroup);
 var
-//  ProgressDialog: TForm;
-//  ProgressBar: TProgressBar;
-//  TotalTalismans, CurrentTalisman: Integer;
-//  Group: TNeoLevelGroup;
+  TotalTalismans, CurrentTalisman: Integer;
   Level: TNeoLevelEntry;
   Talismans: TObjectList<TTalisman>;
   Tal: TTalisman;
@@ -1065,55 +997,35 @@ begin
 
   TotalHeight := 8;
   Talismans := Group.Talismans;
-//  TotalTalismans := Talismans.Count;
-//  CurrentTalisman := 0;
+  TotalTalismans := Talismans.Count;
+  CurrentTalisman := 0;
 
-//  // Create the progress dialog
-//  ProgressDialog := TForm.Create(nil);
-//  try
-//    ProgressDialog.Caption := 'Processing Talismans...';
-//    ProgressDialog.Position := poScreenCenter;
-//    ProgressDialog.BorderStyle := bsDialog;
-//    ProgressDialog.Width := 300;
-//    ProgressDialog.Height := 100;
-//
-//    // Create a progress bar
-//    ProgressBar := TProgressBar.Create(ProgressDialog);
-//    ProgressBar.Parent := ProgressDialog;
-//    ProgressBar.Left := 10;
-//    ProgressBar.Top := 10;
-//    ProgressBar.Width := ProgressDialog.Width - 20;
-//    ProgressBar.Max := TotalTalismans;
-//    ProgressBar.Position := 0;
-//
-//    // Show the progress dialog
-//    ProgressDialog.Show;
+  pbUIProgress.Visible := True;
+  pbUIProgress.Max := TotalTalismans;
 
-    for i := fPackTalBox.ControlCount - 1 downto 0 do
-      fPackTalBox.Controls[i].Free;
+  for i := fPackTalBox.ControlCount - 1 downto 0 do
+    fPackTalBox.Controls[i].Free;
 
-    for i := 0 to Talismans.Count - 1 do
-    begin
-      Tal := Talismans[i];
-      Level := Group.GetLevelForTalisman(Tal);
-      CreateUIElements;
+  for i := 0 to Talismans.Count - 1 do
+  begin
+    Tal := Talismans[i];
+    Level := Group.GetLevelForTalisman(Tal);
+    CreateUIElements;
 
-//      // Update progress
-//      Inc(CurrentTalisman);
-//      ProgressBar.Position := CurrentTalisman;
-//
-//      Application.ProcessMessages; // Ensure UI updates are processed
-    end;
+    // Update progress
+    Inc(CurrentTalisman);
+    pbUIProgress.Position := CurrentTalisman;
 
-    fPackTalBox.VertScrollBar.Position := 0;
-    fPackTalBox.VertScrollBar.Range := Max(0, TotalHeight);
-    fPackTalBox.Visible := True;
+    // Call every 50 talismans to ensure UI responsiveness
+    if (CurrentTalisman mod 50 = 0) then
+      Application.ProcessMessages;
+  end;
 
-//    // Close the progress dialog when finished
-//    ProgressDialog.Close;
-//  finally
-//    ProgressDialog.Free;
-//  end;
+  fPackTalBox.VertScrollBar.Position := 0;
+  fPackTalBox.VertScrollBar.Range := Max(0, TotalHeight);
+  fPackTalBox.Visible := True;
+
+  pbUIProgress.Visible := False;
 end;
 
 
@@ -1601,22 +1513,22 @@ end;
 // --- Advanced options --- //
 procedure TFLevelSelect.SetAdvancedOptionsGroup(G: TNeoLevelGroup);
 begin
-    btnSaveImage.Caption := 'Save Level Images';
-    btnReplayManager.Enabled := True;
-    btnCleanseLevels.Enabled := True;
-    btnCleanseOne.Enabled := False;
-    btnResetTalismans.Enabled := False;
-    btnOk.Enabled := G.LevelCount > 0; // N.B: Levels.Count is not recursive; LevelCount is
+  btnSaveImage.Caption := 'Save Level Images';
+  btnReplayManager.Enabled := True;
+  btnCleanseLevels.Enabled := True;
+  btnCleanseOne.Enabled := False;
+  btnResetTalismans.Enabled := False;
+  btnOk.Enabled := G.LevelCount > 0; // N.B: Levels.Count is not recursive; LevelCount is
 end;
 
 procedure TFLevelSelect.SetAdvancedOptionsLevel(L: TNeoLevelEntry);
 begin
-    btnSaveImage.Caption := 'Save Image';
-    btnReplayManager.Enabled := TNeoLevelEntry(tvLevelSelect.Selected.Data).Group.ParentBasePack <> GameParams.BaseLevelPack;
-    btnCleanseLevels.Enabled := btnReplayManager.Enabled;
-    btnCleanseOne.Enabled := True;
-    btnResetTalismans.Enabled := L.Talismans.Count <> 0;
-    btnOK.Enabled := True;
+  btnSaveImage.Caption := 'Save Image';
+  btnReplayManager.Enabled := TNeoLevelEntry(tvLevelSelect.Selected.Data).Group.ParentBasePack <> GameParams.BaseLevelPack;
+  btnCleanseLevels.Enabled := btnReplayManager.Enabled;
+  btnCleanseOne.Enabled := True;
+  btnResetTalismans.Enabled := L.Talismans.Count <> 0;
+  btnOK.Enabled := True;
 end;
 
 procedure TFLevelSelect.btnSaveImageClick(Sender: TObject);
