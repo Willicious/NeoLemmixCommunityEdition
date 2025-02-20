@@ -1751,6 +1751,7 @@ begin
       Exit;
 
   Group.CleanseLevels(AppPath + 'Cleanse\' + MakeSafeForFilename(Group.Name) + '\');
+  tvLevelSelect.SetFocus;
 end;
 
 end.
