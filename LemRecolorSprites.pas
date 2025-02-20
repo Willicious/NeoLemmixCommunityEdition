@@ -67,7 +67,7 @@ begin
   inherited;
 
   // Until proper loading exists
-  LoadSwaps('default');
+  LoadSwaps(SFDefaultStyle);
 end;
 
 procedure TRecolorImage.SwapColors(F: TColor32; var B: TColor32);
@@ -142,7 +142,7 @@ begin
   Parser := TParser.Create;
   try
     if not FileExists(AppPath + SFStyles + aName + SFPiecesLemmings + 'scheme.nxmi') then
-      aName := 'default';
+      aName := SFDefaultStyle;
 
     if FileExists(AppPath + SFStyles + aName + SFPiecesLemmings + 'scheme.nxmi') then
     begin

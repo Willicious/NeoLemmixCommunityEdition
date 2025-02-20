@@ -13,6 +13,7 @@ uses
   LemGadgetsMeta, LemGadgetsModel, LemGadgets, LemGadgetsConstants,
   LemTypes,
   LemVersion,
+  LemStrings,
   Classes,
   IOUtils,
   StrUtils,
@@ -239,7 +240,7 @@ var
       if Accessor.TriggerEffect = DOM_TELEPORT then
       begin
         NewGadget := TGadgetModel.Create;
-        NewGadget.GS := 'default';
+        NewGadget.GS := SFDefaultStyle;
         NewGadget.Piece := 'button';
         NewGadget.Left := -100;
         NewGadget.Top := -100;

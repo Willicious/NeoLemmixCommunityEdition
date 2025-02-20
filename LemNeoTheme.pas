@@ -64,7 +64,7 @@ end;
 
 procedure TNeoTheme.Clear;
 begin
-  fLemmings := 'default';
+  fLemmings := SFDefaultStyle;
   SetLength(fColors, 0);
 end;
 
@@ -83,7 +83,7 @@ begin
     Parser.LoadFromFile('theme.nxtm');
 
     fLemmings := Parser.MainSection.LineString['lemmings'];
-    if fLemmings = '' then fLemmings := 'default';
+    if fLemmings = '' then fLemmings := SFDefaultStyle;
 
     Sec := Parser.MainSection.Section['colors'];
     if Sec = nil then

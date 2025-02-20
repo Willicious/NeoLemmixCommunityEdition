@@ -371,13 +371,13 @@ begin
 
   try
     if (fTheme = nil) or (GameParams.ForceDefaultLemmings) then
-      SrcFolder := 'default'
+      SrcFolder := SFDefaultStyle
     else
       SrcFolder := PieceManager.Dealias(fTheme.Lemmings, rkLemmings).Piece.GS;
 
-    if SrcFolder = '' then SrcFolder := 'default';
+    if SrcFolder = '' then SrcFolder := SFDefaultStyle;
     if not DirectoryExists(AppPath + SFStyles + SrcFolder + SFPiecesLemmings) then
-      SrcFolder := 'default';
+      SrcFolder := SFDefaultStyle;
 
     SetCurrentDir(AppPath + SFStyles + SrcFolder + SFPiecesLemmings);
 

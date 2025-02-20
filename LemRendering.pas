@@ -3187,7 +3187,7 @@ var
   begin
     if IsFallback then
     begin
-      Collection := 'default';
+      Collection := SFDefaultStyle;
       Piece := 'fallback';
     end else begin
       SplitPos := pos(':', RenderInfoRec.Level.Info.Background);
@@ -3358,7 +3358,7 @@ begin
     on E: Exception do
     begin
       fAni.ClearData;
-      fTheme.Lemmings := 'default';
+      fTheme.Lemmings := SFDefaultStyle;
 
       fAni.ReadData;
 
