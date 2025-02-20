@@ -1512,9 +1512,11 @@ procedure TFLevelSelect.SetAdvancedOptionsGroup(G: TNeoLevelGroup);
 begin
   btnSaveImage.Caption := 'Save Level Images';
   btnReplayManager.Enabled := True;
+  btnPlaybackMode.Enabled := True;
   btnCleanseLevels.Enabled := True;
   btnCleanseOne.Enabled := False;
   btnResetTalismans.Enabled := False;
+  btnEditLevel.Enabled := False;
   btnOk.Enabled := G.LevelCount > 0; // N.B: Levels.Count is not recursive; LevelCount is
 end;
 
@@ -1522,9 +1524,11 @@ procedure TFLevelSelect.SetAdvancedOptionsLevel(L: TNeoLevelEntry);
 begin
   btnSaveImage.Caption := 'Save Image';
   btnReplayManager.Enabled := TNeoLevelEntry(tvLevelSelect.Selected.Data).Group.ParentBasePack <> GameParams.BaseLevelPack;
+  btnPlaybackMode.Enabled := btnReplayManager.Enabled;
   btnCleanseLevels.Enabled := btnReplayManager.Enabled;
   btnCleanseOne.Enabled := True;
   btnResetTalismans.Enabled := L.Talismans.Count <> 0;
+  btnEditLevel.Enabled := True;
   btnOK.Enabled := True;
 end;
 
