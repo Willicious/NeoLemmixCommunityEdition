@@ -8,14 +8,15 @@ uses
   LemLevel, LemTalisman, LemNeoLevelPack,
   LemTypes, LemStrings, LemCore,
   UMisc, Types, Math,
-  GR32, GR32_Image, GR32_Resamplers, PngInterface;
+  GR32, GR32_Image, GR32_Resamplers, PngInterface,
+  SharedGlobals;
 
 const
-  AS_PANEL_BASE_WIDTH = 408;
-  AS_PANEL_BASE_HEIGHT = 312;
-  MIN_PREVIEW_BASE_HEIGHT = 32;
-  PADDING_BASE_SIZE = 8;
-  NORMAL_BASE_SPACING = 40;
+  AS_PANEL_BASE_WIDTH = 600;
+  AS_PANEL_BASE_HEIGHT = 369;
+  MIN_PREVIEW_BASE_HEIGHT = 92;
+  PADDING_BASE_SIZE = 6;
+  NORMAL_BASE_SPACING = 42;
   COLUMN_BASE_SPACING = 92;
   COLUMN_LONGER_SPACING = 112;
   COLUMN_SMALLER_SPACING = 72;
@@ -617,8 +618,9 @@ begin
     AddClose;
     ApplySize;
 
-    Left := TForm(Owner).Left + ((TForm(Owner).Width - Width) div 2);
+    Left := (Screen.Width - Width) div 2;
     Top := TForm(Owner).Top + ((TForm(Owner).Height - Height) div 2);
+
     ShowModal;
   end;
 end;
@@ -626,12 +628,14 @@ end;
 procedure TLevelInfoPanel.PrepareEmbed(aForceRedraw: Boolean);
 var
   SIVal: Integer;
+  SIHintText: String;
+
   Skill: TSkillPanelButton;
+  SkillString, SkillName, SkillHintText: String;
 
   TalCount: Integer;
   BaseCount: Integer;
   PickupCount: Integer;
-  SkillString: String;
 
   IsTalismanLimit: Boolean;
 begin
@@ -639,59 +643,64 @@ begin
 
   if fTalisman <> nil then
     if (GameParams.CurrentLevel.TalismanStatus[fTalisman.ID]) then
-      Add(ICON_TALISMAN[fTalisman.Color], fTalisman.Title, '', True, pmNextRowPadLeft)
+      Add(ICON_TALISMAN[fTalisman.Color], fTalisman.Title, 'Talisman completed - Well done!', True, pmNextRowPadLeft)
     else
-      Add(ICON_TALISMAN[fTalisman.Color] + ICON_TALISMAN_UNOBTAINED_OFFSET, fTalisman.Title, '', True, pmNextRowPadLeft);
+      Add(ICON_TALISMAN[fTalisman.Color] + ICON_TALISMAN_UNOBTAINED_OFFSET, fTalisman.Title, 'Talisman not yet completed', True, pmNextRowPadLeft);
 
-  Add(ICON_NORMAL_LEMMING, fLevel.Info.LemmingsCount - fLevel.Info.ZombieCount - fLevel.Info.NeutralCount, '', True, pmNextColumnSame);
+  Add(ICON_NORMAL_LEMMING, fLevel.Info.LemmingsCount - fLevel.Info.ZombieCount - fLevel.Info.NeutralCount
+  , 'Number of Lemmings', True, pmNextColumnSame);
 
   if fLevel.Info.NeutralCount > 0 then
-    Add(ICON_NEUTRAL_LEMMING, fLevel.Info.NeutralCount, '', True, pmNextColumnSame);
+    Add(ICON_NEUTRAL_LEMMING, fLevel.Info.NeutralCount, 'Number of Neutrals', True, pmNextColumnSame);
 
-  if fLevel.Info.ZombieCount > 0 then
-    Add(ICON_ZOMBIE_LEMMING, fLevel.Info.ZombieCount, '', True, pmNextColumnSame);
+  if (fLevel.Info.ZombieCount > 0) then
+    Add(ICON_ZOMBIE_LEMMING, fLevel.Info.ZombieCount, 'Number of Zombies', True, pmNextColumnSame);
 
   Reposition(pmNextRowLeft);
 
   if (fTalisman = nil) or (fTalisman.RescueCount <= fLevel.Info.RescueCount) then
-    Add(ICON_SAVE_REQUIREMENT, fLevel.Info.RescueCount, '', True, pmNextColumnSame)
+    Add(ICON_SAVE_REQUIREMENT, fLevel.Info.RescueCount, 'Save requirement to complete the level', True, pmNextColumnSame)
   else
-    Add(ICON_SAVE_REQUIREMENT, fTalisman.RescueCount, '', True, pmNextColumnSame, COLOR_TALISMAN_RESTRICTION);
+    Add(ICON_SAVE_REQUIREMENT, fTalisman.RescueCount, 'Save requirement to complete the Talisman', True, pmNextColumnSame, COLOR_TALISMAN_RESTRICTION);
 
   if GameParams.SpawnInterval then
-    SIVal := Level.Info.SpawnInterval
-  else
+  begin
+    SIVal := Level.Info.SpawnInterval;
+    SIHintText := 'Spawn Interval';
+  end else begin
     SIVal := SpawnIntervalToReleaseRate(Level.Info.SpawnInterval);
+    SIHintText := 'Release Rate';
+  end;
 
   if fLevel.Info.SpawnIntervalLocked or (fLevel.Info.SpawnInterval = 4) then
-    Add(ICON_RELEASE_RATE_LOCKED, SIVal, '', True, pmNextColumnSame)
+    Add(ICON_RELEASE_RATE_LOCKED, SIVal, 'Locked ' + SIHintText, True, pmNextColumnSame)
   else
-    Add(ICON_RELEASE_RATE, SIVal, '', True, pmNextColumnSame);
+    Add(ICON_RELEASE_RATE, SIVal, SIHintText, True, pmNextColumnSame);
 
   if (Talisman <> nil) and
      (Talisman.TimeLimit > 0) and
      ((not fLevel.Info.HasTimeLimit) or (Talisman.TimeLimit < fLevel.Info.TimeLimit * 17)) then
     Add(ICON_TIME_LIMIT,
       IntToStr(Talisman.TimeLimit div (60 * 17)) + ':' + LeadZeroStr((Talisman.TimeLimit div 17) mod 60, 2) + '.' +
-        LeadZeroStr(Round((Talisman.TimeLimit mod 17) / 17 * 100), 2), '',
+        LeadZeroStr(Round((Talisman.TimeLimit mod 17) / 17 * 100), 2), 'Time Limit to complete Talisman',
         True, pmNextColumnSame, COLOR_TALISMAN_RESTRICTION)
   else if fLevel.Info.HasTimeLimit then
-    Add(ICON_TIME_LIMIT, IntToStr(fLevel.Info.TimeLimit div 60) + ':' + LeadZeroStr(fLevel.Info.TimeLimit mod 60, 2), '', True, pmNextColumnSame);
+    Add(ICON_TIME_LIMIT, IntToStr(fLevel.Info.TimeLimit div 60) + ':' + LeadZeroStr(fLevel.Info.TimeLimit mod 60, 2), 'Time Limit', True, pmNextColumnSame);
 
   if (Talisman <> nil) then
   begin
     if (Talisman.TotalSkillLimit >= 0) then
-      Add(ICON_MAX_SKILLS, IntToStr(Talisman.TotalSkillLimit), '', True, pmNextColumnShortSame, COLOR_TALISMAN_RESTRICTION);
+      Add(ICON_MAX_SKILLS, IntToStr(Talisman.TotalSkillLimit), 'Maximum number of skills to oomplete Talisman', True, pmNextColumnShortSame, COLOR_TALISMAN_RESTRICTION);
     if (Talisman.SkillTypeLimit >= 0) then
-      Add(ICON_MAX_SKILL_TYPES, IntToStr(Talisman.SkillTypeLimit), '', True, pmNextColumnSame, COLOR_TALISMAN_RESTRICTION);
+      Add(ICON_MAX_SKILL_TYPES, IntToStr(Talisman.SkillTypeLimit), 'Maximum number of skill types to complete Talisman', True, pmNextColumnSame, COLOR_TALISMAN_RESTRICTION);
   end;
-
 
   Reposition(pmNextRowPadLeft);
 
   for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     if Skill in fLevel.Info.Skillset then
     begin
+      SkillName := UpperCase(Copy(SKILL_NAMES[Skill], 1, 1)) + Copy(SKILL_NAMES[Skill], 2, MaxInt);
       BaseCount := Min(fLevel.Info.SkillCount[Skill], 100);
       PickupCount := fLevel.GetPickupSkillCount(Skill);
 
@@ -712,17 +721,21 @@ begin
         end;
 
         if IsTalismanLimit then
-          Add(ICON_SKILLS[Skill], SkillString, '', False, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+        begin
+          SkillHintText := SkillName + ' limit to complete talisman: ' + SkillString;
+          Add(ICON_SKILLS[Skill], SkillString, SkillHintText, False, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+        end;
       end;
 
       if not IsTalismanLimit then
       begin
         SkillString := IntToStr(BaseCount);
+        SkillHintText := SkillName;
 
         if (PickupCount > 0) then
           SkillString := SkillString + ' (' + IntToStr(PickupCount) + ')';
 
-        Add(ICON_SKILLS[Skill], SkillString, '', False, pmMoveHorz);
+        Add(ICON_SKILLS[Skill], SkillString, SkillHintText, False, pmMoveHorz);
       end;
     end;
 
@@ -737,17 +750,27 @@ end;
 procedure TLevelInfoPanel.PrepareEmbedRecords(aKind: TRecordDisplay);
 var
   Records: TLevelRecords;
-
   Skill: TSkillPanelButton;
+  Icon: Integer;
+  SkillName: String;
 
   function PrepareHintName(aInput: String): String;
   begin
     if aKind = rdUser then
       Result := ''
     else if aInput = '' then
-      Result := GameParams.Username
+      Result := ': ' + GameParams.Username
     else
       Result := aInput;
+  end;
+
+  procedure AddLevelPreview;
+  begin
+    if fCurrentPos.X = fAdjustedSizing.PaddingSize then
+      AddDummy(False, pmMoveHorz);
+
+    AddPreview(False);
+    ApplySize(fAdjustedSizing.AsPanelWidth, fAdjustedSizing.AsPanelHeight);
   end;
 begin
   Wipe;
@@ -755,36 +778,36 @@ begin
   if aKind = rdUser then
   begin
     Records := GameParams.CurrentLevel.UserRecords;
-    Add(ICON_RECORDS, 'Your records', '', True, pmNextRowLeft);
+    Add(ICON_RECORDS, GameParams.Username + '''s Records', '', True, pmNextRowLeft);
   end else begin
     Records := GameParams.CurrentLevel.WorldRecords;
-    Add(ICON_WORLD_RECORDS, 'Records', '', True, pmNextRowLeft);
+    Add(ICON_WORLD_RECORDS, 'World Records', '', True, pmNextRowLeft);
   end;
 
   if Records.LemmingsRescued.Value < 0 then
     Add(ICON_SAVE_REQUIREMENT, '~', '', True, pmNextColumnLongSame)
   else
     Add(ICON_SAVE_REQUIREMENT, IntToStr(Records.LemmingsRescued.Value) + ' / ' + IntToStr(fLevel.Info.LemmingsCount - fLevel.Info.ZombieCount),
-        PrepareHintName(Records.LemmingsRescued.User), True, pmNextColumnLongSame, COLOR_RECORDS);
+        'Highest save count record' + PrepareHintName(Records.LemmingsRescued.User), True, pmNextColumnLongSame, COLOR_RECORDS);
 
   if Records.TimeTaken.Value < 0 then
     Add(ICON_TIMER, '~', '', True, pmNextColumnSame)
   else
     Add(ICON_TIMER,
       IntToStr(Records.TimeTaken.Value div (60 * 17)) + ':' + LeadZeroStr((Records.TimeTaken.Value div 17) mod 60, 2) + '.' +
-        LeadZeroStr(Round((Records.TimeTaken.Value mod 17) / 17 * 100), 2),
-      PrepareHintName(Records.TimeTaken.User), True, pmNextColumnSame, COLOR_RECORDS);
+        LeadZeroStr(Round((Records.TimeTaken.Value mod 17) / 17 * 100), 2), 'Fastest time record' +
+          PrepareHintName(Records.TimeTaken.User), True, pmNextColumnSame, COLOR_RECORDS);
 
   if Records.TotalSkills.Value < 0 then
     Add(ICON_MAX_SKILLS, '~', '', True, pmNextColumnShortSame)
   else
-    Add(ICON_MAX_SKILLS, Records.TotalSkills.Value,
+    Add(ICON_MAX_SKILLS, Records.TotalSkills.Value, 'Fewest total skills record' +
         PrepareHintName(Records.TotalSkills.User), True, pmNextColumnShortSame, COLOR_RECORDS);
 
   if Records.SkillTypes.Value < 0 then
     Add(ICON_MAX_SKILL_TYPES, '~', '', True, pmNextColumnSame)
   else
-    Add(ICON_MAX_SKILL_TYPES, Records.SkillTypes.Value,
+    Add(ICON_MAX_SKILL_TYPES, Records.SkillTypes.Value, 'Fewest skill types record' +
         PrepareHintName(Records.SkillTypes.User), True, pmNextColumnShortSame, COLOR_RECORDS);
 
 
@@ -792,18 +815,17 @@ begin
 
   for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     if Skill in fLevel.Info.Skillset then
+    begin
+      SkillName := UpperCase(Copy(SKILL_NAMES[Skill], 1, 1)) + Copy(SKILL_NAMES[Skill], 2, MaxInt);
+
       if Records.SkillCount[Skill].Value < 0 then
         Add(ICON_SKILLS[Skill], '~', '', False, pmMoveHorz)
       else
-        Add(ICON_SKILLS[Skill], Records.SkillCount[Skill].Value,
+        Add(ICON_SKILLS[Skill], Records.SkillCount[Skill].Value, 'Fewest '+ SkillName + 's record' +
             PrepareHintName(Records.SkillCount[Skill].User), False, pmMoveHorz, COLOR_RECORDS);
+    end;
 
-  if fCurrentPos.X = fAdjustedSizing.PaddingSize then
-    AddDummy(False, pmMoveHorz);
-
-  AddPreview(False);
-
-  ApplySize(fAdjustedSizing.AsPanelWidth, fAdjustedSizing.AsPanelHeight);
+  AddLevelPreview;
 end;
 
 end.
