@@ -121,6 +121,8 @@ type
     property Recolorer: TRecolorImage read GetRecolorer;
   protected
   public
+    BrickPixelColors: array[0..11] of TColor32; // gradient steps
+
     constructor Create;
     destructor Destroy; override;
 
@@ -135,6 +137,7 @@ type
     function FindMetaTerrain(T: TTerrain): TMetaTerrain;
 
     procedure PrepareGameRendering(aLevel: TLevel; NoOutput: Boolean = False);
+    procedure InitializeBrickColors(aBrickPixelColor: TColor32);
 
     // Composite pieces (terrain grouping)
     procedure PrepareCompositePieceBitmaps(aTerrains: TTerrains; aLowRes: TBitmap32; aHighRes: TBitmap32);
@@ -3328,25 +3331,35 @@ begin
   Gadgets.InitializeAnimations;
 end;
 
+procedure TRenderer.InitializeBrickColors(aBrickPixelColor: TColor32);
 var
-  LastErrorLemmingSprites: String;
+  i: Integer;
+begin
+  with TColor32Entry(aBrickPixelColor) do
+  for i := 0 to Length(BrickPixelColors) - 1 do
+  begin
+    TColor32Entry(BrickPixelColors[i]).A := A;
+    TColor32Entry(BrickPixelColors[i]).R := Min(Max(R + (i - 6) * 4, 0), 255);
+    TColor32Entry(BrickPixelColors[i]).B := Min(Max(B + (i - 6) * 4, 0), 255);
+    TColor32Entry(BrickPixelColors[i]).G := Min(Max(G + (i - 6) * 4, 0), 255);
+  end;
+end;
 
 procedure TRenderer.PrepareGameRendering(aLevel: TLevel; NoOutput: Boolean = False);
 begin
 
-  if GameParams.HighResolution <> fHelpersAreHighRes then
+  if (GameParams.HighResolution <> fHelpersAreHighRes) then
     LoadHelperImages;
 
   RenderInfoRec.Level := aLevel;
 
   fTheme.Load(aLevel.Info.GraphicSetName);
   PieceManager.SetTheme(fTheme);
-
   fAni.ClearData;
   fAni.Theme := fTheme;
 
   try
-    fAni.ReadData;
+    fAni.PrepareAnimations;
 
     if (aLevel.Info.ZombieCount > 0) and (not fAni.HasZombieColor) then
       raise Exception.Create('Specified lemming spriteset does not include zombie coloring.');
@@ -3357,16 +3370,14 @@ begin
   except
     on E: Exception do
     begin
+      fTheme.Load('orig_crystal'); // We need to actually choose a theme, not just set the default sprites
+      PieceManager.SetTheme(fTheme);
       fAni.ClearData;
-      fTheme.Lemmings := SFDefaultStyle;
+      fAni.Theme := fTheme;
 
-      fAni.ReadData;
+      fAni.PrepareAnimations;
 
-      if fTheme.Lemmings <> LastErrorLemmingSprites then
-      begin
-        LastErrorLemmingSprites := fTheme.Lemmings;
-        ShowMessage(E.Message + #13 + #13 + 'Falling back to default lemming sprites.');
-      end;
+      fTheme.SpriteFallbackMessage := E.Message + #13 + #13 + 'The default sprites will be loaded instead.';
     end;
   end;
 
@@ -3384,6 +3395,10 @@ begin
     fRenderInterface.UserHelper := hpi_None;
     fRenderInterface.DisableDrawing := NoOutput;
   end;
+
+  // Recolor bricks
+  if fTheme <> nil then
+    InitializeBrickColors(fTheme.Colors['MASK']);
 
   // Prepare any composite pieces
   PieceManager.RemoveCompositePieces;

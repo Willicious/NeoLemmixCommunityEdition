@@ -165,8 +165,22 @@ begin
 end;
 
 procedure TGamePreviewScreen.BeginPlay;
+var
+  CurLevel: TLevel;
+  CurTheme: TNeoTheme;
 begin
-  if (GameParams.Level.PreText.Count > 0) then
+  CurLevel := GameParams.Level;
+  CurTheme := GameParams.Renderer.Theme;
+
+  // See if we need to show the sprites fallback message
+  if (CurTheme.SpriteFallbackMessage <> '') then
+  begin
+    ShowMessage(CurTheme.SpriteFallbackMessage);
+
+    CurTheme.SpriteFallbackMessage := '';
+  end;
+
+  if (CurLevel.PreText.Count > 0) then
   begin
     GameParams.IsPreTextScreen := True;
     CloseScreen(gstText);

@@ -29,7 +29,8 @@ type
   TNeoTheme = class
     private
       fColors: array of TNeoThemeColor;
-      fLemmings: String;          // Which lemming graphics to use
+      fLemmings: String;              // Which lemming graphics to use
+      fSpriteFallbackMessage: String; // Message shown when falling back to default
       function GetColor(Name: String): TColor32;
       function FindColorIndex(Name: String): Integer;
     public
@@ -42,6 +43,7 @@ type
 
       property Lemmings: String read fLemmings write fLemmings;
       property Colors[Name: String]: TColor32 read GetColor;
+      property SpriteFallbackMessage: String read fSpriteFallbackMessage write fSpriteFallbackMessage;
   end;
 
 implementation
@@ -66,6 +68,7 @@ procedure TNeoTheme.Clear;
 begin
   fLemmings := SFDefaultStyle;
   SetLength(fColors, 0);
+  fSpriteFallbackMessage := '';
 end;
 
 procedure TNeoTheme.Load(aSet: String);

@@ -161,7 +161,7 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    procedure ReadData;
+    procedure PrepareAnimations;
     procedure ClearData;
 
     property Theme                 : TNeoTheme read fTheme write fTheme;
@@ -348,7 +348,7 @@ begin
   LoadMetaData(aColorDict, aShadeDict);
 end;
 
-procedure TBaseAnimationSet.ReadData;
+procedure TBaseAnimationSet.PrepareAnimations;
 var
   Fn: string;
   Bmp: TBitmap32;
