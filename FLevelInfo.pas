@@ -751,7 +751,6 @@ procedure TLevelInfoPanel.PrepareEmbedRecords(aKind: TRecordDisplay);
 var
   Records: TLevelRecords;
   Skill: TSkillPanelButton;
-  Icon: Integer;
   SkillName: String;
 
   function PrepareHintName(aInput: String): String;
