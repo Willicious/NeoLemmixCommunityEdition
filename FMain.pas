@@ -140,6 +140,7 @@ end;
 procedure TMainForm.RestoreDefaultSize;
 var
   WindowScale: Integer;
+  MaxWidth, MaxHeight: Integer;
 begin
   WindowScale := Min(Screen.Width div 320, Screen.Height div 180);
   WindowScale := Min(WindowScale, GameParams.ZoomLevel * ResMod);
@@ -152,7 +153,22 @@ begin
   else
     ClientWidth := Max(WindowScale * 320, 416 * ResMod);
 
-  ClientHeight := ClientWidth * 9 div 16;
+  ClientHeight := ClientWidth * 9 div 16; // 16:9 aspect ratio
+
+  //MaxWidth := Screen.Width - 280;
+  MaxHeight := Screen.Height - 280;
+
+//  if ClientWidth > MaxWidth then
+//  begin
+//    ClientWidth := MaxWidth;
+//    ClientHeight := ClientWidth * 9 div 16;
+//  end;
+
+  if ClientHeight > MaxHeight then
+  begin
+    ClientHeight := MaxHeight;
+    ClientWidth := (ClientHeight * 16 div 9) - 44;
+  end;
 end;
 
 procedure TMainForm.FormActivate(Sender: TObject);
