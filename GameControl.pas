@@ -120,6 +120,8 @@ type
   private
     fDisableSaveOptions: Boolean;
     fSaveCriticality: TGameParamsSaveCriticality;
+    fLastUserDataWriteTime: TDateTime;
+    fLastWriteTime: TDateTime;
 
     fHotkeys: TLemmixHotkeyManager;
     fTalismanPage: Integer;
@@ -159,6 +161,8 @@ type
 
     procedure LoadFromIniFile;
     procedure SaveToIniFile;
+
+    function IsFileModifiedExternally(aFile: String; aTime: TDateTime): Boolean;
 
     function GetCurrentGroupName: String;
 
@@ -219,6 +223,7 @@ type
     procedure ReloadCurrentLevel(NoOutput: Boolean = False); // re-prepares using the existing TLevel in memory
 
     procedure ElevateSaveCriticality(aCriticality: TGameParamsSaveCriticality);
+    property LastUserDataWriteTime: TDateTime read fLastUserDataWriteTime write fLastUserDataWriteTime;
 
     property CurrentLevel: TNeoLevelEntry read fCurrentLevel write fCurrentLevel;
 
@@ -316,10 +321,34 @@ const
 
 procedure TDosGameParams.Save(aCriticality: TGameParamsSaveCriticality);
 var
-  i: Integer;
-  Attempts: Integer;
-  Success: Boolean;
+  i, Attempts: Integer;
+  Success, ReloadSettings, ReloadUserData: Boolean;
 begin
+  ReloadSettings := False;
+  ReloadUserData := False;
+
+  if IsFileModifiedExternally('userdata.nxsv', fLastUserDataWriteTime) then
+  begin
+    ReloadUserData := True;
+    ReloadSettings := True; // Assume settings.ini is modified too
+  end
+  // Only check settings.ini separately if userdata.nxsv was NOT modified
+  else if IsFileModifiedExternally('settings.ini', fLastWriteTime) then
+  begin
+    ReloadSettings := True;
+  end;
+  if ReloadSettings or ReloadUserData then
+  begin
+    if MessageDlg('Settings have been modified either manually or by another open instance of NeoLemmix CE.' + #13#10 + #13#10 +
+                  'Click OK to load the latest settings, or Cancel to discard.' + #13#10 + #13#10 +
+                  'If unsure, just click OK.',
+                  mtWarning, [mbOK, mbCancel], 0) = mrOk then
+    begin
+      if ReloadSettings then Load;
+      if ReloadUserData then BaseLevelPack.LoadUserData;
+    end;
+  end;
+
   ElevateSaveCriticality(aCriticality);
 
   if TestModeLevel <> nil then Exit;
@@ -412,97 +441,100 @@ var
 begin
   SL := TStringList.Create;
   SL2 := TStringList.Create;
+  try
+    ForceDirectories(AppPath + SFSaveData);
+    if FileExists(AppPath + SFSaveData + 'settings.ini') then
+      SL2.LoadFromFile(AppPath + SFSaveData + 'settings.ini')
+    else if FileExists(AppPath + 'NeoLemmix147Settings.ini') then
+      SL2.LoadFromFile(AppPath + 'NeoLemmix147Settings.ini');
 
-  ForceDirectories(AppPath + SFSaveData);
-  if FileExists(AppPath + SFSaveData + 'settings.ini') then
-    SL2.LoadFromFile(AppPath + SFSaveData + 'settings.ini')
-  else if FileExists(AppPath + 'NeoLemmix147Settings.ini') then
-    SL2.LoadFromFile(AppPath + 'NeoLemmix147Settings.ini');
+    SL.Add('LastVersion=' + IntToStr(CurrentVersionID));
+    SL.Add('UserName=' + UserName);
 
-  SL.Add('LastVersion=' + IntToStr(CurrentVersionID));
-  SL.Add('UserName=' + UserName);
+    SL.Add('');
+    SL.Add('# Interface Options');
+    SaveBoolean('AutoSaveReplay', AutoSaveReplay);
+    SL.Add('AutoSaveReplayPattern=' + AutoSaveReplayPattern);
+    SL.Add('IngameSaveReplayPattern=' + IngameSaveReplayPattern);
+    SL.Add('PostviewSaveReplayPattern=' + PostviewSaveReplayPattern);
+    SaveBoolean('ShowLevelSelectOptions', ShowLevelSelectOptions);
 
-  SL.Add('');
-  SL.Add('# Interface Options');
-  SaveBoolean('AutoSaveReplay', AutoSaveReplay);
-  SL.Add('AutoSaveReplayPattern=' + AutoSaveReplayPattern);
-  SL.Add('IngameSaveReplayPattern=' + IngameSaveReplayPattern);
-  SL.Add('PostviewSaveReplayPattern=' + PostviewSaveReplayPattern);
-  SaveBoolean('ShowLevelSelectOptions', ShowLevelSelectOptions);
+    if (ExitToPostview = etpAlways) then
+      SaveString('ExitToPostview', 'Always')
+    else if (ExitToPostview = etpIfPassed) then
+      SaveString('ExitToPostview', 'IfLevelPassed')
+    else if (ExitToPostview = etpNever) then
+      SaveString('ExitToPostview', 'Never');
 
-  if (ExitToPostview = etpAlways) then
-    SaveString('ExitToPostview', 'Always')
-  else if (ExitToPostview = etpIfPassed) then
-    SaveString('ExitToPostview', 'IfLevelPassed')
-  else if (ExitToPostview = etpNever) then
-    SaveString('ExitToPostview', 'Never');
+    SaveBoolean('ReplayAfterBackskip', ReplayAfterBackskip);
+    SaveBoolean('ReplayAfterRestart', ReplayAfterRestart);
+    SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
+    SaveBoolean('NoBackgrounds', NoBackgrounds);
+    SaveBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
+    SaveBoolean('HideShadows', HideShadows);
+    SaveBoolean('HideHelpers', HideHelpers);
+    SaveBoolean('CompactSkillPanel', CompactSkillPanel);
+    SaveBoolean('HighQualityMinimap', MinimapHighQuality);
+    SaveBoolean('FadeMenuScreens', FadeMenuScreens);
+    SaveBoolean('EdgeScrolling', EdgeScroll);
+    SaveBoolean('UseSpawnInterval', SpawnInterval);
 
-  SaveBoolean('ReplayAfterBackskip', ReplayAfterBackskip);
-  SaveBoolean('ReplayAfterRestart', ReplayAfterRestart);
-  SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
-  SaveBoolean('NoBackgrounds', NoBackgrounds);
-  SaveBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
-  SaveBoolean('HideShadows', HideShadows);
-  SaveBoolean('HideHelpers', HideHelpers);
-  SaveBoolean('CompactSkillPanel', CompactSkillPanel);
-  SaveBoolean('HighQualityMinimap', MinimapHighQuality);
-  SaveBoolean('FadeMenuScreens', FadeMenuScreens);
-  SaveBoolean('EdgeScrolling', EdgeScroll);
-  SaveBoolean('UseSpawnInterval', SpawnInterval);
+    SL.Add('SkillQFrames=' + IntToStr(SkillQFrames));
+    SL.Add('ZoomLevel=' + IntToStr(ZoomLevel));
+    SL.Add('PanelZoomLevel=' + IntToStr(PanelZoomLevel));
+    SL.Add('CursorResize=' + FloatToStr(CursorResize));
+    SaveBoolean('IncreaseZoom', IncreaseZoom);
+    SaveBoolean('FullScreen', FullScreen);
 
-  SL.Add('SkillQFrames=' + IntToStr(SkillQFrames));
-  SL.Add('ZoomLevel=' + IntToStr(ZoomLevel));
-  SL.Add('PanelZoomLevel=' + IntToStr(PanelZoomLevel));
-  SL.Add('CursorResize=' + FloatToStr(CursorResize));
-  SaveBoolean('IncreaseZoom', IncreaseZoom);
-  SaveBoolean('FullScreen', FullScreen);
+    if not FullScreen then
+    begin
+      SL.Add('WindowLeft=' + IntToStr(WindowLeft));
+      SL.Add('WindowTop=' + IntToStr(WindowTop));
+      SL.Add('WindowWidth=' + IntToStr(WindowWidth));
+      SL.Add('WindowHeight=' + IntToStr(WindowHeight));
+    end;
 
-  if not FullScreen then
-  begin
-    SL.Add('WindowLeft=' + IntToStr(WindowLeft));
-    SL.Add('WindowTop=' + IntToStr(WindowTop));
-    SL.Add('WindowWidth=' + IntToStr(WindowWidth));
-    SL.Add('WindowHeight=' + IntToStr(WindowHeight));
+    SaveBoolean('HighResolution', HighResolution);
+    SaveBoolean('LinearResampleMenu', LinearResampleMenu);
+    SaveBoolean('LinearResampleGame', LinearResampleGame);
+
+    LevelSavePath := CurrentLevel.Path;
+    if Pos(AppPath + SFLevels, LevelSavePath) = 1 then
+      LevelSavePath := RightStr(LevelSavePath, Length(LevelSavePath) - Length(AppPath + SFLevels));
+    SL.Add('LastActiveLevel=' + LevelSavePath);
+
+    SL.Add('');
+    SL.Add('# Sound Options');
+    SaveBoolean('MusicEnabled', not SoundManager.MuteMusic);
+    SaveBoolean('SoundEnabled', not SoundManager.MuteSound);
+    SL.Add('MusicVolume=' + IntToStr(SoundManager.MusicVolume));
+    SL.Add('SoundVolume=' + IntToStr(SoundManager.SoundVolume));
+    SaveBoolean('DisableTestplayMusic', DisableMusicInTestplay);
+    SaveBoolean('PostviewJingles', PostviewJingles);
+
+    SL.Add('');
+    SL.Add('# Online Options');
+    SaveBoolean('EnableOnline', EnableOnline);
+    SaveBoolean('UpdateCheck', CheckUpdates);
+    SaveBoolean('LoadNextUnsolvedLevel', LoadNextUnsolvedLevel);
+
+    SL.Add('');
+    SL.Add('# Technical Options');
+    SaveBoolean('FileCaching', FileCaching);
+
+    if UnderWine then
+    begin
+      SaveBoolean('DisableWineWarnings', DisableWineWarnings);
+    end;
+
+    AddUnknowns;
+
+    SL.SaveToFile(AppPath + SFSaveData + 'settings.ini');
+    fLastWriteTime := TFile.GetLastWriteTime(AppPath + SFSaveData + 'settings.ini');
+  finally
+    SL.Free;
+    SL2.Free;
   end;
-
-  SaveBoolean('HighResolution', HighResolution);
-  SaveBoolean('LinearResampleMenu', LinearResampleMenu);
-  SaveBoolean('LinearResampleGame', LinearResampleGame);
-
-  LevelSavePath := CurrentLevel.Path;
-  if Pos(AppPath + SFLevels, LevelSavePath) = 1 then
-    LevelSavePath := RightStr(LevelSavePath, Length(LevelSavePath) - Length(AppPath + SFLevels));
-  SL.Add('LastActiveLevel=' + LevelSavePath);
-
-  SL.Add('');
-  SL.Add('# Sound Options');
-  SaveBoolean('MusicEnabled', not SoundManager.MuteMusic);
-  SaveBoolean('SoundEnabled', not SoundManager.MuteSound);
-  SL.Add('MusicVolume=' + IntToStr(SoundManager.MusicVolume));
-  SL.Add('SoundVolume=' + IntToStr(SoundManager.SoundVolume));
-  SaveBoolean('DisableTestplayMusic', DisableMusicInTestplay);
-  SaveBoolean('PostviewJingles', PostviewJingles);
-
-  SL.Add('');
-  SL.Add('# Online Options');
-  SaveBoolean('EnableOnline', EnableOnline);
-  SaveBoolean('UpdateCheck', CheckUpdates);
-  SaveBoolean('LoadNextUnsolvedLevel', LoadNextUnsolvedLevel);
-
-  SL.Add('');
-  SL.Add('# Technical Options');
-  SaveBoolean('FileCaching', FileCaching);
-
-  if UnderWine then
-  begin
-    SaveBoolean('DisableWineWarnings', DisableWineWarnings);
-  end;
-
-  AddUnknowns;
-
-  SL.SaveToFile(AppPath + SFSaveData + 'settings.ini');
-
-  SL.Free;
 end;
 
 procedure TDosGameParams.LoadFromIniFile;
@@ -938,6 +970,23 @@ end;
 function TDosGameParams.GetOptionFlag(aFlag: TMiscOption): Boolean;
 begin
   Result := aFlag in MiscOptions;
+end;
+
+function TDosGameParams.IsFileModifiedExternally(aFile: String; aTime: TDateTime): Boolean;
+var
+  CurrentModifiedTime, DefaultTime: TDateTime;
+begin
+  Result := False;
+  DefaultTime := EncodeDate(1900, 1, 1); // Ensure a valid date
+
+  if aTime < DefaultTime then
+    Exit;
+
+  if FileExists(AppPath + SFSaveData + aFile) then
+  begin
+    CurrentModifiedTime := TFile.GetLastWriteTime(AppPath + SFSaveData + aFile);
+    Result := CurrentModifiedTime > aTime;
+  end;
 end;
 
 procedure TDosGameParams.SetOptionFlag(aFlag: TMiscOption; aValue: Boolean);
