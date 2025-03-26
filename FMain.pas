@@ -154,19 +154,12 @@ begin
 
   ClientHeight := ClientWidth * 9 div 16; // 16:9 aspect ratio
 
-  //MaxWidth := Screen.Width - 280;
   MaxHeight := Screen.Height - 280;
-
-//  if ClientWidth > MaxWidth then
-//  begin
-//    ClientWidth := MaxWidth;
-//    ClientHeight := ClientWidth * 9 div 16;
-//  end;
 
   if ClientHeight > MaxHeight then
   begin
     ClientHeight := MaxHeight;
-    ClientWidth := (ClientHeight * 16 div 9) - 44;
+    ClientWidth := (ClientHeight * 16 div 9);
   end;
 end;
 
