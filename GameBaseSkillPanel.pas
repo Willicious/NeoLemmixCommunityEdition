@@ -1614,7 +1614,7 @@ begin
           DrawButtonSelector(spbDirRight, True);
         end;
       end;
-    spbLoadReplay: fGameWindow.LoadReplay;
+    spbLoadReplay: fGameWindow.HandleLoadReplay;
     spbNone: {nothing};
   else // usual skill buttons
     Game.SetSelectedSkill(i, True, GameParams.Hotkeys.CheckForKey(lka_Highlight));

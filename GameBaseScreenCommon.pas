@@ -29,13 +29,14 @@ type
     fCurrentScreen       : TGameScreenType;
 
     procedure CNKeyDown(var Message: TWMKeyDown); message CN_KEYDOWN;
+
   protected
     procedure CloseScreen(aNextScreen: TGameScreenType); virtual;
     property ScreenIsClosing: Boolean read fScreenIsClosing;
     property CloseDelay: Integer read fCloseDelay write fCloseDelay;
 
-    function LoadReplay: Boolean;
   public
+    function LoadReplay: Boolean;
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
     procedure ShowScreen; override;
@@ -223,6 +224,7 @@ var
   end;
 begin
   s := '';
+  GlobalGame.ReplayManager.ReplayLoadSuccess := False;
 
   if GameParams.OpenedViaReplay //or GameParams.PlaybackModeActive // Bookmark
   then
@@ -260,9 +262,12 @@ begin
   if s <> '' then
   begin
     GlobalGame.ReplayManager.LoadFromFile(s);
+	
     if GlobalGame.ReplayManager.LevelID <> GameParams.Level.Info.LevelID then
       ShowMessage('Warning: This replay appears to be from a different level. NeoLemmix' + #13 +
                   'will attempt to play the replay anyway.');
+	
+	GlobalGame.ReplayManager.ReplayLoadSuccess := True;
   end;
 end;
 

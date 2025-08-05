@@ -27,7 +27,7 @@ type
     procedure SetForceUpdateOneFrame(aValue: Boolean);
     procedure SetHyperSpeedTarget(aValue: Integer);
 
-    procedure LoadReplay;
+    procedure HandleLoadReplay;
     procedure SaveReplay;
     procedure GotoSaveState(aTargetIteration: Integer; PauseAfterSkip: Integer = 0; aForceBeforeIteration: Integer = -1);
 

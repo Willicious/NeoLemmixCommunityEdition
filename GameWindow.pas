@@ -117,7 +117,6 @@ type
     procedure AddSaveState;
     procedure CheckAdjustSpawnInterval;
     procedure SetAdjustedGameCursorPoint(BitmapPoint: TPoint);
-    procedure StartReplay(const aFileName: string);
     procedure InitializeCursor;
     procedure CheckShifts(Shift: TShiftState);
     procedure CheckUserHelpers;
@@ -184,7 +183,7 @@ type
     destructor Destroy; override;
     procedure ApplyMouseTrap;
     procedure GotoSaveState(aTargetIteration: Integer; PauseAfterSkip: Integer = 0; aForceBeforeIteration: Integer = -1);
-    procedure LoadReplay;
+    procedure HandleLoadReplay;
     procedure SaveReplay;
     procedure RenderMinimap;
     procedure MainFormResized; override;
@@ -204,7 +203,6 @@ type
     property DisplayHeight: Integer read GetDisplayHeight; // to staisfy IGameWindow
     procedure SetForceUpdateOneFrame(aValue: Boolean);  // to satisfy IGameWindow
     procedure SetHyperSpeedTarget(aValue: Integer);     // to satisfy IGameWindow
-
   end;
 
 implementation
@@ -1355,7 +1353,7 @@ begin
                         end;
                       end;
       lka_SaveImage: SaveShot;
-      lka_LoadReplay: LoadReplay;
+      lka_LoadReplay: HandleLoadReplay;
       lka_Music: SoundManager.MuteMusic := not SoundManager.MuteMusic;
       lka_Restart: begin
                      if not GameParams.ReplayAfterRestart then
@@ -1692,7 +1690,6 @@ begin
   end;
 end;
 
-
 procedure TGameWindow.PrepareGameParams;
 {-------------------------------------------------------------------------------
   This method is called by the inherited ShowScreen
@@ -1863,21 +1860,6 @@ begin
     Result := False;
 end;
 
-procedure TGameWindow.StartReplay(const aFileName: string);
-begin
-  CanPlay := False;
-
-  Game.ReplayManager.LoadFromFile(aFilename);
-
-  if Game.ReplayManager.LevelID <> Game.Level.Info.LevelID then
-    ShowMessage('Warning: This replay appears to be from a different level. NeoLemmix' + #13 +
-                'will attempt to play the replay anyway.');
-
-  GameSpeed := gspNormal;
-  GotoSaveState(0, -1);
-  CanPlay := True;
-end;
-
 procedure TGameWindow.SuspendGameplay;
 var
   NewSuspendState: TSuspendState;
@@ -1925,70 +1907,15 @@ begin
   end;
 end;
 
-procedure TGameWindow.LoadReplay;
-var
-  Dlg : TOpenDialog;
-  s: string;
-
-  function GetDefaultLoadPath: String;
-    function GetGroupName: String;
-    var
-      G: TNeoLevelGroup;
-    begin
-      G := GameParams.CurrentLevel.Group;
-      if G.Parent = nil then
-        Result := ''
-      else begin
-        while not (G.IsBasePack or (G.Parent.Parent = nil)) do
-          G := G.Parent;
-        Result := MakeSafeForFilename(G.Name, False) + '\';
-      end;
-    end;
-  begin
-    Result := AppPath + SFReplays + GetGroupName;
-  end;
-
-  function GetInitialLoadPath: String;
-  begin
-    if (LastReplayDir <> '') then
-      Result := LastReplayDir
-    else
-      Result := GetDefaultLoadPath;
-  end;
+procedure TGameWindow.HandleLoadReplay;
 begin
-  // Todo: Replace this with use of GameBaseScreen's LoadReplay function
+  LoadReplay;
 
-  s := '';
-  Dlg := TOpenDialog.Create(Self);
-  SuspendGameplay;
-  try
-    Dlg.Title := 'Select a replay file to load (' + GameParams.CurrentGroupName + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1) + ', ' + Trim(GameParams.Level.Info.Title) + ')';
-    Dlg.Filter := SProgramName + ' Replay File (*.nxrp)|*.nxrp';
-    Dlg.FilterIndex := 1;
-    if LastReplayDir = '' then
-    begin
-      Dlg.InitialDir := AppPath + SFReplays + GetInitialLoadPath;
-      if not DirectoryExists(Dlg.InitialDir) then
-        Dlg.InitialDir := AppPath + SFReplays;
-      if not DirectoryExists(Dlg.InitialDir) then
-        Dlg.InitialDir := AppPath;
-    end else
-      Dlg.InitialDir := LastReplayDir;
-    Dlg.Options := [ofFileMustExist, ofHideReadOnly, ofEnableSizing];
-    if Dlg.execute then
-    begin
-      s:=Dlg.filename;
-      LastReplayDir := ExtractFilePath(s);
-    end;
-  finally
-    Dlg.Free;
-    ResumeGameplay;
-  end;
-
-  if s <> '' then
+  if GlobalGame.ReplayManager.ReplayLoadSuccess then
   begin
-    StartReplay(s);
-    exit;
+    GameSpeed := gspNormal;
+    GoToSaveState(0, -1);
+    CanPlay := True;
   end;
 end;
 

@@ -121,6 +121,7 @@ type
   TReplay = class
     private
       fIsModified: Boolean;
+      fReplayLoadSuccess: Boolean;
 
       fAssignments: TReplayItemList;        // nuking is also included here
       fSpawnIntervalChanges: TReplayItemList;
@@ -174,6 +175,7 @@ type
 
       property IsModified: Boolean read fIsModified;
       property IsThisUsersReplay: Boolean read GetIsThisUsersReplay;
+      property ReplayLoadSuccess: Boolean read fReplayLoadSuccess write fReplayLoadSuccess;
   end;
 
   function GetSkillReplayName(aButton: TSkillPanelButton): String; overload;
