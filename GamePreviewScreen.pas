@@ -504,8 +504,14 @@ begin
   end;
 
   // Clears the current-replay-in-memory when the level loads
-  if not GameParams.ReplayAfterRestart then
-    GlobalGame.ReplayManager.Clear(True);
+  if (not (//GameParams.PlaybackModeActive or  // Bookmark
+  GameParams.OpenedViaReplay))
+    or not GameParams.ReplayAfterRestart then
+      GlobalGame.ReplayManager.Clear(True);
+
+  if //GameParams.PlaybackModeActive or // Bookmark
+  GameParams.OpenedViaReplay then
+    GameParams.OpenedViaReplay := False; // Reset flag once replay has been successfully loaded
 end;
 
 end.

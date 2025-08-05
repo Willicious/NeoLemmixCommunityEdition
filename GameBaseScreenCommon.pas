@@ -223,30 +223,38 @@ var
   end;
 begin
   s := '';
+
+  if GameParams.OpenedViaReplay //or GameParams.PlaybackModeActive // Bookmark
+  then
+  begin
+    Result := True; // Return True if NLCE was opened by replay or if PlaybackMode is active
+    s := GameParams.LoadedReplayFile;
+  end else begin
   Dlg := TOpenDialog.Create(Self);
   try
-    Dlg.Title := 'Select a replay file to load (' + GameParams.CurrentGroupName + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1) + ', ' + Trim(GameParams.Level.Info.Title) + ')';
-    Dlg.Filter := SProgramName + ' Replay File (*.nxrp)|*.nxrp';
-    Dlg.FilterIndex := 1;
-    if LastReplayDir = '' then
-    begin
-      Dlg.InitialDir := AppPath + SFReplays + GetInitialLoadPath;
-      if not DirectoryExists(Dlg.InitialDir) then
-        Dlg.InitialDir := AppPath + SFReplays;
-      if not DirectoryExists(Dlg.InitialDir) then
-        Dlg.InitialDir := AppPath;
+	Dlg.Title := 'Select a replay file to load (' + GameParams.CurrentGroupName + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1) + ', ' + Trim(GameParams.Level.Info.Title) + ')';
+	Dlg.Filter := SProgramName + ' Replay File (*.nxrp)|*.nxrp';
+	Dlg.FilterIndex := 1;
+	if LastReplayDir = '' then
+	begin
+	  Dlg.InitialDir := AppPath + SFReplays + GetInitialLoadPath;
+	  if not DirectoryExists(Dlg.InitialDir) then
+		Dlg.InitialDir := AppPath + SFReplays;
+	  if not DirectoryExists(Dlg.InitialDir) then
+		Dlg.InitialDir := AppPath;
+	end else
+	  Dlg.InitialDir := LastReplayDir;
+	Dlg.Options := [ofFileMustExist, ofHideReadOnly, ofEnableSizing];
+	if Dlg.execute then
+	begin
+	  s:=Dlg.filename;
+	  LastReplayDir := ExtractFilePath(s);
+      Result := True; // Return True if the file was successfully selected
     end else
-      Dlg.InitialDir := LastReplayDir;
-    Dlg.Options := [ofFileMustExist, ofHideReadOnly, ofEnableSizing];
-    if Dlg.execute then
-    begin
-      s:=Dlg.filename;
-      LastReplayDir := ExtractFilePath(s);
-      Result := True;
-    end else
-      Result := False;
+      Result := False; // Return False if the user cancelled the dialog
   finally
-    Dlg.Free;
+	Dlg.Free;
+  end;
   end;
 
   if s <> '' then

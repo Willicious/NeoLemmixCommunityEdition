@@ -73,7 +73,8 @@ uses
   GameBaseMenuScreen in 'GameBaseMenuScreen.pas',
   GameMenuScreen in 'GameMenuScreen.pas',
   FLevelInfo in 'FLevelInfo.pas' {LevelInfoPanel},
-  FReplayManager in 'FReplayManager.pas' {FReplayManager};
+  FReplayManager in 'FReplayManager.pas' {FReplayManager},
+  FLevelListDialog in 'FLevelListDialog.pas' {FLevelListDialog};
 
 {$R *.res}
 
