@@ -287,9 +287,6 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <DCCReference Include="FLevelInfo.pas">
             <Form>LevelInfoPanel</Form>
         </DCCReference>
-        <DCCReference Include="FReplayRename.pas">
-            <Form>FReplayNaming</Form>
-        </DCCReference>
         <DCCReference Include="FReplayManager.pas">
             <Form>FReplayManager</Form>
             <FormType>dfm</FormType>
@@ -333,6 +330,12 @@ $(PreBuildEvent)]]></PreBuildEvent>
             </Platforms>
             <ModelSupport>False</ModelSupport>
             <Deployment Version="3">
+                <DeployFile LocalName="bin\NeoLemmixCE.exe" Configuration="Release" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>NeoLemmixCE.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="bin\NeoLemmix.exe" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="bin\NeoLemmixCE.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">

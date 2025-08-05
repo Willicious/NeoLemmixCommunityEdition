@@ -190,8 +190,7 @@ const // Icon indexes
 implementation
 
 uses
-  FReplayRename,
-  //FReplayManager, // Bookmark
+  FReplayManager,
   LemLevel;
 
 const
@@ -1675,57 +1674,24 @@ end;
 
 procedure TFLevelSelect.btnReplayManagerClick(Sender: TObject);
 var
-  OpenDlg: TOpenDialog;
-  F: TFReplayNaming;
+  ReplayManagerForm: TFReplayManager;
 begin
-  OpenDlg := TOpenDialog.Create(Self);
-  try
-    OpenDlg.Title := 'Select any file in the folder containing replays';
-    OpenDlg.InitialDir := AppPath + SFReplays + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name, False);
-    OpenDlg.Filter := SProgramName + ' Replay (*.nxrp)|*.nxrp';
-    OpenDlg.Options := [ofHideReadOnly, ofFileMustExist, ofEnableSizing];
-    if not OpenDlg.Execute then
-      Exit;
-    GameParams.ReplayCheckPath := ExtractFilePath(OpenDlg.FileName);
-  finally
-    OpenDlg.Free;
-  end;
+  ReplayManagerForm := TFReplayManager.Create(nil);
 
-  F := TFReplayNaming.Create(Self);
   try
-    if F.ShowModal = mrCancel then
-      Exit;
-  finally
-    F.Free;
-  end;
+    // Populate the form with the currently selected pack
+    ReplayManagerForm.CurrentlySelectedPack := GetCurrentlySelectedPack;
+    ReplayManagerForm.UpdatePackNameText;
 
-  WriteToParams;
-  ModalResult := mrRetry;
+    if ReplayManagerForm.ShowModal = mrOk then
+    begin
+      WriteToParams;
+      ModalResult := mrRetry;
+    end;
+  finally
+    ReplayManagerForm.Free;
+  end;
 end;
-
-// Bookmark - replace above procedure with the commented-out one below
-// Also remember to change the button caption back to "Replay Manager"
-
-//procedure TFLevelSelect.btnReplayManagerClick(Sender: TObject);
-//var
-//  ReplayManagerForm: TFReplayManager;
-//begin
-//  ReplayManagerForm := TFReplayManager.Create(nil);
-//
-//  try
-//    // Populate the form with the currently selected pack
-//    ReplayManagerForm.CurrentlySelectedPack := GetCurrentlySelectedPack;
-//    ReplayManagerForm.UpdatePackNameText;
-//
-//    if ReplayManagerForm.ShowModal = mrOk then
-//    begin
-//      WriteToParams;
-//      ModalResult := mrRetry;
-//    end;
-//  finally
-//    ReplayManagerForm.Free;
-//  end;
-//end;
 
 procedure TFLevelSelect.btnCleanseLevelsClick(Sender: TObject);
 var

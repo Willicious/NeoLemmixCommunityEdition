@@ -250,7 +250,7 @@ object FLevelSelect: TFLevelSelect
     Width = 134
     Height = 25
     Hint = 'Perform a replay check for every level in the selected pack'
-    Caption = 'Mass Replay Check'
+    Caption = 'Replay Manager'
     ParentShowHint = False
     ShowHint = True
     TabOrder = 7

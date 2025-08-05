@@ -1621,7 +1621,6 @@ begin
         SetRedraw(rdRedraw);
     end;
   end;
-
 end;
 
 procedure TGameWindow.Img_MouseUp(Sender: TObject; Button: TMouseButton;

@@ -78,7 +78,7 @@ implementation
 
 uses
   LemReplay,
-  FReplayRename,
+  FReplayManager,
   Forms,
   LemNeoLevelPack,
   CustomPopup;
@@ -246,20 +246,28 @@ var
       Result := Result + ' + ' + IntToStr(f) + ' frames';
   end;
 
-  procedure HandleReplayNaming(aEntry: TReplayCheckEntry);
+  procedure ManageReplays(aEntry: TReplayCheckEntry);
   var
-    NewName, BaseNewName: String;
-    ThisSetting: TReplayNamingSetting;
-    OutcomeText: String;
-    i: Integer;
+    NewName, UniqueTag, ResultTag, OutcomeText: String;
+    ThisSetting: TReplayManagerSetting;
+    NamingAttempts: Integer;
   const
+    MaxNamingAttempts = 1000;
+
     TAG_RESULT = '{RESULT}';
     TAG_FILENAME = '{FILENAME}';
-  begin
-    ThisSetting := ReplayNaming[aEntry.ReplayResult];
-    //GameParams.ReplayCheckPath
 
-    if (ThisSetting.Action = rnaNone) and (not ThisSetting.Refresh) then
+    ResultTags: array of String = ['__(Passed).nxrp',
+                                   '__(Talisman).nxrp',
+                                   '__(Failed).nxrp',
+                                   '__(Undetermined).nxrp',
+                                   '__(Error).nxrp',
+                                   '__(LevelNotFound).nxrp'
+                                  ];
+  begin
+    ThisSetting := ReplayManager[aEntry.ReplayResult];
+
+    if (ThisSetting.Action = rnaNone) and not (ThisSetting.UpdateVersion or ThisSetting.AppendResult) then
       Exit;
 
     if ThisSetting.Action = rnaDelete then
@@ -268,12 +276,7 @@ var
       Exit;
     end;
 
-    if (aEntry.ReplayResult <> CR_NOLEVELMATCH) and (aEntry.ReplayResult <> CR_ERROR) then
-    try
-      Game.EnsureCorrectReplayDetails;
-    except
-      // Silently accept failure.
-    end;
+    Game.EnsureCorrectReplayDetails;
 
     if ThisSetting.Action = rnaNone then
       NewName := aEntry.ReplayFile
@@ -283,17 +286,31 @@ var
     NewName := StringReplace(NewName, '/', '\', [rfReplaceAll]);
 
     case aEntry.ReplayResult of
-      CR_UNKNOWN, CR_ERROR: OutcomeText := 'Error';
-      CR_PASS: OutcomeText := 'Passed';
-      CR_PASS_TALISMAN: OutcomeText := 'Talisman';
-      CR_FAIL: OutcomeText := 'Failed';
-      CR_UNDETERMINED: OutcomeText := 'Undetermined';
-      CR_NOLEVELMATCH: OutcomeText := 'LevelNotFound';
+      CR_UNKNOWN, CR_ERROR: OutcomeText := '(Error)';
+      CR_PASS: OutcomeText := '(Passed)';
+      CR_PASS_TALISMAN: OutcomeText := '(Talisman)';
+      CR_FAIL: OutcomeText := '(Failed)';
+      CR_UNDETERMINED: OutcomeText := '(Undetermined)';
+      CR_NOLEVELMATCH: OutcomeText := '(LevelNotFound)';
       else raise Exception.Create('Invalid replay result');
     end;
 
     NewName := StringReplace(NewName, TAG_FILENAME, ChangeFileExt(ExtractFileName(aEntry.ReplayFile), ''), [rfReplaceAll]);
-    NewName := StringReplace(NewName, TAG_RESULT, OutcomeText, [rfReplaceAll]);
+
+    // Append replay result to the filename
+    if ThisSetting.AppendResult then
+    begin
+      // Check for existing result tag and delete it
+      for ResultTag in ResultTags do
+      begin
+        if EndsText(ResultTag, NewName) then
+          NewName := StringReplace(NewName, ResultTag, '.nxrp', []);
+      end;
+
+      // Add new result tag
+      NewName := ChangeFileExt(NewName, '__' + TAG_RESULT + '.nxrp');
+      NewName := StringReplace(NewName, TAG_RESULT, OutcomeText, [rfReplaceAll]);
+    end;
 
     if not TPath.IsPathRooted(NewName) then
       NewName := GameParams.ReplayCheckPath + NewName;
@@ -301,7 +318,7 @@ var
     ForceDirectories(ExtractFilePath(NewName));
     OutStream.Clear;
 
-    if ThisSetting.Refresh then
+    if ThisSetting.UpdateVersion then
     begin
       if aEntry.ReplayResult in [CR_PASS, CR_PASS_TALISMAN] then
         Game.ReplayManager.LevelVersion := GameParams.Level.Info.LevelVersion;
@@ -310,20 +327,22 @@ var
     end else
       OutStream.LoadFromFile(aEntry.ReplayFile);
 
-    if (NewName <> aEntry.ReplayFile) then
+    // Add a tag to ensure the filename is unique and prevent overwriting
+    NamingAttempts := 0;
+    while FileExists(NewName) do
     begin
-      BaseNewName := NewName;
-      i := 1;
-      while FileExists(NewName) do
-      begin
-        NewName := ChangeFileExt(BaseNewName, '') + '-' + LeadZeroStr(i, 4) + ExtractFileExt(BaseNewName);
-        Inc(i);
-      end;
+      Inc(NamingAttempts);
+
+      if NamingAttempts > MaxNamingAttempts then
+        raise Exception.Create('Unable to generate a unique filename after ' + MaxNamingAttempts.ToString + ' attempts');
+
+      UniqueTag := IntToHex(Random($1000), 3);
+      NewName := ChangeFileExt(NewName, '') + '_' + UniqueTag + '.nxrp';
     end;
 
     OutStream.SaveToFile(NewName);
 
-    if ThisSetting.Action = rnaMove then
+    if (ThisSetting.Action = rnaMove) or ((ThisSetting.Action = rnaNone) and ThisSetting.AppendResult) then
       DeleteFile(aEntry.ReplayFile);
   end;
 
@@ -445,7 +464,7 @@ begin
         OutputText;
       end;
 
-      HandleReplayNaming(fReplays[i]);
+      ManageReplays(fReplays[i]);
 
       Application.ProcessMessages;
       if not fProcessing then Break;
