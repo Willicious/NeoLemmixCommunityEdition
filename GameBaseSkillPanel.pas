@@ -1398,12 +1398,19 @@ end;
 
 procedure TBaseSkillPanel.SetInfoLemHatch(Pos: Integer);
 var
+  HatchLems: Integer;
   S: string;
 const
   LEN = 4;
 begin
-  CustomAssert(Game.LemmingsToSpawn - Game.SpawnedDead >= 0, 'Negative number of lemmings in hatch displayed');
-  S := IntToStr(Game.LemmingsToSpawn - Game.SpawnedDead);
+  HatchLems := Game.LemmingsToSpawn - Game.SpawnedDead;
+
+  Assert(HatchLems >= 0, 'Negative number of lemmings in hatch displayed');
+
+  if (HatchLems >= 999) then
+    S := ' 999'
+  else
+    S := IntToStr(HatchLems);
 
   if Length(S) < LEN then
     S := PadL(PadR(S, LEN - 1), LEN);
@@ -1421,7 +1428,11 @@ begin
   LemNum := Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead;
   CustomAssert(LemNum >= 0, 'Negative number of alive lemmings displayed');
 
-  S := IntToStr(LemNum);
+  if (LemNum >= 999) then
+    S := ' 999'
+  else
+    S := IntToStr(LemNum);
+
   if Length(S) < LEN then
     S := PadL(PadR(S, LEN - 1), LEN);
 
@@ -1430,14 +1441,27 @@ end;
 
 procedure TBaseSkillPanel.SetInfoLemIn(Pos: Integer);
 var
+  MinusSaveCount: Integer;
   S: string;
 const
   LEN = 4;
 begin
-  S := IntToStr(Game.LemmingsSaved - Level.Info.RescueCount);
+  MinusSaveCount := (Game.LemmingsSaved - Level.Info.RescueCount);
 
-  if Length(S) < LEN then
-    S := PadL(PadR(S, LEN - 1), LEN);
+  S := IntToStr(MinusSaveCount);
+
+  if (MinusSaveCount <= -999) then
+    S := '-999'
+  else if (MinusSaveCount >= 999) then // Should never happen
+    S := ' 999'
+
+//  if (Game.LemmingsSaved <= -99) then // Bookmark
+//    S := ' -99'
+//  else if (Game.LemmingsSaved >= 999) then
+//    S := ' 999'
+  else if Length(S) < LEN then
+    S := PadL(PadR(S, LEN - 1), LEN)
+  else;
 
   ModString(fNewDrawStr, S, Pos);
 end;
