@@ -6,7 +6,7 @@ object FormNXConfig: TFormNXConfig
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'NeoLemmix Configuration'
-  ClientHeight = 545
+  ClientHeight = 591
   ClientWidth = 382
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -19,15 +19,15 @@ object FormNXConfig: TFormNXConfig
   OnClick = OptionChanged
   DesignSize = (
     382
-    545)
+    591)
   PixelsPerInch = 96
   TextHeight = 13
   object NXConfigPages: TPageControl
     Left = 0
     Top = 0
     Width = 382
-    Height = 506
-    ActivePage = TabSheet3
+    Height = 552
+    ActivePage = TabSheet2
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
     object TabSheet1: TTabSheet
@@ -193,7 +193,7 @@ object FormNXConfig: TFormNXConfig
       ImageIndex = 2
       object rgWhenNoLemmings: TRadioGroup
         Left = 19
-        Top = 397
+        Top = 426
         Width = 336
         Height = 85
         Caption = 'When No Lemmings Remain'
@@ -206,7 +206,7 @@ object FormNXConfig: TFormNXConfig
       end
       object gbReplayOptions: TGroupBox
         Left = 19
-        Top = 309
+        Top = 338
         Width = 336
         Height = 70
         Caption = 'Replay Options'
@@ -232,7 +232,7 @@ object FormNXConfig: TFormNXConfig
       end
       object gbHelperOptions: TGroupBox
         Left = 19
-        Top = 175
+        Top = 204
         Width = 336
         Height = 119
         Caption = 'Helper Options'
@@ -287,7 +287,7 @@ object FormNXConfig: TFormNXConfig
         Left = 19
         Top = 3
         Width = 336
-        Height = 75
+        Height = 102
         Caption = 'Interface Options'
         TabOrder = 0
         object cbEdgeScrolling: TCheckBox
@@ -308,10 +308,19 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 1
           OnClick = OptionChanged
         end
+        object cbUseNegativeSaveCount: TCheckBox
+          Left = 19
+          Top = 68
+          Width = 238
+          Height = 17
+          Caption = 'Use Negative Save Count'
+          TabOrder = 2
+          OnClick = OptionChanged
+        end
       end
       object gbVisualCustomizationOptions: TGroupBox
         Left = 19
-        Top = 92
+        Top = 121
         Width = 336
         Height = 77
         Caption = 'Visual/Customization Options'
@@ -600,7 +609,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnOK: TButton
     Left = 23
-    Top = 512
+    Top = 558
     Width = 108
     Height = 25
     Anchors = [akLeft, akBottom]
@@ -610,7 +619,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnCancel: TButton
     Left = 137
-    Top = 512
+    Top = 558
     Width = 108
     Height = 25
     Anchors = [akLeft, akBottom]
@@ -621,7 +630,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnApply: TButton
     Left = 251
-    Top = 512
+    Top = 558
     Width = 108
     Height = 25
     Anchors = [akLeft, akBottom]

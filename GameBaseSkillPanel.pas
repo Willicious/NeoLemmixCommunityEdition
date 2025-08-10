@@ -1441,27 +1441,33 @@ end;
 
 procedure TBaseSkillPanel.SetInfoLemIn(Pos: Integer);
 var
-  MinusSaveCount: Integer;
+  MinusSaveCount, SaveCount: Integer;
   S: string;
 const
   LEN = 4;
 begin
-  MinusSaveCount := (Game.LemmingsSaved - Level.Info.RescueCount);
+  if GameParams.UseNegativeSaveCount then
+  begin
+    MinusSaveCount := (Game.LemmingsSaved - Level.Info.RescueCount);
+    S := IntToStr(MinusSaveCount);
 
-  S := IntToStr(MinusSaveCount);
+    if (MinusSaveCount <= -999) then
+      S := '-999'
+    else if (MinusSaveCount >= 999) then // Should never happen
+      S := ' 999'
+    else if Length(S) < LEN then
+      S := PadL(PadR(S, LEN - 1), LEN);
+  end else begin
+    SaveCount := Game.LemmingsSaved;
+    S := IntToStr(SaveCount);
 
-  if (MinusSaveCount <= -999) then
-    S := '-999'
-  else if (MinusSaveCount >= 999) then // Should never happen
-    S := ' 999'
-
-//  if (Game.LemmingsSaved <= -99) then // Bookmark
-//    S := ' -99'
-//  else if (Game.LemmingsSaved >= 999) then
-//    S := ' 999'
-  else if Length(S) < LEN then
-    S := PadL(PadR(S, LEN - 1), LEN)
-  else;
+    if (SaveCount <= -999) then // Should never happen
+      S := '-999'
+    else if (SaveCount >= 999) then
+      S := ' 999'
+    else if Length(S) < LEN then
+      S := PadL(PadR(S, LEN - 1), LEN);
+  end;
 
   ModString(fNewDrawStr, S, Pos);
 end;
