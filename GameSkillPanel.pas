@@ -23,6 +23,7 @@ type
     function DrawStringLength: Integer; override;
     function DrawStringTemplate: string; override;
     function TimeLimitStartIndex: Integer; override;
+    function SaveCountStartIndex: Integer; override;
     function LemmingCountStartIndex: Integer; override;
   public
     constructor CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow); override;
@@ -42,6 +43,7 @@ type
     procedure CreateNewInfoString; override;
     function DrawStringLength: Integer; override;
     function DrawStringTemplate: string; override;
+    function SaveCountStartIndex: Integer; override;
     function TimeLimitStartIndex: Integer; override;
     function LemmingCountStartIndex: Integer; override;
   public
@@ -87,6 +89,16 @@ begin
                            + #94 + '_...' + ' ' + #95 +  '_.-..';
 end;
 
+function TSkillPanelStandard.LemmingCountStartIndex: Integer;
+begin
+  Result := 21;
+end;
+
+function TSkillPanelStandard.SaveCountStartIndex: Integer;
+begin
+  Result := 27;
+end;
+
 function TSkillPanelStandard.TimeLimitStartIndex: Integer;
 begin
   Result := 33;
@@ -124,11 +136,6 @@ begin
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 4] := spbBackOneFrame; // and below: spbForwardOneFrame
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 5] := spbDirLeft; // and below: spbDirRight
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 6] := spbClearPhysics; // and below: spbLoadReplay
-end;
-
-function TSkillPanelStandard.LemmingCountStartIndex: Integer;
-begin
-  Result := 21;
 end;
 
 procedure TSkillPanelStandard.ResizeMinimapRegion(MinimapRegion: TBitmap32);
@@ -183,14 +190,19 @@ begin
                            + #94 + '_...' + ' ' + #95 +  '_.-..';
 end;
 
-function TSkillPanelCompact.TimeLimitStartIndex: Integer;
-begin
-  Result := 33;
-end;
-
 function TSkillPanelCompact.LemmingCountStartIndex: Integer;
 begin
   Result := 21;
+end;
+
+function TSkillPanelCompact.SaveCountStartIndex: Integer;
+begin
+  Result := 27;
+end;
+
+function TSkillPanelCompact.TimeLimitStartIndex: Integer;
+begin
+  Result := 33;
 end;
 
 function TSkillPanelCompact.MinimapRect: TRect;

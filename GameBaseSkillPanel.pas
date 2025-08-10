@@ -112,6 +112,7 @@ type
 
     procedure DrawNewStr;
       function LemmingCountStartIndex: Integer; virtual; abstract;
+      function SaveCountStartIndex: Integer; virtual; abstract;
       function TimeLimitStartIndex: Integer; virtual; abstract;
     procedure CreateNewInfoString; virtual; abstract;
     procedure SetInfoCursorLemming(Pos: Integer);
@@ -1226,10 +1227,18 @@ var
   New: char;
   i, CharID: integer;
   SpecialCombine: Boolean;
-
+  Red, Blue, Purple, Teal, Yellow, Orange: Single;
   LemmingKinds: TLemmingKinds;
 begin
   LemmingKinds := Game.ActiveLemmingTypes;
+
+  // Define hue shift colours
+  Red    := -1 / 3;
+  Blue   :=  1 / 4;
+  Purple :=  1 / 2;
+  Teal   :=  1 / 6;
+  Yellow := -1 / 6;
+  Orange := -1 / 4;
 
   // Erase previous text there
   fImage.Bitmap.FillRectS(0, 0, DrawStringLength * 8 * ResMod, 16 * ResMod, $00000000);
@@ -1254,15 +1263,27 @@ begin
         if Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead < Level.Info.RescueCount - Game.LemmingsSaved then
         begin
           SpecialCombine := True;
-          fCombineHueShift := -1 / 3;
+          fCombineHueShift := Red;
         end else if (lkNeutral in LemmingKinds) then
         begin
           SpecialCombine := True;
 
           if lkNormal in LemmingKinds then
-            fCombineHueShift := -1 / 6
+            fCombineHueShift := Yellow
           else
-            fCombineHueShift := 1 / 6;
+            fCombineHueShift := Teal;
+        end else
+          SpecialCombine := False;
+      end else if (not GameParams.UseNegativeSaveCount) and (i > SaveCountStartIndex) and (i <= SaveCountStartIndex + 5) then
+      begin
+        if Game.LemmingsSaved <= 0 then
+        begin
+          SpecialCombine := True;
+          fCombineHueShift := Red;
+        end else if Game.LemmingsSaved < Level.Info.RescueCount then
+        begin
+          SpecialCombine := True;
+          fCombineHueShift := Yellow;
         end else
           SpecialCombine := False;
       end else if Level.Info.HasTimeLimit and (i > TimeLimitStartIndex) and (i <= TimeLimitStartIndex + 5) then
@@ -1270,11 +1291,11 @@ begin
         SpecialCombine := True;
 
         if Game.IsOutOfTime then
-          fCombineHueShift := 1 / 2
+          fCombineHueShift := Purple
         else if Level.Info.TimeLimit * 17 < Game.CurrentIteration + 255 {15 * 17} then
-          fCombineHueShift := -1 / 3
+          fCombineHueShift := Red
         else
-          fCombineHueShift := -1 / 6;
+          fCombineHueShift := Yellow;
       end else
         SpecialCombine := False;
 
