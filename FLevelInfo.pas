@@ -663,7 +663,7 @@ begin
   else
     Add(ICON_SAVE_REQUIREMENT, fTalisman.RescueCount, 'Save requirement to complete the Talisman', True, pmNextColumnSame, COLOR_TALISMAN_RESTRICTION);
 
-  if GameParams.SpawnInterval then
+  if GameParams.UseSpawnInterval then
   begin
     SIVal := Level.Info.SpawnInterval;
     SIHintText := 'Spawn Interval';

@@ -36,7 +36,7 @@ type
     cbIncreaseZoom: TCheckBox;
     cbCompactSkillPanel: TCheckBox;
     cbEdgeScrolling: TCheckBox;
-    cbSpawnInterval: TCheckBox;
+    cbUseSpawnInterval: TCheckBox;
     btnHotkeys: TButton;
     cbReplayAfterBackskip: TCheckBox;
     cbPauseAfterBackwards: TCheckBox;
@@ -282,7 +282,7 @@ begin
     seSkillQFrames.Value := GameParams.SkillQFrames;
 
     cbEdgeScrolling.Checked := GameParams.EdgeScroll;
-    cbSpawnInterval.Checked := GameParams.SpawnInterval;
+    cbUseSpawnInterval.Checked := GameParams.UseSpawnInterval;
 
     rgWhenNoLemmings.ItemIndex := Ord(GameParams.ExitToPostview);
 
@@ -354,7 +354,7 @@ begin
   GameParams.SkillQFrames := seSkillQFrames.Value;
 
   GameParams.EdgeScroll := cbEdgeScrolling.Checked;
-  GameParams.SpawnInterval := cbSpawnInterval.Checked;
+  GameParams.UseSpawnInterval := cbUseSpawnInterval.Checked;
 
   if (rgWhenNoLemmings.ItemIndex >= Ord(Low(TExitToPostview)))
     and (rgWhenNoLemmings.ItemIndex <= Ord(High(TExitToPostview))) then

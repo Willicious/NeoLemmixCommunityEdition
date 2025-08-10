@@ -90,7 +90,7 @@ type
     moMatchBlankReplayUsername,
     moCompactSkillPanel,
     moEdgeScroll,
-    moSpawnInterval,
+    moUseSpawnInterval,
     moShowLevelSelectOptions,
     moFileCaching,
     moPostviewJingles,
@@ -256,7 +256,7 @@ type
     property LoadedConfig: Boolean Index moLoadedConfig read GetOptionFlag write SetOptionFlag;
     property CompactSkillPanel: Boolean Index moCompactSkillPanel read GetOptionFlag write SetOptionFlag;
     property EdgeScroll: Boolean Index moEdgeScroll read GetOptionFlag write SetOptionFlag;
-    property SpawnInterval: Boolean Index moSpawnInterval read GetOptionFlag write SetOptionFlag;
+    property UseSpawnInterval: Boolean Index moUseSpawnInterval read GetOptionFlag write SetOptionFlag;
     property ForceDefaultLemmings: Boolean Index moForceDefaultLemmings read GetOptionFlag write SetOptionFlag;
     property DisableMusicInTestplay: Boolean Index moDisableMusicInTestplay read GetOptionFlag write SetOptionFlag;
 
@@ -480,7 +480,7 @@ begin
     SaveBoolean('HighQualityMinimap', MinimapHighQuality);
     SaveBoolean('FadeMenuScreens', FadeMenuScreens);
     SaveBoolean('EdgeScrolling', EdgeScroll);
-    SaveBoolean('UseSpawnInterval', SpawnInterval);
+    SaveBoolean('UseSpawnInterval', UseSpawnInterval);
 
     SL.Add('SkillQFrames=' + IntToStr(SkillQFrames));
     SL.Add('ZoomLevel=' + IntToStr(ZoomLevel));
@@ -674,7 +674,7 @@ begin
     FadeMenuScreens := LoadBoolean('FadeMenuScreens', FadeMenuScreens);
     EdgeScroll := LoadBoolean('EdgeScrolling', EdgeScroll);
     IncreaseZoom := LoadBoolean('IncreaseZoom', IncreaseZoom);
-    SpawnInterval := LoadBoolean('UseSpawnInterval', SpawnInterval);
+    UseSpawnInterval := LoadBoolean('UseSpawnInterval', UseSpawnInterval);
 
     SetCurrentLevelToBestMatch(SL.Values['LastActiveLevel']);
 

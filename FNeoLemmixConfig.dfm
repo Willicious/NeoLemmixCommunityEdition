@@ -299,7 +299,7 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 0
           OnClick = OptionChanged
         end
-        object cbSpawnInterval: TCheckBox
+        object cbUseSpawnInterval: TCheckBox
           Left = 19
           Top = 45
           Width = 294
