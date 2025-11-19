@@ -761,7 +761,6 @@ begin
       Parser.LoadFromFile(GameParams.CurrentLevel.Group.FindFile('title.nxmi'));
 
     Result := Sec.LineTrimString['BACKGROUND_DRAW_MODE'];
-    Output('BackgroundDrawMode = ' + Result);
   finally
     Parser.Free;
   end;

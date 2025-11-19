@@ -295,11 +295,8 @@ type
     property MainForm: TForm read fMainForm write fMainForm;
 
     property TalismanPage: Integer read fTalismanPage write fTalismanPage;
-
     property Hotkeys: TLemmixHotkeyManager read fHotkeys;
-
     property CurrentGroupName: String read GetCurrentGroupName;
-
     property ExitToPostview: TExitToPostview read fExitToPostview write fExitToPostview;
 
     property Username: String read fUsername write SetUsername;

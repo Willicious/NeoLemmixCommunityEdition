@@ -13,7 +13,8 @@ uses
   LemNeoTheme,
   LemMetaAnimation,
   LemNeoParser,
-  LemStrings;
+  LemStrings,
+  SharedGlobals;
 
 const
   LTR = False;
@@ -471,7 +472,6 @@ begin
     ShadeDict.Free;
   end;
 end;
-
 
 procedure TBaseAnimationSet.ClearData;
 begin
