@@ -452,7 +452,10 @@ begin
       MLA := fMetaLemmingAnimations[iAnimation];
       Fn := RightStr(MLA.Description, Length(MLA.Description) - 1);
 
-      if FileExists(ImgSrcFolder + Fn + '.png') then
+      if ((Fn = 'SLEEPER') and not FileExists(ImgSrcFolder + 'sleeper.png'))
+      or ((Fn = 'SLEEPER') and not FileExists(MetaSrcFolder + 'sleeper.png')) then
+        GameParams.SleeperSpriteMissing := True
+      else if FileExists(ImgSrcFolder + Fn + '.png') then
         TPngInterface.LoadPngFile(ImgSrcFolder + Fn + '.png', TempBitmap)
       else begin
         TPngInterface.LoadPngFile(MetaSrcFolder + Fn + '.png', TempBitmap);

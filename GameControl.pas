@@ -135,6 +135,7 @@ type
     fOneLevelMode: Boolean;
     fDoneUpdateCheck: Boolean;
     fCurrentLevel: TNeoLevelEntry;
+    fSleeperSpriteMissing: Boolean;
 
     fCursorResize: Double;
     fZoomLevel: Integer;
@@ -298,6 +299,8 @@ type
     property Hotkeys: TLemmixHotkeyManager read fHotkeys;
     property CurrentGroupName: String read GetCurrentGroupName;
     property ExitToPostview: TExitToPostview read fExitToPostview write fExitToPostview;
+
+    property SleeperSpriteMissing: Boolean read fSleeperSpriteMissing write fSleeperSpriteMissing;
 
     property Username: String read fUsername write SetUsername;
     property AutoSaveReplayPattern: String read fAutoSaveReplayPattern write fAutoSaveReplayPattern;
@@ -1026,6 +1029,7 @@ begin
   LemDataInResource := True;
   LemSoundsInResource := True;
   LemMusicInResource := True;
+  SleeperSpriteMissing := False;
 
   try
     fHotkeys := TLemmixHotkeyManager.Create;

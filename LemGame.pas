@@ -3014,7 +3014,11 @@ begin
     if not IsOutOfTime then
       Transition(L, baExiting)
     else begin
-      Transition(L, baSleeping);
+      if (GameParams.SleeperSpriteMissing) then
+        HandleFire(L)
+      else
+        Transition(L, baSleeping);
+
       Exit;
     end;
 
