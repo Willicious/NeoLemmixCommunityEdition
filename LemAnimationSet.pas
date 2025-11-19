@@ -156,8 +156,8 @@ type
 
     procedure ReadMetaData(aColorDict: TColorDict = nil; aShadeDict: TShadeDict = nil);
     procedure LoadMetaData(aColorDict: TColorDict; aShadeDict: TShadeDict);
-
     procedure HandleRecoloring(aColorDict: TColorDict; aShadeDict: TShadeDict);
+    procedure AddSleeperDataToScheme;
   public
     constructor Create;
     destructor Destroy; override;
@@ -265,6 +265,18 @@ begin
     begin
       try
         ThisAnimSec := AnimSec.Section[ANIM_NAMES[i]];
+
+        // Special handling of missing Sleeper section
+        if (ANIM_NAMES[i] = 'SLEEPER') and (ThisAnimSec = nil) then
+        begin
+          AddSleeperDataToScheme;
+          Parser.Free;
+          Parser := TParser.Create;
+          Parser.LoadFromFile('scheme.nxmi');
+          AnimSec := Parser.MainSection.Section['animations'];
+          ThisAnimSec := AnimSec.Section['SLEEPER'];
+        end;
+
         for dx := 0 to 1 do
         begin
           DirSec := ThisAnimSec.Section[DIR_NAMES[dx]];
@@ -318,6 +330,49 @@ begin
     end;
   finally
     Parser.Free;
+  end;
+end;
+
+procedure TBaseAnimationSet.AddSleeperDataToScheme;
+begin
+  var Lines := TStringList.Create;
+  try
+    Lines.LoadFromFile('scheme.nxmi');
+
+    // Find last $END
+    var InsertIndex := Lines.Count - 1;
+    while (InsertIndex >= 0) and (Trim(Lines[InsertIndex]) <> '$END') do
+      Dec(InsertIndex);
+
+    // Add default SLEEPER section
+    var SleeperLines := TStringList.Create;
+    try
+      SleeperLines.Add('');
+      SleeperLines.Add('  $SLEEPER');
+      SleeperLines.Add('    FRAMES 20');
+      SleeperLines.Add('    LOOP_TO_FRAME 19');
+      SleeperLines.Add('');
+      SleeperLines.Add('    $RIGHT');
+      SleeperLines.Add('      FOOT_X 6');
+      SleeperLines.Add('      FOOT_Y 13');
+      SleeperLines.Add('    $END');
+      SleeperLines.Add('');
+      SleeperLines.Add('    $LEFT');
+      SleeperLines.Add('      FOOT_X 8');
+      SleeperLines.Add('      FOOT_Y 13');
+      SleeperLines.Add('    $END');
+      SleeperLines.Add('  $END');
+
+      // Insert each line before the last $END
+      for var j := SleeperLines.Count - 1 downto 0 do
+        Lines.Insert(InsertIndex, SleeperLines[j]);
+
+      Lines.SaveToFile('scheme.nxmi');
+    finally
+      SleeperLines.Free;
+    end;
+  finally
+    Lines.Free;
   end;
 end;
 
