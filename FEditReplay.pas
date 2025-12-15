@@ -368,6 +368,8 @@ begin
 
   if ItemSelected then
     CurrentItem := TBaseReplayItem(lbReplayActions.Items.Objects[lbReplayActions.ItemIndex])
+  else if (lbReplayActions.Items.Count > 0) then
+    CurrentItem := TBaseReplayItem(lbReplayActions.Items.Objects[0])
   else
     CurrentItem := nil;
 
@@ -375,10 +377,13 @@ begin
   btnDelete.Enabled := ItemSelected;
   btnGoToReplayEvent.Enabled := ItemSelected and not (lbReplayActions.SelCount > 1);
 
-  if (fTargetFrame <> -1) and (CurrentItem.Frame = fTargetFrame) then
-    btnGoToReplayEvent.Caption := 'Return To Starting Frame'
-  else
-    btnGoToReplayEvent.Caption := 'Skip To Selected Replay Event';
+  if CurrentItem <> nil then
+  begin
+    if (fTargetFrame <> -1) and (CurrentItem.Frame = fTargetFrame) then
+      btnGoToReplayEvent.Caption := 'Return To Starting Frame'
+    else
+      btnGoToReplayEvent.Caption := 'Skip To Selected Replay Event';
+  end;
 
   if SkillEventSelected then
   begin
