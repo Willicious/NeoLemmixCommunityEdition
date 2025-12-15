@@ -33,8 +33,8 @@ type
     procedure btnGoToReplayEventClick(Sender: TObject);
     procedure lbReplayActionsDblClick(Sender: TObject);
     procedure cbSelectFutureEventsClick(Sender: TObject);
-    procedure FormShow(Sender: TObject);
     procedure btnReplayInsertExplanationClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
 private
     fSavedReplay: TMemoryStream;
     fReplay: TReplay;
@@ -84,58 +84,6 @@ begin
     Result := 'Starting Frame: '
   else
     Result := 'Current Frame: ';
-end;
-
-procedure TFReplayEditor.ShowReplayInsertExplanationPopup;
-var
-  Popup: TForm;
-  Memo: TMemo;
-  BtnOK: TButton;
-  P: String;
-begin
-  Popup := TForm.Create(Self);
-  try
-    Popup.BorderStyle := bsDialog;
-    Popup.Caption := 'Replay Insert Mode';
-    Popup.Position := poOwnerFormCenter;
-    Popup.ClientWidth := 560;
-    Popup.ClientHeight := 440;
-
-    // Invisible button to allow closing via ESC
-    BtnOK := TButton.Create(Popup);
-    BtnOK.Parent := Popup;
-    BtnOK.Cancel := True;
-    BtnOK.ModalResult := mrCancel;
-
-    Memo := TMemo.Create(Popup);
-    Memo.Parent := Popup;
-    Memo.Align := alClient;
-    Memo.ReadOnly := True;
-    Memo.TabStop := False;
-    Memo.Enabled := False;
-    Memo.BorderStyle := bsNone;
-    Memo.Font.Name := 'Segoe UI';
-    Memo.Font.Size := 10;
-    P := '       '; // Padding for Memo text
-    Memo.Text := sLineBreak +
-                 P + 'Replay Insert Mode allows you to add skill assignments' + sLineBreak +
-                 P + 'and/or release rate changes without disrupting any' + sLineBreak +
-                 P + 'existing replay events.' + sLineBreak +
-                 sLineBreak +
-                 P + 'Any action already in the replay will remain intact,' + sLineBreak +
-                 P + 'and - importantly - will occur at the frame upon' + sLineBreak +
-                 P + 'which it was originally inputted.' + sLineBreak +
-                 sLineBreak +
-                 P + 'Replay Insert Mode is indicated by changing the color' + sLineBreak +
-                 P + 'of the "R" replay marker in the skill panel from' + sLineBreak +
-                 P + 'red to blue.' + sLineBreak +
-                 sLineBreak +
-                 P + 'Press ESC or close the window when done.';
-
-    Popup.ShowModal;
-  finally
-    Popup.Free;
-  end;
 end;
 
 procedure TFReplayEditor.AddCurrentFrameString;
@@ -395,14 +343,14 @@ begin
   GoToSelectedReplayEvent;
 end;
 
-procedure TFReplayEditor.btnReplayInsertExplanationClick(Sender: TObject);
-begin
-  ShowReplayInsertExplanationPopup;
-end;
-
 procedure TFReplayEditor.cbSelectFutureEventsClick(Sender: TObject);
 begin
   SelectFutureEvents;
+end;
+
+procedure TFReplayEditor.btnReplayInsertExplanationClick(Sender: TObject);
+begin
+  ShowReplayInsertExplanationPopup;
 end;
 
 procedure TFReplayEditor.SetControls;
@@ -571,6 +519,58 @@ begin
   end;
 
   ListReplayActions;
+end;
+
+procedure TFReplayEditor.ShowReplayInsertExplanationPopup;
+var
+  Popup: TForm;
+  Memo: TMemo;
+  BtnOK: TButton;
+  P: String;
+begin
+  Popup := TForm.Create(Self);
+  try
+    Popup.BorderStyle := bsDialog;
+    Popup.Caption := 'Replay Insert Mode';
+    Popup.Position := poOwnerFormCenter;
+    Popup.ClientWidth := 560;
+    Popup.ClientHeight := 440;
+
+    // Invisible button to allow closing via ESC
+    BtnOK := TButton.Create(Popup);
+    BtnOK.Parent := Popup;
+    BtnOK.Cancel := True;
+    BtnOK.ModalResult := mrCancel;
+
+    Memo := TMemo.Create(Popup);
+    Memo.Parent := Popup;
+    Memo.Align := alClient;
+    Memo.ReadOnly := True;
+    Memo.TabStop := False;
+    Memo.Enabled := False;
+    Memo.BorderStyle := bsNone;
+    Memo.Font.Name := 'Segoe UI';
+    Memo.Font.Size := 10;
+    P := '       '; // Padding for Memo text
+    Memo.Text := sLineBreak +
+                 P + 'Replay Insert Mode allows you to add skill assignments' + sLineBreak +
+                 P + 'and/or release rate changes without disrupting any' + sLineBreak +
+                 P + 'existing replay events.' + sLineBreak +
+                 sLineBreak +
+                 P + 'Any action already in the replay will remain intact,' + sLineBreak +
+                 P + 'and - importantly - will occur at the frame upon' + sLineBreak +
+                 P + 'which it was originally inputted.' + sLineBreak +
+                 sLineBreak +
+                 P + 'Replay Insert Mode is indicated by changing the color' + sLineBreak +
+                 P + 'of the "R" replay marker in the skill panel from' + sLineBreak +
+                 P + 'red to blue.' + sLineBreak +
+                 sLineBreak +
+                 P + 'Press ESC or close the window when ready.';
+
+    Popup.ShowModal;
+  finally
+    Popup.Free;
+  end;
 end;
 
 end.
