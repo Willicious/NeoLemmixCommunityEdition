@@ -85,8 +85,12 @@ end;
 
 function TSkillPanelStandard.DrawStringTemplate: string;
 begin
-  Result := '............' + '.' + ' ' + #92 + '_...' + ' ' + #93 + '_...' + ' '
-                           + #94 + '_...' + ' ' + #95 +  '_.-..';
+  Result := '............' +      // 0 Cursor info
+            '.' + ' ' +           // 13 Replay icon
+            #92 + '_...' + ' ' +  // 16 Hatch icon
+            #93 + '_...' + ' ' +  // 21 Lem icon
+            #94 + '_...' + ' ' +  // 27 Exit icon
+            #96 +  '_.-..';       // 33 Time icon
 end;
 
 function TSkillPanelStandard.LemmingCountStartIndex: Integer;
@@ -115,6 +119,7 @@ begin
   SetReplayMark(13);
   SetInfoLemHatch(16);
   SetInfoLemAlive(22);
+  SetExitIcon(27);
   SetInfoLemIn(28);
   SetTimeLimit(33);
   SetInfoTime(34, 37);
@@ -186,8 +191,12 @@ end;
 
 function TSkillPanelCompact.DrawStringTemplate: string;
 begin
-  Result := '............' + '.' + ' ' + #92 + '_...' + ' ' + #93 + '_...' + ' '
-                           + #94 + '_...' + ' ' + #95 +  '_.-..';
+  Result := '............' +      // 0 Cursor info
+            '.' + ' ' +           // 13 Replay icon
+            #92 + '_...' + ' ' +  // 16 Hatch icon
+            #93 + '_...' + ' ' +  // 21 Lem icon
+            #94 + '_...' + ' ' +  // 27 Exit icon
+            #96 +  '_.-..';       // 33 Time icon
 end;
 
 function TSkillPanelCompact.LemmingCountStartIndex: Integer;
@@ -216,6 +225,7 @@ begin
   SetReplayMark(13);
   SetInfoLemHatch(16);
   SetInfoLemAlive(22);
+  SetExitIcon(27);
   SetInfoLemIn(28);
   SetTimeLimit(33);
   SetInfoTime(34, 37);
