@@ -19,6 +19,8 @@ type
     procedure ResizeMinimapRegion(MinimapRegion: TBitmap32); override;
     function MinimapRect: TRect; override;
 
+    function RescueCountRect: TRect; override;
+
     procedure CreateNewInfoString; override;
     function DrawStringLength: Integer; override;
     function DrawStringTemplate: string; override;
@@ -39,6 +41,8 @@ type
 
     procedure ResizeMinimapRegion(MinimapRegion: TBitmap32); override;
     function MinimapRect: TRect; override;
+
+    function RescueCountRect: TRect; override;
 
     procedure CreateNewInfoString; override;
     function DrawStringLength: Integer; override;
@@ -111,6 +115,12 @@ end;
 function TSkillPanelStandard.MinimapRect: TRect;
 begin
   Result := Rect(308 * ResMod, 3 * ResMod, 412 * ResMod, 37 * ResMod);
+end;
+
+// Assigns a non-clickable rectangle to the rescue count icon & digits
+function TSkillPanelStandard.RescueCountRect: TRect;
+begin
+  Result := Rect(208 * ResMod, 2 * ResMod, 258 * ResMod, 16 * ResMod);
 end;
 
 procedure TSkillPanelStandard.CreateNewInfoString;
@@ -217,6 +227,12 @@ end;
 function TSkillPanelCompact.MinimapRect: TRect;
 begin
   Result := Rect(228 * ResMod, 18 * ResMod, 316 * ResMod, 38 * ResMod)
+end;
+
+// Assigns a non-clickable rectangle to the rescue count icon & digits
+function TSkillPanelCompact.RescueCountRect: TRect;
+begin
+  Result := Rect(208 * ResMod, 2 * ResMod, 258 * ResMod, 16 * ResMod);
 end;
 
 procedure TSkillPanelCompact.CreateNewInfoString;

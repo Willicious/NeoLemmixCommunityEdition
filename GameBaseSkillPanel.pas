@@ -90,6 +90,7 @@ type
     function MinimapRect: TRect; virtual; abstract;
     function MinimapWidth: Integer;
     function MinimapHeight: Integer;
+    function RescueCountRect: TRect; virtual; abstract;
 
     function FirstSkillButtonIndex: Integer; virtual;
     function LastSkillButtonIndex: Integer; virtual;
@@ -1228,8 +1229,9 @@ var
   New: char;
   i, CharID: integer;
   SpecialCombine: Boolean;
-  Red, Blue, Purple, Teal, Yellow, Orange: Single;
+  Red, Blue, Purple, Teal, Yellow{, Orange}: Single;
   LemmingKinds: TLemmingKinds;
+  CursorPos, P: TPoint;
 begin
   LemmingKinds := Game.ActiveLemmingTypes;
 
@@ -1239,7 +1241,7 @@ begin
   Purple :=  1 / 2;
   Teal   :=  1 / 6;
   Yellow := -1 / 6;
-  Orange := -1 / 4;
+  //Orange := -1 / 4;
 
   // Erase previous text there
   fImage.Bitmap.FillRectS(0, 0, DrawStringLength * 8 * ResMod, 16 * ResMod, $00000000);
@@ -1277,16 +1279,25 @@ begin
           SpecialCombine := False;
       end else if (not GameParams.UseNegativeSaveCount) and (i > SaveCountStartIndex) and (i <= SaveCountStartIndex + 5) then
       begin
-        if Game.LemmingsSaved <= 0 then
+        CursorPos := Mouse.CursorPos;
+        P := Image.ControlToBitmap(Image.ScreenToClient(CursorPos));
+
+        if PtInRect(RescueCountRect, P) then
         begin
           SpecialCombine := True;
-          fCombineHueShift := Red;
-        end else if Game.LemmingsSaved < Level.Info.RescueCount then
-        begin
-          SpecialCombine := True;
-          fCombineHueShift := Yellow;
-        end else
-          SpecialCombine := False;
+          fCombineHueShift := Blue;
+        end else begin
+          if Game.LemmingsSaved <= 0 then
+          begin
+            SpecialCombine := True;
+            fCombineHueShift := Red;
+          end else if Game.LemmingsSaved < Level.Info.RescueCount then
+          begin
+            SpecialCombine := True;
+            fCombineHueShift := Yellow;
+          end else
+            SpecialCombine := False;
+        end;
       end else if Level.Info.HasTimeLimit and (i > TimeLimitStartIndex) and (i <= TimeLimitStartIndex + 5) then
       begin
         SpecialCombine := True;
@@ -1464,6 +1475,7 @@ end;
 procedure TBaseSkillPanel.SetInfoLemIn(Pos: Integer);
 var
   MinusSaveCount, SaveCount: Integer;
+  CursorPos, P: TPoint;
   S: string;
 const
   LEN = 4;
@@ -1481,7 +1493,13 @@ begin
       S := PadL(PadR(S, LEN - 1), LEN);
   end else begin
     SaveCount := Game.LemmingsSaved;
-    S := IntToStr(SaveCount);
+    CursorPos := Mouse.CursorPos;
+    P := Image.ControlToBitmap(Image.ScreenToClient(CursorPos));
+
+    if PtInRect(RescueCountRect, P) then
+      S := IntToStr(Level.Info.RescueCount)
+    else
+      S := IntToStr(SaveCount);
 
     if (SaveCount <= -999) then // Should never happen
       S := '-999'
