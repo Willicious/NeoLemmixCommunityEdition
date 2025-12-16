@@ -19,12 +19,14 @@ type
     procedure ResizeMinimapRegion(MinimapRegion: TBitmap32); override;
     function MinimapRect: TRect; override;
 
+    function ReplayIconRect: TRect; override;
     function RescueCountRect: TRect; override;
 
     procedure CreateNewInfoString; override;
     function DrawStringLength: Integer; override;
     function DrawStringTemplate: string; override;
     function TimeLimitStartIndex: Integer; override;
+    function CursorInfoEndIndex: Integer; override;
     function SaveCountStartIndex: Integer; override;
     function LemmingCountStartIndex: Integer; override;
   public
@@ -42,6 +44,7 @@ type
     procedure ResizeMinimapRegion(MinimapRegion: TBitmap32); override;
     function MinimapRect: TRect; override;
 
+    function ReplayIconRect: TRect; override;
     function RescueCountRect: TRect; override;
 
     procedure CreateNewInfoString; override;
@@ -49,6 +52,7 @@ type
     function DrawStringTemplate: string; override;
     function SaveCountStartIndex: Integer; override;
     function TimeLimitStartIndex: Integer; override;
+    function CursorInfoEndIndex: Integer; override;
     function LemmingCountStartIndex: Integer; override;
   public
     constructor CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow); override;
@@ -97,6 +101,11 @@ begin
             #96 +  '_.-..';       // 33 Time icon
 end;
 
+function TSkillPanelStandard.CursorInfoEndIndex: Integer;
+begin
+  Result := 13;
+end;
+
 function TSkillPanelStandard.LemmingCountStartIndex: Integer;
 begin
   Result := 21;
@@ -117,6 +126,12 @@ begin
   Result := Rect(308 * ResMod, 3 * ResMod, 412 * ResMod, 37 * ResMod);
 end;
 
+// Assigns a clickable rectangle to the replay "R" icon
+function TSkillPanelStandard.ReplayIconRect: TRect;
+begin
+  Result := Rect(94 * ResMod, 2 * ResMod, 104 * ResMod, 16 * ResMod);
+end;
+
 // Assigns a non-clickable rectangle to the rescue count icon & digits
 function TSkillPanelStandard.RescueCountRect: TRect;
 begin
@@ -125,8 +140,8 @@ end;
 
 procedure TSkillPanelStandard.CreateNewInfoString;
 begin
-  SetInfoCursorLemming(1);
-  SetReplayMark(13);
+  SetInfoCursor(1);
+  SetReplayIcon(13);
   SetInfoLemHatch(16);
   SetInfoLemAlive(22);
   SetExitIcon(27);
@@ -209,6 +224,11 @@ begin
             #96 +  '_.-..';       // 33 Time icon
 end;
 
+function TSkillPanelCompact.CursorInfoEndIndex: Integer;
+begin
+  Result := 13;
+end;
+
 function TSkillPanelCompact.LemmingCountStartIndex: Integer;
 begin
   Result := 21;
@@ -229,6 +249,12 @@ begin
   Result := Rect(228 * ResMod, 18 * ResMod, 316 * ResMod, 38 * ResMod)
 end;
 
+// Assigns a clickable rectangle to the replay "R" icon
+function TSkillPanelCompact.ReplayIconRect: TRect;
+begin
+  Result := Rect(94 * ResMod, 2 * ResMod, 104 * ResMod, 16 * ResMod);
+end;
+
 // Assigns a non-clickable rectangle to the rescue count icon & digits
 function TSkillPanelCompact.RescueCountRect: TRect;
 begin
@@ -237,8 +263,8 @@ end;
 
 procedure TSkillPanelCompact.CreateNewInfoString;
 begin
-  SetInfoCursorLemming(1);
-  SetReplayMark(13);
+  SetInfoCursor(1);
+  SetReplayIcon(13);
   SetInfoLemHatch(16);
   SetInfoLemAlive(22);
   SetExitIcon(27);

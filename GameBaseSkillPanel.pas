@@ -75,6 +75,7 @@ type
 
     fLastDrawnStr         : String;
     fNewDrawStr           : String;
+    fButtonHint           : String;
 
     // Global stuff
     property Level: TLevel read GetLevel;
@@ -90,6 +91,7 @@ type
     function MinimapRect: TRect; virtual; abstract;
     function MinimapWidth: Integer;
     function MinimapHeight: Integer;
+    function ReplayIconRect: TRect; virtual; abstract;
     function RescueCountRect: TRect; virtual; abstract;
 
     function FirstSkillButtonIndex: Integer; virtual;
@@ -115,14 +117,15 @@ type
       function LemmingCountStartIndex: Integer; virtual; abstract;
       function SaveCountStartIndex: Integer; virtual; abstract;
       function TimeLimitStartIndex: Integer; virtual; abstract;
+      function CursorInfoEndIndex: Integer; virtual; abstract;
     procedure CreateNewInfoString; virtual; abstract;
-    procedure SetInfoCursorLemming(Pos: Integer);
+    procedure SetInfoCursor(Pos: Integer);
       function GetSkillString(L: TLemming): String;
     procedure SetInfoLemHatch(Pos: Integer);
     procedure SetInfoLemAlive(Pos: Integer);
     procedure SetInfoLemIn(Pos: Integer);
     procedure SetInfoTime(PosMin, PosSec: Integer);
-    procedure SetReplayMark(Pos: Integer);
+    procedure SetReplayIcon(Pos: Integer);
     procedure SetTimeLimit(Pos: Integer);
     procedure SetExitIcon(Pos: Integer);
 
@@ -175,6 +178,15 @@ type
     property FrameSkip: Integer read CheckFrameSkip;
     property SkillPanelSelectDx: Integer read fSelectDx write fSelectDx;
     property ShowUsedSkills: Boolean read fShowUsedSkills write SetShowUsedSkills;
+
+    property ButtonHint: String read fButtonHint write fButtonHint;
+    procedure GetButtonHints(aButton: TSkillPanelButton);
+
+    function CursorOverSkillButton(out Button: TSkillPanelButton): Boolean;
+    function CursorOverClickableItem: Boolean;
+    function CursorOverRescueCount: Boolean;
+    function CursorOverReplayIcon: Boolean;
+    function CursorOverMinimap: Boolean;
   end;
 
   procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
@@ -225,6 +237,122 @@ constructor TBaseSkillPanel.CreateWithWindow(aOwner: TComponent; aGameWindow: IG
 begin
   Create(aOwner);
   fGameWindow := aGameWindow;
+end;
+
+procedure TBaseSkillPanel.GetButtonHints(aButton: TSkillPanelButton);
+begin
+  ButtonHint := '';
+
+  if CursorOverMinimap then
+                   ButtonHint := 'MINIMAP'
+  else if CursorOverReplayIcon then
+  begin
+    if Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
+                   ButtonHint := 'STOP REPLAY'
+//    else if GameParams.PlaybackModeActive then
+//                   ButtonHint := 'STOP PLAYBACK'
+    else
+                   ButtonHint := '';
+  end else if CursorOverSkillButton(aButton) then
+  begin
+    case aButton of
+      spbNone:     ButtonHint := '';
+      spbSlower:   ButtonHint := 'SLOWER';
+      spbFaster:   ButtonHint := 'FASTER';
+      spbPause:    ButtonHint := 'PAUSE';
+      spbFastForward:
+//        if GameParams.TurboFF then
+//                   ButtonHint := 'TURBO-FF'
+//        else
+                   ButtonHint := 'FAST-FORWARD';
+      spbRestart:  ButtonHint := 'RESTART';
+      spbNuke:     ButtonHint := 'NUKE';
+      else         ButtonHint := Uppercase(SKILL_NAMES[aButton]);
+    end;
+  end;
+end;
+
+function TBaseSkillPanel.CursorOverRescueCount: Boolean;
+var
+  CursorPos: TPoint;
+  P: TPoint;
+begin
+  Result := False;
+  CursorPos := Mouse.CursorPos;
+  P := Image.ControlToBitmap(Image.ScreenToClient(CursorPos));
+
+  if PtInRect(RescueCountRect, P) then
+  begin
+    Result := True;
+    Exit;
+  end;
+end;
+
+function TBaseSkillPanel.CursorOverSkillButton(out Button: TSkillPanelButton): Boolean;
+var
+  CursorPos: TPoint;
+  P: TPoint;
+  i: TSkillPanelButton;
+begin
+  Result := False;
+  Button := spbNone; // Initialize Button to a default value
+
+  CursorPos := Mouse.CursorPos;
+  P := Image.ControlToBitmap(Image.ScreenToClient(CursorPos));
+
+  for i := Low(fButtonRects) to High(fButtonRects) do
+  begin
+    if PtInRect(fButtonRects[i], P) then
+    begin
+      Result := True;
+      Button := TSkillPanelButton(i); // Assign the button value
+      Exit;
+    end;
+  end;
+
+  // If no button found, set Button to spbNone
+  Button := spbNone;
+end;
+
+function TBaseSkillPanel.CursorOverReplayIcon: Boolean;
+var
+  CursorPos: TPoint;
+  P: TPoint;
+begin
+  Result := False;
+  CursorPos := Mouse.CursorPos;
+  P := Image.ControlToBitmap(Image.ScreenToClient(CursorPos));
+
+  if PtInRect(ReplayIconRect, P) then
+  begin
+    Result := True;
+    Exit;
+  end;
+end;
+
+function TBaseSkillPanel.CursorOverMinimap: Boolean;
+var
+  CursorPos: TPoint;
+  P: TPoint;
+begin
+  Result := False;
+  CursorPos := Mouse.CursorPos;
+  P := Image.ControlToBitmap(Image.ScreenToClient(CursorPos));
+
+  if PtInRect(MinimapRect, P) then
+  begin
+    Result := True;
+    Exit;
+  end;
+end;
+
+function TBaseSkillPanel.CursorOverClickableItem: Boolean;
+var
+  aButton: TSkillPanelButton;
+begin
+  Result := False or CursorOverSkillButton(aButton)
+                  or CursorOverReplayIcon
+                  or CursorOverMinimap;
 end;
 
 constructor TBaseSkillPanel.Create(aOwner: TComponent);
@@ -1227,7 +1355,7 @@ end;
 procedure TBaseSkillPanel.DrawNewStr;
 var
   New: char;
-  i, CharID: integer;
+  CurChar, CharID: integer;
   SpecialCombine: Boolean;
   Red, Blue, Purple, Teal, Yellow{, Orange}: Single;
   LemmingKinds: TLemmingKinds;
@@ -1246,9 +1374,9 @@ begin
   // Erase previous text there
   fImage.Bitmap.FillRectS(0, 0, DrawStringLength * 8 * ResMod, 16 * ResMod, $00000000);
 
-  for i := 1 to DrawStringLength do
+  for CurChar := 1 to DrawStringLength do
   begin
-    New := fNewDrawStr[i];
+    New := fNewDrawStr[CurChar];
 
     case New of
       '%':        CharID := 0;
@@ -1261,7 +1389,7 @@ begin
 
     if (CharID >= 0) then
     begin
-      if (i > LemmingCountStartIndex) and (i <= LemmingCountStartIndex + 5) then
+      if (CurChar > LemmingCountStartIndex) and (CurChar <= LemmingCountStartIndex + 5) then
       begin
         if Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead < Level.Info.RescueCount - Game.LemmingsSaved then
         begin
@@ -1277,12 +1405,9 @@ begin
             fCombineHueShift := Teal;
         end else
           SpecialCombine := False;
-      end else if (not GameParams.UseNegativeSaveCount) and (i > SaveCountStartIndex) and (i <= SaveCountStartIndex + 5) then
+      end else if (not GameParams.UseNegativeSaveCount) and (CurChar > SaveCountStartIndex) and (CurChar <= SaveCountStartIndex + 5) then
       begin
-        CursorPos := Mouse.CursorPos;
-        P := Image.ControlToBitmap(Image.ScreenToClient(CursorPos));
-
-        if PtInRect(RescueCountRect, P) then
+        if CursorOverRescueCount then
         begin
           SpecialCombine := True;
           fCombineHueShift := Blue;
@@ -1298,7 +1423,7 @@ begin
           end else
             SpecialCombine := False;
         end;
-      end else if Level.Info.HasTimeLimit and (i > TimeLimitStartIndex) and (i <= TimeLimitStartIndex + 5) then
+      end else if Level.Info.HasTimeLimit and (CurChar > TimeLimitStartIndex) and (CurChar <= TimeLimitStartIndex + 5) then
       begin
         SpecialCombine := True;
 
@@ -1308,6 +1433,10 @@ begin
           fCombineHueShift := Red
         else
           fCombineHueShift := Yellow;
+      end else if (CurChar <= CursorInfoEndIndex) and CursorOverClickableItem then
+      begin
+        SpecialCombine := True;
+        fCombineHueShift := Blue;
       end else
         SpecialCombine := False;
 
@@ -1315,10 +1444,10 @@ begin
       begin
         fInfoFont[CharID].DrawMode := dmCustom;
         fInfoFont[CharID].OnPixelCombine := CombineShift;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8 * ResMod, 0);
+        fInfoFont[CharID].DrawTo(fImage.Bitmap, (CurChar - 1) * 8 * ResMod, 0);
       end else begin
         fInfoFont[CharID].DrawMode := dmOpaque;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8 * ResMod, 0);
+        fInfoFont[CharID].DrawTo(fImage.Bitmap, (CurChar - 1) * 8 * ResMod, 0);
       end;
     end;
   end;
@@ -1332,6 +1461,9 @@ begin
 
   Image.BeginUpdate;
   try
+    for i := Low(fButtonRects) to High(fButtonRects) do
+      GetButtonHints(i);
+
     // Text info string
     CreateNewInfoString;
     DrawNewStr;
@@ -1412,19 +1544,29 @@ begin
   end;
 end;
 
-procedure TBaseSkillPanel.SetInfoCursorLemming(Pos: Integer);
+procedure TBaseSkillPanel.SetInfoCursor(Pos: Integer);
 var
   S: string;
 const
   LEN = 12;
 begin
-  S := Uppercase(GetSkillString(Game.RenderInterface.SelectedLemming));
-  if S = '' then
-    S := StringOfChar(' ', LEN)
-  else if (Game.GetCursorLemmingCount = 0) then
-    S := PadR(S, LEN)
-  else
-    S := PadR(S + ' ' + IntToStr(Game.GetCursorLemmingCount), LEN);
+//  if (Game.StateIsUnplayable and not Game.ShouldExitToPostview) then  // Bookmark - for when panel message is added
+//    Exit;
+
+  S := '';
+
+  if CursorOverClickableItem and GameParams.ShowButtonHints then
+    S := ButtonHint + StringOfChar(' ', 13 - Length(ButtonHint))
+  else begin
+
+    S := Uppercase(GetSkillString(Game.RenderInterface.SelectedLemming));
+    if S = '' then
+      S := StringOfChar(' ', LEN)
+    else if (Game.GetCursorLemmingCount = 0) then
+      S := PadR(S, LEN)
+    else
+      S := PadR(S + ' ' + IntToStr(Game.GetCursorLemmingCount), LEN);
+  end;
 
   ModString(fNewDrawStr, S, Pos);
 end;
@@ -1493,10 +1635,8 @@ begin
       S := PadL(PadR(S, LEN - 1), LEN);
   end else begin
     SaveCount := Game.LemmingsSaved;
-    CursorPos := Mouse.CursorPos;
-    P := Image.ControlToBitmap(Image.ScreenToClient(CursorPos));
 
-    if PtInRect(RescueCountRect, P) then
+    if CursorOverRescueCount then
       S := IntToStr(Level.Info.RescueCount)
     else
       S := IntToStr(SaveCount);
@@ -1536,7 +1676,7 @@ begin
   ModString(fNewDrawStr, S, PosSec);
 end;
 
-procedure TBaseSkillPanel.SetReplayMark(Pos: Integer);
+procedure TBaseSkillPanel.SetReplayIcon(Pos: Integer);
 begin
   if not Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
     fNewDrawStr[Pos] := ' '
@@ -1584,6 +1724,16 @@ var
 begin
   if GameParams.EdgeScroll then fGameWindow.ApplyMouseTrap;
   if fGameWindow.IsHyperSpeed then Exit;
+
+  if CursorOverReplayIcon then
+  begin
+//    // Stop playback if the "P" icon is clicked (replay must have finished or been cancelled, so this needs to be called first)
+//    if GameParams.PlaybackModeActive and (Game.CurrentIteration > Game.ReplayManager.LastActionFrame) then
+//      GameParams.PlaybackModeActive := False;
+
+    // Cancel replay if the "R" icon is clicked
+    Game.RegainControl(True);
+  end;
 
   // Get pressed button
   aButton := spbNone;

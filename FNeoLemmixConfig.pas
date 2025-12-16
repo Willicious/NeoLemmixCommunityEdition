@@ -77,6 +77,7 @@ type
     gbVisualCustomizationOptions: TGroupBox;
     cbFadeMenuScreens: TCheckBox;
     cbUseNegativeSaveCount: TCheckBox;
+    cbShowButtonHints: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -285,6 +286,7 @@ begin
     cbEdgeScrolling.Checked := GameParams.EdgeScroll;
     cbUseSpawnInterval.Checked := GameParams.UseSpawnInterval;
     cbUseNegativeSaveCount.Checked := GameParams.UseNegativeSaveCount;
+    cbShowButtonHints.Checked := GameParams.ShowButtonHints;
 
     rgWhenNoLemmings.ItemIndex := Ord(GameParams.ExitToPostview);
 
@@ -358,6 +360,7 @@ begin
   GameParams.EdgeScroll := cbEdgeScrolling.Checked;
   GameParams.UseSpawnInterval := cbUseSpawnInterval.Checked;
   GameParams.UseNegativeSaveCount := cbUseNegativeSaveCount.Checked;
+  GameParams.ShowButtonHints := cbShowButtonHints.Checked;
 
   if (rgWhenNoLemmings.ItemIndex >= Ord(Low(TExitToPostview)))
     and (rgWhenNoLemmings.ItemIndex <= Ord(High(TExitToPostview))) then
