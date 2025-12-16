@@ -6,7 +6,7 @@ TRIGGER_HEIGHT 5
 SOUND weedgulp
 
 $ANIMATION
-  FRAMES 4
+  FRAMES 8
   NAME constant
   Z_INDEX 2
   
