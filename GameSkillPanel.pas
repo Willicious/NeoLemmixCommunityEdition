@@ -99,7 +99,7 @@ end;
 
 function TSkillPanelStandard.CursorInfoEndIndex: Integer;
 begin
-  Result := 13;
+  Result := 12;
 end;
 
 function TSkillPanelStandard.LemmingCountStartIndex: Integer;
@@ -217,7 +217,7 @@ end;
 
 function TSkillPanelCompact.CursorInfoEndIndex: Integer;
 begin
-  Result := 13;
+  Result := 12;
 end;
 
 function TSkillPanelCompact.LemmingCountStartIndex: Integer;
