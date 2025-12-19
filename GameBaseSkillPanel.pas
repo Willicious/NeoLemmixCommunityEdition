@@ -1689,15 +1689,14 @@ begin
 end;
 
 procedure TBaseSkillPanel.SetReplayIcon(Pos: Integer);
-//var
-  //TickCount: Cardinal;
-  //ShowIcon: Boolean;
+var
+  TickCount: Cardinal;
+  BlinkIcon: Boolean;
 begin
-  //TickCount := GetTickCount;
-  //ShowIcon := ((TickCount div 500) mod 2) = 0;
+  TickCount := GetTickCount;
+  BlinkIcon := ((TickCount div 500) mod 2) = 0;
 
-  if //(not ShowIcon) or
-  Game.StateIsUnplayable or (not GameParams.PlaybackModeActive and not IsReplaying) then
+  if BlinkIcon or Game.StateIsUnplayable or (not GameParams.PlaybackModeActive and not IsReplaying) then
     fNewDrawStr[Pos] := ' '
   else if Game.ReplayInsert or (GameParams.PlaybackModeActive and not IsReplaying) then
     fNewDrawStr[Pos] := #97 // Blue "R"
