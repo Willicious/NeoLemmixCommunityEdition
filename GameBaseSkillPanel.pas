@@ -181,6 +181,7 @@ type
     property RRIsPressed: Boolean read fRRIsPressed write fRRIsPressed;
     property ButtonHint: String read fButtonHint write fButtonHint;
     procedure GetButtonHints(aButton: TSkillPanelButton);
+    function IsReplaying: Boolean;
 
     function CursorOverSkillButton(out Button: TSkillPanelButton): Boolean;
     function CursorOverClickableItem: Boolean;
@@ -353,6 +354,11 @@ begin
   Result := False or CursorOverSkillButton(aButton)
                   or CursorOverReplayIcon
                   or CursorOverMinimap;
+end;
+
+function TBaseSkillPanel.IsReplaying: Boolean;
+begin
+  Result := False or Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause];
 end;
 
 constructor TBaseSkillPanel.Create(aOwner: TComponent);
@@ -1439,6 +1445,10 @@ begin
       begin
         SpecialCombine := True;
         fCombineHueShift := Blue;
+      end else if (CurChar = CursorInfoEndIndex + 1) and GameParams.PlaybackModeActive and not IsReplaying then
+      begin
+        SpecialCombine := True;
+        fCombineHueShift := 1 / 10; // Shifts Blue "R" to Purple for Playback Mode
       end else
         SpecialCombine := False;
 
@@ -1679,37 +1689,21 @@ begin
 end;
 
 procedure TBaseSkillPanel.SetReplayIcon(Pos: Integer);
-var
-//  TickCount: Cardinal;
-//  FrameIndex: Integer;
-  IsReplaying: Boolean;
+//var
+  //TickCount: Cardinal;
+  //ShowIcon: Boolean;
 begin
-//  // Calculate the frame index based on the tick count
-//  TickCount := GetTickCount;
-//  FrameIndex := (TickCount div 500) mod 2;
+  //TickCount := GetTickCount;
+  //ShowIcon := ((TickCount div 500) mod 2) = 0;
 
-  IsReplaying := Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause];
-//  IsClassicModeRewind := (GameParams.ClassicMode and (fGameWindow.GameSpeed = gspRewind));
-
-  if Game.StateIsUnplayable or (not GameParams.PlaybackModeActive and not IsReplaying) then
+  if //(not ShowIcon) or
+  Game.StateIsUnplayable or (not GameParams.PlaybackModeActive and not IsReplaying) then
     fNewDrawStr[Pos] := ' '
-  else if GameParams.PlaybackModeActive and not IsReplaying then
-    fNewDrawStr[Pos] := Chr(103 {+ FrameIndex}) // Purple "P" (#103 and #104) // TODO - Add this!
-  else if Game.ReplayInsert then
-    fNewDrawStr[Pos] := Chr(97 {+ FrameIndex}) // Blue "R" (#101 and #102)
-  else if not (RRIsPressed {or IsClassicModeRewind}) then
-    fNewDrawStr[Pos] := Chr(91 {+ FrameIndex}); // Red "R" (#99 and #100)
+  else if Game.ReplayInsert or (GameParams.PlaybackModeActive and not IsReplaying) then
+    fNewDrawStr[Pos] := #97 // Blue "R"
+  else if not RRIsPressed then
+    fNewDrawStr[Pos] := #91; // Red "R"
 end;
-
-//procedure TBaseSkillPanel.SetReplayIcon(Pos: Integer);
-//begin
-//  if not Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
-//    fNewDrawStr[Pos] := ' '
-//  else if Game.ReplayInsert then
-//    fNewDrawStr[Pos] := #97
-//  else
-//    fNewDrawStr[Pos] := #91;
-//end;
 
 procedure TBaseSkillPanel.SetTimeLimit(Pos: Integer);
 begin
