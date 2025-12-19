@@ -46,7 +46,7 @@ type
   end;
 
 const
-  CURSOR_TYPES = 6;
+  CURSOR_TYPES = 24; // Bookmark - TODO - Add support for fallback to original 6
 
   // special hyperspeed ends. usually only needed for forwards ones, backwards can often get the exact frame.
   SHE_SHRUGGER = 1;
@@ -1005,19 +1005,38 @@ procedure TGameWindow.SetCurrentCursor(aCursor: Integer = 0);
 var
   NewCursor: Integer;
 begin
+  if DoSuspendCursor then Exit;
+
   if aCursor = 0 then
   begin
     if (fRenderInterface.SelectedLemming = nil) or not PtInRect(Img.BoundsRect, ScreenToClient(Mouse.CursorPos)) then
-      NewCursor := 1
-    else
-      NewCursor := 2;
+    begin
+      if GameParams.PlaybackModeActive and not Game.Replaying then
+        NewCursor := 7
+      else if Game.ReplayInsert and Game.Replaying then
+        NewCursor := 5
+      else if Game.Replaying then
+        NewCursor := 3
+      else
+        NewCursor := 1
+    end else begin
+      if GameParams.PlaybackModeActive and not Game.Replaying then
+        NewCursor := 8
+      else if Game.ReplayInsert and Game.Replaying then
+        NewCursor := 6
+      else if Game.Replaying then
+        NewCursor := 4
+      else
+        NewCursor := 2;
+    end;
 
     if Game.fSelectDx < 0 then
-      NewCursor := NewCursor + 2
+      NewCursor := NewCursor + 8
     else if Game.fSelectDx > 0 then
-      NewCursor := NewCursor + 4;
+      NewCursor := NewCursor + 16;
   end else
     NewCursor := aCursor;
+
   NewCursor := NewCursor + ((fInternalZoom-1) * CURSOR_TYPES);
 
   if NewCursor <> Cursor then
@@ -1029,11 +1048,11 @@ begin
   end;
 end;
 
+
 function TGameWindow.DoSuspendCursor: Boolean;
 begin
   Result := fSuspendCursor;
 end;
-
 
 function TGameWindow.CheckScroll: Boolean;
   procedure Scroll(dx, dy: Integer);
@@ -1285,7 +1304,10 @@ begin
       RegainControl(True); // force the cancel even if in Replay Insert mode
 
     if (func.Action in [lka_ReleaseRateMax, lka_ReleaseRateDown, lka_ReleaseRateUp, lka_ReleaseRateMin]) then
+    begin
+      SkillPanel.RRIsPressed := True; // Prevents replay "R" being displayed when using RR hotkeys
       RegainControl; // we do not want to FORCE it in this case; Replay Insert mode should be respected here
+    end;
 
     if func.Action = lka_Skill then
     begin
@@ -1326,6 +1348,10 @@ begin
                         end else
                           fLastNukeKeyTime := CurrTime;
                       end;
+      lka_CancelPlayback: begin
+                            StopPlayback;
+                            RegainControl(True);
+                          end;
       lka_SaveState : begin
                         fSaveStateFrame := fGame.CurrentIteration;
                         fSaveStateReplayStream.Clear;
@@ -1519,7 +1545,7 @@ begin
   end;
 
   CheckShifts(Shift);
-
+  SkillPanel.RRIsPressed := False;
 end;
 
 procedure TGameWindow.SetAdjustedGameCursorPoint(BitmapPoint: TPoint);
@@ -1633,15 +1659,33 @@ var
   i, i2: Integer;
   TempBMP, TempBMP2: TBitmap32;
   SL: TStringList;
-  CursorDir: String;
+  CursorDir, FileExt: String;
 const
   CURSOR_NAMES: array[1..CURSOR_TYPES] of String = (
-    'standard',
-    'focused',
-    'standard|direction_left',
-    'focused|direction_left',
-    'standard|direction_right',
-    'focused|direction_right'
+    'standard',                               // 1
+    'focused',                                // 2
+    'standard_replay',                        // 3
+    'focused_replay',                         // 4
+    'standard_replay_insert',                 // 5
+    'focused_replay_insert',                  // 6
+    'standard_playback',                      // 7
+    'focused_playback',                       // 8
+    'standard|direction_left',                // 1 + 8
+    'focused|direction_left',                 // 2 + 8
+    'standard_replay|direction_left',         // 3 + 8
+    'focused_replay|direction_left',          // 4 + 8
+    'standard_replay_insert|direction_left',  // 5 + 8
+    'focused_replay_insert|direction_left',   // 6 + 8
+    'standard_playback|direction_left',       // 7 + 8
+    'focused_playback|direction_left',        // 8 + 8
+    'standard|direction_right',               // 1 + 16
+    'focused|direction_right',                // 2 + 16
+    'standard_replay|direction_right',        // 3 + 16
+    'focused_replay|direction_right',         // 4 + 16
+    'standard_replay_insert|direction_right', // 5 + 16
+    'focused_replay_insert|direction_right',  // 6 + 16
+    'standard_playback|direction_right',      // 7 + 16
+    'focused_playback|direction_right'        // 8 + 16
   );
 begin
   FreeCursors;
@@ -1663,16 +1707,18 @@ begin
       SL.DelimitedText := CURSOR_NAMES[i];
 
       if GameParams.HighResolution then
-        CursorDir := 'cursor-hr'
+        CursorDir := SFGraphicsCursorHighRes
       else
-        CursorDir := 'cursor';
+        CursorDir := SFGraphicsCursor;
 
-      TPngInterface.LoadPngFile(AppPath + 'gfx/' + CursorDir + '/' + SL[0] + '.png', TempBMP);
+      FileExt := '.png';
+
+      TPngInterface.LoadPngFile(AppPath + CursorDir + SL[0] + FileExt, TempBMP);
 
       while SL.Count > 1 do
       begin
         SL.Delete(0);
-        TPngInterface.LoadPngFile(AppPath + 'gfx/' + CursorDir + '/' + SL[0] + '.png', TempBMP2);
+        TPngInterface.LoadPngFile(AppPath + CursorDir + SL[0] + FileExt, TempBMP2);
         TempBMP2.DrawMode := dmBlend;
         TempBMP2.CombineMode := cmMerge;
         TempBMP.Draw(TempBMP.BoundsRect, TempBMP2.BoundsRect, TempBMP2);
@@ -1909,7 +1955,8 @@ end;
 
 procedure TGameWindow.HandleLoadReplay;
 begin
-  LoadReplay;
+  if not GameParams.PlaybackModeActive then
+    LoadReplay;
 
   if GlobalGame.ReplayManager.ReplayLoadSuccess then
   begin
@@ -1958,10 +2005,13 @@ procedure TGameWindow.Game_Finished;
 begin
   SoundManager.StopMusic;
 
-  if (Game.CheckPass and (Game.Level.PostText.Count > 0)) then
-    fCloseToScreen := gstText
-  else
-    fCloseToScreen := gstPostview;
+  SoundManager.StopMusic;
+
+  if (Game.CheckPass and (Game.Level.PostText.Count > 0))
+    and not (GameParams.PlaybackModeActive and GameParams.AutoSkipPreviewPostview) then
+      fCloseToScreen := gstText
+    else
+      fCloseToScreen := gstPostview;
 end;
 
 procedure TGameWindow.CloseScreen(aNextScreen: TGameScreenType);

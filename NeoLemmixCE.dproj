@@ -295,6 +295,10 @@ $(PreBuildEvent)]]></PreBuildEvent>
             <Form>FLevelListDialog</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="FPlaybackMode.pas">
+            <Form>FPlaybackMode</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -8,17 +8,18 @@ uses
   Types,
   LemNeoLevelPack,
   LemmixHotkeys,
-  Windows, Classes, SysUtils, StrUtils, Controls,
+  Windows, Classes, SysUtils, StrUtils, Controls, Dialogs, UITypes,
   UMisc, Math,
-  GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
+  Gr32, Gr32_Image, Gr32_Layers, GR32_Resamplers,
   LemCore,
   LemTypes,
-  LemStrings,
-  LemGame,
+  LemStrings, LemMenuFont,
+  LemLevel, LemGame,
   LemGadgetsConstants,
   GameControl,
   GameSound,
-  GameBaseScreenCommon, GameBaseMenuScreen;
+  GameBaseScreenCommon, GameBaseMenuScreen,
+  SharedGlobals;
 
 {-------------------------------------------------------------------------------
    The dos postview screen, which shows you how you've done it.
@@ -27,23 +28,43 @@ type
   TGamePostviewScreen = class(TGameBaseMenuScreen)
     private
       fAdvanceLevel: Boolean;
-      function GetScreenText: string;
+
+      function GetPostviewText: TextLineArray;
+      procedure LoadPostviewTextColours;
+
+      function GetResultIndex: Integer;
       procedure NextLevel;
       procedure ReplaySameLevel;
       procedure ExitToMenu;
+
+      procedure MakeShowSkillsUsedClickable;
+      procedure MakeNextLevelClickable;
+      procedure MakePlaybackNextLevelClickable;
+      procedure MakeRetryLevelClickable(LevelPassed: Boolean);
+      procedure MakeSaveReplayClickable;
+      procedure MakeLevelSelectClickable;
+      procedure MakeExitToMenuClickable;
     protected
       procedure PrepareGameParams; override;
       procedure BuildScreen; override;
       procedure CloseScreen(aNextScreen: TGameScreenType); override;
-      function GetBackgroundSuffix: String; override;
+      function GetWallpaperSuffix: String; override;
 
       procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
       procedure DoAfterConfig; override;
+      procedure ShowSkillsUsed;
   end;
 
 implementation
 
-uses Forms;
+uses Forms, LemNeoParser;
+
+var
+  TopTextShift: Extended;
+  RescueRecordShift: Extended;
+  CommentShift: Extended;
+  TimeRecordShift: Extended;
+  SkillsRecordShift: Extended;
 
 { TDosGamePreview }
 
@@ -52,7 +73,7 @@ begin
   inherited CloseScreen(aNextScreen);
 end;
 
-function TGamePostviewScreen.GetBackgroundSuffix: String;
+function TGamePostviewScreen.GetWallpaperSuffix: String;
 begin
   Result := 'postview';
 end;
@@ -65,7 +86,9 @@ end;
 
 procedure TGamePostviewScreen.NextLevel;
 begin
-  GameParams.NextLevel(True);
+  if not GameParams.PlaybackModeActive then
+    GameParams.NextLevel(True);
+
   CloseScreen(gstPreview);
 end;
 
@@ -85,43 +108,178 @@ begin
   CloseScreen(gstPreview);
 end;
 
+procedure TGamePostviewScreen.MakeShowSkillsUsedClickable;
+var
+  R: TClickableRegion;
+begin
+  if GameParams.PlaybackModeActive or (GameParams.TestModeLevel = nil) then
+    Exit;
+
+  R := MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y - 40), 'Show Skills Used', ShowSkillsUsed, True);
+
+  R.ShortcutKeys.Add(VK_RETURN);
+  R.ShortcutKeys.Add(VK_SPACE);
+end;
+
+procedure TGamePostviewScreen.MakeExitToMenuClickable;
+var
+  S: String;
+  R: TClickableRegion;
+  P: TPoint;
+begin
+  if GameParams.PlaybackModeActive then
+  begin
+    S := 'Cancel Playback Mode';
+    P := Point(FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y);
+  end else begin
+    S := SOptionToMenu;
+    P := Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+  end;
+
+  R := MakeClickableText(Point(P), S, ExitToMenu);
+  R.ShortcutKeys.Add(VK_ESCAPE);
+end;
+
+procedure TGamePostviewScreen.MakeNextLevelClickable;
+var
+  R: TClickableRegion;
+begin
+  if GameParams.PlaybackModeActive then
+    Exit;
+
+  R := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionNextLevel, NextLevel);
+
+  R.ShortcutKeys.Add(VK_RETURN);
+  R.ShortcutKeys.Add(VK_SPACE);
+end;
+
+procedure TGamePostviewScreen.MakePlaybackNextLevelClickable;
+var
+  R: TClickableRegion;
+  S: String;
+begin
+  S := 'Playback Next Level';
+
+  R := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), S, NextLevel);
+
+  R.ShortcutKeys.Add(VK_RETURN);
+  R.ShortcutKeys.Add(VK_SPACE);
+end;
+
+procedure TGamePostviewScreen.MakeRetryLevelClickable(LevelPassed: Boolean);
+var
+  P: TPoint;
+  R: TClickableRegion;
+begin
+  if GameParams.PlaybackModeActive then
+    Exit;
+
+  if LevelPassed then
+    P := Point(FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y)
+  else
+    P := Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y);
+
+  R := MakeClickableText(Point(P), SOptionRetryLevel, ReplaySameLevel);
+
+  if not LevelPassed then
+  begin
+    R.ShortcutKeys.Add(VK_RETURN);
+    R.ShortcutKeys.Add(VK_SPACE);
+  end;
+
+  R.AddKeysFromFunction(lka_Restart);
+end;
+
+procedure TGamePostviewScreen.MakeSaveReplayClickable;
+var
+  R: TClickableRegion;
+  P: TPoint;
+begin
+  if GameParams.PlaybackModeActive then
+  begin
+    if not GlobalGame.ReplayManager.ActionAddedDuringPlayback then
+      Exit;
+
+    P := Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y);
+  end else
+    P := Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y);
+
+  R := MakeClickableText(P, SOptionSaveReplay, SaveReplay);
+  R.AddKeysFromFunction(lka_SaveReplay);
+end;
+
+procedure TGamePostviewScreen.MakeLevelSelectClickable;
+var
+  R: TClickableRegion;
+begin
+  if GameParams.PlaybackModeActive then
+    Exit;
+
+  R := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
+
+  R.ShortcutKeys.Add(VK_F3);
+end;
+
 procedure TGamePostviewScreen.BuildScreen;
 var
-  NewRegion: TClickableRegion;
+  Lines: TextLineArray;
+const
+  TEXT_Y_POSITION = 28;
 begin
   CurrentScreen := gstPostview;
-
+  fClickableRegions.Clear;
   ScreenImg.BeginUpdate;
+
   try
-    MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, 16);
+    // Draw text
+    Lines := GetPostviewText;
+    MenuFont.DrawTextLines(Lines, ScreenImg.Bitmap, TEXT_Y_POSITION);
 
-    if GameParams.GameResult.gSuccess then
+    { This needs to be called before the next level+replay is loaded
+      so that modified replays can be saved in Playback Mode }
+    MakeSaveReplayClickable;
+
+    // If in PlaybackMode, load the next level or stop playback if the list is empty
+    if GameParams.PlaybackModeActive then
     begin
-      NewRegion := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionNextLevel, NextLevel);
-      NewRegion.ShortcutKeys.Add(VK_RETURN);
-      NewRegion.ShortcutKeys.Add(VK_SPACE);
-
-      NewRegion := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionRetryLevel, ReplaySameLevel);
-      NewRegion.AddKeysFromFunction(lka_Restart);
-    end else begin
-      NewRegion := MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionRetryLevel, ReplaySameLevel);
-      NewRegion.ShortcutKeys.Add(VK_RETURN);
-      NewRegion.ShortcutKeys.Add(VK_SPACE);
-      NewRegion.AddKeysFromFunction(lka_Restart);
+      if GameParams.PlaybackIndex >= GameParams.PlaybackList.Count -1 then
+        StopPlayback
+      else
+        StartPlayback(GameParams.PlaybackIndex + 1);
     end;
 
-    NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu);
-    NewRegion.ShortcutKeys.Add(VK_ESCAPE);
+    // Check again for PlaybackMode after call to StartPlayback
+    if GameParams.PlaybackModeActive then
+      MakePlaybackNextLevelClickable
+    else
+      MakeSaveReplayClickable;
 
-    NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
-    NewRegion.ShortcutKeys.Add(VK_F2);
+    // Check for success result and prepare the relevant clickables
+    if GameParams.GameResult.gSuccess then
+    begin
+      MakeTalismanOptions;
+      MakeNextLevelClickable;
+      MakeRetryLevelClickable(True);
+    end else begin
+      MakeRetryLevelClickable(False);
+    end;
 
-    NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionSaveReplay, SaveReplay);
-    NewRegion.AddKeysFromFunction(lka_SaveReplay);
+    // If in Playtest mode, show the Skills Used clickable
+    if (GameParams.TestModeLevel <> nil) then
+      MakeShowSkillsUsedClickable;
 
-    MakeHiddenOption(VK_F3, ShowConfigMenu);
+    // Prepare some more clickables and hotkey options
+    MakeLevelSelectClickable;
+    MakeExitToMenuClickable;
 
-    DrawAllClickables;
+    MakeHiddenOption(VK_F2, ShowConfigMenu);
+    MakeHiddenOption(lka_CancelPlayback, CancelPlaybackMode);
+
+    ReloadCursor; // ('postview'); // Bookmark - Add support for menu cursors
+
+    // Draw clickables only if (AutoSkip + PlaybackMode) isn't active
+    if not (GameParams.AutoSkipPreviewPostview and GameParams.PlaybackModeActive) then
+      DrawAllClickables;
   finally
     ScreenImg.EndUpdate;
   end;
@@ -131,57 +289,34 @@ procedure TGamePostviewScreen.ExitToMenu;
 begin
   if GameParams.TestModeLevel <> nil then
     CloseScreen(gstExit)
-  else
+  else begin
+    GameParams.PlaybackModeActive := False;
     CloseScreen(gstMenu);
+  end;
 end;
 
-function TGamePostviewScreen.GetScreenText: string;
+function TGamePostviewScreen.GetResultIndex: Integer;
 var
-  WhichText: TPostviewText;
   i: Integer;
-  STarget: string;
-  SDone: string;
+  AdjLemCount: Integer;
+  CurrentMin: Integer;
 
-    procedure Add(const S: string);
-    begin
-      Result := Result + S + #13;
-    end;
-
-    procedure LF(aCount: Double);
-    begin
-      if aCount >= 1 then
-        Result := Result + StringOfChar(#13, Floor(aCount));
-      if Floor(aCount) <> Ceil(aCount) then
-        Result := Result + #12;
-    end;
-
-    function GetResultIndex: Integer;
-    var
-      i: Integer;
-      AdjLemCount: Integer;
-      CurrentMin: Integer;
-
-      function ConditionMet(aText: TPostviewText): Boolean;
-      var
-        NewMin: Integer;
+  function ConditionMet(aText: TPostviewText): Boolean;
+  var
+    NewMin: Integer;
       begin
         with GameParams.GameResult do
         begin
-          NewMin := $7FFFFFFF; // avoid compiler warning
+          NewMin := $7FFFFFFF; // Avoid compiler warning
           case aText.ConditionType of
             pvc_Absolute: NewMin := aText.ConditionValue;
             pvc_Percent: NewMin := AdjLemCount * aText.ConditionValue div 100;
             pvc_Relative: NewMin := gToRescue + aText.ConditionValue;
             pvc_RelativePercent: NewMin := gToRescue + (gToRescue * aText.ConditionValue div 100);
           end;
-          if (gRescued >= NewMin)
-             and
-            ((NewMin > CurrentMin)
-             or
-             ((aText.ConditionType in [pvc_Relative, pvc_RelativePercent]) and (aText.ConditionValue = 0))
-             or
-             ((aText.ConditionType = pvc_Percent) and (aText.ConditionValue = 100))
-             ) then
+          if (gRescued >= NewMin) and
+            ((NewMin > CurrentMin) or ((aText.ConditionType in [pvc_Relative, pvc_RelativePercent]) and (aText.ConditionValue = 0))
+            or ((aText.ConditionType = pvc_Percent) and (aText.ConditionValue = 100))) then
           begin
             Result := True;
             CurrentMin := NewMin;
@@ -189,35 +324,52 @@ var
             Result := False;
         end;
       end;
-    begin
-      AdjLemCount := GameParams.Level.Info.LemmingsCount - GameParams.Level.Info.ZombieCount;
-      if spbCloner in GameParams.Level.Info.Skillset then AdjLemCount := AdjLemCount + GameParams.Level.Info.SkillCount[spbCloner];
-      for i := 0 to GameParams.Level.InteractiveObjects.Count-1 do
-        if GameParams.Renderer.FindGadgetMetaInfo(GameParams.Level.InteractiveObjects[i]).TriggerEffect = DOM_PICKUP then
-          if GameParams.Level.InteractiveObjects[i].Skill = Integer(spbCloner) then Inc(AdjLemCount, Max(GameParams.Level.InteractiveObjects[i].TarLev, 1));
-      Result := 0;
-      CurrentMin := -1;
-      for i := 0 to GameParams.CurrentLevel.Group.PostviewTexts.Count-1 do
-        if ConditionMet(GameParams.CurrentLevel.Group.PostviewTexts[i]) then
-          Result := i;
-    end;
+begin
+  AdjLemCount := GameParams.Level.Info.LemmingsCount - GameParams.Level.Info.ZombieCount;
 
-    function MakeTimeString(aFrames: Integer): String;
-    const
-      CENTISECONDS: array[0..16] of String = ('00', '06', '12', '18',
-                                              '24', '29', '35', '41',
-                                              '47', '53', '59', '65',
-                                              '71', '76', '82', '88',
-                                              '94');
-    begin
-      if aFrames < 0 then
-        Result := '0:00.00'
-      else begin
-        Result := IntToStr(aFrames div (17 * 60));
-        Result := Result + ':' + LeadZeroStr((aFrames mod (17 * 60)) div 17, 2);
-        Result := Result + '.' + CENTISECONDS[aFrames mod 17];
-      end;
+  if spbCloner in GameParams.Level.Info.Skillset then
+    AdjLemCount := AdjLemCount + GameParams.Level.Info.SkillCount[spbCloner];
+
+  for i := 0 to GameParams.Level.InteractiveObjects.Count-1 do
+    if GameParams.Renderer.FindGadgetMetaInfo(GameParams.Level.InteractiveObjects[i]).TriggerEffect = DOM_PICKUP then
+      if GameParams.Level.InteractiveObjects[i].Skill = Integer(spbCloner) then
+        Inc(AdjLemCount, Max(GameParams.Level.InteractiveObjects[i].TarLev, 1));
+
+  Result := 0;
+  CurrentMin := -1;
+
+  for i := 0 to GameParams.CurrentLevel.Group.PostviewTexts.Count-1 do
+    if ConditionMet(GameParams.CurrentLevel.Group.PostviewTexts[i]) then
+      Result := i;
+end;
+
+function TGamePostviewScreen.GetPostviewText: TextLineArray;
+const
+  LINE_Y_SPACING = 28;
+
+var
+  HueShift: TColorDiff;
+  Results: TGameResultsRec;
+  Entry: TNeoLevelEntry;
+  WhichText: TPostviewText;
+  STarget, SRescued, STimeSR, STimeTotal: string;
+  SRescueRecord, STimeRecord, SSkillsRecord, SThisLine: string;
+  // InfiniteHotkeysUsed,
+  LevelHasTalismans, LevelPassed, ShowSavedRecord: Boolean;
+
+  function MakeTimeString(aFrames: Integer): String;
+  const
+    CENTISECONDS: array[0..16] of String = ('00', '06', '12', '18', '24', '29', '35', '41', '47',
+                                            '53', '59', '65', '71', '76', '82', '88', '94');
+  begin
+    if aFrames < 0 then
+      Result := '0:00.00'
+    else begin
+      Result := IntToStr(aFrames div (17 * 60));
+      Result := Result + ':' + LeadZeroStr((aFrames mod (17 * 60)) div 17, 2);
+      Result := Result + '.' + CENTISECONDS[aFrames mod 17];
     end;
+  end;
 
   function GetSkillRecordValue(aNewValue, aOldValue: Integer): Integer;
   begin
@@ -226,11 +378,27 @@ var
     else
       Result := aOldValue;
   end;
-    
 begin
+  Results := GameParams.GameResult;
+  Entry := GameParams.CurrentLevel;
+  FillChar(HueShift, SizeOf(TColorDiff), 0);
+  SetLength(Result, 10);
+  LoadPostviewTextColours;
 
-  Result := '';
-  with GameParams, GameResult do
+  STarget := IntToStr(Results.gToRescue);
+  SRescued := IntToStr(Results.gRescued);
+
+  STimeSR := MakeTimeString(Results.gLastRescueIteration);
+//  STimeTotal := MakeTimeString(Results.gLastIteration);  // Bookmark
+
+  SRescueRecord := IntToStr(Entry.UserRecords.LemmingsRescued.Value);
+  STimeRecord := MakeTimeString(Entry.UserRecords.TimeTaken.Value);
+  SSkillsRecord := IntToStr(Entry.UserRecords.TotalSkills.Value);
+
+//  InfiniteHotkeysUsed := GlobalGame.IsInfiniteSkillsMode or GlobalGame.IsInfiniteTimeMode; // Bookmark
+  LevelHasTalismans := Entry.Talismans.Count > 0;
+
+  with GameParams, Results do
   begin
     if GameParams.OneLevelMode then
     begin
@@ -249,66 +417,233 @@ begin
     if GameParams.PostviewJingles then
     begin
       SoundManager.PurgePackSounds;
+
       if gRescued >= Level.Info.RescueCount then
-          SoundManager.PlayPackSound('success', ExtractFilePath(GameParams.CurrentLevel.Group.FindFile('success.ogg')))
+        SoundManager.PlaySound(SFX_SUCCESS)
       else
-          SoundManager.PlayPackSound('failure', ExtractFilePath(GameParams.CurrentLevel.Group.FindFile('failure.ogg')));
+        SoundManager.PlaySound(SFX_FAILURE);
     end;
+  end;
 
-    // init some local strings
-    STarget := PadL(IntToStr(gToRescue), 4);
-    SDone := PadL(IntToStr(gRescued), 4);
+  LevelPassed := (Results.gSuccess) or ((GameParams.TestModeLevel <> nil) and
+                                        (Results.gRescued >= Results.gToRescue));
 
-    // top text
-    if gGotNewTalisman then
-        Add(STalismanUnlocked)
-    else if gTimeIsUp then
-        Add(SYourTimeIsUp)
+  // Top text
+  HueShift.HShift := TopTextShift;
+
+  if (Results.gGotNewTalisman or Results.gGotTalisman) and GlobalGame.ReplayManager.IsThisUsersReplay then
+  begin
+    if Results.gGotNewTalisman then
+      Result[0].Line := STalismanUnlocked
     else
-        Add(SAllLemmingsAccountedFor);
+      Result[0].Line := STalismanAchieved;
+  end else if Results.gTimeIsUp then
+    Result[0].Line := SYourTimeIsUp
+  else                                     // Bookmark - Add support for this
+    Result[0].Line := 'All ' + 'lemmings' { GameParams.Renderer.Theme.LemNamesPlural } + ' accounted for.';
+  Result[0].ColorShift := HueShift;
+  Result[0].yPos := 0 + LINE_Y_SPACING;
 
-    LF(2);
+  // Rescue result - needed
+  HueShift.HShift := RescueRecordShift;
+  if LevelHasTalismans and LevelPassed then
+    Result[1].Line := ''
+  else
+    Result[1].Line := SYouNeeded + ' ' + STarget + StringOfChar(' ', 3 - STarget.Length);
+  Result[1].yPos := Result[0].yPos + (LINE_Y_SPACING * 2);
+  Result[1].ColorShift := HueShift;
 
-    Add(SYouRescued + SDone);
-    LF(0.5);
-    Add(SYouNeeded + STarget);
-    LF(0.5);
+  // Rescue result - rescued
+  if LevelHasTalismans and LevelPassed then
+    Result[2].Line := ''
+  else
+    Result[2].Line := SYouRescued + SRescued + StringOfChar(' ', 3 - SRescued.Length);
+  Result[2].yPos := Result[1].yPos + LINE_Y_SPACING;
+  Result[2].ColorShift := HueShift;
 
-    if GameParams.TestModeLevel <> nil then
-      LF(1)
-    else if GameParams.CurrentLevel.UserRecords.LemmingsRescued.Value < 0 then
-      Add(SYourRecord + PadL('0', 4))
+  // Rescue result - record
+  ShowSavedRecord := Results.gSuccess
+                     and (Entry.UserRecords.LemmingsRescued.Value > 0)
+                     and (not Results.gToRescue <= 0); // and not InfiniteHotkeysUsed; // Bookmark
+
+  if LevelHasTalismans and LevelPassed then
+  begin
+    SThisLine := SYouNeeded + STarget + ' | ' + SYouRescued + SRescued;
+
+    if ShowSavedRecord then
+      Result[3].Line := SThisLine + ' | ' + SYourRecord + SRescueRecord
     else
-      Add(SYourRecord + PadL(IntToStr(GameParams.CurrentLevel.UserRecords.LemmingsRescued.Value), 4));
+      Result[3].Line := SThisLine;
+  end else if ShowSavedRecord then
+    Result[3].Line := SYourRecord + SRescueRecord +
+                      StringOfChar(' ', 3 - SRescueRecord.Length)
+  else
+    Result[3].Line := '';
 
-    LF(2);
+  Result[3].yPos := Result[2].yPos + LINE_Y_SPACING;
+  Result[3].ColorShift := HueShift;
 
-    WhichText := GameParams.CurrentLevel.Group.PostviewTexts[GetResultIndex];
-    for i := 0 to 6 do
-    begin
-      if i < WhichText.Text.Count then
-        Add(WhichText.Text[i]);
-    end;
+  // Comment - we allocate 2 lines for this
+  HueShift.HShift := CommentShift;
+//  if InfiniteHotkeysUsed then // Bookmark - In case Infinite Skills/Time hotkey is every implemented
+//  begin
+//    var S := '';
+//
+//    if GlobalGame.IsInfiniteSkillsMode and GlobalGame.IsInfiniteTimeMode then
+//      S := 'skills and time'
+//    else if GlobalGame.IsInfiniteSkillsMode then
+//      S := 'skills'
+//    else
+//      S := 'time';
+//
+//    Result[4].Line := 'You used infinite ' + S + ' to play this level';
+//    Result[5].Line := 'Try again sometime with the intended skillset';
+//  end else
+  begin
+    WhichText := Entry.Group.PostviewTexts[GetResultIndex];
+    Result[4].Line := WhichText.Text[0];
+    Result[5].Line := WhichText.Text[1];
+  end;
 
-    if gSuccess then
-    begin
-      LF(2);
+  Result[4].yPos := Result[3].yPos + (LINE_Y_SPACING * 2);
+  Result[5].yPos := Result[4].yPos + LINE_Y_SPACING;
+  Result[4].ColorShift := HueShift;
+  Result[5].ColorShift := HueShift;
 
-      Add(SYourTime + PadL(MakeTimeString(gLastRescueIteration), 8));
-      LF(0.5);
-      if (GameParams.TestModeLevel <> nil) then
-        LF(1)
-      else
-        Add(SYourTimeRecord + PadL(MakeTimeString(GameParams.CurrentLevel.UserRecords.TimeTaken.Value), 8));
-    end;
+//  // Always show total time taken // Bookmark - See if people want total time to be shown
+//  HueShift.HShift := TimeRecordShift;
+//  Result[6].Line := SYourTotalTime + STimeTotal;
+//  Result[6].yPos := Result[5].yPos + (LINE_Y_SPACING * 2);
+//  Result[6].ColorShift := HueShift;
+
+  // Time taken to reach SR
+  if (Results.gSuccess and not (Results.gToRescue <= 0))
+  or ((GameParams.TestModeLevel <> nil) and (Results.gRescued >= Results.gToRescue)) then
+    Result[6 {Bookmark - Needs to be 7 if using TotalTime}].Line := SYourTime + STimeSR
+  else
+    Result[6].Line := '';
+  Result[6].yPos := Result[5 {Bookmark - Needs to be 6 if using TotalTime}].yPos + LINE_Y_SPACING;
+  Result[6].ColorShift := HueShift;
+
+  // Time record
+  if (Results.gSuccess and (Entry.UserRecords.TimeTaken.Value > 0))
+  and (not Results.gToRescue <= 0) {Bookmark - and not InfiniteHotkeysUsed} then
+    Result[7 {Bookmark - Needs to be 8 if using TotalTime}].Line := SYourTimeRecord + STimeRecord
+  else
+    Result[7].Line := '';
+  Result[7].yPos := Result[6 {Bookmark - Needs to be 7 if using TotalTime}].yPos + LINE_Y_SPACING;
+  Result[7].ColorShift := HueShift;
+
+  // Skills record
+  HueShift.HShift := SkillsRecordShift;
+  if (Results.gSuccess and (Entry.UserRecords.TotalSkills.Value >= 0))
+  and (not Results.gToRescue <= 0) {Bookmark - and not InfiniteHotkeysUsed} then
+    Result[8 {Bookmark - Needs to be 9 if using TotalTime}].Line := SYourFewestSkills + SSkillsRecord
+  else
+    Result[8].Line := '';
+  Result[8].yPos := Result[7 {Bookmark - Needs to be 8 if using TotalTime}].yPos + (LINE_Y_SPACING * 2);
+  Result[8].ColorShift := HueShift;
+end;
+
+procedure TGamePostviewScreen.LoadPostviewTextColours;
+var
+  Parser: TParser;
+  Sec: TParserSection;
+  aPath: string;
+  aFile: string;
+
+  // Default colours(all blue), loaded if custom files don't exist
+  procedure ResetColours;
+  begin
+    TopTextShift := 0;
+    RescueRecordShift := 0;
+    CommentShift := 0;
+    TimeRecordShift := 0;
+    SkillsRecordShift := 0;
+  end;
+
+begin
+  ResetColours;
+
+  aFile := 'textcolours.nxmi';
+  aPath := GameParams.CurrentLevel.Group.ParentBasePack.Path;
+
+  if aPath = '' then
+  aPath := AppPath + SFLevels;
+
+  if (GameParams.CurrentLevel = nil)
+    or not (FileExists(aPath + aFile) or FileExists(AppPath + SFData + aFile))
+      then Exit;
+
+  Parser := TParser.Create;
+  try
+    if FileExists(aPath + aFile) then
+      Parser.LoadFromFile(aPath + aFile)
+    else if FileExists(AppPath + SFData + aFile) then
+      Parser.LoadFromFile(AppPath + SFData + aFile);
+
+    Sec := Parser.MainSection.Section['postview'];
+    if Sec = nil then Exit;
+
+    TopTextShift := StrToFloatDef(Sec.LineString['top_text'], 0);
+    RescueRecordShift := StrToFloatDef(Sec.LineString['rescue_record'], 0);
+    CommentShift := StrToFloatDef(Sec.LineString['comment'], 0);
+    TimeRecordShift := StrToFloatDef(Sec.LineString['time_record'], 0);
+    SkillsRecordShift := StrToFloatDef(Sec.LineString['skills_record'], 0);
+  finally
+    Parser.Free;
   end;
 end;
 
 procedure TGamePostviewScreen.DoAfterConfig;
 begin
   inherited;
-  ReloadCursor;
+  ReloadCursor; // ('postview'); // Bookmark - Add support for menu cursors
+end;
+
+procedure TGamePostviewScreen.ShowSkillsUsed;
+var
+  i, TotalSkills, TotalTypes: Integer;
+  S: TStringList;
+  Results: TGameResultsRec;
+begin
+  if GameParams.TestModeLevel = nil then
+    Exit;
+
+  Results := GameParams.GameResult;
+
+  TotalSkills := 0;
+  TotalTypes := 0;
+
+  S := TStringList.Create;
+  try
+    S.Add('Skills used during this playtest:');
+    S.Add('');
+
+    for i := 0 to High(Results.gSkillsUsedList) do
+    begin
+      if Results.gSkillsUsedList[i].Count > 0 then
+      begin
+        Inc(TotalSkills, Results.gSkillsUsedList[i].Count);
+        Inc(TotalTypes);
+        S.Add(Format('%s: %d',
+          [Results.gSkillsUsedList[i].Name,
+           Results.gSkillsUsedList[i].Count]));
+      end;
+    end;
+
+    if (TotalTypes = 0) then
+      S.Add('(None)')
+    else begin
+      S.Add('');
+      S.Add(Format('Total Skills: %d', [TotalSkills]));
+      S.Add(Format('Total Skill Types: %d', [TotalTypes]));
+    end;
+
+    MessageDlg(S.Text, mtInformation, [mbOK], 0);
+  finally
+    S.Free;
+  end;
 end;
 
 end.
-

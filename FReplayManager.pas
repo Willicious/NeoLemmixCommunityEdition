@@ -137,7 +137,7 @@ begin
       InitialDir := AppPath + SFReplays;
 
     OpenDlg.InitialDir := InitialDir;
-    OpenDlg.Filter := 'SuperLemmix Replay (*.nxrp)|*.nxrp';
+    OpenDlg.Filter := 'NeoLemmix Replay (*.nxrp)|*.nxrp';
     OpenDlg.Options := [ofFileMustExist, ofHideReadOnly, ofEnableSizing, ofPathMustExist];
 
     if OpenDlg.Execute then

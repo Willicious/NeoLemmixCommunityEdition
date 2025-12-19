@@ -7,7 +7,8 @@ uses
   LemTypes, LemStrings,
   Dialogs, Controls, Forms,
   GR32,
-  Classes, SysUtils;
+  Classes, SysUtils,
+  SharedGlobals;
 
 const
   MENU_FONT_COUNT = ord(#126) - ord('!') + 1;
@@ -18,6 +19,14 @@ const
   HALF_LINE_FEED = 10;
 
 type
+   TextLineInfo = record
+   Line: string;
+   yPos: Integer;
+   ColorShift: TColorDiff;
+  end;
+
+  TextLineArray = array of TextLineInfo;
+
   TMenuFont = class
     private
       function GetBitmapOfChar(Ch: Char): TBitmap32;
@@ -32,7 +41,9 @@ type
       procedure Load;
 
       procedure DrawText(Dst: TBitmap32; const S: string; X, Y: Integer; aRestoreBuffer: TBitmap32 = nil);
+      procedure DrawTextColored(Dst: TBitmap32; const HueShift: TColorDiff; const S: string; X, Y: Integer; aRestoreBuffer: TBitmap32 = nil; EraseOnly: Boolean = False);
       procedure DrawTextCentered(Dst: TBitmap32; const S: string; Y: Integer; aRestoreBuffer: TBitmap32 = nil; EraseOnly: Boolean = False);
+      procedure DrawTextLines(const Lines: TextLineArray; Dst: TBitmap32; Y: Integer; aRestoreBuffer: TBitmap32 = nil; EraseOnly: Boolean = False);
       function GetTextSize(const S: String): TRect;
 
       property BitmapOfChar[Ch: Char]: TBitmap32 read GetBitmapOfChar;
@@ -45,7 +56,7 @@ uses
   GameControl;
 
 procedure TMenuFont.Combine(F: TColor32; var B: TColor32; M: Cardinal);
-// just show transparent
+// Just show transparent
 begin
   if F <> 0 then B := F;
 end;
@@ -133,7 +144,7 @@ begin
   begin
     R := GetTextSize(S);
     Types.OffsetRect(R, X, Y);
-    Types.IntersectRect(R, R, aRestoreBuffer.BoundsRect); // oops, again watch out for sourceretangle!
+    Types.IntersectRect(R, R, aRestoreBuffer.BoundsRect); // Oops, again watch out for sourceretangle!
     aRestoreBuffer.DrawTo(Dst, R, R);
   end;
 
@@ -181,7 +192,7 @@ begin
   begin
     R := GetTextSize(S);
     Types.OffsetRect(R, (Dst.Width - (R.Right - R.Left)) div 2, Y);
-    Types.IntersectRect(R, R, aRestoreBuffer.BoundsRect); // oops, again watch out for sourceretangle!
+    Types.IntersectRect(R, R, aRestoreBuffer.BoundsRect); // Oops, again watch out for sourceretangle!
     aRestoreBuffer.DrawTo(Dst, R, R);
   end;
 
@@ -199,6 +210,70 @@ begin
     end;
 
   List.Free;
+end;
+
+procedure TMenuFont.DrawTextColored(Dst: TBitmap32; const HueShift: TColorDiff;
+  const S: string; X, Y: Integer; aRestoreBuffer: TBitmap32 = nil; EraseOnly: Boolean = False);
+var
+  C: Char;
+  CX, CY, i: Integer;
+  R: TRect;
+
+  tmpBitmap: TBitmap32;
+begin
+  tmpBitmap := TBitmap32.Create;
+
+  if aRestoreBuffer <> nil then
+  begin
+    R := GetTextSize(S);
+    Types.OffsetRect(R, X, Y);
+    Types.IntersectRect(R, R, aRestoreBuffer.BoundsRect);
+    aRestoreBuffer.DrawTo(Dst, R, R);
+  end;
+
+  CX := X;
+  CY := Y;
+  for i := 1 to Length(S) do
+  begin
+    C := S[i];
+    case C of
+      #12:
+        begin
+          Inc(CY, HALF_LINE_FEED);
+          CX := X;
+        end;
+      #13:
+        begin
+          Inc(CY, CHARACTER_HEIGHT);
+          CX := X;
+        end;
+      ' ':
+        begin
+          Inc(CX, CHARACTER_WIDTH);
+        end;
+      #33..#132:
+        begin
+          tmpBitmap.Assign(BitmapOfChar[C]);
+          ApplyColorShift(tmpBitmap, HueShift);
+          tmpBitmap.DrawTo(Dst, CX, CY);
+          Inc(CX, CHARACTER_WIDTH);
+        end;
+    end;
+  end;
+  tmpBitmap.Free;
+end;
+
+procedure TMenuFont.DrawTextLines(const Lines: TextLineArray; Dst: TBitmap32;
+Y: Integer; aRestoreBuffer: TBitmap32 = nil; EraseOnly: Boolean = False);
+var
+  i: Integer;
+begin
+  for i := 0 to Length(Lines) - 1 do
+    begin
+      var LineInfo: TextlineInfo := Lines[i];
+      var X := (Dst.Width - CHARACTER_WIDTH * Length(LineInfo.Line)) div 2;
+      DrawTextColored(Dst, LineInfo.ColorShift, LineInfo.Line, X, LineInfo.yPos, aRestoreBuffer, EraseOnly);
+    end;
 end;
 
 procedure TMenuFont.MakeList(const S: string; aList: TStrings);

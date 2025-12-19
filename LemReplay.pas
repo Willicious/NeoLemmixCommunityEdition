@@ -121,6 +121,7 @@ type
   TReplay = class
     private
       fIsModified: Boolean;
+      fActionAddedDuringPlayback : Boolean;
       fReplayLoadSuccess: Boolean;
 
       fAssignments: TReplayItemList;        // nuking is also included here
@@ -174,6 +175,7 @@ type
       property ExpectedCompletionIteration: Integer read fExpectedCompletionIteration write fExpectedCompletionIteration;
 
       property IsModified: Boolean read fIsModified;
+      property ActionAddedDuringPlayback: Boolean read fActionAddedDuringPlayback write fActionAddedDuringPlayback;
       property IsThisUsersReplay: Boolean read GetIsThisUsersReplay;
       property ReplayLoadSuccess: Boolean read fReplayLoadSuccess write fReplayLoadSuccess;
   end;
@@ -441,6 +443,9 @@ begin
     fExpectedCompletionIteration := 0;
 
   fIsModified := True;
+
+  if GameParams.PlaybackModeActive then
+    ActionAddedDuringPlayback := True;
 end;
 
 function TReplay.CheckForAction(aList: TReplayItemList; aFrame: Integer): Boolean;

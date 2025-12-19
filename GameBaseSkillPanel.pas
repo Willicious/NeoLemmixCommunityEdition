@@ -23,6 +23,7 @@ type
     fGame                 : TLemmingGame;
     fIconBmp              : TBitmap32;   // for temporary storage
     fShowUsedSkills       : Boolean;
+    fRRIsPressed          : Boolean;
 
     fSetInitialZoom       : Boolean;
 
@@ -177,7 +178,7 @@ type
     property FrameSkip: Integer read CheckFrameSkip;
     property SkillPanelSelectDx: Integer read fSelectDx write fSelectDx;
     property ShowUsedSkills: Boolean read fShowUsedSkills write SetShowUsedSkills;
-
+    property RRIsPressed: Boolean read fRRIsPressed write fRRIsPressed;
     property ButtonHint: String read fButtonHint write fButtonHint;
     procedure GetButtonHints(aButton: TSkillPanelButton);
 
@@ -248,8 +249,8 @@ begin
   begin
     if Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
                    ButtonHint := 'STOP REPLAY'
-//    else if GameParams.PlaybackModeActive then
-//                   ButtonHint := 'STOP PLAYBACK'
+    else if GameParams.PlaybackModeActive then
+                   ButtonHint := 'STOP PLAYBACK'
     else
                    ButtonHint := '';
   end else if CursorOverSkillButton(aButton) then
@@ -455,6 +456,8 @@ begin
 
   for i := 100 to MAXIMUM_SI do                    
     fSkillOvercount[i] := TBitmap32.Create;
+
+  fRRIsPressed := False;
 end;
 
 destructor TBaseSkillPanel.Destroy;
@@ -1676,14 +1679,37 @@ begin
 end;
 
 procedure TBaseSkillPanel.SetReplayIcon(Pos: Integer);
+var
+//  TickCount: Cardinal;
+//  FrameIndex: Integer;
+  IsReplaying: Boolean;
 begin
-  if not Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
+//  // Calculate the frame index based on the tick count
+//  TickCount := GetTickCount;
+//  FrameIndex := (TickCount div 500) mod 2;
+
+  IsReplaying := Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause];
+//  IsClassicModeRewind := (GameParams.ClassicMode and (fGameWindow.GameSpeed = gspRewind));
+
+  if Game.StateIsUnplayable or (not GameParams.PlaybackModeActive and not IsReplaying) then
     fNewDrawStr[Pos] := ' '
+  else if GameParams.PlaybackModeActive and not IsReplaying then
+    fNewDrawStr[Pos] := Chr(103 {+ FrameIndex}) // Purple "P" (#103 and #104) // TODO - Add this!
   else if Game.ReplayInsert then
-    fNewDrawStr[Pos] := #97
-  else
-    fNewDrawStr[Pos] := #91;
+    fNewDrawStr[Pos] := Chr(97 {+ FrameIndex}) // Blue "R" (#101 and #102)
+  else if not (RRIsPressed {or IsClassicModeRewind}) then
+    fNewDrawStr[Pos] := Chr(91 {+ FrameIndex}); // Red "R" (#99 and #100)
 end;
+
+//procedure TBaseSkillPanel.SetReplayIcon(Pos: Integer);
+//begin
+//  if not Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
+//    fNewDrawStr[Pos] := ' '
+//  else if Game.ReplayInsert then
+//    fNewDrawStr[Pos] := #97
+//  else
+//    fNewDrawStr[Pos] := #91;
+//end;
 
 procedure TBaseSkillPanel.SetTimeLimit(Pos: Integer);
 begin
@@ -1718,9 +1744,9 @@ begin
 
   if CursorOverReplayIcon then
   begin
-//    // Stop playback if the "P" icon is clicked (replay must have finished or been cancelled, so this needs to be called first)
-//    if GameParams.PlaybackModeActive and (Game.CurrentIteration > Game.ReplayManager.LastActionFrame) then
-//      GameParams.PlaybackModeActive := False;
+    // Stop playback if the "P" icon is clicked (replay must have finished or been cancelled, so this needs to be called first)
+    if GameParams.PlaybackModeActive and (Game.CurrentIteration > Game.ReplayManager.LastActionFrame) then
+      GameParams.PlaybackModeActive := False;
 
     // Cancel replay if the "R" icon is clicked
     Game.RegainControl(True);
@@ -1750,8 +1776,16 @@ begin
 
   // Do button-specific actions
   case aButton of
-    spbSlower: Game.SetSelectedSkill(i, True, (Button = mbRight));
-    spbFaster: Game.SetSelectedSkill(i, True, (Button = mbRight));
+    spbSlower:
+      begin
+        RRIsPressed := True; // Prevents replay icon being drawn when using RR buttons
+        Game.SetSelectedSkill(i, True, (Button = mbRight));
+      end;
+    spbFaster:
+      begin
+        RRIsPressed := True; // Prevents replay icon being drawn when using RR buttons
+        Game.SetSelectedSkill(i, True, (Button = mbRight));
+      end;
     spbPause:
       begin
         if fGameWindow.GameSpeed = gspPause then
@@ -1857,6 +1891,7 @@ procedure TBaseSkillPanel.ImgMouseUp(Sender: TObject; Button: TMouseButton;
 begin
   Game.SetSelectedSkill(spbSlower, False);
   Game.SetSelectedSkill(spbFaster, False);
+  RRIsPressed := False;
 end;
 
 procedure TBaseSkillPanel.MinimapMouseDown(Sender: TObject; Button: TMouseButton;

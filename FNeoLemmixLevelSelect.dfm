@@ -308,7 +308,6 @@ object FLevelSelect: TFLevelSelect
     ParentShowHint = False
     ShowHint = True
     TabOrder = 8
-    Visible = False
     OnClick = btnPlaybackModeClick
   end
   object btnShowHideOptions: TButton

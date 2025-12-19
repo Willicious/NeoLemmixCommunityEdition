@@ -28,6 +28,7 @@ type
                          lka_Pause,
                          lka_Nuke,
                          lka_BypassNuke,
+                         lka_CancelPlayback,
                          lka_SaveState,
                          lka_LoadState,
                          lka_Highlight,
@@ -154,6 +155,7 @@ begin
   SetKeyFunction($49, lka_FallDistance);
   SetKeyFunction($50, lka_EditReplay);
   SetKeyFunction($4F, lka_ReplayInsert);
+  SetKeyFunction($59, lka_CancelPlayback);
   SetKeyFunction($0D, lka_SaveImage);
   SetKeyFunction($4A, lka_Scroll);
 
@@ -226,6 +228,7 @@ begin
   SetKeyFunction($27, lka_DirRight);
   SetKeyFunction($41, lka_Scroll);
   SetKeyFunction($43, lka_CancelReplay);
+  SetKeyFunction($59, lka_CancelPlayback);
   SetKeyFunction($44, lka_FallDistance);
   SetKeyFunction($45, lka_EditReplay);
   SetKeyFunction($46, lka_FastForward);
@@ -301,6 +304,7 @@ begin
   if s = 'pause' then Result := lka_Pause;
   if s = 'nuke' then Result := lka_Nuke;
   if s = 'bypass_nuke' then Result := lka_BypassNuke;
+  if s = 'cancel_playback_mode' then Result := lka_CancelPlayback;
   if s = 'save_state' then Result := lka_SaveState;
   if s = 'load_state' then Result := lka_LoadState;
   if s = 'dir_select_left' then Result := lka_DirLeft;
@@ -450,6 +454,7 @@ var
       lka_Pause:            Result := 'Pause';
       lka_Nuke:             Result := 'Nuke';
       lka_BypassNuke:       Result := 'Bypass_Nuke';
+      lka_CancelPlayback:   Result := 'Cancel_Playback_Mode';
       lka_SaveState:        Result := 'Save_State';
       lka_LoadState:        Result := 'Load_State';
       lka_DirLeft:          Result := 'Dir_Select_Left';

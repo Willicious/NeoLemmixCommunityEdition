@@ -9,27 +9,26 @@ uses
   LemTypes,
   PngInterface,
   LemNeoLevelPack,
-  LemmixHotkeys, LemNeoTheme, SharedGlobals,
+  LemmixHotkeys,
   Windows, Classes, Controls, Graphics, SysUtils,
   GR32, GR32_Layers, GR32_Resamplers, GR32_Image,
   UMisc, Dialogs,
-  LemCore, LemStrings, LemRendering, LemLevel,
-  LemGadgetsMeta, LemGadgets,
+  LemCore, LemStrings, LemRendering, LemLevel, LemNeoTheme, LemGame,
+  LemGadgetsMeta, LemGadgets, LemMenuFont,
   LemTalisman,
-  GameControl, GameBaseScreenCommon, GameBaseMenuScreen, GameWindow;
+  GameControl, GameBaseScreenCommon, GameBaseMenuScreen, GameWindow,
+  SharedGlobals;
 
 type
   TGamePreviewScreen = class(TGameBaseMenuScreen)
     private
-      fTalRects: TList<TRect>;
-      fTalismanImage: TBitmap32;
-
-      function GetScreenText: string;
+      function GetPreviewText: TextLineArray;
+      procedure LoadPreviewTextColours;
 
       procedure NextLevel;
       procedure PreviousLevel;
-      procedure NextRank;
-      procedure PreviousRank;
+      procedure NextGroup;
+      procedure PreviousGroup;
 
       procedure BeginPlay;
       procedure ExitToMenu;
@@ -37,12 +36,16 @@ type
       procedure SaveLevelImage;
       procedure TryLoadReplay;
 
-      procedure MakeTalismanOptions;
-      procedure HandleTalismanClick;
+      procedure DrawLevelPreview;
+
+      procedure MakeLoadReplayClickable;
+      procedure MakeLevelSelectClickable;
+      procedure MakeExitToMenuClickable;
+
       procedure SetWindowCaption;
     protected
       procedure DoAfterConfig; override;
-      function GetBackgroundSuffix: String; override;
+      function GetWallpaperSuffix: String; override;
 
       procedure AfterCancelLevelSelect; override;
 
@@ -59,31 +62,26 @@ type
 implementation
 
 uses
-  CustomPopup,
-  FBaseDosForm,
-  FLevelInfo,
-  FStyleManager,
-  LemGame;
+  CustomPopup, FBaseDosForm, FLevelInfo, FStyleManager, GameSound, LemNeoParser;
 
-const
-  TALISMAN_PADDING = 8;
+var
+  TitleShift: Extended;
+  GroupShift: Extended;
+  NumLemsShift: Extended;
+  RescueLemsShift: Extended;
+  ReleaseRateShift: Extended;
+  TimeLimitShift: Extended;
+  AuthorShift: Extended;
 
 { TGamePreviewScreen }
 
 constructor TGamePreviewScreen.Create(aOwner: TComponent);
 begin
   inherited;
-  fTalRects := TList<TRect>.Create;
-  fTalismanImage := nil;
 end;
 
 destructor TGamePreviewScreen.Destroy;
 begin
-  fTalRects.Free;
-
-  if fTalismanImage <> nil then
-    fTalismanImage.Free;
-
   inherited;
 end;
 
@@ -117,8 +115,9 @@ begin
             end;
         end;
       end else
-        ShowMessage('Some pieces used by this level are missing. You will not be able to play this level. ' +
-                    'Download the missing styles manually, or enable online features in NeoLemmix config to try to auto-download them.');
+        ShowMessage('This level contains pieces which are missing from the styles folder. ' +
+                    'Please contact the level author or download the style manually ' +
+                    'via www.lemmingsforums.net.');
     end else
       inherited CloseScreen(gstPlay);
   end else if NextScreen = gstText then
@@ -145,13 +144,13 @@ begin
   end;
 end;
 
-procedure TGamePreviewScreen.NextRank;
+procedure TGamePreviewScreen.NextGroup;
 begin
   GameParams.NextGroup;
   CloseScreen(gstPreview);
 end;
 
-procedure TGamePreviewScreen.PreviousRank;
+procedure TGamePreviewScreen.PreviousGroup;
 begin
   GameParams.PrevGroup;
   CloseScreen(gstPreview);
@@ -161,15 +160,17 @@ procedure TGamePreviewScreen.AfterCancelLevelSelect;
 begin
   inherited;
   GameParams.LoadCurrentLevel;
-  GameParams.Renderer.RenderWorld(nil, not GameParams.NoBackgrounds); // some necessary prep work is done in here
+  GameParams.Renderer.RenderWorld(nil, not GameParams.NoBackgrounds); // Some necessary prep work is done in here
 end;
 
 procedure TGamePreviewScreen.BeginPlay;
 var
   CurLevel: TLevel;
+  CurInfo: TLevelInfo;
   CurTheme: TNeoTheme;
 begin
   CurLevel := GameParams.Level;
+  CurInfo := CurLevel.Info;
   CurTheme := GameParams.Renderer.Theme;
 
   // See if we need to show the sprites fallback message
@@ -180,12 +181,38 @@ begin
     CurTheme.SpriteFallbackMessage := '';
   end;
 
-  if (CurLevel.PreText.Count > 0) then
+//  // See if we need to show the missing sounds message // Bookmark - Missing sounds resolution (port from SLX)
+//  if (CurTheme.MissingSoundsList.Count > 0) then
+//  begin
+//    ShowMessage('Some sounds are missing for ' + CurTheme.Name + ':' + sLineBreak + sLineBreak +
+//                 CurTheme.MissingSoundsList.Text + sLineBreak +
+//                 'The default sound will be loaded in place of each missing sound.');
+//
+//    CurTheme.MissingSoundsList.Clear;
+//  end;
+
+//  // Make sure there is at least one exit if we're not in test mode // Bookmark - Add ExitCount logic
+//  if (CurInfo.ExitCount <= 0) and (GameParams.TestModeLevel = nil) then
+//  begin
+//    ShowMessage('This level cannot be played as it doesn''t have an exit!');
+//    Exit;
+//  end;
+
+  // Make sure there is at least one available lemming
+  if (CurInfo.LemmingsCount <= 0) or (CurInfo.ZombieCount = CurInfo.LemmingsCount) then
   begin
-    GameParams.IsPreTextScreen := True;
-    CloseScreen(gstText);
-  end else
-    CloseScreen(gstPlay);
+    ShowMessage('This level cannot be played as it doesn''t have any lemmings!');
+    Exit;
+  end;
+
+  // Check for preview text
+  if (CurLevel.PreText.Count > 0)
+    and not (GameParams.PlaybackModeActive and GameParams.AutoSkipPreviewPostview) then
+    begin
+      GameParams.IsPreTextScreen := True;
+      CloseScreen(gstText);
+    end else
+      CloseScreen(gstPlay);
 end;
 
 procedure TGamePreviewScreen.OnMouseClick(aPoint: TPoint;
@@ -195,104 +222,163 @@ begin
   case aButton of
     mbLeft: BeginPlay;
     mbRight: ExitToMenu;
-    mbMiddle: begin GameParams.ShownText := False; BeginPlay; end;
+    mbMiddle:
+    begin
+      GameParams.ShownText := False;
+      BeginPlay;
+    end;
+  end;
+end;
+
+procedure TGamePreviewScreen.DrawLevelPreview;
+var
+  LevelPreviewImage: TBitmap32;
+  DstRect: TRect;
+  Lw, Lh : Integer;
+  LevelScale: Double;
+begin
+  LevelPreviewImage := TBitmap32.Create;
+  try
+    Lw := GameParams.Level.Info.Width;
+    Lh := GameParams.Level.Info.Height;
+
+    LevelPreviewImage.SetSize(Lw, Lh);
+    LevelPreviewImage.Clear(0);
+
+    GameParams.Renderer.RenderWorld(LevelPreviewImage, not GameParams.NoBackgrounds);
+    TLinearResampler.Create(LevelPreviewImage);
+    LevelPreviewImage.DrawMode := dmBlend;
+    LevelPreviewImage.CombineMode := cmMerge;
+
+    LevelScale := INTERNAL_SCREEN_WIDTH / lw;
+
+    if LevelScale > 160 / lh then LevelScale := 160 / lh;
+    DstRect := Rect(0, 0, Trunc(lw * LevelScale), Trunc(lh * LevelScale));
+
+    OffsetRect(DstRect, (INTERNAL_SCREEN_WIDTH div 2) - (DstRect.Right div 2), 80 - (DstRect.Bottom div 2));
+
+    LevelPreviewImage.DrawTo(ScreenImg.Bitmap, DstRect, LevelPreviewImage.BoundsRect);
+  finally
+    LevelPreviewImage.Free;
+  end;
+end;
+
+procedure TGamePreviewScreen.MakeLoadReplayClickable;
+var
+  R: TClickableRegion;
+begin
+  if GameParams.PlaybackModeActive then
+    Exit;
+
+  R := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay);
+
+  R.AddKeysFromFunction(lka_LoadReplay);
+end;
+
+procedure TGamePreviewScreen.MakeLevelSelectClickable;
+var
+  R: TClickableRegion;
+begin
+  if GameParams.PlaybackModeActive then
+    Exit;
+
+  R := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
+
+  R.ShortcutKeys.Add(VK_F3);
+end;
+
+procedure TGamePreviewScreen.MakeExitToMenuClickable;
+var
+  S: String;
+  R: TClickableRegion;
+  P: TPoint;
+begin
+  if GameParams.PlaybackModeActive then
+  begin
+    S := 'Cancel Playback Mode';
+    P := Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+  end else begin
+    S := SOptionToMenu;
+    P := Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+  end;
+
+  R := MakeClickableText(Point(P), S, ExitToMenu);
+  R.ShortcutKeys.Add(VK_ESCAPE);
+end;
+
+procedure TGamePreviewScreen.BuildScreen;
+var
+  Lines: TextLineArray;
+const
+  TEXT_Y_POSITION = 170;
+begin
+  CurrentScreen := gstPreview;
+  SetWindowCaption;
+
+  fClickableRegions.Clear;
+  CustomAssert(GameParams <> nil, 'GameParams not initialized correctly');
+
+  ScreenImg.BeginUpdate;
+  try
+    DrawLevelPreview;
+
+    // Draw text
+    Lines := GetPreviewText;
+    MenuFont.DrawTextLines(Lines, ScreenImg.Bitmap, TEXT_Y_POSITION);
+
+    MakeLoadReplayClickable;
+    MakeLevelSelectClickable;
+    MakeExitToMenuClickable;
+
+    MakeHiddenOption(VK_SPACE, BeginPlay);
+    MakeHiddenOption(VK_RETURN, BeginPlay);
+    MakeHiddenOption(VK_F2, ShowConfigMenu);
+    MakeHiddenOption(lka_SaveImage, SaveLevelImage);
+    MakeHiddenOption(lka_CancelPlayback, CancelPlaybackMode);
+
+    if not GameParams.PlaybackModeActive then
+    begin
+      MakeHiddenOption(VK_LEFT, PreviousLevel);
+      MakeHiddenOption(VK_RIGHT, NextLevel);
+      MakeHiddenOption(VK_DOWN, PreviousGroup);
+      MakeHiddenOption(VK_UP, NextGroup);
+    end;
+
+    MakeTalismanOptions;
+
+    if GameParams.PlaybackModeActive and GameParams.AutoSkipPreviewPostview then
+      BeginPlay
+    else
+      DrawAllClickables;
+  finally
+    ScreenImg.EndUpdate;
   end;
 end;
 
 procedure TGamePreviewScreen.SetWindowCaption;
 var
-  s, Title, Pack: string;
-//  CurTheme: TNeoTheme;
-  RescueCount, LemCount: Integer;
+  S, Title, Pack: string;
+  CurTheme: TNeoTheme;
+  RescueCount, LemCount, CollectibleCount: Integer;
 begin
   Title := GameParams.Level.Info.Title;
   Pack := GameParams.CurrentLevel.Group.ParentBasePack.Name;
   RescueCount := GameParams.Level.Info.RescueCount;
   LemCount := GameParams.Level.Info.LemmingsCount;
-//  CurTheme := GameParams.Renderer.Theme;
+  CurTheme := GameParams.Renderer.Theme;
 
-  s := SProgramName + ' - ' + Pack + ' - ' + Title + ' - Save ' + IntToStr(RescueCount)
+  S := SProgramName + ' - ' + Pack + ' - ' + Title + ' - Save ' + IntToStr(RescueCount)
        + ' of ' + IntToStr(LemCount) + ' ';
 
-//  if LemCount = 1 then   // Bookmark - for singular/plural lems, not yet implemented
-//    s := s + CurTheme.LemNamesSingular
-//  else
-//    s := s + CurTheme.LemNamesPlural;
+  if LemCount = 1 then
+    S := S + 'lemming' // CurTheme.LemNamesSingular // Bookmark - Add support for singular/plural names
+  else
+    S := S + 'lemmings'; // CurTheme.LemNamesPlural;
 
-  GameParams.MainForm.Caption := s;
-end;
+  if CollectibleCount <> 0 then
+    S := S + ' - ' + IntToStr(CollectibleCount) + ' Diamonds to collect';
 
-procedure TGamePreviewScreen.BuildScreen;
-var
-  W: TBitmap32;
-  DstRect: TRect;
-  Lw, Lh : Integer;
-  LevelScale: Double;
-  NewRegion: TClickableRegion;
-const
-  TEXT_Y_POSITION = 170;
-begin
-  CurrentScreen := gstPreview;
-
-  CustomAssert(GameParams <> nil, 'GameParams not initialized correctly');
-
-  SetWindowCaption;
-
-  W := TBitmap32.Create;
-  ScreenImg.BeginUpdate;
-  try
-    ScreenImg.Bitmap.FillRect(0, 0, 864, 160, $FF000000);
-
-    Lw := GameParams.Level.Info.Width;
-    Lh := GameParams.Level.Info.Height;
-
-    // draw level preview
-    W.SetSize(Lw, Lh);
-    W.Clear(0);
-
-    GameParams.Renderer.RenderWorld(W, not GameParams.NoBackgrounds);
-    TLinearResampler.Create(W);
-    W.DrawMode := dmBlend;
-    W.CombineMode := cmMerge;
-
-    // We have a 864x160 area in which to draw the level preview
-    LevelScale := 864 / lw;
-    if LevelScale > 160 / lh then LevelScale := 160 / lh;
-
-    DstRect := Rect(0, 0, Trunc(lw * LevelScale), Trunc(lh * LevelScale));
-    OffsetRect(DstRect, 432 - (DstRect.Right div 2), 80 - (DstRect.Bottom div 2));
-
-    W.DrawTo(ScreenImg.Bitmap, DstRect, W.BoundsRect);
-    // draw text
-    MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, TEXT_Y_POSITION);
-
-    NewRegion := MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionContinue, BeginPlay);
-    NewRegion.ShortcutKeys.Add(VK_RETURN);
-    NewRegion.ShortcutKeys.Add(VK_SPACE);
-
-    NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu);
-    NewRegion.ShortcutKeys.Add(VK_ESCAPE);
-
-    NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
-    NewRegion.ShortcutKeys.Add(VK_F2);
-
-    NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay);
-    NewRegion.AddKeysFromFunction(lka_LoadReplay);
-
-    MakeHiddenOption(VK_F3, ShowConfigMenu);
-    MakeHiddenOption(VK_LEFT, PreviousLevel);
-    MakeHiddenOption(VK_RIGHT, NextLevel);
-    MakeHiddenOption(VK_DOWN, PreviousRank);
-    MakeHiddenOption(VK_UP, NextRank);
-    MakeHiddenOption(lka_SaveImage, SaveLevelImage);
-
-    MakeTalismanOptions;
-
-    DrawAllClickables;
-  finally
-    W.Free;
-    ScreenImg.EndUpdate;
-  end;
+  GameParams.MainForm.Caption := S;
 end;
 
 procedure TGamePreviewScreen.SaveLevelImage;
@@ -323,18 +409,17 @@ end;
 
 procedure TGamePreviewScreen.TryLoadReplay;
 begin
-  // Pretty much just because LoadReplay is a function, not a procedure, so this
-  // needs to be here as a wraparound.
+  // LoadReplay is a function, not a procedure, so this needs to be here as a wraparound.
   LoadReplay;
 end;
 
 procedure TGamePreviewScreen.DoAfterConfig;
 begin
   inherited;
-  CloseScreen(gstPreview);
+  ReloadCursor; // ('menu'); // Bookmark - Add support for menu cursors
 end;
 
-function TGamePreviewScreen.GetBackgroundSuffix: String;
+function TGamePreviewScreen.GetWallpaperSuffix: String;
 begin
   Result := 'preview';
 end;
@@ -343,147 +428,172 @@ procedure TGamePreviewScreen.ExitToMenu;
 begin
   if GameParams.TestModeLevel <> nil then
     CloseScreen(gstExit)
-  else
+  else begin
+    GameParams.PlaybackModeActive := False;
     CloseScreen(gstMenu);
-end;
-
-function TGamePreviewScreen.GetScreenText: string;
-begin
-  CustomAssert(GameParams <> nil, 'GameParams not initialized correctly');
-
-  with GameParams.Level.Info do
-  begin
-    Result := Title + #13#12;
-
-    if GameParams.CurrentLevel.Group.Parent <> nil then
-    begin
-      Result := Result + GameParams.CurrentLevel.Group.Name;
-      if GameParams.CurrentLevel.Group.IsOrdered then
-        Result := Result + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1);
-    end;
-    Result := Result + #13#13#13;
-
-    if (NeutralCount > 0) or (ZombieCount > 0) then
-    begin
-      Result := Result + IntToStr(LemmingsCount - ZombieCount - NeutralCount) + ' Lemmings  + ';
-
-      if NeutralCount > 0 then
-        Result := Result + IntToStr(NeutralCount) + ' Neutrals';
-
-      if (NeutralCount > 0) and (ZombieCount > 0) then
-        Result := Result + ', ';
-
-      if ZombieCount > 0 then
-        Result := Result + IntToStr(ZombieCount) + ' Zombies';
-    end else
-      Result := Result + IntToStr(LemmingsCount) + SPreviewLemmings;
-
-    Result := Result + #13#12;
-
-    Result := Result + IntToStr(RescueCount) + SPreviewSave + #13#12;
-
-    if HasTimeLimit then
-      Result := Result + SPreviewTimeLimit + IntToStr(TimeLimit div 60) + ':' + LeadZeroStr(TimeLimit mod 60, 2) + #13 + #12;
-
-    if Author <> '' then
-      Result := Result + SPreviewAuthor + Author;
   end;
 end;
 
-procedure TGamePreviewScreen.HandleTalismanClick;
+function TGamePreviewScreen.GetPreviewText: TextLineArray;
+const
+  LINE_Y_SPACING = 28;
 var
-  P: TPoint;
-  i: Integer;
-  F: TLevelInfoPanel;
+  HueShift: TColorDiff;
+  Entry: TNeoLevelEntry;
+  Level: TLevel;
+  Theme: TNeoTheme;
+
+  function HasSpecialLemmings: Boolean;
+  begin
+    Result := False or (Level.Info.NeutralCount > 0)
+                    or (Level.Info.ZombieCount > 0);
+  end;
+
+  function RegularLemmingsCount: Integer;
+  begin
+    Result := (Level.Info.LemmingsCount - Level.Info.ZombieCount
+                                        - Level.Info.NeutralCount);
+  end;
 begin
-  P := GetInternalMouseCoordinates;
-  for i := 0 to fTalRects.Count-1 do
-    if PtInRect(fTalRects[i], P) then
-    begin
-      F := TLevelInfoPanel.Create(Self, nil, fTalismanImage);
-      try
-        F.Level := GameParams.Level;
-        F.Talisman := GameParams.Level.Talismans[i];
-        F.ShowPopup;
-      finally
-        F.Free;
-      end;
-      Break;
-    end;
+  Entry := GameParams.CurrentLevel;
+  Level := GameParams.Level;
+  Theme := GameParams.Renderer.Theme;
+
+  FillChar(HueShift, SizeOf(TColorDiff), 0);
+
+  SetLength(Result, 7);
+  LoadPreviewTextColours;
+
+  HueShift.HShift := TitleShift;
+  Result[0].Line := Entry.Title;
+  Result[0].ColorShift := HueShift;
+  Result[0].yPos := 168;
+
+  HueShift.HShift := GroupShift;
+  Result[1].yPos := Result[0].yPos + 40;
+  Result[1].Line := Entry.Group.Name;
+  if Entry.Group.Parent = nil then
+  begin
+    Result[1].Line := 'Miscellaneous Levels'
+  end else
+  begin
+    if Entry.Group.IsOrdered then
+    Result[1].Line := Result[1].Line + ' ' + IntToStr(Entry.GroupIndex + 1);
+  end;
+  Result[1].ColorShift := HueShift;
+
+  HueShift.HShift := NumLemsShift;
+  Result[2].yPos := Result[1].yPos + LINE_Y_SPACING;
+
+  if HasSpecialLemmings then
+  begin
+    if (Level.Info.LemmingsCount = 1) then
+      Result[2].Line := Result[2].Line + IntToStr(RegularLemmingsCount) + ' '
+                        + 'lemming' // Theme.LemNamesSingular // Bookmark - Add support for this
+    else if (Level.Info.LemmingsCount > 1) then
+      Result[2].Line := Result[2].Line + IntToStr(RegularLemmingsCount) + ' '
+                        + 'lemmings'; // Theme.LemNamesPlural; // Bookmark - Add support for this
+
+    if (Level.Info.NeutralCount = 1) then
+      Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.NeutralCount) + ' Neutral'
+    else if (Level.Info.NeutralCount > 1) then
+      Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.NeutralCount) + ' Neutrals';
+
+    if (Level.Info.ZombieCount = 1) then
+      Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.ZombieCount) + ' Zombie'
+    else if (Level.Info.ZombieCount > 1) then
+      Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.ZombieCount) + ' Zombies';
+  end else if (Level.Info.LemmingsCount = 1) then
+    Result[2].Line := IntToStr(Level.Info.LemmingsCount) + ' ' + 'lemming' // Theme.LemNamesSingular // Bookmark - Add support for this
+  else
+    Result[2].Line := IntToStr(Level.Info.LemmingsCount) + ' ' + 'lemmings'; // Theme.LemNamesPlural; // Bookmark - Add support for this
+  Result[2].ColorShift := HueShift;
+
+  HueShift.HShift := RescueLemsShift;
+  Result[3].yPos := Result[2].yPos + LINE_Y_SPACING;
+  Result[3].Line := IntToStr(Level.Info.RescueCount) + SPreviewSave;
+  Result[3].ColorShift := HueShift;
+
+  HueShift.HShift := ReleaseRateShift;
+  Result[4].yPos := Result[3].yPos + LINE_Y_SPACING;
+  if Level.Info.SpawnIntervalLocked then
+  begin
+    Result[4].Line := SPreviewReleaseRate + IntToStr(103 - Level.Info.SpawnInterval) + SPreviewRRLocked;
+  end else
+  Result[4].Line := SPreviewReleaseRate + IntToStr(103 - Level.Info.SpawnInterval);
+  Result[4].ColorShift := HueShift;
+
+  HueShift.HShift := TimeLimitShift;
+  Result[5].yPos := Result[4].yPos + LINE_Y_SPACING;
+  if Level.Info.HasTimeLimit then
+  begin
+    Result[5].Line := SPreviewTimeLimit + IntToStr(Level.Info.TimeLimit div 60) + ':'
+                    + LeadZeroStr(Level.Info.TimeLimit mod 60, 2);
+  end else
+  Result[5].Line := 'Infinite Time';
+  Result[5].ColorShift := HueShift;
+
+  HueShift.HShift := AuthorShift;
+  Result[6].yPos := Result[5].yPos + LINE_Y_SPACING;
+  if Level.Info.Author <> '' then
+  begin
+    Result[6].Line := SPreviewAuthor + Level.Info.Author;
+  end else
+  Result[6].Line := SPreviewAuthor + ' Anonymous';
+  Result[6].ColorShift := HueShift;
 end;
 
-procedure TGamePreviewScreen.MakeTalismanOptions;
+procedure TGamePreviewScreen.LoadPreviewTextColours;
 var
-  NewRegion: TClickableRegion;
-  Temp: TBitmap32;
-  Tal: TTalisman;
-  i: Integer;
+  Parser: TParser;
+  Sec: TParserSection;
+  aPath: string;
+  aFile: string;
 
-  LoadPath: String;
-  SrcRect: TRect;
+  // Default colours (all blue), loaded if custom files don't exist
+  procedure ResetColours;
+  begin
+    TitleShift := 0;
+    GroupShift := 0;
+    NumLemsShift := 0;
+    RescueLemsShift := 0;
+    ReleaseRateShift := 0;
+    TimeLimitShift := 0;
+    AuthorShift := 0;
+  end;
 
-  TotalTalWidth: Integer;
-  TalPoint: TPoint;
-
-  KeepTalismans: Boolean;
-const
-  TALISMANS_Y_POSITION = 400;
 begin
-  if GameParams.Level.Talismans.Count = 0 then
-    Exit;
+  ResetColours;
 
-  KeepTalismans := False;
+  aFile := 'textcolours.nxmi';
+  aPath := GameParams.CurrentLevel.Group.ParentBasePack.Path;
 
-  if fTalismanImage = nil then
-    fTalismanImage := TBitmap32.Create;
+  if aPath = '' then
+  aPath := AppPath + SFLevels;
 
-  Temp := TBitmap32.Create;
+  if (GameParams.CurrentLevel = nil)
+    or not (FileExists(aPath + aFile) or FileExists(AppPath + SFData + aFile))
+      then Exit;
+
+  Parser := TParser.Create;
   try
-    LoadPath := GameParams.CurrentLevel.Group.FindFile('talismans.png');
-    if LoadPath = '' then
-      LoadPath := AppPath + SFGraphicsMenu + 'talismans.png'
-    else
-      KeepTalismans := True;
+    if FileExists(aPath + aFile) then
+      Parser.LoadFromFile(aPath + aFile)
+    else if FileExists(AppPath + SFData + aFile) then
+      Parser.LoadFromFile(AppPath + SFData + aFile);
 
-    TPngInterface.LoadPngFile(LoadPath, fTalismanImage);
-    fTalismanImage.DrawMode := dmOpaque;
+    Sec := Parser.MainSection.Section['preview'];
+    if Sec = nil then Exit;
 
-    Temp.SetSize(fTalismanImage.Width div 2, fTalismanImage.Height div 3);
-
-    TotalTalWidth := (GameParams.Level.Talismans.Count * (Temp.Width + TALISMAN_PADDING)) - TALISMAN_PADDING;
-    TalPoint := Point(
-      (ScreenImg.Bitmap.Width - TotalTalWidth + Temp.Width) div 2,
-      TALISMANS_Y_POSITION
-      );
-
-    for i := 0 to GameParams.Level.Talismans.Count-1 do
-    begin
-      Tal := GameParams.Level.Talismans[i];
-      case Tal.Color of
-        tcBronze: SrcRect := SizedRect(0, 0, Temp.Width, Temp.Height);
-        tcSilver: SrcRect := SizedRect(0, Temp.Height, Temp.Width, Temp.Height);
-        tcGold: SrcRect := SizedRect(0, Temp.Height * 2, Temp.Width, Temp.Height);
-      end;
-
-      if GameParams.CurrentLevel.TalismanStatus[Tal.ID] then
-        OffsetRect(SrcRect, Temp.Width, 0);
-
-      Temp.Clear(0);
-      fTalismanImage.DrawTo(Temp, 0, 0, SrcRect);
-
-      NewRegion := MakeClickableImageAuto(TalPoint, Temp.BoundsRect, HandleTalismanClick, Temp);
-      fTalRects.Add(NewRegion.ClickArea);
-
-      TalPoint.X := TalPoint.X + Temp.Width + TALISMAN_PADDING;
-    end;
+    TitleShift := StrToFloatDef(Sec.LineString['title'], 0);
+    GroupShift := StrToFloatDef(Sec.LineString['group'], 0);
+    NumLemsShift := StrToFloatDef(Sec.LineString['lem_count'], 0);
+    RescueLemsShift := StrToFloatDef(Sec.LineString['rescue_count'], 0);
+    ReleaseRateShift := StrToFloatDef(Sec.LineString['release_rate'], 0);
+    TimeLimitShift := StrToFloatDef(Sec.LineString['time_limit'], 0);
+    AuthorShift := StrToFloatDef(Sec.LineString['author'], 0);
   finally
-    Temp.Free;
-
-    if not KeepTalismans then
-    begin
-      fTalismanImage.Free;
-      fTalismanImage := nil;
-    end;
+    Parser.Free;
   end;
 end;
 
@@ -499,20 +609,16 @@ begin
     begin
       ShowMessage(E.Message);
       CloseScreen(gstMenu);
-      Raise; // yet again, to be caught on TBaseDosForm
+      Raise; // Yet again, to be caught on TBaseDosForm
     end;
   end;
 
   // Clears the current-replay-in-memory when the level loads
-  if (not (//GameParams.PlaybackModeActive or  // Bookmark
-  GameParams.OpenedViaReplay))
-    or not GameParams.ReplayAfterRestart then
-      GlobalGame.ReplayManager.Clear(True);
+  if not GameParams.ReplayAfterRestart then
+    GlobalGame.ReplayManager.Clear(True);
 
-  if //GameParams.PlaybackModeActive or // Bookmark
-  GameParams.OpenedViaReplay then
+  if GameParams.PlaybackModeActive or GameParams.OpenedViaReplay then
     GameParams.OpenedViaReplay := False; // Reset flag once replay has been successfully loaded
 end;
 
 end.
-

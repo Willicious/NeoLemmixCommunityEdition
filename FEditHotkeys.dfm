@@ -60,7 +60,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   object lblSkillButton: TLabel
     Left = 368
     Top = 304
-    Width = 62
+    Width = 63
     Height = 13
     Caption = 'Skill Button:'
     Visible = False
@@ -126,6 +126,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Pause'
       'Nuke'
       'Nuke (Timer Bypass)'
+      'Cancel Playback Mode'
       'Save State'
       'Load State'
       'Highlight Lemming'
@@ -311,8 +312,9 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Top = 515
     Width = 81
     Height = 30
-    Caption = 'Restore'
     Hint = 'Restore previously saved layout'
+    Caption = 'Restore'
+    ParentShowHint = False
     ShowHint = True
     TabOrder = 15
     OnClick = btnResetClick

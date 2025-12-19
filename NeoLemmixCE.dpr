@@ -74,7 +74,8 @@ uses
   GameMenuScreen in 'GameMenuScreen.pas',
   FLevelInfo in 'FLevelInfo.pas' {LevelInfoPanel},
   FReplayManager in 'FReplayManager.pas' {FReplayManager},
-  FLevelListDialog in 'FLevelListDialog.pas' {FLevelListDialog};
+  FLevelListDialog in 'FLevelListDialog.pas' {FLevelListDialog},
+  FPlaybackMode in 'FPlaybackMode.pas' {FPlaybackMode};
 
 {$R *.res}
 

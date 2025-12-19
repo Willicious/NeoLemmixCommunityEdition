@@ -116,7 +116,7 @@ type
 
       procedure DoAfterConfig; override;
 
-      function GetBackgroundSuffix: String; override;
+      function GetWallpaperSuffix: String; override;
       procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
     public
       constructor Create(aOwner: TComponent); override;
@@ -765,7 +765,7 @@ begin
     RedrawGroupSign;
 end;
 
-function TGameMenuScreen.GetBackgroundSuffix: String;
+function TGameMenuScreen.GetWallpaperSuffix: String;
 begin
   Result := 'menu';
 end;

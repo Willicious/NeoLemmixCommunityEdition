@@ -124,6 +124,8 @@ begin
     IsHalting := True;
     GameParams.NextScreen := gstExit;
   end;
+
+  GameParams.PlaybackModeActive := False;
   
   GameParams.OpenedViaReplay := False;
   CheckIfOpenedViaReplay;

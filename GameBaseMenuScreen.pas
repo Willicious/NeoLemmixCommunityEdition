@@ -12,12 +12,15 @@ uses
   LemNeoParser,
   LemNeoPieceManager,
   LemStrings,
+  LemTalisman,
   LemTypes,
   LemmixHotkeys,
+  FLevelInfo,
   GameBaseScreenCommon,
   GameControl,
   GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   Generics.Collections,
+  IOUtils, Vcl.FileCtrl, // For Playback Mode
   SharedGlobals;
 
 const
@@ -37,6 +40,8 @@ const
   FOOTER_THREE_OPTIONS_X_LEFT = INTERNAL_SCREEN_WIDTH * 3 div 16;
   FOOTER_THREE_OPTIONS_X_MID = INTERNAL_SCREEN_WIDTH div 2;
   FOOTER_THREE_OPTIONS_X_RIGHT = INTERNAL_SCREEN_WIDTH * 13 div 16;
+
+  TALISMAN_PADDING = 8;
 
 type
   TRegionState = (rsNormal, rsHover, rsClick);
@@ -83,9 +88,10 @@ type
       fMenuFont          : TMenuFont;
       fKeyStates: TDictionary<Word, UInt64>;
 
-      fBasicCursor: TNLCursor;
+      fTalRects: TList<TRect>;
+      fTalismanImage: TBitmap32;
 
-      fClickableRegions: TObjectList<TClickableRegion>;
+      fBasicCursor: TNLCursor;
 
       procedure LoadBasicCursor;
       procedure SetBasicCursor;
@@ -109,10 +115,12 @@ type
       procedure SaveScreenImage;
       {$endif}{$endif}
     protected
+      fClickableRegions: TObjectList<TClickableRegion>;
       procedure CloseScreen(aNextScreen: TGameScreenType); override;
 
       procedure DoLevelSelect;
       procedure SaveReplay;
+      procedure CancelPlaybackMode;
 
       procedure ShowConfigMenu;
       procedure ApplyConfigChanges(OldFullScreen, OldHighResolution, ResetWindowSize, ResetWindowPos: Boolean);
@@ -128,7 +136,7 @@ type
                                    aNormal: TBitmap32; aHover: TBitmap32 = nil; aClick: TBitmap32 = nil): TClickableRegion;
       function MakeClickableImageAuto(aImageCenter: TPoint; aImageClickRect: TRect; aAction: TRegionAction;
                                    aNormal: TBitmap32; aMargin: Integer = -1): TClickableRegion;
-      function MakeClickableText(aTextCenter: TPoint; aText: String; aAction: TRegionAction): TClickableRegion;
+      function MakeClickableText(aTextCenter: TPoint; aText: String; aAction: TRegionAction; SwapHues: Boolean = False): TClickableRegion;
 
       function MakeHiddenOption(aKey: Word; aAction: TRegionAction): TClickableRegion; overload;
       function MakeHiddenOption(aFunc: TLemmixHotkeyAction; aAction: TRegionAction): TClickableRegion; overload;
@@ -142,7 +150,7 @@ type
 
       procedure AfterRedrawClickables; virtual;
 
-      function GetBackgroundSuffix: String; virtual; abstract;
+      function GetWallpaperSuffix: String; virtual; abstract;
 
       procedure ReloadCursor;
 
@@ -154,6 +162,9 @@ type
       destructor Destroy; override;
 
       procedure MainFormResized; override;
+
+      procedure MakeTalismanOptions;
+      procedure HandleTalismanClick;
   end;
 
 implementation
@@ -167,6 +178,12 @@ const
   ACCEPT_KEY_DELAY = 200;
 
 { TGameBaseMenuScreen }
+
+procedure TGameBaseMenuScreen.CancelPlaybackMode;
+begin
+  if GameParams.PlaybackModeActive then
+    StopPlayback(True);
+end;
 
 procedure TGameBaseMenuScreen.CloseScreen(aNextScreen: TGameScreenType);
 begin
@@ -192,6 +209,9 @@ begin
   fBasicCursor := TNLCursor.Create(Min(Screen.Width div 320, Screen.Height div 200) + EXTRA_ZOOM_LEVELS);
   LoadBasicCursor;
   SetBasicCursor;
+
+  fTalRects := TList<TRect>.Create;
+  fTalismanImage := nil;
 
   InitializeImage;
 
@@ -225,6 +245,11 @@ begin
   fBasicCursor.Free;
   fClickableRegions.Free;
   fKeyStates.Free;
+
+  fTalRects.Free;
+
+  if fTalismanImage <> nil then
+    fTalismanImage.Free;
 
   inherited;
 end;
@@ -402,12 +427,13 @@ begin
 
 end;
 
+// Changes hue of clickable text in pre-level screen
 function TGameBaseMenuScreen.MakeClickableText(aTextCenter: TPoint;
-  aText: String; aAction: TRegionAction): TClickableRegion;
+  aText: String; aAction: TRegionAction; SwapHues: Boolean = False): TClickableRegion;
 const
-  HUE_SHIFT_NORMAL = -0.250;
-  HUE_SHIFT_HOVER = -0.125;
-  VALUE_SHIFT_CLICK = -0.250;
+  HUE_SHIFT_NORMAL = -0.250;  // Green
+  HUE_SHIFT_HOVER = -0.125;   // Teal
+  VALUE_SHIFT_CLICK = -0.250; // Green
 var
   tmpNormal, tmpHover, tmpClick: TBitmap32;
   ScreenRect: TRect;
@@ -419,8 +445,14 @@ begin
   FillChar(HoverShift, SizeOf(TColorDiff), 0);
   FillChar(ClickShift, SizeOf(TColorDiff), 0);
 
-  NormalShift.HShift := HUE_SHIFT_NORMAL;
-  HoverShift.HShift := HUE_SHIFT_HOVER;
+  if SwapHues then
+  begin
+    NormalShift.HShift := HUE_SHIFT_HOVER;
+    HoverShift.HShift := HUE_SHIFT_NORMAL;
+  end else begin
+    NormalShift.HShift := HUE_SHIFT_NORMAL;
+    HoverShift.HShift := HUE_SHIFT_HOVER;
+  end;
 
   ClickShift.HShift := HUE_SHIFT_HOVER;
   ClickShift.VShift := VALUE_SHIFT_CLICK;
@@ -458,6 +490,7 @@ begin
   end;
 end;
 
+
 function TGameBaseMenuScreen.MakeHiddenOption(aFunc: TLemmixHotkeyAction;
   aAction: TRegionAction): TClickableRegion;
 begin
@@ -470,6 +503,112 @@ function TGameBaseMenuScreen.MakeHiddenOption(aKey: Word;
 begin
   Result := TClickableRegion.Create(aAction, aKey);
   fClickableRegions.Add(Result);
+end;
+
+procedure TGameBaseMenuScreen.MakeTalismanOptions;
+var
+  NewRegion: TClickableRegion;
+  Temp: TBitmap32;
+  Tal: TTalisman;
+  SrcRect: TRect;
+  TalPoint: TPoint;
+  LoadPath, aImage: String;
+  i, TalCount, TotalTalWidth, YOffset: Integer;
+  KeepTalismans: Boolean;
+
+  procedure DrawButtons;
+  begin
+    Temp.Clear(0);
+    fTalismanImage.DrawTo(Temp, 0, 0, SrcRect);
+
+    NewRegion := MakeClickableImageAuto(TalPoint, Temp.BoundsRect, HandleTalismanClick, Temp);
+
+    fTalRects.Add(NewRegion.ClickArea);
+    TalPoint.X := TalPoint.X + Temp.Width + TALISMAN_PADDING;
+  end;
+const
+  TALISMANS_Y_POSITION = 408;
+begin
+  if (GameParams.Level.Talismans.Count = 0) then
+        Exit;
+
+  YOffset := 0;
+  KeepTalismans := False;
+
+  if (CurrentScreen = gstPostview) then
+    YOffset := 316;
+
+  if fTalismanImage = nil then
+    fTalismanImage := TBitmap32.Create;
+
+  Temp := TBitmap32.Create;
+  try
+    aImage := 'talismans.png';
+
+    // Try level pack folder first
+    LoadPath := GameParams.CurrentLevel.Group.FindFile(aImage);
+
+    // Then default
+    if not FileExists(LoadPath) then
+      LoadPath := AppPath + SFGraphicsMenu + aImage
+    else
+      KeepTalismans := True;
+
+    TPngInterface.LoadPngFile(LoadPath, fTalismanImage);
+    fTalismanImage.DrawMode := dmOpaque;
+
+    Temp.SetSize(fTalismanImage.Width div 2, fTalismanImage.Height div 4);
+
+    TalCount := GameParams.Level.Talismans.Count;
+
+    TotalTalWidth := (TalCount * (Temp.Width + TALISMAN_PADDING)) - TALISMAN_PADDING;
+    TalPoint := System.Types.Point((ScreenImg.Bitmap.Width - TotalTalWidth + Temp.Width) div 2, TALISMANS_Y_POSITION - YOffset);
+
+    for i := 0 to GameParams.Level.Talismans.Count-1 do
+    begin
+      Tal := GameParams.Level.Talismans[i];
+      case Tal.Color of
+        tcBronze: SrcRect := SizedRect(0, 0, Temp.Width, Temp.Height);
+        tcSilver: SrcRect := SizedRect(0, Temp.Height, Temp.Width, Temp.Height);
+        tcGold: SrcRect := SizedRect(0, Temp.Height * 2, Temp.Width, Temp.Height);
+      end;
+
+      if GameParams.CurrentLevel.TalismanStatus[Tal.ID] then
+        System.Types.OffsetRect(SrcRect, Temp.Width, 0);
+
+      DrawButtons;
+    end;
+  finally
+    Temp.Free;
+
+    if not KeepTalismans then
+    begin
+      fTalismanImage.Free;
+      fTalismanImage := nil;
+    end;
+  end;
+end;
+
+procedure TGameBaseMenuScreen.HandleTalismanClick;
+var
+  P: TPoint;
+  i: Integer;
+  F: TLevelInfoPanel;
+begin
+  P := GetInternalMouseCoordinates;
+  for i := 0 to fTalRects.Count-1 do
+    if System.Types.PtInRect(fTalRects[i], P) then
+    begin
+      F := TLevelInfoPanel.Create(Self, nil, fTalismanImage);
+      try
+        F.Level := GameParams.Level;
+        F.Talisman := GameParams.Level.Talismans[i];
+        F.ShowPopup;
+      finally
+        F.Free;
+      end;
+      Break;
+    end;
 end;
 
 procedure TGameBaseMenuScreen.OnClickTimer(Sender: TObject);
@@ -777,7 +916,7 @@ begin
   BgImage := TBitmap32.Create;
 
   try
-    if not GetGraphic('background_' + GetBackgroundSuffix + '.png', BgImage, True) then
+    if not GetGraphic('background_' + GetWallpaperSuffix + '.png', BgImage, True) then
       GetGraphic('background.png', BgImage, True);
 
     if (BgImage.Width = 0) or (BgImage.Height = 0) then
@@ -897,7 +1036,11 @@ begin
 
   if PopupResult = mrRetry then
   begin
-    CloseScreen(gstReplayTest)
+    if GameParams.PlaybackModeActive then
+    begin
+      GeneratePlaybackList;
+    end else
+      CloseScreen(gstReplayTest)
   end else if not Success then
   begin
     GameParams.SetLevel(OldLevel);

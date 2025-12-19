@@ -26,7 +26,7 @@ type
       procedure TryLoadReplay;
     protected
       procedure BuildScreen; override;
-      function GetBackgroundSuffix: String; override;
+      function GetWallpaperSuffix: String; override;
 
       procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
     public
@@ -55,10 +55,14 @@ begin
 
     MakeHiddenOption(VK_ESCAPE, ExitToMenu);
 
-    if GameParams.IsPreTextScreen then
-      MakeHiddenOption(lka_LoadReplay, TryLoadReplay)
-    else
-      MakeHiddenOption(lka_SaveReplay, SaveReplay);
+    if GameParams.PlaybackModeActive then
+      MakeHiddenOption(lka_CancelPlayback, CancelPlaybackMode)
+    else begin
+      if GameParams.IsPreTextScreen then
+        MakeHiddenOption(lka_LoadReplay, TryLoadReplay)
+      else
+        MakeHiddenOption(lka_SaveReplay, SaveReplay);
+    end;
 
     DrawAllClickables;
 
@@ -69,7 +73,7 @@ begin
   end;
 end;
 
-function TGameTextScreen.GetBackgroundSuffix: String;
+function TGameTextScreen.GetWallpaperSuffix: String;
 begin
   if GameParams.IsPreTextScreen then
     Result := 'pretext'

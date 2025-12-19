@@ -66,7 +66,7 @@ type
     protected
       procedure BuildScreen; override;
       procedure CloseScreen(aNextScreen: TGameScreenType); override;
-      function GetBackgroundSuffix: String; override;
+      function GetWallpaperSuffix: String; override;
 
       procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
     public
@@ -377,7 +377,7 @@ begin
         fReplays[i].ReplayLevelText := '';
         fReplays[i].ReplayLevelTitle := '<no match>';
 
-        if not LoadLevel(fReplays[i].ReplayLevelID) then
+        if not GameParams.LoadLevelByID(fReplays[i].ReplayLevelID) then
           fReplays[i].ReplayResult := CR_NOLEVELMATCH
         else if GameParams.Level.HasAnyFallbacks then
           fReplays[i].ReplayResult := CR_ERROR
@@ -558,7 +558,7 @@ begin
     inherited;
 end;
 
-function TGameReplayCheckScreen.GetBackgroundSuffix: String;
+function TGameReplayCheckScreen.GetWallpaperSuffix: String;
 begin
   Result := 'replay_check';
 end;

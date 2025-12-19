@@ -28,16 +28,25 @@ var
                       // be replaced once proper level select menus are introduced. 
 
 type
+  TSkillsUsedRec = record
+    Name  : string;
+    Count : Integer;
+  end;
+
+  TSkillsUsedList = array of TSkillsUsedRec;
+
   TGameResultsRec = record
-    gSuccess            : Boolean; // level played successfully?
-    gCheated            : Boolean; // level cheated?
-    gCount              : Integer; // number
-    gToRescue           : Integer;
-    gRescued            : Integer;
-    gTimeIsUp           : Boolean;
-    gLastRescueIteration: Integer;
-    gGotTalisman        : Boolean;
-    gGotNewTalisman     : Boolean;
+    gSuccess            : Boolean; // Level played successfully
+    gCheated            : Boolean; // Level cheated
+    gCount              : Integer; // Number of lems
+    gToRescue           : Integer; // Save requirement
+    gRescued            : Integer; // Number of lems rescued
+    gTimeIsUp           : Boolean; // Time up status
+    gLastIteration      : Integer; // Final frame
+    gLastRescueIteration: Integer; // Final rescue frame
+    gGotTalisman        : Boolean; // Talisman achieved
+    gGotNewTalisman     : Boolean; // New talisman achieved
+    gSkillsUsedList     : TSkillsUsedList;  // Dynamic list of (name, count)
   end;
 
 type
@@ -58,6 +67,13 @@ type
     gsoMusic
   );
   TGameSoundOptions = set of TGameSoundOption;
+
+type
+  TPlaybackOrder = (
+    poByReplay,
+    poByLevel,
+    poRandom
+  );
 
 type
   TExitToPostview = (
@@ -163,6 +179,15 @@ type
 
     MiscOptions           : TMiscOptions;
 
+    // Playback Mode
+    fPlaybackModeActive: Boolean;
+    fPlaybackOrder: TPlaybackOrder;
+    fPlaybackList: TStringList;
+    fUnmatchedList: TStringList;
+    fReplayVerifyList: TStringList;
+    fPlaybackIndex: Integer;
+    fAutoSkipPreviewPostview: Boolean;
+
     function GetOptionFlag(aFlag: TMiscOption): Boolean;
     procedure SetOptionFlag(aFlag: TMiscOption; aValue: Boolean);
 
@@ -233,6 +258,7 @@ type
     procedure LoadCurrentLevel(NoOutput: Boolean = False); // loads level specified by CurrentLevel into Level, and prepares renderer
     procedure ReloadCurrentLevel(NoOutput: Boolean = False); // re-prepares using the existing TLevel in memory
     function FindLevelFileByID(LevelID: string): string;
+    function LoadLevelByID(aID: Int64): Boolean;
 
     procedure ElevateSaveCriticality(aCriticality: TGameParamsSaveCriticality);
 
@@ -272,6 +298,14 @@ type
     property FileCaching: Boolean Index moFileCaching read GetOptionFlag write SetOptionFlag;
     property MatchBlankReplayUsername: Boolean Index moMatchBlankReplayUsername read GetOptionFlag write SetOptionFlag;
     property PostviewJingles: Boolean Index moPostviewJingles read GetOptionFlag write SetOptionFlag;
+
+    property PlaybackModeActive: Boolean read fPlaybackModeActive write fPlaybackModeActive;
+    property PlaybackOrder: TPlaybackOrder read fPlaybackOrder write fPlaybackOrder;
+    property PlaybackList: TStringList read fPlaybackList write fPlaybackList;
+    property UnmatchedList: TStringList read fUnmatchedList write fUnmatchedList;
+    property ReplayVerifyList: TStringList read fReplayVerifyList write fReplayVerifyList;
+    property PlaybackIndex: Integer read fPlaybackIndex write fPlaybackIndex;
+    property AutoSkipPreviewPostview: Boolean read fAutoSkipPreviewPostview write fAutoSkipPreviewPostview;
 
     property DumpMode: Boolean read fDumpMode write fDumpMode;
     property OneLevelMode: Boolean read fOneLevelMode write fOneLevelMode;
@@ -524,6 +558,17 @@ begin
     SaveBoolean('PostviewJingles', PostviewJingles);
 
     SL.Add('');
+    SL.Add('# Playback Options');
+    SaveBoolean('AutoSkipPreviewPostview', AutoSkipPreviewPostview);
+
+    if (PlaybackOrder = poByReplay) then
+      SaveString('PlaybackOrder', 'ByReplay')
+    else if (PlaybackOrder = poByLevel) then
+      SaveString('PlaybackOrder', 'ByLevel')
+    else if (PlaybackOrder = poRandom) then
+      SaveString('PlaybackOrder', 'Random');
+
+    SL.Add('');
     SL.Add('# Online Options');
     SaveBoolean('EnableOnline', EnableOnline);
     SaveBoolean('UpdateCheck', CheckUpdates);
@@ -634,6 +679,20 @@ var
       ExitToPostview := etpIfPassed;
   end;
 
+  procedure LoadPlaybackOrderOptions;
+  var
+    sOption: String;
+  begin
+    sOption := SL.Values['PlaybackOrder'];
+
+    if (sOption = 'Random') then
+      PlaybackOrder := poRandom
+    else if (sOption = 'ByReplay') then
+      PlaybackOrder := poByReplay
+    else // Set default if the string is anything else
+      PlaybackOrder := poByLevel;
+  end;
+
   procedure ValidateSkillQFrames;
   begin
     if (SkillQFrames < 0) or (SkillQFrames > 20) then
@@ -695,6 +754,9 @@ begin
     DisableWineWarnings := LoadBoolean('DisableWineWarnings', DisableWineWarnings);
     FileCaching := LoadBoolean('FileCaching', FileCaching);
 
+    LoadPlaybackOrderOptions;
+    AutoSkipPreviewPostview := LoadBoolean('AutoSkipPreviewPostview', AutoSkipPreviewPostview);
+
     ZoomLevel := StrToIntDef(SL.Values['ZoomLevel'], -1);
     PanelZoomLevel := StrToIntDef(SL.Values['PanelZoomLevel'], -1);
 
@@ -746,6 +808,37 @@ begin
   end;
 
   SL.Free;
+end;
+
+function TDosGameParams.LoadLevelByID(aID: Int64): Boolean;
+var
+  G: TNeoLevelGroup;
+
+  function SearchGroup(aGroup: TNeoLevelGroup): Boolean;
+  var
+    i: Integer;
+  begin
+    Result := False;
+
+    for i := 0 to aGroup.Children.Count-1 do
+    begin
+      Result := SearchGroup(aGroup.Children[i]);
+      if Result then Exit;
+    end;
+
+    for i := 0 to aGroup.Levels.Count-1 do
+      if aGroup.Levels[i].LevelID = aID then
+      begin
+        SetLevel(aGroup.Levels[i]);
+        LoadCurrentLevel(True);
+        Result := True;
+      end;
+  end;
+begin
+  G := GameParams.CurrentLevel.Group;
+  while (G.Parent <> nil) and (not G.IsBasePack) do
+    G := G.Parent;
+  Result := SearchGroup(G);
 end;
 
 function TDosGameParams.FindLevelFileByID(LevelID: string): string;
@@ -1022,6 +1115,9 @@ begin
   SoundManager.SoundVolume := 50;
   ExitToPostview := etpIfPassed;
 
+  PlaybackOrder := poByLevel;
+  fAutoSkipPreviewPostview := True;
+
   fDumpMode := False;
   fShownText := False;
   fOneLevelMode := False;
@@ -1044,6 +1140,10 @@ begin
                    E.ClassName + ': ' + E.Message + #10 +
                    'Default hotkeys have been loaded. Customizations to hotkeys during this session will not be saved.');
   end;
+
+  PlaybackList := TStringList.Create;
+  UnmatchedList := TStringList.Create;
+  ReplayVerifyList := TStringList.Create;
 end;
 
 procedure TDosGameParams.CreateBasePack;
@@ -1076,6 +1176,9 @@ destructor TDosGameParams.Destroy;
 begin
   fHotkeys.Free;
   BaseLevelPack.Free;
+  PlaybackList.Free;
+  UnmatchedList.Free;
+  ReplayVerifyList.Free;
   inherited Destroy;
 end;
 

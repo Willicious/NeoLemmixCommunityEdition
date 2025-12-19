@@ -10,7 +10,7 @@ uses
   LemCore,
   LemTalisman,
   PngInterface,
-  FLevelInfo, //FPlaybackMode, // Bookmark
+  FLevelInfo, FPlaybackMode,
   GR32, GR32_Resamplers, GR32_Layers, GR32_Image,
   Generics.Collections,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Buttons,
@@ -574,44 +574,39 @@ begin
 end;
 
 procedure TFLevelSelect.btnPlaybackModeClick(Sender: TObject);
+var
+  PlaybackModeForm: TFPlaybackMode;
+  ReplayFiles: TStringDynArray;
+  ReplayFile: string;
 begin
-  ModalResult := mrCancel;
-end;                      // Bookmark
+  PlaybackModeForm := TFPlaybackMode.Create(nil);
 
-//procedure TFLevelSelect.btnPlaybackModeClick(Sender: TObject);
-//var
-//  PlaybackModeForm: TFPlaybackMode;
-//  ReplayFiles: TStringDynArray;
-//  ReplayFile: string;
-//begin
-//  PlaybackModeForm := TFPlaybackMode.Create(nil);
-//
-//  try
-//    // Populate the form with the currently selected pack
-//    PlaybackModeForm.CurrentlySelectedPack := GetCurrentlySelectedPack;
-//    PlaybackModeForm.UpdatePackNameText;
-//
-//    if PlaybackModeForm.ShowModal = mrOk then
-//    begin
-//      if PlaybackModeForm.SelectedFolder = '' then
-//        Exit;
-//
-//      // Get list of replay files
-//      ReplayFiles := TDirectory.GetFiles(PlaybackModeForm.SelectedFolder, '*.nxrp');
-//
-//      // Add replay file names to ReplayVerifyList
-//      for ReplayFile in ReplayFiles do
-//        GameParams.ReplayVerifyList.Add(ReplayFile); // Storing full path for easier access later
-//
-//      GameParams.PlaybackModeActive := True;
-//      GameParams.Save(scImportant);
-//      WriteToParams;
-//      ModalResult := mrRetry;
-//    end;
-//  finally
-//    PlaybackModeForm.Free;
-//  end;
-//end;
+  try
+    // Populate the form with the currently selected pack
+    PlaybackModeForm.CurrentlySelectedPack := GetCurrentlySelectedPack;
+    PlaybackModeForm.UpdatePackNameText;
+
+    if PlaybackModeForm.ShowModal = mrOk then
+    begin
+      if PlaybackModeForm.SelectedFolder = '' then
+        Exit;
+
+      // Get list of replay files
+      ReplayFiles := TDirectory.GetFiles(PlaybackModeForm.SelectedFolder, '*.nxrp');
+
+      // Add replay file names to ReplayVerifyList
+      for ReplayFile in ReplayFiles do
+        GameParams.ReplayVerifyList.Add(ReplayFile); // Storing full path for easier access later
+
+      GameParams.PlaybackModeActive := True;
+      GameParams.Save(scImportant);
+      WriteToParams;
+      ModalResult := mrRetry;
+    end;
+  finally
+    PlaybackModeForm.Free;
+  end;
+end;
 
 procedure TFLevelSelect.btnResetTalismansClick(Sender: TObject);
 var

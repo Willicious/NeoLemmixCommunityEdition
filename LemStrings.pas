@@ -11,6 +11,8 @@ const
   // Important paths
   SFGraphics = 'gfx\';
     SFGraphicsGame = SFGraphics + 'game\';
+    SFGraphicsCursor = SFGraphics + 'cursor\';
+    SFGraphicsCursorHighRes = SFGraphics + 'cursor-hr\';
     SFGraphicsHelpers = SFGraphics + 'helpers\';
     SFGraphicsHelpersHighRes = SFGraphics + 'helpers-hr\';
     SFGraphicsMasks = SFGraphics + 'mask\';
@@ -65,6 +67,8 @@ const
   SFX_FIXING = 'wrench';
   SFX_ZOMBIE = 'zombie';
   SFX_TIMEUP = 'timeup';
+  SFX_SUCCESS = 'success';
+  SFX_FAILURE = 'failure';
   SFX_PORTAL = 'portal';
   SFX_NEUTRALIZE = 'neutralize';
   SFX_DENEUTRALIZE = 'deneutralize';
@@ -139,14 +143,12 @@ resourcestring
   {-------------------------------------------------------------------------------
     Postview Screen
   -------------------------------------------------------------------------------}
-  SYourTimeIsUp =
-    'Your time is up!';
+  SYourTimeIsUp = 'Your time is up!';
 
-  SAllLemmingsAccountedFor =
-    'All lemmings accounted for.';
+  SAllLemmingsAccountedFor = 'All lemmings accounted for.';
 
-  STalismanUnlocked =
-    'You unlocked a talisman!';
+  STalismanUnlocked = 'You unlocked a new talisman!';
+  STalismanAchieved = 'You achieved a talisman!';
 
   SYouRescued = 'You rescued ';
   SYouNeeded =  'You needed  ';
@@ -154,6 +156,8 @@ resourcestring
 
   SYourTime =       'Your time taken is  ';
   SYourTimeRecord = 'Your record time is ';
+
+  SYourFewestSkills = 'Your fewest skills used is ';
 
   SOptionNextLevel = 'Next level';
   SOptionRetryLevel = 'Retry level';
