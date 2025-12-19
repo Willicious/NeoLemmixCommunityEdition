@@ -1660,65 +1660,138 @@ var
   TempBMP, TempBMP2: TBitmap32;
   SL: TStringList;
   CursorDir, FileExt: String;
+  CursorBitmaps: TDictionary<string, TBitmap32>;
+
+  function ResolveCursorName(const Name: string): string;
+  var
+    Base: string;
+  begin
+    // Exit if the cursor has been successfully loaded
+    if CursorBitmaps.ContainsKey(Name) then
+      Exit(Name);
+
+    // Fallback to 'standard' and 'focused' if optional cursors are missing
+    Base := Name;
+
+    Base := StringReplace(Base, 'replay_insert_', '', [rfIgnoreCase]);
+    Base := StringReplace(Base, 'replay_', '', [rfIgnoreCase]);
+    Base := StringReplace(Base, 'playback_', '', [rfIgnoreCase]);
+
+    if CursorBitmaps.ContainsKey(Base) then
+      Exit(Base);
+
+    if Pos('focused', Name) > 0 then
+      Result := 'focused'
+    else
+      Result := 'standard';
+  end;
+
+  procedure LoadCursorImage(const aName: string);
+  var
+    Bmp: TBitmap32;
+    Name, Path: string;
+  const
+    MandatoryCursors: array[0..3] of string = ('standard', 'focused', 'direction_left', 'direction_right');
+  begin
+    Name := LowerCase(aName);
+    Path := AppPath + CursorDir + Name + FileExt;
+
+    if not FileExists(Path) then
+    begin
+      if (IndexText(Name, MandatoryCursors) >= 0) then
+        ShowMessage(Name + FileExt + ' is missing from ' + CursorDir);
+
+      Exit;
+    end;
+
+    Bmp := TBitmap32.Create;
+    try
+      TPngInterface.LoadPngFile(Path, Bmp);
+
+      if CursorBitmaps.ContainsKey(Name) then
+        CursorBitmaps[Name].Free;
+
+      CursorBitmaps.AddOrSetValue(Name, Bmp);
+    except
+      Bmp.Free;
+      raise;
+    end;
+  end;
 const
   CURSOR_NAMES: array[1..CURSOR_TYPES] of String = (
-    'standard',                               // 1
-    'focused',                                // 2
-    'standard_replay',                        // 3
-    'focused_replay',                         // 4
-    'standard_replay_insert',                 // 5
-    'focused_replay_insert',                  // 6
-    'standard_playback',                      // 7
-    'focused_playback',                       // 8
-    'standard|direction_left',                // 1 + 8
-    'focused|direction_left',                 // 2 + 8
-    'standard_replay|direction_left',         // 3 + 8
-    'focused_replay|direction_left',          // 4 + 8
-    'standard_replay_insert|direction_left',  // 5 + 8
-    'focused_replay_insert|direction_left',   // 6 + 8
-    'standard_playback|direction_left',       // 7 + 8
-    'focused_playback|direction_left',        // 8 + 8
-    'standard|direction_right',               // 1 + 16
-    'focused|direction_right',                // 2 + 16
-    'standard_replay|direction_right',        // 3 + 16
-    'focused_replay|direction_right',         // 4 + 16
-    'standard_replay_insert|direction_right', // 5 + 16
-    'focused_replay_insert|direction_right',  // 6 + 16
-    'standard_playback|direction_right',      // 7 + 16
-    'focused_playback|direction_right'        // 8 + 16
+    'standard',
+    'focused',
+    'standard_replay',
+    'focused_replay',
+    'standard_replay_insert',
+    'focused_replay_insert',
+    'standard_playback',
+    'focused_playback',
+    'standard|direction_left',
+    'focused|direction_left',
+    'standard_replay|direction_left',
+    'focused_replay|direction_left',
+    'standard_replay_insert|direction_left',
+    'focused_replay_insert|direction_left',
+    'standard_playback|direction_left',
+    'focused_playback|direction_left',
+    'standard|direction_right',
+    'focused|direction_right',
+    'standard_replay|direction_right',
+    'focused_replay|direction_right',
+    'standard_replay_insert|direction_right',
+    'focused_replay_insert|direction_right',
+    'standard_playback|direction_right',
+    'focused_playback|direction_right'
   );
 begin
   FreeCursors;
 
   LocalMaxZoom := Min(Screen.Width div 320, (Screen.Height - (40 * ResMod * SkillPanel.MaxZoom)) div 160) + EXTRA_ZOOM_LEVELS;
 
+  if GameParams.HighResolution then
+    CursorDir := SFGraphicsCursorHighRes
+  else
+    CursorDir := SFGraphicsCursor;
+
+  FileExt := '.png';
+
   TempBMP := TBitmap32.Create;
   TempBMP2 := TBitmap32.Create;
   SL := TStringList.Create;
+  CursorBitmaps := TDictionary<string, TBitmap32>.Create;
+
   try
     SL.Delimiter := '|';
 
+    // ---- Load mandatory ----
+    LoadCursorImage('standard');
+    LoadCursorImage('focused');
+    LoadCursorImage('direction_left');
+    LoadCursorImage('direction_right');
+
+    // ---- Load optional ----
+    LoadCursorImage('standard_replay');
+    LoadCursorImage('focused_replay');
+    LoadCursorImage('standard_replay_insert');
+    LoadCursorImage('focused_replay_insert');
+    LoadCursorImage('standard_playback');
+    LoadCursorImage('focused_playback');
+
+    // ---- Compose cursors ----
     for i := 1 to CURSOR_TYPES do
     begin
       Cursors[i].Free;
-
       Cursors[i] := TNLCursor.Create(LocalMaxZoom);
 
       SL.DelimitedText := CURSOR_NAMES[i];
 
-      if GameParams.HighResolution then
-        CursorDir := SFGraphicsCursorHighRes
-      else
-        CursorDir := SFGraphicsCursor;
-
-      FileExt := '.png';
-
-      TPngInterface.LoadPngFile(AppPath + CursorDir + SL[0] + FileExt, TempBMP);
+      TempBMP.Assign(CursorBitmaps[ ResolveCursorName(LowerCase(SL[0])) ]);
 
       while SL.Count > 1 do
       begin
         SL.Delete(0);
-        TPngInterface.LoadPngFile(AppPath + CursorDir + SL[0] + FileExt, TempBMP2);
+        TempBMP2.Assign(CursorBitmaps[ ResolveCursorName(LowerCase(SL[0])) ]);
         TempBMP2.DrawMode := dmBlend;
         TempBMP2.CombineMode := cmMerge;
         TempBMP.Draw(TempBMP.BoundsRect, TempBMP2.BoundsRect, TempBMP2);
@@ -1733,6 +1806,10 @@ begin
     TempBMP.Free;
     TempBMP2.Free;
     SL.Free;
+
+    for var CB in CursorBitmaps.Values do
+      CB.Free;
+    CursorBitmaps.Free;
   end;
 end;
 
