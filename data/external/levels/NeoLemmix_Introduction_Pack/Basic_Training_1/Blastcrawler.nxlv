@@ -1,0 +1,1250 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.40
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Blastcrawler
+ AUTHOR IchoTolot
+ ID x5D917D442AAC6FD5
+ VERSION x000000000000000C
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 520
+ HEIGHT 264
+ START_X 160
+ START_Y 184
+ THEME dex_lr2_mona
+ BACKGROUND dex_lr2_build:LR2-Stars2
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 20
+ SAVE_REQUIREMENT 20
+ MAX_SPAWN_INTERVAL 38
+ 
+ $SKILLSET 
+   JUMPER 1
+   SHIMMIER 3
+   CLIMBER 1
+   PLATFORMER 2
+   LASERER 2
+   BASHER 1
+   MINER 2
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE dex_lr2_mona
+   PIECE entrance_mona
+   X 82
+   Y 176
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_lr2_mona
+   PIECE exit_mona
+   X 420
+   Y 37
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_lr2_mona
+   PIECE owa_left
+   X 62
+   Y 144
+   WIDTH 420
+   HEIGHT 24
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE dex_lr2_mona
+   PIECE owa_right
+   X 50
+   Y 72
+   WIDTH 432
+   HEIGHT 24
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE dex_lr2_mona
+   PIECE trap_armillary
+   X 532
+   Y 32
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_lr2_mona
+   PIECE water
+   X 0
+   Y 248
+   WIDTH 520
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_lr2_mona
+   PIECE owa_right
+   X 184
+   Y 96
+   WIDTH 16
+   HEIGHT 48
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE dex_lr2_mona
+   PIECE owa_left
+   X 302
+   Y 168
+   WIDTH 16
+   HEIGHT 48
+   ONLY_ON_TERRAIN
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE balustrade_a01
+   X 71
+   Y 240
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE balustrade_a02
+   X 101
+   Y 240
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks05
+   X 44
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 62
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 92
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE balustrade_a01
+   X 131
+   Y 240
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE balustrade_a02
+   X 161
+   Y 240
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 122
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 152
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE balustrade_a01
+   X 311
+   Y 240
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE balustrade_a02
+   X 341
+   Y 240
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 302
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 332
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE balustrade_a01
+   X 371
+   Y 240
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE balustrade_a02
+   X 401
+   Y 240
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 362
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 392
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE balustrade_a01
+   X 62
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE balustrade_a02
+   X 62
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 62
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 92
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 122
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 152
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 302
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 332
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 362
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 392
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE balustrade_a01
+   X 461
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE balustrade_a02
+   X 461
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 62
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 92
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 122
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 152
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 302
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 332
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 362
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 392
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE balustrade_a01
+   X 49
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE balustrade_a02
+   X 49
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks05
+   X 14
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 362
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 392
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 422
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 422
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 392
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 422
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 392
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 422
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 362
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 332
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 362
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 332
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE balustrade_a01
+   X 431
+   Y 240
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks19
+   X 452
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 452
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 452
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 452
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 422
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 452
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks18
+   X 35
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 50
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 50
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks05
+   X 32
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks02
+   X 29
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 80
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 80
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 110
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 110
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 140
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 140
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE balustrade_a01
+   X 191
+   Y 240
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE balustrade_a02
+   X 221
+   Y 240
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 182
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 212
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE balustrade_a01
+   X 251
+   Y 240
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE balustrade_a02
+   X 281
+   Y 240
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 242
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 272
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 182
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 212
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 242
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 272
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 182
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 212
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 242
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 272
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 32
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 422
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 452
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE balustrade_a01
+   X 461
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE balustrade_a02
+   X 461
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks02
+   X 29
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X 50
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks04
+   X 482
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks19
+   X 482
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks04
+   X 482
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks17
+   X 482
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks19
+   X 482
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE balustrade_a01
+   X 385
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE balustrade_a02
+   X 385
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 302
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 302
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 170
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks01
+   X 170
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE block05
+   X 278
+   Y 168
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE block05
+   X 200
+   Y 96
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE column02a
+   X 284
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE column02c
+   X 284
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE sphere06
+   X 197
+   Y 7
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks_mona
+   X 327
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE sphere01
+   X 153
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE sphere02
+   X 123
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE smiley
+   X 446
+   Y 183
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE sun
+   X 386
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE statue02
+   X 482
+   Y 111
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE column02c
+   X 361
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE statue03
+   X 477
+   Y 21
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE fencec01
+   X 50
+   Y 95
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE fencec01
+   X 74
+   Y 95
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE fencec01
+   X 98
+   Y 95
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE fencec01
+   X 50
+   Y 119
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE fencec01
+   X 74
+   Y 119
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE fencec01
+   X 98
+   Y 119
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks_arch04c
+   X 131
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks_arch04a
+   X 80
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks_arch04b
+   X 101
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks_arch02
+   X 62
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks_arch02
+   X 152
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks_arch04c
+   X 221
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks_arch04a
+   X 170
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks_arch04b
+   X 191
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks_arch02
+   X 242
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks_arch04c
+   X 311
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks_arch04a
+   X 260
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks_arch04b
+   X 281
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks_arch02
+   X 332
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X 350
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE sphere03
+   X 106
+   Y 6
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE sphere03
+   X 286
+   Y 6
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE sphere05
+   X 381
+   Y 96
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+$PRETEXT
+  LINE The created tunnel of a laserer is perfectly
+  LINE suited for shimmiers!    
+  LINE If you can somehow get to the ceiling 
+  LINE leading to the laserer tunnel, a shimmier 
+  LINE won't have a problem making it through 
+  LINE the tunnel.
+  LINE 
+  LINE Now blast and shimmy your way up the floors!
+$END 

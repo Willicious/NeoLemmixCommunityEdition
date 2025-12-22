@@ -1,0 +1,1347 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.40
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Shocking Interruption
+ AUTHOR IchoTolot
+ ID x724F96B42F609C2B
+ VERSION x000000000000001B
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 816
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME dex_halloween
+ BACKGROUND dex_halloween:halloween_spooky
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 90
+ SAVE_REQUIREMENT 30
+ MAX_SPAWN_INTERVAL 13
+ SPAWN_INTERVAL_LOCKED
+ 
+ $SKILLSET 
+   WALKER 0
+   JUMPER 1
+   SHIMMIER 1
+   PLATFORMER 1
+   LASERER 5
+   BASHER 0
+ $END 
+ 
+ $PRETEXT 
+   LINE Another level title with "Interruption" in it!
+   LINE Not only skills like jumpers and walkers
+   LINE can be used to interrupt skills to create 
+   LINE more favorable outcomes.
+   LINE In fact, a ton of different skills can be used
+   LINE depending on the situation.
+   LINE 
+   LINE Shimmiers would be a good example, but  
+   LINE in the right position, even something like  
+   LINE a basher can be a good interruption skill.
+   LINE 
+   LINE Let's interrupt some laserers here! 
+   LINE Hint: When blasting against the right kind of 
+   LINE angled surface, a perfectly timed interrupt  
+   LINE will allow lemmings to step up while still
+   LINE keeping the surface whole. It's a bit precise, 
+   LINE and you might want to slightly change up the 
+   LINE laserer's starting position, though.
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE dex_halloween
+   PIECE exit_spooky
+   X 706
+   Y 115
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE entrance_spooky
+   X 51
+   Y 88
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE entrance_spooky
+   X 149
+   Y 28
+   NO_OVERWRITE
+   ZOMBIE 
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE entrance_spooky
+   X 555
+   Y 22
+   NO_OVERWRITE
+   ZOMBIE 
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE water_blood
+   X 192
+   Y 144
+   WIDTH 144
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE water_blood
+   X 528
+   Y 144
+   WIDTH 96
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE flame_spooky
+   X 10
+   Y 62
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE flame_spooky
+   X 18
+   Y 60
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE flame_spooky
+   X 25
+   Y 62
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE flame_spooky
+   X 788
+   Y 62
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE flame_spooky
+   X 796
+   Y 60
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE flame_spooky
+   X 803
+   Y 62
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE painting1
+   X 48
+   Y 12
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE painting1_anim
+   X 66
+   Y 37
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE painting2
+   X 728
+   Y 56
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE painting4
+   X 248
+   Y 16
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE painting4_anim
+   X 258
+   Y 34
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE painting3
+   X 412
+   Y 40
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE painting3_anim
+   X 426
+   Y 56
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE painting2_anim
+   X 743
+   Y 80
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE flame_spooky
+   X 747
+   Y 28
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE flame_spooky
+   X 738
+   Y 28
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE flame_spooky
+   X 730
+   Y 27
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE flame_spooky
+   X 707
+   Y 28
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE flame_spooky
+   X 699
+   Y 28
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE flame_spooky
+   X 690
+   Y 27
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE pickup_sweet
+   X 437
+   Y 129
+   NO_OVERWRITE
+   SKILL BASHER
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE pickup_sweet
+   X 417
+   Y 129
+   NO_OVERWRITE
+   SKILL WALKER
+ $END
+ 
+ 
+#        Terrain groups         
+# ----------------------------- 
+ $TERRAINGROUP
+   NAME Group2081700161
+   
+   $TERRAIN
+     STYLE dex_halloween
+     PIECE metal_purple1
+     X 648
+     Y 52
+   $END
+   
+   $TERRAIN
+     STYLE dex_halloween
+     PIECE metal_purple1
+     X 648
+     Y 58
+     ERASE
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group1025522979
+   
+   $TERRAIN
+     STYLE dex_halloween
+     PIECE metal_purple1
+     X 648
+     Y 40
+   $END
+   
+   $TERRAIN
+     STYLE dex_halloween
+     PIECE metal_purple1
+     X 648
+     Y 34
+     ERASE
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group-972699616
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group2081700161
+     X 648
+     Y 52
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group1025522979
+     X 648
+     Y 58
+   $END
+   
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_big1
+   X 0
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 48
+   Y 148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 72
+   Y 148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 96
+   Y 148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 120
+   Y 148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_big1
+   X 144
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 120
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml1
+   X 96
+   Y 100
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml1
+   X 96
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_big1
+   X 96
+   Y 28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 144
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_big2
+   X 192
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 168
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 192
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 216
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 240
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 264
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_big1
+   X 288
+   Y 28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_big1
+   X 336
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_big2
+   X 240
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_big2
+   X 288
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 336
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 360
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_big4
+   X 384
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 384
+   Y 148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 408
+   Y 148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 432
+   Y 148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 456
+   Y 148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_big2
+   X 336
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 576
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 552
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml1
+   X 456
+   Y 28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 528
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 456
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE metal_purple1
+   X 456
+   Y 64
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 480
+   Y 148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE metal_purple1
+   X 456
+   Y 88
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE metal_purple1
+   X 456
+   Y 112
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_big1
+   X 480
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 528
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 480
+   Y 124
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 504
+   Y 124
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 528
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 504
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 624
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 600
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml1
+   X 624
+   Y 28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 552
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 552
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 576
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 576
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 600
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 600
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml1
+   X 624
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_big1
+   X 624
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_big1
+   X 768
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 672
+   Y 148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 696
+   Y 148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 720
+   Y 148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 744
+   Y 148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 48
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 72
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 96
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 120
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 144
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 168
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_big1
+   X 0
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE metal_purple1
+   X 648
+   Y 28
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE metal_purple1
+   X 648
+   Y 64
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 192
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 216
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 240
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 264
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 288
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 312
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 336
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 360
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 384
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 408
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 432
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 456
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 480
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 504
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 528
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 552
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 576
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 600
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 624
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 648
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 672
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 696
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 720
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 744
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_big1
+   X 768
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE candle5
+   X 0
+   Y 65
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE candle5
+   X 785
+   Y 65
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE chandelier
+   X 688
+   Y 12
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE chain4
+   X 193
+   Y 11
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE furniture_books5
+   X 27
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE furniture_vase
+   X 128
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE furniture_flowerwilt
+   X 124
+   Y 77
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 432
+   Y 28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 408
+   Y 28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml1
+   X 384
+   Y 28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE chain5
+   X 372
+   Y 98
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml1
+   X 504
+   Y 28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE chain3
+   X 590
+   Y -1
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE metal_purple1
+   X 504
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-972699616
+   X 648
+   Y 52
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml3
+   X 312
+   Y 88
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml3
+   X 360
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml3
+   X 360
+   Y 28
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml1
+   X 336
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml4
+   X 336
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml3
+   X 384
+   Y 124
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE necroblock_sml2
+   X 660
+   Y 88
+   ROTATE
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE metal_purple3
+   X 653
+   Y 14
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE metal_purple3
+   X 653
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE metal_purple3
+   X 509
+   Y 14
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE metal_purple3
+   X 509
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE metal_purple1
+   X 96
+   Y 100
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE metal_purple1
+   X 96
+   Y 76
+   ONE_WAY
+ $END
+ 
+ 

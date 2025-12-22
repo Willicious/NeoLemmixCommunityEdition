@@ -1,0 +1,900 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.40
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Welcome To The Sliderdance!
+ AUTHOR IchoTolot
+ ID x65954C3D05FEA015
+ VERSION x0000000000000010
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 520
+ HEIGHT 280
+ START_X 160
+ START_Y 80
+ THEME namida_bridge
+ BACKGROUND namida_bridge:night_large
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 30
+ SAVE_REQUIREMENT 29
+ MAX_SPAWN_INTERVAL 13
+ 
+ $SKILLSET 
+   SHIMMIER 2
+   FLOATER 3
+   STONER 1
+   PLATFORMER 0
+   STACKER 2
+   BASHER 0
+   MINER 2
+   DIGGER 0
+   CLONER 1
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE namida_bridge
+   PIECE window
+   X 30
+   Y 24
+   NO_OVERWRITE
+   SLIDER 
+   CLIMBER 
+ $END
+ 
+ $GADGET
+   STYLE namida_bridge
+   PIECE window
+   X 136
+   Y 24
+   NO_OVERWRITE
+   SLIDER 
+   CLIMBER 
+ $END
+ 
+ $GADGET
+   STYLE namida_bridge
+   PIECE window
+   X 240
+   Y 24
+   NO_OVERWRITE
+   SLIDER 
+   CLIMBER 
+ $END
+ 
+ $GADGET
+   STYLE namida_bridge
+   PIECE weight_trap
+   X 87
+   Y 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_bridge
+   PIECE weight_trap
+   X 191
+   Y 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_bridge
+   PIECE weight_trap
+   X 207
+   Y 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_bridge
+   PIECE weight_trap
+   X 103
+   Y 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_bridge
+   PIECE exit
+   X 8
+   Y 220
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_bridge
+   PIECE weight_trap
+   X 295
+   Y 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_bridge
+   PIECE pickup
+   X 460
+   Y 127
+   NO_OVERWRITE
+   SKILL STONER
+ $END
+ 
+ $GADGET
+   STYLE namida_bridge
+   PIECE pickup
+   X 338
+   Y 59
+   NO_OVERWRITE
+   SKILL PLATFORMER
+   SKILL_COUNT 9
+ $END
+ 
+ $GADGET
+   STYLE namida_bridge
+   PIECE weight_trap
+   X 1
+   Y 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_bridge
+   PIECE water
+   X 0
+   Y 264
+   WIDTH 520
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_bridge
+   PIECE pickup
+   X 364
+   Y 223
+   NO_OVERWRITE
+   SKILL PLATFORMER
+ $END
+ 
+ $GADGET
+   STYLE namida_bridge
+   PIECE pickup
+   X 364
+   Y 59
+   NO_OVERWRITE
+   SKILL DIGGER
+   SKILL_COUNT 3
+ $END
+ 
+ $GADGET
+   STYLE namida_bridge
+   PIECE pickup
+   X 338
+   Y 223
+   NO_OVERWRITE
+   SKILL BASHER
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X -4
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 40
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 63
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 120
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 144
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 168
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 224
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 248
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 272
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE girder_large
+   X 72
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE girder_large
+   X 32
+   Y 248
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 33
+   Y 248
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 56
+   Y 248
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE girder_large
+   X 80
+   Y 248
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 80
+   Y 248
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 104
+   Y 248
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE girder_large
+   X 128
+   Y 248
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 128
+   Y 248
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 152
+   Y 248
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE girder_large
+   X 176
+   Y 248
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 176
+   Y 248
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 200
+   Y 248
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE girder_large
+   X 224
+   Y 248
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 224
+   Y 248
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 248
+   Y 248
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE girder_large
+   X 272
+   Y 248
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 272
+   Y 248
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 296
+   Y 248
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE steel_02
+   X 312
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE steel_02
+   X 312
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE steel_02
+   X 312
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 407
+   Y 84
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 431
+   Y 84
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE steel_02
+   X 0
+   Y 68
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE girder_large
+   X 424
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE girder_large
+   X 424
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 425
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 448
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 472
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE girder_large
+   X 488
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE girder_large
+   X 488
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE girder_large
+   X 488
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE girder_large
+   X 488
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 472
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 496
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 424
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 448
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 408
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE girder_large
+   X 440
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE girder_large
+   X 320
+   Y 248
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 320
+   Y 248
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 344
+   Y 248
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE girder_large
+   X 368
+   Y 248
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 364
+   Y 248
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 359
+   Y 84
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 383
+   Y 84
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 335
+   Y 84
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 392
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 344
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 368
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 328
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE small_chain_02
+   X 299
+   Y -12
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE small_chain_02
+   X 211
+   Y -12
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE small_chain_02
+   X 195
+   Y -12
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE small_chain_02
+   X 107
+   Y -12
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE small_chain_02
+   X 91
+   Y -12
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 9
+   Y 248
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 39
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 63
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X -9
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE bridge_01
+   X 15
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE small_chain_02
+   X 5
+   Y -12
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE chain_02
+   X 341
+   Y -36
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE chain_02
+   X 500
+   Y -36
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE pole_01
+   X 418
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE thin_cable_diagonal
+   X 456
+   Y 2
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE thin_cable_diagonal
+   X 434
+   Y -20
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE thin_cable_diagonal
+   X 370
+   Y 1
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE thin_cable_diagonal
+   X 392
+   Y -21
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE cable_diagonal
+   X 466
+   Y 195
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE cable_diagonal
+   X 443
+   Y 172
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE cable_diagonal
+   X 430
+   Y 160
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE cable_diagonal
+   X 429
+   Y 226
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE cable_diagonal
+   X 452
+   Y 203
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_bridge
+   PIECE cable_diagonal
+   X 465
+   Y 190
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+$PRETEXT
+  LINE Sliders can fit into the tiniest of holes
+  LINE inside a wall.
+  LINE 
+  LINE In recent lessons, you learned how to make 
+  LINE little dents inside stackers to be able to 
+  LINE step up the stacks. Now, we will use such holes 
+  LINE to create turning points for sliders! 
+  LINE After taking a step on top of the stack, 
+  LINE cloning a miner about to create such a dent in 
+  LINE a stacker will even contain all incoming 
+  LINE sliders just on top of this single stack! 
+  LINE 
+  LINE The same double-sided containment can be
+  LINE observed with sliders landing on top of
+  LINE a stoner.
+  LINE 
+  LINE Try out all three of these cases here!
+$END 

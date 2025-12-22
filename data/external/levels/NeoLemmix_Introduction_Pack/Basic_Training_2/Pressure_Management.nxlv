@@ -1,0 +1,659 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.40
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Pressure Management
+ AUTHOR IchoTolot
+ ID x079476151B7E5C90
+ VERSION x0000000000000016
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 328
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME sms_fire
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 15
+ SAVE_REQUIREMENT 15
+ MAX_SPAWN_INTERVAL 53
+ 
+ $SKILLSET 
+   SHIMMIER 0
+   PLATFORMER 0
+   BUILDER 4
+   LASERER 2
+ $END 
+ 
+ $PRETEXT 
+   LINE Hint: Here, I was not so nice to already
+   LINE adjust the release rate for you. On the 
+   LINE other hand, the level would also be 
+   LINE impossible if you were not able to lower 
+   LINE the release rate back down. :P
+ $END 
+ 
+ $POSTTEXT 
+   LINE Well done!
+   LINE Be sure to still check out
+   LINE the advanced training rank
+   LINE though. There are still quite
+   LINE a few tricks and techniques
+   LINE that can help you in your
+   LINE future quests to save the
+   LINE Lemmings!
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE sms_fire
+   PIECE entrance
+   X 199
+   Y 92
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE sms_fire
+   PIECE exit
+   X 76
+   Y 0
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE sms_fire
+   PIECE lava
+   X 129
+   Y 145
+   WIDTH 200
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE sms_fire
+   PIECE firepit
+   X 46
+   Y 55
+   WIDTH 36
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE sms_fire
+   PIECE firepit
+   X 6
+   Y 138
+   WIDTH 76
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE sms_fire
+   PIECE fire
+   X 176
+   Y 101
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 194
+   Y 131
+   NO_OVERWRITE
+   SKILL PLATFORMER
+   SKILL_COUNT 2
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 152
+   Y 131
+   NO_OVERWRITE
+   SKILL SHIMMIER
+   SKILL_COUNT 2
+ $END
+ 
+ 
+#        Terrain groups         
+# ----------------------------- 
+ $TERRAINGROUP
+   NAME Group-1618899616
+   
+   $TERRAIN
+     STYLE sms_fire
+     PIECE bars_03
+     X 202
+     Y 116
+     ROTATE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE sms_fire
+     PIECE bars_03
+     X 202
+     Y 114
+     ERASE
+     ROTATE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE chain_01
+   X 280
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE chain_04
+   X 180
+   Y 44
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE bricks_07
+   X 81
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE bricks_07
+   X 81
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE bricks_05
+   X 97
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE bars_01
+   X 202
+   Y 127
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE bars_01
+   X 238
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE bars_01
+   X 129
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE bars_01
+   X 18
+   Y 111
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE bars_01
+   X 165
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE bricks_05
+   X 81
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE pillar_02
+   X 129
+   Y 88
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE pillar_01
+   X 145
+   Y 81
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE pillar_01
+   X 146
+   Y 80
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE pillar_01
+   X 165
+   Y 81
+   ROTATE
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE pillar_01
+   X 146
+   Y 99
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE pillar_02
+   X 154
+   Y 65
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE pillar_02
+   X 154
+   Y 49
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE pillar_01
+   X 296
+   Y 127
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE pillar_02
+   X 304
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE pillar_02
+   X 304
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE pillar_02
+   X 304
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE pillar_02
+   X 304
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE rocks_08
+   X -25
+   Y 60
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE rocks_10
+   X -73
+   Y 53
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE spike_01
+   X 5
+   Y 24
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE letters_arrow
+   X 93
+   Y 133
+   ROTATE
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE grill_long
+   X 42
+   Y 62
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE chain_01
+   X 264
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE bluebricks_08
+   X 266
+   Y 38
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE bluebricks_08
+   X 282
+   Y 22
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE bluebricks_08
+   X 298
+   Y 6
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE bluebricks_08
+   X 314
+   Y -10
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE rocks_12
+   X 271
+   Y -5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE rocks_11
+   X 209
+   Y -7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE spike_01
+   X 249
+   Y -6
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE spike_01
+   X 234
+   Y -20
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE spike_01
+   X 223
+   Y -12
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE chain_04
+   X 180
+   Y -21
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE pillar_02
+   X 154
+   Y 33
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE bricks_05
+   X 145
+   Y -15
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE chain_02
+   X 189
+   Y 13
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE rocks_10
+   X -65
+   Y -17
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE spike_01
+   X 38
+   Y -12
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE bluebricks_09
+   X 130
+   Y -9
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE grill_long
+   X 41
+   Y 144
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE grill_long
+   X 1
+   Y 144
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE bluebricks_09
+   X 290
+   Y 54
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE bars_01
+   X 234
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE bars_01
+   X 169
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE bars_01
+   X 248
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE bluebricks_09
+   X 81
+   Y 96
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE bluebricks_09
+   X 105
+   Y 48
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE bricks_05
+   X 97
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sms_fire
+   PIECE spike_01
+   X 110
+   Y 62
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1618899616
+   X 202
+   Y 130
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1618899616
+   X 241
+   Y 130
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1618899616
+   X 228
+   Y 130
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1618899616
+   X 215
+   Y 130
+   ONE_WAY
+ $END
+ 
+ 

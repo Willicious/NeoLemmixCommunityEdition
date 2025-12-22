@@ -1,0 +1,1606 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.40
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE A New Coat Of Paint
+ AUTHOR IchoTolot
+ ID x7385D2D84343BCFC
+ VERSION x000000000000000B
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 321
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME l2_outdoor
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 30
+ SAVE_REQUIREMENT 29
+ MAX_SPAWN_INTERVAL 43
+ 
+ $SKILLSET 
+   BOMBER 1
+   BUILDER 1
+   LASERER 1
+   BASHER 1
+   FENCER 1
+   MINER 1
+   DIGGER 1
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE l2_outdoor
+   PIECE window
+   X 15
+   Y 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE l2_outdoor
+   PIECE eyes
+   X 80
+   Y 47
+   ONLY_ON_TERRAIN
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE l2_shadow
+   PIECE window_animated_01
+   X 145
+   Y 84
+   ONLY_ON_TERRAIN
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE l2_shadow
+   PIECE window_animated_02
+   X 192
+   Y 72
+   ONLY_ON_TERRAIN
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE dex_lr2_mona
+   PIECE mona_wink
+   X 82
+   Y 126
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE l2_egyptian
+   PIECE sphinx_eyes
+   X 257
+   Y 87
+   ONLY_ON_TERRAIN
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE l2_outdoor
+   PIECE exit
+   X 80
+   Y 0
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE l2_egyptian
+   PIECE torch
+   X 272
+   Y 24
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X 97
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_01
+   X 0
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_01
+   X 0
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_01
+   X 16
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_01
+   X 32
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_01
+   X 48
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_01
+   X 64
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_01
+   X 64
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_01
+   X 64
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_01
+   X 0
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_01
+   X 0
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_01
+   X 0
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_01
+   X 16
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_01
+   X 32
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_01
+   X 48
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_01
+   X 80
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_01
+   X 96
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_01
+   X 112
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_01
+   X 128
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_01
+   X 144
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE leaves_03
+   X 48
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE leaves_04
+   X 160
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE leaves_02
+   X 80
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE leaves_01
+   X 64
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE leaves_02
+   X 112
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE leaves_01
+   X 96
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE leaves_02
+   X 144
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE leaves_01
+   X 128
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_01
+   X 160
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_02
+   X 176
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_02
+   X 176
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_02
+   X 176
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_02
+   X 192
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_02
+   X 208
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_02
+   X 208
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_02
+   X 208
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_02
+   X 208
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_02
+   X 208
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE bricks_dark
+   X 192
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE bricks_dark
+   X 192
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE bricks_dark
+   X 192
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE bricks_dark
+   X 192
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_02
+   X 160
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_02
+   X 144
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_02
+   X 128
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_02
+   X 112
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_02
+   X 96
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_02
+   X 80
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_02
+   X 64
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_04
+   X 160
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_04
+   X 144
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_04
+   X 128
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_04
+   X 112
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_04
+   X 96
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_04
+   X 80
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_04
+   X 64
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE bricks_dark
+   X 144
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE bricks_dark
+   X 144
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE bricks_dark
+   X 160
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE bricks_dark
+   X 160
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_02
+   X 112
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE bricks_dark
+   X 144
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE bricks_dark
+   X 160
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE bricks_dark
+   X 128
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE bricks_dark
+   X 128
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE bricks_dark
+   X 144
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE bricks_dark
+   X 160
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE bricks_dark
+   X 128
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE bricks_dark
+   X 144
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE bricks_dark
+   X 160
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE bricks_dark
+   X 128
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks_mona
+   X 79
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X 79
+   Y 112
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X 79
+   Y 136
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X 97
+   Y 136
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 98
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 112
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 126
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 113
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 127
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_04
+   X 208
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_04
+   X 192
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_04
+   X 176
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_04
+   X 160
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_04
+   X 144
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_04
+   X 128
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_04
+   X 112
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 140
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 154
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X 54
+   Y 112
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X 54
+   Y 136
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_04
+   X 96
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 84
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X 101
+   Y 112
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X 101
+   Y 136
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 40
+   Y 150
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 40
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 40
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 40
+   Y 108
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 40
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 40
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 141
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 155
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 169
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 183
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 197
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 211
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 168
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 182
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 196
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 210
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks04
+   X 54
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE sphinx_01
+   X 225
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 225
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 241
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 257
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 273
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 289
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 305
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 305
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 305
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 305
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 305
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 305
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_03
+   X 289
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 289
+   Y 96
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 289
+   Y 112
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 289
+   Y 128
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 305
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 224
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 224
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 224
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_02
+   X 240
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_02
+   X 256
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_05
+   X 240
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 305
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 305
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 305
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 289
+   Y 80
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_03
+   X 273
+   Y 80
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 289
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 273
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 257
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 241
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 225
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_02
+   X 177
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_02
+   X 193
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_02
+   X 209
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_02
+   X 161
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_02
+   X 145
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_02
+   X 129
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE steel_02
+   X 113
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X 66
+   Y 112
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X 66
+   Y 136
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X 78
+   Y 112
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X 78
+   Y 136
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE flower_stalk_07
+   X 161
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE flower_stalk_06
+   X 145
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE flower_stalk_01
+   X 145
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_outdoor
+   PIECE flower_blue_01
+   X 155
+   Y -19
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_05
+   X 289
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X 28
+   Y 94
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X 28
+   Y 118
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X -2
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 12
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE metal04
+   X 26
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X 16
+   Y 94
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X 16
+   Y 118
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X 4
+   Y 94
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X 4
+   Y 118
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X -8
+   Y 94
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X -8
+   Y 118
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X 28
+   Y 142
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X 16
+   Y 142
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X 4
+   Y 142
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE bricks07
+   X -8
+   Y 142
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE sphere02
+   X 5
+   Y 102
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE fencec02
+   X 16
+   Y 135
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE fencec02
+   X 0
+   Y 135
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE fencec02
+   X 16
+   Y 94
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_mona
+   PIECE fencec02
+   X 0
+   Y 94
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+$PRETEXT
+  LINE Paint objects are objects (usually animated)
+  LINE that are only displayed on top of terrain.
+  LINE They don't have any effect on lemmings and
+  LINE are purely decorative.
+  LINE If you should remove the terrain they are 
+  LINE placed upon, they will be removed as well.
+  LINE 
+  LINE Let's take a closer look at some examples 
+  LINE in this next little puzzle!
+$END 

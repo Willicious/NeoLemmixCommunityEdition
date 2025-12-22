@@ -1,0 +1,11197 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.40
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Distance Control
+ AUTHOR IchoTolot
+ ID x3F15A9371B05692B
+ VERSION x0000000000000021
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 480
+ HEIGHT 208
+ START_X 160
+ START_Y 80
+ THEME proxima_metroid
+ BACKGROUND proxima_metroid:mushroom_light
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 3
+ SAVE_REQUIREMENT 3
+ MAX_SPAWN_INTERVAL 33
+ SPAWN_INTERVAL_LOCKED
+ 
+ $SKILLSET 
+   FLOATER 2
+   GLIDER 1
+   PLATFORMER 2
+   FENCER 3
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE proxima_metroid
+   PIECE starship
+   X 0
+   Y 0
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE proxima_metroid
+   PIECE spikes_up
+   X 64
+   Y 200
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE proxima_metroid
+   PIECE spikes_up
+   X 72
+   Y 200
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE proxima_metroid
+   PIECE spikes_up
+   X 80
+   Y 200
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE proxima_metroid
+   PIECE spikes_up
+   X 88
+   Y 200
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE proxima_metroid
+   PIECE spikes_up
+   X 256
+   Y 200
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE proxima_metroid
+   PIECE spikes_up
+   X 264
+   Y 200
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE proxima_metroid
+   PIECE exit
+   X 248
+   Y 24
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE owa_right
+   X 312
+   Y 152
+   WIDTH 16
+   HEIGHT 16
+   ONLY_ON_TERRAIN
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE whynot
+   X 408
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 288
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 288
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 368
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 376
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 368
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 376
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 384
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 392
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 384
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 392
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 440
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 448
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 440
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 448
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 392
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 392
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 392
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 392
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 440
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 440
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 440
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 448
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 448
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 448
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 440
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 448
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 320
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 320
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 368
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 368
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 368
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 376
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 376
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 376
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 368
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 376
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 384
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 384
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 384
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 384
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 288
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 296
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 304
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 296
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 304
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 312
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 312
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 280
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 272
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 312
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 320
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 312
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 320
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 272
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 272
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 272
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 272
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 288
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 288
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 288
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 288
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 320
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 368
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 376
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 368
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 376
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 296
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 304
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 312
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 320
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 320
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 368
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 376
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 368
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 376
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 296
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 304
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 296
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 304
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 312
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 312
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 392
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 392
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 384
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 384
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 336
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 336
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 328
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 328
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 336
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 328
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 336
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 336
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 328
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 328
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 352
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 352
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 344
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 344
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 352
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 344
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 352
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 352
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 344
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 344
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 360
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 360
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 360
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 360
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 360
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 360
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 360
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 360
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 280
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 288
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 272
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 272
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 288
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 288
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 272
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 272
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 288
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 288
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 272
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 272
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 280
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 288
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 272
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 272
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 288
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 272
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 312
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 320
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 320
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 312
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 296
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 304
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 304
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 296
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 328
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 336
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 336
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 328
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 344
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 352
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 352
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 344
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 320
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 320
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 368
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 376
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 296
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 304
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 296
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 304
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 312
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 312
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 320
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 320
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 296
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 304
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 296
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 304
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 312
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 312
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 336
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 336
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 328
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 328
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 336
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 336
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 328
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 328
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 352
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 352
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 344
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 344
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 352
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 352
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 344
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 344
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 360
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 360
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 360
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 360
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 384
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 392
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 384
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 392
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 384
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 392
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 320
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 320
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 296
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 304
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 296
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 304
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 312
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 312
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 320
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 320
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 296
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 304
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 296
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 304
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 312
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 312
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 328
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 328
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 328
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 328
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 288
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 272
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 272
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 288
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 288
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 320
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 320
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 296
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 304
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 296
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 304
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 312
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 312
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 328
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 328
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 440
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 448
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 368
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 368
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 360
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 360
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 360
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 360
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 352
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 352
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 352
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 352
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 424
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 432
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 424
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 432
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 432
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 432
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 432
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 432
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 424
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 424
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 424
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 424
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 424
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 432
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 408
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 416
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 408
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 416
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 416
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 416
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 416
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 416
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 408
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 408
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 408
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 408
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 408
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 416
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 400
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 400
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 400
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 400
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 400
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 400
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 400
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 440
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 448
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 424
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 432
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 408
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 416
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 400
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 336
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 336
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 352
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 352
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 344
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 344
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 360
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 360
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 336
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 336
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 336
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 336
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 352
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 352
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 344
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 344
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 352
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 352
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 344
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 344
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 360
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 360
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 360
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 360
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 288
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 288
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 280
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 272
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 288
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 288
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 272
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 272
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 288
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 288
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 288
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 280
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 272
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 264
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 272
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 264
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 256
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 248
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 256
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 248
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 232
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 232
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 232
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 232
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 232
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 232
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 232
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 232
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 232
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 224
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 232
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 224
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 256
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 256
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 248
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 248
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 248
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 256
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 256
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 248
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 272
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 272
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 264
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 264
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 264
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 272
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 272
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 264
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_debris_t
+   X 368
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_debris_b
+   X 368
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_pipe
+   X 376
+   Y 40
+   NO_OVERWRITE
+   ONE_WAY
+   HEIGHT 32
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_pipe
+   X 392
+   Y 40
+   NO_OVERWRITE
+   ONE_WAY
+   HEIGHT 32
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_pipe
+   X 376
+   Y 24
+   NO_OVERWRITE
+   ONE_WAY
+   HEIGHT 32
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 200
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 200
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 216
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 208
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 216
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 208
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 144
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 136
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 144
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 136
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 160
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 152
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 160
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 152
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 184
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 168
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 184
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 168
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 128
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 120
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 128
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 120
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 112
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 96
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 96
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 96
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 112
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 96
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 200
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 200
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 216
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 208
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 216
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 208
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 144
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 136
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 144
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 136
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 160
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 152
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 160
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 152
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 184
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 168
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 184
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 168
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 128
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 120
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 128
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 120
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 112
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 96
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 112
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 96
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 112
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 120
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 128
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 136
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 144
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 152
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 160
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 168
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 184
+   Y 48
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 200
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 208
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 216
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 216
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 216
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 216
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 216
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 216
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 216
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 216
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 216
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 224
+   Y 24
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 224
+   Y 32
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 224
+   Y 64
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 272
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 264
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 256
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 264
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 256
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 248
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 232
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 248
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 232
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 224
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 216
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 224
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 216
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 248
+   Y 72
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 256
+   Y 72
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 264
+   Y 72
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 272
+   Y 72
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 272
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 224
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 224
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 280
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 280
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 232
+   Y 72
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 224
+   Y 16
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 280
+   Y 88
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 280
+   Y 96
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 280
+   Y 104
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 280
+   Y 112
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 280
+   Y 120
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 280
+   Y 128
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 280
+   Y 80
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 352
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 104
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 104
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 104
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 344
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 296
+   Y 136
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 304
+   Y 136
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 312
+   Y 136
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 320
+   Y 136
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 288
+   Y 136
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 328
+   Y 136
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 336
+   Y 136
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 280
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 288
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 280
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 280
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 320
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 304
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 312
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 336
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 328
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 352
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 344
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 312
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 320
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 320
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 312
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 304
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 304
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 328
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 336
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 336
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 328
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 344
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 352
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 352
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 344
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 352
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 344
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 304
+   Y 176
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 312
+   Y 176
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 320
+   Y 176
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 328
+   Y 176
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 336
+   Y 176
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 288
+   Y 176
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 280
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 280
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 280
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 248
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 256
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 264
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 272
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 232
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 280
+   Y 24
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 280
+   Y 16
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 272
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 280
+   Y 184
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 320
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 304
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 312
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 320
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 344
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 328
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 336
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 344
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 368
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 352
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 360
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 368
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 360
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 368
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 376
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 384
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 392
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 400
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 408
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 376
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 376
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 400
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 384
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 392
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 400
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 424
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 408
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 416
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 424
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 416
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 424
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 432
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 440
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 448
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 440
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 432
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 440
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 464
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 448
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 456
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 464
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 456
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 304
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 312
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 320
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 328
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 336
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 288
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 352
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 360
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 368
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 376
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 384
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 344
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 400
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 408
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 416
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 424
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 432
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 392
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 440
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 448
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 456
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 464
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 464
+   Y 184
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 456
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 456
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 456
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 472
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 472
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 472
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 456
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 456
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 456
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 456
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 456
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 464
+   Y 144
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 464
+   Y 152
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 464
+   Y 160
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 464
+   Y 168
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 464
+   Y 176
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 456
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 456
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 456
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 472
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 472
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 472
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 456
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 456
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 456
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 456
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 456
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 464
+   Y 104
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 464
+   Y 112
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 464
+   Y 120
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 464
+   Y 128
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 464
+   Y 136
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 456
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 456
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 464
+   Y 88
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 464
+   Y 96
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 456
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 456
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 472
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 472
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 472
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 456
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 456
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 456
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 456
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 464
+   Y 48
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 464
+   Y 56
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 464
+   Y 64
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 464
+   Y 72
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 456
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 456
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 464
+   Y 32
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 464
+   Y 40
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 456
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 456
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 472
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 472
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 472
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 456
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 456
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 456
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 456
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 472
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 464
+   Y -8
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 464
+   Y 16
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 464
+   Y 24
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 464
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 464
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 456
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_pipe
+   X 392
+   Y 24
+   NO_OVERWRITE
+   ONE_WAY
+   HEIGHT 32
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 288
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 288
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 288
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 304
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 312
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 296
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 320
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 328
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 336
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 344
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 312
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 296
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 304
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 312
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 336
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 320
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 328
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 336
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 360
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 344
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 352
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 360
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 352
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 360
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 368
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 376
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 384
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 392
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 400
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 368
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 368
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 392
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 376
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 384
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 392
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 416
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 400
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 408
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 416
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 408
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 416
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 424
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 432
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 440
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 432
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 424
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 432
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 440
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 448
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 448
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 296
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 304
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 312
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 320
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 328
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 288
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 344
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 352
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 360
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 368
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 376
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 336
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 392
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 400
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 408
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 416
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 424
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 384
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 432
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 440
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 448
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 464
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 456
+   Y 80
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 400
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 392
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 400
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 392
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 384
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 384
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 368
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 368
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 368
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 368
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 400
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 400
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 392
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 384
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 392
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 384
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 376
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 368
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 376
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 368
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 392
+   Y 80
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 400
+   Y 80
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 376
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 384
+   Y 80
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 376
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 424
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 416
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 424
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 416
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 408
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 408
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 424
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 424
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 416
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 408
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 416
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 408
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 416
+   Y 80
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 424
+   Y 80
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 408
+   Y 80
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 448
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 440
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 448
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 440
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 432
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 432
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 448
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 448
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 440
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 432
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 440
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 432
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 440
+   Y 80
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 448
+   Y 80
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 432
+   Y 80
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 144
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 144
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 112
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 120
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 128
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 120
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 128
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 136
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 136
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 96
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 96
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 112
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 232
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 232
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 152
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 152
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 248
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 248
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 112
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 96
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 96
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 112
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 136
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 144
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 144
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 136
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 120
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 128
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 128
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 120
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 152
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 232
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 232
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 152
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 248
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 248
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 96
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 104
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 248
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 240
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 120
+   Y 168
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 128
+   Y 168
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 136
+   Y 168
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 144
+   Y 168
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 112
+   Y 168
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 152
+   Y 168
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 232
+   Y 168
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 104
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 192
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 192
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 160
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 168
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 176
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 168
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 176
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 184
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 184
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 160
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 200
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 200
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 160
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 160
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 184
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 192
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 192
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 184
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 168
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 176
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 176
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 168
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 200
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 200
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 168
+   Y 168
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 176
+   Y 168
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 184
+   Y 168
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 192
+   Y 168
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 160
+   Y 168
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 200
+   Y 168
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 216
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 216
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 208
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 208
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 224
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 224
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 208
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 216
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 216
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 208
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 224
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 224
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 208
+   Y 168
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 216
+   Y 168
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 224
+   Y 168
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 16
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 16
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 0
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 0
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 0
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 0
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 8
+   Y 184
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 16
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 16
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 8
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 0
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 8
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 0
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 8
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 16
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 48
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 40
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 48
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 40
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 56
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 56
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 56
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 40
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 48
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 48
+   Y 184
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 56
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 56
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 40
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 56
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 40
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 48
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 48
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 56
+   Y 96
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 40
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 48
+   Y 104
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 80
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 72
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 80
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 72
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 88
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 88
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 88
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 72
+   Y 96
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 80
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 80
+   Y 88
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 88
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 88
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 88
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 80
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 72
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 72
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 72
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 72
+   Y 56
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 80
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 80
+   Y 64
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 24
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 32
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 32
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 24
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 24
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 24
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 32
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 32
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 32
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 24
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 64
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 64
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 64
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 64
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 64
+   Y 96
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 56
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 56
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 56
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 56
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 56
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 56
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 56
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 56
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 56
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 56
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 40
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 40
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 40
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 40
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 40
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 40
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 40
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 40
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 40
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 40
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 48
+   Y 144
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 48
+   Y 152
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 48
+   Y 160
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 48
+   Y 168
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 48
+   Y 176
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 16
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 16
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 16
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 16
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 16
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 16
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 16
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 16
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 16
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 16
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 0
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 0
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 0
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 0
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 0
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 0
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 0
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 0
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 0
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 0
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 8
+   Y 144
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 8
+   Y 152
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 8
+   Y 160
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 8
+   Y 168
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 8
+   Y 176
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 56
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 56
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 56
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 56
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 56
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 56
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 40
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 40
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 40
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 40
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 40
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 40
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 48
+   Y 120
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 48
+   Y 128
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 48
+   Y 136
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 56
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 56
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 40
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 40
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 48
+   Y 112
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 16
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 16
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 16
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 16
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 16
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 16
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 16
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 16
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 16
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 16
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 0
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 0
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 0
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 0
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 0
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 0
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 0
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 0
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 0
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 0
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 8
+   Y 104
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 8
+   Y 112
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 8
+   Y 120
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 8
+   Y 128
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 8
+   Y 136
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 16
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 16
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 16
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 16
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 16
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 16
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 16
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 16
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 0
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 0
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 0
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 0
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 0
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 0
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 0
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 0
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 8
+   Y 72
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 8
+   Y 80
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 8
+   Y 88
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 8
+   Y 96
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 16
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 16
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 0
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 16
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 0
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 8
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 8
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 16
+   Y 56
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 0
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 8
+   Y 64
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 40
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 40
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 32
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 24
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 32
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 24
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 16
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 16
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 40
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 40
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 32
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 24
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 32
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 24
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 16
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 16
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 16
+   Y 56
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 24
+   Y 56
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 32
+   Y 56
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 40
+   Y 56
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 64
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 64
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 56
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 48
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 56
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 48
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 64
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 64
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 56
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 48
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 56
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 48
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 48
+   Y 56
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 56
+   Y 56
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 64
+   Y 56
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 88
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 88
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 72
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 72
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 72
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 72
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 80
+   Y 72
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 80
+   Y 80
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 24
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 24
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 24
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 32
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 32
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 32
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 24
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 24
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 32
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 32
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 24
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 24
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 24
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 32
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 32
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 32
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 24
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 24
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 32
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 32
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 24
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 24
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 24
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 32
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 32
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 32
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 24
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 24
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 32
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 32
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 40
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 40
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 48
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 48
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 56
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 56
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 64
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 64
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 192
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 192
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 176
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 176
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 176
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 176
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 184
+   Y 40
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 192
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 192
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 184
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 176
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 184
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 176
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 184
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 192
+   Y 48
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 192
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 192
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 192
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 184
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 192
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 184
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 176
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 176
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 176
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 176
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 176
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 184
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 184
+   Y 16
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 192
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 240
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 240
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 240
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 240
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 240
+   Y 72
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 240
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 240
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 240
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 240
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 240
+   Y 8
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 216
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 232
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 224
+   Y 56
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 216
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 232
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 232
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 232
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 216
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 232
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 224
+   Y 40
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 224
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 216
+   Y 48
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 200
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 200
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 200
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 200
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 200
+   Y 48
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 208
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 208
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 208
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 208
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 208
+   Y 48
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 192
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 192
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 192
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 192
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 176
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 176
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 176
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 176
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 184
+   Y 24
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 184
+   Y 32
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 200
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 208
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 200
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 208
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 296
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 296
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 296
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 296
+   Y 176
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 296
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 296
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 240
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 104
+   Y 176
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 240
+   Y 176
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 96
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 104
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 96
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 104
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_01
+   X 240
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 240
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 248
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 248
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 248
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 232
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 112
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 112
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 96
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 104
+   Y 184
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_v
+   X 240
+   Y 184
+   ONE_WAY
+   HEIGHT 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 112
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 232
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 232
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 112
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 144
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 144
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 120
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 128
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 120
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 128
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 136
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 136
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 152
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 152
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 136
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 144
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 144
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 136
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 120
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 128
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 128
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 120
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 152
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 152
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 120
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 128
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 136
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 144
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 152
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 192
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 192
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 160
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 168
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 176
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 168
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 176
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 184
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 184
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 160
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 200
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 200
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 160
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 160
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 184
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 192
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 192
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 184
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 168
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 176
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 176
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 168
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 200
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 200
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 168
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 176
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 184
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 192
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 160
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 200
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 216
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 216
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 208
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 208
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 224
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_05
+   X 224
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 208
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 216
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 216
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 208
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 224
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE steel_02
+   X 224
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 208
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 216
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+ $TERRAIN
+   STYLE proxima_metroid
+   PIECE blue_pipe_h
+   X 224
+   Y 192
+   ONE_WAY
+   WIDTH 8
+ $END
+ 
+$PRETEXT
+  LINE The point at which you assign floaters 
+  LINE and gliders can make a huge difference! 
+  LINE     
+  LINE Since a floater falls more slowly than a
+  LINE non-floater, a floater assigned just before 
+  LINE the lemming splats on the ground is way 
+  LINE faster than when a floater is assigned at 
+  LINE the very top of a fall.
+  LINE 
+  LINE A glider assigned at the very top of a fall  
+  LINE travels across farther than a glider assigned 
+  LINE close to the ground and therefore is faster.
+  LINE 
+  LINE Use these facts to get some lemmings
+  LINE ahead here and finish up some urgent 
+  LINE tasks with the gained head start before the
+  LINE slowpokes arrive!
+$END
+ 

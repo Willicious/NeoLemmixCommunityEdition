@@ -1,0 +1,734 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.40
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Weightless
+ AUTHOR IchoTolot
+ ID x1E56011F12DAB7BE
+ VERSION x0000000000000010
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 600
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME namida_sky
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 15
+ SAVE_REQUIREMENT 15
+ MAX_SPAWN_INTERVAL 8
+ 
+ $SKILLSET 
+   WALKER 1
+   JUMPER 4
+   SHIMMIER 1
+   SWIMMER 5
+   FLOATER 5
+   GLIDER 5
+   PLATFORMER 0
+   LASERER 1
+ $END 
+ 
+ $PRETEXT 
+   LINE Swimmers, floaters, and gliders
+   LINE have a special attribute, where 
+   LINE they can enter an exit even when its 
+   LINE trigger area is not on solid ground.
+   LINE 
+   LINE Just swim, float, or glide directly into
+   LINE it, regardless of the exit's position!
+   LINE  
+   LINE I have prepared a little puzzle to
+   LINE demonstrate this. Assign the lemmings 
+   LINE the correct permanent skills and watch 
+   LINE them go into the exits.
+   LINE 
+   LINE Hint: For one type of permanent skill,  
+   LINE you might need to make some preparations.
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE namida_sky
+   PIECE exit
+   X 380
+   Y 76
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_sky
+   PIECE exit_text
+   X 380
+   Y 64
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_sky
+   PIECE window
+   X 205
+   Y 8
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_sky
+   PIECE exit
+   X 567
+   Y 130
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_sky
+   PIECE exit_text
+   X 567
+   Y 118
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_sky
+   PIECE window
+   X 15
+   Y 121
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_sky
+   PIECE window
+   X 15
+   Y 121
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE water
+   X 203
+   Y 144
+   WIDTH 400
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 130
+   Y 29
+   NO_OVERWRITE
+   SKILL PLATFORMER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 144
+   Y 29
+   NO_OVERWRITE
+   SKILL PLATFORMER
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_08
+   X 47
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_07
+   X 89
+   Y 115
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_06
+   X 102
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_12
+   X 141
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_07
+   X -12
+   Y 114
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_07
+   X 34
+   Y 67
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_07
+   X 32
+   Y 30
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_07
+   X 33
+   Y -9
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_08
+   X 46
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_08
+   X 84
+   Y -10
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_06
+   X 87
+   Y 75
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_06
+   X 125
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_06
+   X 132
+   Y 39
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_06
+   X 146
+   Y 119
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_12
+   X 178
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_11
+   X 176
+   Y 70
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_03
+   X 184
+   Y 63
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_02
+   X 181
+   Y 55
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_02
+   X 219
+   Y 54
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_08
+   X 130
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_04
+   X 83
+   Y 102
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_05
+   X 41
+   Y 95
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_04
+   X 79
+   Y 71
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_05
+   X 38
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_06
+   X -11
+   Y 70
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_06
+   X -19
+   Y 28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_06
+   X -19
+   Y -12
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_08
+   X 6
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_03
+   X 100
+   Y 42
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_04
+   X 65
+   Y 1
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_04
+   X 43
+   Y 23
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_07
+   X 50
+   Y -20
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_04
+   X 46
+   Y 19
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_circuit
+   PIECE steel_03
+   X 60
+   Y 39
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE namida_circuit
+   PIECE steel_03
+   X 80
+   Y 51
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_04
+   X 57
+   Y 9
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_circuit
+   PIECE steel_03
+   X 70
+   Y 29
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE namida_circuit
+   PIECE steel_03
+   X 81
+   Y 18
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_04
+   X 74
+   Y -7
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_circuit
+   PIECE steel_03
+   X 86
+   Y 13
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_07
+   X 123
+   Y -24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_04
+   X 250
+   Y 36
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_04
+   X 264
+   Y 19
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_04
+   X 215
+   Y 62
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_02
+   X 216
+   Y 59
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_02
+   X 284
+   Y 17
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_08
+   X 273
+   Y 26
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_04
+   X 267
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_09
+   X 263
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_02
+   X 505
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_06
+   X 548
+   Y 65
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_04
+   X 536
+   Y 103
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_08
+   X 503
+   Y 106
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_04
+   X 531
+   Y 84
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_11
+   X 584
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE balloon_03
+   X 468
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE balloon_02
+   X 517
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE balloon_01
+   X 441
+   Y 4
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE snowflake_01
+   X 474
+   Y 18
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE snowflake_02
+   X 560
+   Y 31
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE snowflake_02
+   X 500
+   Y 78
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE snowflake_01
+   X 564
+   Y 78
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE snowflake_02
+   X 147
+   Y 95
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE snowflake_02
+   X 168
+   Y 135
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE snowflake_02
+   X 114
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE snowflake_02
+   X 13
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE balloon_03
+   X 114
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE balloon_01
+   X 14
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE balloon_02
+   X 183
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_04
+   X 149
+   Y 28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_07
+   X 168
+   Y 20
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_07
+   X 123
+   Y -27
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_sky
+   PIECE cloud_07
+   X 121
+   Y -31
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ 

@@ -1,0 +1,886 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.40
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Cunning Cycle
+ AUTHOR IchoTolot
+ ID x45A758240AE730BD
+ VERSION x0000000000000011
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 800
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME willlem_lemminas
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 10
+ SAVE_REQUIREMENT 10
+ MAX_SPAWN_INTERVAL 58
+ SPAWN_INTERVAL_LOCKED
+ 
+ $SKILLSET 
+   SLIDER 10
+   BUILDER 10
+   BASHER 0
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE willlem_lemminas
+   PIECE window
+   X 96
+   Y 72
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_lemminas
+   PIECE exit
+   X 688
+   Y 56
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_lemminas
+   PIECE rope_trap
+   X 480
+   Y 4
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_lemminas
+   PIECE rope_trap
+   X 522
+   Y 83
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_lemminas
+   PIECE pickup
+   X 672
+   Y 78
+   NO_OVERWRITE
+   SKILL BASHER
+ $END
+ 
+ $GADGET
+   STYLE willlem_lemminas
+   PIECE water
+   X 0
+   Y 144
+   WIDTH 232
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_lemminas
+   PIECE pepsi
+   X 359
+   Y 143
+   WIDTH 64
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_lemminas
+   PIECE water
+   X 571
+   Y 151
+   WIDTH 104
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_lemminas
+   PIECE pepsi
+   X 736
+   Y 136
+   WIDTH 64
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE silverpipe_small_06
+   X 137
+   Y 132
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE purplebricks_02
+   X 56
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE purplebricks_02
+   X 120
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE silverpipe_small_06
+   X 149
+   Y 144
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE silverpipe_small_06
+   X 161
+   Y 156
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE silverpipe_small_06
+   X 88
+   Y 132
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE silverpipe_small_06
+   X 76
+   Y 144
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE silverpipe_small_06
+   X 64
+   Y 156
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_03
+   X 268
+   Y 66
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_04
+   X 226
+   Y 70
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_04
+   X 325
+   Y 50
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_05
+   X 232
+   Y 91
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_07
+   X 291
+   Y 105
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_06
+   X 295
+   Y 78
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_01
+   X 332
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_01
+   X 330
+   Y 74
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_05
+   X 332
+   Y 87
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_03
+   X 218
+   Y 147
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_03
+   X 275
+   Y 147
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_03
+   X 316
+   Y 148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE pyramid_02
+   X 412
+   Y 42
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE pyramid_02
+   X 454
+   Y 42
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE pyramid_02
+   X 412
+   Y 82
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE pyramid_02
+   X 454
+   Y 82
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE pillar_end_02
+   X 505
+   Y 28
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE pyramid_02
+   X 496
+   Y 42
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE pillar_end_02
+   X 505
+   Y 14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE pillar_end_02
+   X 505
+   Y 0
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE pyramid_02
+   X 454
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE pillar_end_02
+   X 412
+   Y 144
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE pillar_end_02
+   X 412
+   Y 130
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE pillar_end_02
+   X 412
+   Y 116
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE pillar_end_02
+   X 412
+   Y 102
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE pillar_end_02
+   X 412
+   Y 158
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE pyramid_02
+   X 445
+   Y 151
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE pyramid_02
+   X 496
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE pyramid_02
+   X 487
+   Y 151
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE pyramid_02
+   X 529
+   Y 151
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE block_light
+   X 672
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE block_light
+   X 704
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE bar_red_01
+   X 672
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE bar_red_01
+   X 720
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE bar_02
+   X 680
+   Y 112
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE bar_02
+   X 677
+   Y 117
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE emerald_clump
+   X 592
+   Y 147
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE emerald_02
+   X 613
+   Y 145
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_04
+   X 316
+   Y 10
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_03
+   X 257
+   Y 25
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_04
+   X 212
+   Y 31
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_07
+   X 327
+   Y -10
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_06
+   X 286
+   Y -8
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_05
+   X 211
+   Y -13
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_01
+   X 240
+   Y -14
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_03
+   X 208
+   Y -20
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_03
+   X 265
+   Y -19
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_03
+   X 313
+   Y -19
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE purplebricks_04
+   X 0
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE purplebricks_04
+   X 32
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE purplebricks_04
+   X 64
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE purplebricks_04
+   X 96
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE purplebricks_04
+   X 128
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE bar_light_02
+   X -11
+   Y 20
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE bar_02
+   X 11
+   Y 21
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE bar_02
+   X -29
+   Y 61
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_03
+   X 547
+   Y -15
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_03
+   X 603
+   Y -14
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_03
+   X 658
+   Y -13
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_04
+   X 716
+   Y -8
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_04
+   X 758
+   Y 17
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_05
+   X 763
+   Y -17
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_05
+   X 565
+   Y 2
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_01
+   X 707
+   Y 6
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_06
+   X 688
+   Y 1
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_07
+   X 595
+   Y -2
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_06
+   X 672
+   Y -16
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_01
+   X 630
+   Y -11
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_melt_01
+   X 774
+   Y 32
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_03
+   X 367
+   Y -19
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE fairy_dust_01
+   X 421
+   Y -15
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE pillar_end_02
+   X 552
+   Y 146
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE steelpipe_02
+   X -1
+   Y 18
+   ROTATE
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE steelpipe_02
+   X 31
+   Y 18
+   ROTATE
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE steelpipe_02
+   X 63
+   Y 18
+   ROTATE
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE steelpipe_03
+   X 139
+   Y -1
+   FLIP_HORIZONTAL
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE steelpipe_02
+   X 95
+   Y 18
+   ROTATE
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE steelpipe_02
+   X 126
+   Y 18
+   ROTATE
+ $END
+
+ $PRETEXT 
+   LINE You already know that a slider will enter
+   LINE any hole in the wall he is currently 
+   LINE sliding down.
+   LINE The interesting part is that the size 
+   LINE of the hole and the wall needs to only
+   LINE be a single pixel.
+   LINE This behavior can be a great ally or the downfall 
+   LINE for your plans to save the little critters!
+   LINE 
+   LINE We will focus on small, 1-pixel holes in the 
+   LINE "Advanced Training" rank, and for now, just
+   LINE examine a common 1-pixel wall case:
+   LINE A simple builder staircase! 
+   LINE 
+   LINE A platformer would also fall under this rule,
+   LINE but here, let's use a simple builder staircase  
+   LINE to create a fast, effective holding pit for
+   LINE the lemming crowd. Don't be afraid and try it!
+ $END
+ 
+ 

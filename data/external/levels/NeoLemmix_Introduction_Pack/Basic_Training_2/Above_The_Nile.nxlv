@@ -1,0 +1,1471 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.40
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Above The Nile
+ AUTHOR IchoTolot
+ ID x1C2590B211485FC8
+ VERSION x0000000000000014
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 440
+ HEIGHT 240
+ START_X 160
+ START_Y 80
+ THEME l2_egyptian
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 20
+ SAVE_REQUIREMENT 21
+ MAX_SPAWN_INTERVAL 98
+ SPAWN_INTERVAL_LOCKED
+ 
+ $SKILLSET 
+   WALKER 1
+   JUMPER 2
+   SHIMMIER 3
+   CLIMBER 0
+   BUILDER 3
+   MINER 2
+   CLONER 0
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE l2_egyptian
+   PIECE hatch
+   X 40
+   Y 24
+   NO_OVERWRITE
+   SLIDER 
+ $END
+ 
+ $GADGET
+   STYLE l2_egyptian
+   PIECE water
+   X 88
+   Y 144
+   WIDTH 128
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE l2_egyptian
+   PIECE exit
+   X 264
+   Y 176
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE l2_egyptian
+   PIECE flag
+   X 280
+   Y 168
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE l2_egyptian
+   PIECE water
+   X 344
+   Y 144
+   WIDTH 48
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE l2_egyptian
+   PIECE water
+   X 0
+   Y 224
+   WIDTH 232
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE l2_egyptian
+   PIECE water
+   X 328
+   Y 224
+   WIDTH 32
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE l2_egyptian
+   PIECE water
+   X 392
+   Y 224
+   WIDTH 32
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE l2_egyptian
+   PIECE sphinx_eyes
+   X 104
+   Y 200
+   ONLY_ON_TERRAIN
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE l2_egyptian
+   PIECE torch
+   X 180
+   Y 88
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE l2_egyptian
+   PIECE torch
+   X 392
+   Y 32
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE l2_egyptian
+   PIECE torch
+   X 392
+   Y 88
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE l2_egyptian
+   PIECE torch
+   X 184
+   Y 186
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE l2_egyptian
+   PIECE torch
+   X 16
+   Y 80
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 370
+   Y 202
+   NO_OVERWRITE
+   SKILL CLIMBER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 321
+   Y 58
+   NO_OVERWRITE
+   SKILL CLONER
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_11
+   X 104
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_11
+   X 56
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 56
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 104
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 40
+   Y 104
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 56
+   Y 104
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 72
+   Y 104
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 88
+   Y 104
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 104
+   Y 104
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 120
+   Y 104
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 72
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 72
+   Y 160
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 88
+   Y 160
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 104
+   Y 160
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 56
+   Y 160
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 40
+   Y 160
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_11
+   X 56
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_13
+   X 40
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 120
+   Y 160
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 136
+   Y 160
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 152
+   Y 160
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 168
+   Y 160
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 184
+   Y 160
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 200
+   Y 160
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 216
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 248
+   Y 160
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 232
+   Y 160
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 216
+   Y 160
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_11
+   X 232
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_13
+   X 248
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 152
+   Y 48
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 168
+   Y 48
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 184
+   Y 48
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 232
+   Y 48
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 248
+   Y 48
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_17
+   X 136
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_19
+   X 72
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_17
+   X 232
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_13
+   X 296
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_13
+   X 248
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 232
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 248
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 296
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 312
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 232
+   Y 232
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 248
+   Y 232
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 264
+   Y 232
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 280
+   Y 232
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 296
+   Y 232
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 312
+   Y 232
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_12
+   X 232
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_12
+   X 312
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_19
+   X 264
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_13
+   X 312
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_13
+   X 264
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_11
+   X 344
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_11
+   X 232
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 232
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 248
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 328
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 344
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_17
+   X 280
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 232
+   Y 104
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 248
+   Y 104
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 296
+   Y 104
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 312
+   Y 104
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 328
+   Y 104
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 344
+   Y 104
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_12
+   X 264
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_06
+   X 264
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_06
+   X 280
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_12
+   X 280
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_13
+   X 296
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_11
+   X 312
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 216
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 296
+   Y 160
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 312
+   Y 160
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 344
+   Y 160
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 328
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 328
+   Y 160
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 360
+   Y 160
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 376
+   Y 160
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 392
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 392
+   Y 160
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 360
+   Y 232
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 376
+   Y 232
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_13
+   X 424
+   Y 224
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_12
+   X 360
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_12
+   X 376
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_13
+   X 424
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 120
+   Y 72
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 120
+   Y 88
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 40
+   Y 88
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_02
+   X 40
+   Y 72
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 200
+   Y 48
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 216
+   Y 48
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 168
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 184
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 200
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 216
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 184
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 200
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_13
+   X 216
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_13
+   X 168
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 264
+   Y 104
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE steel_01
+   X 280
+   Y 104
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 264
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 312
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 248
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 328
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_12
+   X 424
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_12
+   X 408
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_12
+   X 424
+   Y 208
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 424
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 424
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 424
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 424
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 424
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 424
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_21
+   X 424
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_21
+   X 424
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_21
+   X 424
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_21
+   X 424
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_21
+   X 424
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_21
+   X 424
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_21
+   X 424
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_21
+   X 424
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_21
+   X 424
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_21
+   X 424
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_21
+   X 384
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_21
+   X 376
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 392
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_21
+   X 352
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_21
+   X 344
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 360
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_01
+   X 328
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_10
+   X 120
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_06
+   X 120
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_10
+   X 104
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_05
+   X 184
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_04
+   X 168
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_21
+   X 320
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_21
+   X 312
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_21
+   X 304
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_21
+   X 296
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_10
+   X 280
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE sphinx_01
+   X 72
+   Y 184
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_04
+   X 0
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_04
+   X 16
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_04
+   X 32
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_03
+   X 0
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_03
+   X 16
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_rough_06
+   X 0
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_05
+   X 48
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_04
+   X 80
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_21
+   X 72
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_21
+   X 64
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_10
+   X 56
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_09
+   X 72
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_10
+   X 136
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_09
+   X 152
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_10
+   X 216
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_09
+   X 232
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_10
+   X 360
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_09
+   X 376
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_egyptian
+   PIECE block_06
+   X 136
+   Y 48
+   ONE_WAY
+ $END
+
+ $PRETEXT 
+   LINE Hint: One hero lemming needs to go 
+   LINE around again, and always remember that you
+   LINE deal with sliders here! So, keep the 
+   LINE direction changes in mind, and use them to
+   LINE your advantage!
+ $END 
+ 
+ 

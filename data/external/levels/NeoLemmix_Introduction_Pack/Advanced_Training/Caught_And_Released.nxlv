@@ -1,0 +1,792 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.40
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Caught And Released
+ AUTHOR IchoTolot
+ ID x7E99A7AD558CA0D4
+ VERSION x0000000000000021
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 400
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME dex_lr2_jungle
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 30
+ SAVE_REQUIREMENT 29
+ MAX_SPAWN_INTERVAL 22
+ SPAWN_INTERVAL_LOCKED
+ 
+ $SKILLSET 
+   SHIMMIER 5
+   SLIDER 6
+   SWIMMER 5
+   STONER 0
+   PLATFORMER 0
+   BUILDER 2
+   STACKER 3
+   MINER 1
+ $END 
+ 
+ $PRETEXT 
+   LINE Hints: 
+   LINE - Five lemmings can fall down into the water, 
+   LINE and, with swimmers and shimmiers, later get 
+   LINE back up again. This also hints at some necessary 
+   LINE builder and platformer placements in order to get
+   LINE the shimmiers to cooperate in coming up again.
+   LINE
+   LINE - A platformer or a builder can maybe break
+   LINE the containment cycle of sliders on stacks/stoners.
+   LINE In the case of stackers, filling the dent 
+   LINE of the stack, or building into something 
+   LINE in the dent's direction can do the trick.
+   LINE
+   LINE - The sliders can be used to stall the crowd for
+   LINE the perfect amount of time!
+   LINE 
+   LINE Go on, you can do it!
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE dex_lr2_jungle
+   PIECE entrance_jungle
+   X 156
+   Y 22
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_lr2_jungle
+   PIECE water
+   X 45
+   Y 147
+   WIDTH 176
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_lr2_jungle
+   PIECE button_jungle
+   X 25
+   Y 114
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_lr2_jungle
+   PIECE exit_jungle_locked
+   X 364
+   Y 72
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_lr2_jungle
+   PIECE entrance_jungle
+   X 21
+   Y 31
+   NO_OVERWRITE
+   SLIDER 
+   CLIMBER 
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 249
+   Y 61
+   NO_OVERWRITE
+   SKILL STONER
+ $END
+ 
+ $GADGET
+   STYLE dex_lr2_jungle
+   PIECE button_jungle
+   X 279
+   Y 130
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 226
+   Y 26
+   NO_OVERWRITE
+   SKILL BUILDER
+ $END
+ 
+ $GADGET
+   STYLE dex_lr2_jungle
+   PIECE button_jungle
+   X 18
+   Y 58
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 293
+   Y 132
+   NO_OVERWRITE
+   SKILL BUILDER
+   SKILL_COUNT 2
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 353
+   Y 101
+   NO_OVERWRITE
+   SKILL BUILDER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 263
+   Y 61
+   NO_OVERWRITE
+   SKILL PLATFORMER
+   SKILL_COUNT 2
+ $END
+ 
+ 
+#        Terrain groups         
+# ----------------------------- 
+ $TERRAINGROUP
+   NAME Group-1346218580
+   
+   $TERRAIN
+     STYLE dex_lr2_jungle
+     PIECE blocks_column_top
+     X 216
+     Y 40
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE dex_lr2_jungle
+     PIECE blocks_column01
+     X 218
+     Y 58
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE dex_lr2_jungle
+     PIECE blocks_column01
+     X 218
+     Y 96
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE dex_lr2_jungle
+     PIECE blocks_column01
+     X 218
+     Y 134
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group-325565907
+   
+   $TERRAIN
+     STYLE dex_lr2_jungle
+     PIECE dirt10
+     X -4
+     Y 84
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE dex_lr2_jungle
+     PIECE dirt16
+     X -12
+     Y 62
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1346218580
+   X 216
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE dirt06
+   X 29
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE dirt06
+   X -7
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE dirt05
+   X -1
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE dirt08
+   X -14
+   Y 101
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform01
+   X 0
+   Y 101
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform01
+   X 32
+   Y 101
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform01
+   X 0
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform01
+   X 32
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column02
+   X 44
+   Y 82
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column01
+   X 23
+   Y 82
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column02
+   X 2
+   Y 82
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform01
+   X 64
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE vine08
+   X 62
+   Y 98
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE vine08
+   X 75
+   Y 91
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE vine08
+   X 86
+   Y 85
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform03
+   X 96
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE vine08
+   X 95
+   Y 80
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column_top
+   X 246
+   Y 75
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column02
+   X 253
+   Y 113
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column01
+   X 253
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column02
+   X 253
+   Y 143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column01
+   X 253
+   Y 132
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column_top
+   X 271
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column_top
+   X 352
+   Y 115
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column02
+   X 359
+   Y 153
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column01
+   X 359
+   Y 134
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column_top
+   X -8
+   Y 19
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column02
+   X -1
+   Y 57
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column01
+   X -1
+   Y 38
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block01c2
+   X 101
+   Y 68
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform03
+   X 176
+   Y 62
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE metal02
+   X 225
+   Y 70
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE metal02
+   X 225
+   Y 46
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block02a
+   X 352
+   Y 121
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block02a
+   X 376
+   Y 121
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block02a
+   X 352
+   Y 140
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block02a
+   X 376
+   Y 140
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block02a
+   X 352
+   Y 159
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block02a
+   X 376
+   Y 159
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-325565907
+   X -3
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-325565907
+   X -13
+   Y 113
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE dirt08
+   X 360
+   Y -4
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE dirt11
+   X 388
+   Y 34
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE dirt13
+   X 330
+   Y -3
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE dirt12
+   X 302
+   Y -6
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE moss02
+   X 277
+   Y -13
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE tree_branch02b
+   X 371
+   Y 42
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE vines04
+   X 327
+   Y 7
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform01
+   X 0
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform01
+   X 32
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform01
+   X 64
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform01
+   X 96
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform01
+   X 128
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform01
+   X 160
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column_top
+   X 32
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column_top
+   X 96
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column_top
+   X 160
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_smiley
+   X 353
+   Y 125
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE moss02
+   X 254
+   Y -25
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE moss01
+   X 180
+   Y -20
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE vines04
+   X 231
+   Y -25
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE vines03
+   X 208
+   Y -27
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE tree_bush03
+   X 373
+   Y 125
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE tree_branch04b
+   X 229
+   Y 134
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE tree_bush02
+   X 377
+   Y 13
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE tree_bush01
+   X -9
+   Y 132
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE tree_bush04
+   X -13
+   Y 124
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE tree_branch02b
+   X -2
+   Y 0
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ 

@@ -1,0 +1,540 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.40
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE King Of The Sky
+ AUTHOR IchoTolot
+ ID x3F5641FD327518A9
+ VERSION x0000000000000018
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 400
+ HEIGHT 320
+ START_X 160
+ START_Y 80
+ THEME gigalem_skymd
+ BACKGROUND gigalem_skymd:cloudy_night
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 5
+ SAVE_REQUIREMENT 5
+ MAX_SPAWN_INTERVAL 28
+ SPAWN_INTERVAL_LOCKED
+ 
+ $SKILLSET 
+   FLOATER 3
+   GLIDER 2
+   BUILDER 1
+   BASHER 1
+   DIGGER 1
+ $END 
+ 
+ $PRETEXT 
+   LINE Hint: The gliders won't need the help
+   LINE of the digger to reach the exit. 
+   LINE In fact, the created hole would be 
+   LINE in their way.
+   LINE Also, if the gliders land in different
+   LINE spots, they could prepare different
+   LINE tasks simultaneously!
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE gigalem_skymd
+   PIECE exit
+   X 312
+   Y 248
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE gigalem_skymd
+   PIECE window
+   X 24
+   Y 8
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE gigalem_skymd
+   PIECE lightning_horizontal
+   X 168
+   Y 304
+   WIDTH 208
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE gigalem_skymd
+   PIECE lightning_vertical
+   X 0
+   Y 24
+   HEIGHT 288
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE gigalem_skymd
+   PIECE exit_text
+   X 312
+   Y 236
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE cloud_08
+   X 32
+   Y 304
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE cloud_07
+   X 80
+   Y 280
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE cloud_06
+   X 96
+   Y 280
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE cloud_06
+   X 104
+   Y 256
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE cloud_06
+   X 120
+   Y 240
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE cloud_06
+   X 128
+   Y 224
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE cloud_04
+   X 88
+   Y 256
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE cloud_04
+   X 112
+   Y 232
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE cloud_04
+   X 128
+   Y 216
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE cloud_04
+   X 64
+   Y 280
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE cloud_02
+   X 144
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE cloud_02
+   X 184
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE cloud_02
+   X 264
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE steel_03
+   X 136
+   Y 296
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE steel_03
+   X 376
+   Y 296
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE bricks_16
+   X 376
+   Y 240
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE bricks_16
+   X 376
+   Y 176
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE cloud_06
+   X 360
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE cloud_04
+   X 336
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE bricks_21
+   X 304
+   Y 216
+   NO_OVERWRITE
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE cloud_09
+   X 336
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE bricks_21
+   X 320
+   Y 216
+   NO_OVERWRITE
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE cloud_10
+   X 248
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE cloud_07
+   X 176
+   Y 176
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE balloon_01
+   X 168
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE balloon_03
+   X 136
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE balloon_02
+   X 96
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE rainbow_05
+   X 216
+   Y 56
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE rainbow_01
+   X 216
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE rainbow_01
+   X 216
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE rainbow_01
+   X 248
+   Y 56
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE rainbow_01
+   X 280
+   Y 56
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE rainbow_01
+   X 312
+   Y 56
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE rainbow_01
+   X 344
+   Y 56
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE rainbow_01
+   X 376
+   Y 56
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE snowflake_02
+   X 192
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE snowflake_02
+   X 120
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE snowflake_01
+   X 184
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE rainbow_05
+   X 248
+   Y 24
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE rainbow_01
+   X 248
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE rainbow_01
+   X 280
+   Y 24
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE rainbow_01
+   X 312
+   Y 24
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE rainbow_01
+   X 344
+   Y 24
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE rainbow_01
+   X 376
+   Y 24
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE rainbow_05
+   X 280
+   Y -8
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE rainbow_01
+   X 312
+   Y -8
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE rainbow_01
+   X 344
+   Y -8
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE rainbow_01
+   X 376
+   Y -8
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE steel_03
+   X -16
+   Y -8
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE steel_03
+   X -8
+   Y 304
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_skymd
+   PIECE cloud_08
+   X 16
+   Y 304
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ 

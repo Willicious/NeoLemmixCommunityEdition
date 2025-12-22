@@ -1,0 +1,562 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.40
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Slider's Sacrifice
+ AUTHOR IchoTolot
+ ID x7F73A0E55FE88D14
+ VERSION x0000000000000008
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 400
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME dex_lr2_jungle
+ BACKGROUND dex_lr2_build:LR2-Gloom1
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 10
+ SAVE_REQUIREMENT 8
+ MAX_SPAWN_INTERVAL 73
+ 
+ $SKILLSET 
+   SLIDER 1
+   CLIMBER 2
+   DISARMER 1
+   BOMBER 2
+   PLATFORMER 1
+   BUILDER 1
+   BASHER 1
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE dex_lr2_jungle
+   PIECE exit_jungle
+   X 310
+   Y 98
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_lr2_jungle
+   PIECE entrance_jungle
+   X 4
+   Y 0
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_lr2_jungle
+   PIECE trap_eye
+   X 246
+   Y 41
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_lr2_jungle
+   PIECE owa_left
+   X 224
+   Y 78
+   WIDTH 64
+   HEIGHT 88
+   ONLY_ON_TERRAIN
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE blocks01
+   X 96
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE blocks05a
+   X 64
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE blocks05c
+   X 64
+   Y 78
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE blocks05b
+   X 96
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE blocks05d
+   X 96
+   Y 78
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE blocks01
+   X 32
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE blocks02
+   X 32
+   Y 78
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform01
+   X 96
+   Y 34
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform01
+   X 64
+   Y 34
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform01
+   X 32
+   Y 34
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform01
+   X 0
+   Y 34
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE blocks01
+   X 0
+   Y 78
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE blocks03
+   X 0
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE blocks04
+   X 0
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE blocks01
+   X 32
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE blocks06
+   X 64
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform01
+   X 96
+   Y 154
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform01
+   X 64
+   Y 154
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform01
+   X 32
+   Y 154
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform01
+   X 0
+   Y 154
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform01
+   X 224
+   Y 154
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform01
+   X 192
+   Y 154
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform01
+   X 160
+   Y 154
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform01
+   X 128
+   Y 154
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE blocks01
+   X 224
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE blocks01
+   X 224
+   Y 78
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE eye_saucer01
+   X 239
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_platform01
+   X 256
+   Y 154
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE blocks01
+   X 256
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE blocks01
+   X 256
+   Y 78
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column_top
+   X 304
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_smiley
+   X 353
+   Y 73
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column_top
+   X 352
+   Y 103
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column02
+   X 359
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column01
+   X 359
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE vines03
+   X 362
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE vines04
+   X 327
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE vine05
+   X 314
+   Y -4
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE plantb05
+   X 277
+   Y -27
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE plantb07
+   X 282
+   Y 5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE plantb13
+   X 273
+   Y 22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE plantb08
+   X 217
+   Y -6
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE plantb10
+   X 216
+   Y 13
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE tree_bush02
+   X 371
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE tree_bush04
+   X 333
+   Y 127
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE vines04
+   X 265
+   Y -15
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE vines03
+   X 236
+   Y -24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column_top
+   X 64
+   Y 0
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column_top
+   X 96
+   Y 0
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column_top
+   X 128
+   Y 0
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE block_column_top
+   X 160
+   Y 0
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE plantc10
+   X 391
+   Y 95
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE tree_branch02b
+   X 370
+   Y 44
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE vine05
+   X 301
+   Y -14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE vine04
+   X 201
+   Y -12
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE tree_leaf01
+   X 263
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE tree_leaf05
+   X 239
+   Y 62
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_jungle
+   PIECE tree_leaf01
+   X 239
+   Y 64
+   ONE_WAY
+ $END
+
+$PRETEXT
+  LINE Just like with the climber, you can also 
+  LINE assign a bomber to a sliding lemming.
+  LINE 
+  LINE As this would nearly be the same lecture
+  LINE as before, though let's make it a bit more
+  LINE interesting, and try to not bomb 
+  LINE the slider and instead help him out by 
+  LINE bombing other more expendable lemmings.
+  LINE This way, you can create quite helpful 
+  LINE holes inside of a wall in which a slider  
+  LINE can get into.
+  LINE
+  LINE This tactic can open up a lot of 
+  LINE possibilities!
+$END
+ 
+ 

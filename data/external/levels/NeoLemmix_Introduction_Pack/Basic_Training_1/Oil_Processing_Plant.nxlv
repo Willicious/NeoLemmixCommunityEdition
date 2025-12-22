@@ -1,0 +1,1498 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.40
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Oil Processing Plant
+ AUTHOR IchoTolot
+ ID x3646C5752B324029
+ VERSION x000000000000000A
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 800
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME dex_lr2_industry
+ BACKGROUND dex_lr2_industry:LR2-Industry2
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 30
+ SAVE_REQUIREMENT 29
+ MAX_SPAWN_INTERVAL 38
+ 
+ $SKILLSET 
+   JUMPER 1
+   SHIMMIER 4
+   SLIDER 1
+   BOMBER 1
+   PLATFORMER 3
+   LASERER 2
+   BASHER 1
+   MINER 1
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE dex_lr2_industry
+   PIECE entrance_industry
+   X 27
+   Y 72
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_lr2_industry
+   PIECE exit_industry
+   X 736
+   Y 37
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_lr2_industry
+   PIECE owa_left
+   X 192
+   Y 40
+   WIDTH 90
+   HEIGHT 120
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE dex_lr2_industry
+   PIECE owa_left
+   X 498
+   Y 64
+   WIDTH 90
+   HEIGHT 120
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE dex_lr2_industry
+   PIECE oil
+   X 282
+   Y 145
+   WIDTH 96
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_lr2_industry
+   PIECE oil
+   X -1
+   Y 145
+   WIDTH 144
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_lr2_industry
+   PIECE oil
+   X 588
+   Y 145
+   WIDTH 120
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_lr2_industry
+   PIECE trap_piston
+   X 438
+   Y 48
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE barrel01
+   X 8
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE barrel03
+   X 42
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE barrel05
+   X 76
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE barrel04
+   X 110
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate01
+   X 192
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 143
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 120
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE metal01
+   X 0
+   Y 112
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE metal01
+   X 144
+   Y 112
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 96
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 72
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 48
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 24
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 120
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE metal01
+   X 0
+   Y 64
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 96
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 48
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 24
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 0
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE metal01
+   X 72
+   Y 64
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE metal01
+   X 0
+   Y 40
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE metal01
+   X 72
+   Y 40
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 144
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 144
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate01
+   X 216
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a02
+   X 96
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a03
+   X 120
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a02
+   X 144
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a03
+   X 0
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a04
+   X 24
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a02
+   X 48
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a01
+   X 72
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a04
+   X 48
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a02
+   X 72
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a04
+   X 0
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a02
+   X 24
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate04b
+   X 192
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate04a
+   X 210
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate04b
+   X 240
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate01b
+   X 192
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate02a
+   X 258
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate04a
+   X 240
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate02b
+   X 258
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate04b
+   X 240
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate04a
+   X 216
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate02b
+   X 223
+   Y 100
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate01
+   X 228
+   Y 68
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate01b
+   X 258
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate03a
+   X 264
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate03b
+   X 246
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate02a
+   X 192
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate02b
+   X 216
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate03a
+   X 216
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate04a
+   X 241
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate02b
+   X 234
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a03
+   X 168
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a02
+   X 168
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a04
+   X 168
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a02
+   X 168
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a04
+   X 168
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 378
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE metal01
+   X 378
+   Y 112
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 426
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 402
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE metal01
+   X 378
+   Y 64
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 450
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 426
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 402
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 450
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE metal01
+   X 474
+   Y 112
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 474
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 474
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE barrel01
+   X 378
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE barrel01
+   X 418
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE barrel03
+   X 398
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE barrel02
+   X 387
+   Y 15
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a02
+   X 402
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a03
+   X 426
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a02
+   X 450
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a04
+   X 474
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate01
+   X 498
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate01
+   X 522
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate04b
+   X 498
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate04a
+   X 516
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate04b
+   X 546
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate01b
+   X 498
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate02a
+   X 564
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate04a
+   X 546
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate02b
+   X 564
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate04b
+   X 546
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate04a
+   X 522
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate02b
+   X 529
+   Y 124
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate01
+   X 534
+   Y 92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate01b
+   X 564
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate03a
+   X 570
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate03b
+   X 552
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate02a
+   X 498
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate02b
+   X 522
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate03a
+   X 522
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate04a
+   X 547
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate02b
+   X 540
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE platform01
+   X 588
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE platform01
+   X 612
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE platform01
+   X 636
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE platform01
+   X 660
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE tube_base
+   X 661
+   Y 138
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE tube_base
+   X 661
+   Y 74
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE tube_base
+   X 613
+   Y 138
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE tube_base
+   X 613
+   Y 74
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE platform01
+   X 684
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a02
+   X 708
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a03
+   X 732
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a02
+   X 756
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a04
+   X 780
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a03
+   X 708
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a01
+   X 780
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a04
+   X 732
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a02
+   X 756
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a04
+   X 756
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a02
+   X 780
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a01
+   X 732
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a04
+   X 708
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a03
+   X 756
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a04
+   X 708
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a02
+   X 732
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a04
+   X 780
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 752
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 728
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE metal01
+   X 704
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 776
+   Y -12
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05d
+   X 749
+   Y 23
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05a
+   X 776
+   Y 26
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05a
+   X 790
+   Y 26
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE metal01
+   X 776
+   Y 40
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05a
+   X 776
+   Y 12
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05a
+   X 790
+   Y 12
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_scaffold05
+   X 680
+   Y -3
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE sign_a05
+   X 379
+   Y 113
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE sign_a07
+   X 73
+   Y 65
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE tube_r03
+   X 520
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE tube_r04
+   X 637
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE tube03
+   X 541
+   Y 5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE tube04
+   X 565
+   Y 5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE tube07
+   X 589
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE tube05
+   X 613
+   Y 5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE tube_i02
+   X 665
+   Y 114
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE tube_i01
+   X 665
+   Y 90
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE tube_i02
+   X 617
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE tube_i01
+   X 617
+   Y 120
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE barrel04
+   X 409
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE cable05
+   X 485
+   Y 22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE cable05
+   X 467
+   Y 22
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE smiley
+   X 470
+   Y 7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE cable05
+   X 485
+   Y 4
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE cable05
+   X 467
+   Y 4
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE tube_r03
+   X 176
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE tube_r04
+   X 341
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE tube03
+   X 197
+   Y 5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE tube04
+   X 221
+   Y 5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE tube07
+   X 317
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE tube05
+   X 245
+   Y 5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE block_a02
+   X 96
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE metal01
+   X 120
+   Y -8
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE tube01
+   X 293
+   Y 5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE tube03
+   X 269
+   Y 5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE sign_a03
+   X 705
+   Y 1
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE sign_a02
+   X 1
+   Y 113
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE crate05b
+   X 773
+   Y 23
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE plank06
+   X 96
+   Y 82
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE plank05
+   X 72
+   Y 82
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE plank06
+   X 402
+   Y 82
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_lr2_industry
+   PIECE plank05
+   X 378
+   Y 82
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ 
