@@ -5533,7 +5533,13 @@ begin
     Dec(L.LemPhysicsFrame);
 
     if UserSetNuking and (L.LemExplosionTimer <= 0) and (Index_LemmingToBeNuked > L.LemIndex) then
-      Transition(L, baOhnoing);
+      Transition(L, baOhnoing)
+    else begin
+      if (GameParams.SleeperSpriteMissing) then
+        Transition(L, baVaporizing)
+      else
+        Transition(L, baSleeping);
+    end;
   end else
   if L.LemEndOfAnimation then RemoveLemming(L, RM_SAVE);
 end;
