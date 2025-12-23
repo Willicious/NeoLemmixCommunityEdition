@@ -1,13 +1,14 @@
-NeoLemmix
+NeoLemmix Community Edition
 
-by Namida Verasche and Stephan Neupert,
-based on Lemmix by Eric Langedijk,
+by William James
+based on NeoLemmix by Namida Verasche and Stephan Neupert,
+itself based on Lemmix by Eric Langedijk,
 inspired by Lemmings by DMA.
 
 The main branch is "master", which gives users access to most data files 
 allowing them to easily mod their copy of the game.
 
-Release builds are compiled using Delphi 10.3 Community Edition.
+Release builds are compiled using Delphi 10.4.2.
 
 No version currently exists that can be compiled on Lazarus. This implies in 
 particular that the only way to play NeoLemmix on Linux systems is via Wine.
@@ -29,16 +30,5 @@ Compile instructions for the NeoLemmix player:
 
 Further comments:
 - Compiled versions of NeoLemmix will be placed in the subfolder "bin".
-- NXPConverter: 
-  This is a tool to convert old binary level pack files to the new text-based file format.
-  The project file is "NXPConvert.dpr" in "Tools/NXPConvert".
-  Again no special build script is needed, though it uses several units from the main game.
-- GSConverter:
-  This is a tool to convert old binary graphic styles to the new .png-based file format.
-  The project file is "GSConvert.dpr" in "Tools/GSConvert".
-  Again no special build script is needed.
-- StyleZipper:
-  This is a tool to create ZIP files of the styles. The output is put into "bin/style_zips".
-	In addition to an individual ZIP for each style, it also creates an "_all_styles.zip".
 
 
