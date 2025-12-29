@@ -6518,15 +6518,15 @@ begin
       end;
 
       if (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap)
-             and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTrap) <> 65535)
-             and not L.LemIsDisarmer)
-         or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trExit) and not LemWasJumping)
-         or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trWater) and not L.LemIsSwimmer)
-         or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trFire)
-         or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTeleport)
-             and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTeleport) <> 65535))
-         or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trPortal)
-             and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trPortal) <> 65535))
+        and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTrap) <> 65535)
+          and not L.LemIsDisarmer)
+      or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trExit) and not LemWasJumping)
+      or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trWater) and not L.LemIsSwimmer)
+      or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trFire)
+      or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTeleport)
+        and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTeleport) <> 65535))
+      or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trPortal)
+        and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trPortal) <> 65535))
       or (LemPosArray[1, i] <= 0)
       then begin
         L.LemAction := baExploding; // This always stops the simulation!
