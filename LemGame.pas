@@ -6527,10 +6527,11 @@ begin
              and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTeleport) <> 65535))
          or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trPortal)
              and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trPortal) <> 65535))
-         then
-      begin
+      or (LemPosArray[1, i] <= 0)
+      then begin
         L.LemAction := baExploding; // This always stops the simulation!
         L := nil;
+        SetLength(LemPosArray, 0); // Clear any accumulated positions
         Break;
       end;
 
