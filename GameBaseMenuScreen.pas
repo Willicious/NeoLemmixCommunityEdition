@@ -557,7 +557,7 @@ begin
     TPngInterface.LoadPngFile(LoadPath, fTalismanImage);
     fTalismanImage.DrawMode := dmOpaque;
 
-    Temp.SetSize(fTalismanImage.Width div 2, fTalismanImage.Height div 4);
+    Temp.SetSize(fTalismanImage.Width div 2, fTalismanImage.Height div 3);
 
     TalCount := GameParams.Level.Talismans.Count;
 
