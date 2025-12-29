@@ -258,7 +258,7 @@ type
       function HandleWaterDrown(L: TLemming): Boolean;
       function HandleWaterSwim(L: TLemming): Boolean;
       function HandlePortal(L: TLemming; PosX, PosY: Integer): Boolean;
-      function HandleAddSkill(L: TLemming; PosX, PosY: Integer): Boolean;
+      function HandleAddSkill(L: TLemming; PosX, PosY: Integer; PlaySound: Boolean = True): Boolean;
       function HandleRemoveSkills(L: TLemming): Boolean;
       function HandleNeutralize(L: TLemming): Boolean;
       function HandleDeneutralize(L: TLemming): Boolean;
@@ -3157,7 +3157,7 @@ begin
   SetBlockerMap;
 end;
 
-function TLemmingGame.HandleAddSkill(L: TLemming; PosX, PosY: Integer): Boolean;
+function TLemmingGame.HandleAddSkill(L: TLemming; PosX, PosY: Integer; PlaySound: Boolean = True): Boolean;
 var
   Gadget: TGadget;
   GadgetID: Word;
@@ -3174,19 +3174,19 @@ begin
     if (Gadget.SkillType = spbSlider) and (not L.LemIsSlider) then
     begin
       L.LemIsSlider := True;
-      CueSoundEffect(SFX_ADD_SKILL, L.Position);
+      if PlaySound then CueSoundEffect(SFX_ADD_SKILL, L.Position);
     end;
 
     if (Gadget.SkillType = spbClimber) and (not L.LemIsClimber) then
     begin
       L.LemIsClimber := True;
-      CueSoundEffect(SFX_ADD_SKILL, L.Position);
+      if PlaySound then CueSoundEffect(SFX_ADD_SKILL, L.Position);
     end;
 
     if (Gadget.SkillType = spbSwimmer) and (not L.LemIsSwimmer) then
     begin
       L.LemIsSwimmer := True;
-      CueSoundEffect(SFX_ADD_SKILL, L.Position);
+      if PlaySound then CueSoundEffect(SFX_ADD_SKILL, L.Position);
       if L.LemAction = baDrowning then
         Transition(L, baSwimming);
     end;
@@ -3194,19 +3194,19 @@ begin
     if (Gadget.SkillType = spbFloater) and (not (L.LemIsFloater or L.LemIsGlider)) then
     begin
       L.LemIsFloater := True;
-      CueSoundEffect(SFX_ADD_SKILL, L.Position);
+      if PlaySound then CueSoundEffect(SFX_ADD_SKILL, L.Position);
     end;
 
     if (Gadget.SkillType = spbGlider) and (not (L.LemIsFloater or L.LemIsGlider)) then
     begin
       L.LemIsGlider := True;
-      CueSoundEffect(SFX_ADD_SKILL, L.Position);
+      if PlaySound then CueSoundEffect(SFX_ADD_SKILL, L.Position);
     end;
 
     if (Gadget.SkillType = spbDisarmer) and (not L.LemIsDisarmer) then
     begin
       L.LemIsDisarmer := True;
-      CueSoundEffect(SFX_ADD_SKILL, L.Position);
+      if PlaySound then CueSoundEffect(SFX_ADD_SKILL, L.Position);
     end;
   end;
 end;
@@ -6489,6 +6489,21 @@ begin
     // Check for exit, traps and teleporters (but stop at teleporters!)
     for i := 0 to Length(LemPosArray[0]) do
     begin
+      // Set flags and actions according to assigners/de-assigners
+      if (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trAddSkill)) then
+        HandleAddSkill(L, LemPosArray[0, i], LemPosArray[1, i], False)
+      else if (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trRemoveSkills)) then
+        HandleRemoveSkills(L);
+
+      if HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trWater) and L.LemIsSwimmer then
+        fLemNextAction := baSwimming;
+
+      if (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap)
+        and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTrap) <> 65535))
+        and HasPixelAt(LemPosArray[0, i], LemPosArray[1, i])
+        and L.LemIsDisarmer then
+          fLemNextAction := baFixing;
+
       // Transition if we are at the end position and need to do one
       if (fLemNextAction <> baNone) and ([LemPosArray[0, i], LemPosArray[1, i]] = [L.LemX, L.LemY]) then
       begin
@@ -6502,15 +6517,15 @@ begin
         fLemJumpToHoistAdvance := False;
       end;
 
-      if    (    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap)
+      if (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap)
              and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTrap) <> 65535)
              and not L.LemIsDisarmer)
          or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trExit) and not LemWasJumping)
          or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trWater) and not L.LemIsSwimmer)
          or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trFire)
-         or (    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTeleport)
+         or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTeleport)
              and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTeleport) <> 65535))
-         or (    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trPortal)
+         or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trPortal)
              and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trPortal) <> 65535))
          then
       begin
@@ -6518,15 +6533,6 @@ begin
         L := nil;
         Break;
       end;
-
-      if HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trWater) and L.LemIsSwimmer then
-        fLemNextAction := baSwimming;
-
-      if (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap)
-        and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTrap) <> 65535))
-        and HasPixelAt(LemPosArray[0, i], LemPosArray[1, i])
-        and L.LemIsDisarmer then
-          fLemNextAction := baFixing;
 
       // End this loop when we have reached the lemming position
       if (L.LemX = LemPosArray[0, i]) and (L.LemY = LemPosArray[1, i]) then Break;
