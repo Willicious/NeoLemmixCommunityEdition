@@ -92,6 +92,9 @@ type
 
     fSuspensions: TList<TSuspendState>;
 
+    fDrawingPixels: Boolean;
+    fErasingPixels: Boolean;
+
   { game eventhandler}
     procedure Game_Finished;
   { Self eventhandlers }
@@ -1585,6 +1588,19 @@ begin
 
     CheckShifts(Shift);
 
+//    if (Button = mbLeft) then  // Bookmark - debug painting method
+//    begin
+//      fDrawingPixels := True;
+//      fErasingPixels := False;
+//      Game.PaintPixels(Game.CursorPoint.X, Game.CursorPoint.Y);
+//      Exit;
+//    end else if (Button = mbRight) then begin
+//      fDrawingPixels := False;
+//      fErasingPixels := True;
+//      Game.ErasePixels(Game.CursorPoint.X, Game.CursorPoint.Y);
+//      Exit;
+//    end;
+
     // Middle or Right clicks get passed to the keyboard handler, because their
     // handling has more in common with that than with mouse handling
     PassKey := 0;
@@ -1629,6 +1645,11 @@ begin
 
     SetAdjustedGameCursorPoint(Img.ControlToBitmap(Point(X, Y)));
 
+    if fDrawingPixels and not fErasingPixels then
+      Game.PaintPixels(Game.CursorPoint.X, Game.CursorPoint.Y)
+    else if fErasingPixels and not fDrawingPixels then
+      Game.ErasePixels(Game.CursorPoint.X, Game.CursorPoint.Y);
+
     if (fGameSpeed = gspPause) or (Game.HitTestAutoFail) then
     begin
       Game.HitTest;
@@ -1650,6 +1671,9 @@ end;
 procedure TGameWindow.Img_MouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
 begin
+  fDrawingPixels := False;
+  fErasingPixels := False;
+
   CheckShifts(Shift);
 end;
 

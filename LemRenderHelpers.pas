@@ -9,7 +9,8 @@ interface
 uses
   LemTypes, LemGadgets, LemLemming, LemCore,
   GR32, GR32_Blend,
-  Contnrs, Classes, System.Types;
+  Contnrs, Classes, System.Types,
+  SharedGlobals;
 
 const
   PARTICLE_FRAMECOUNT = 51;

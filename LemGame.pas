@@ -418,6 +418,8 @@ type
     procedure UpdateLemmings;
 
   { callable }
+    procedure PaintPixels(X, Y: Integer);
+    procedure ErasePixels(X, Y: Integer);
     function ShouldWeExitBecauseOfOptions: Boolean;
     procedure MaybeExitToPostview;
     procedure CheckAdjustSpawnInterval;
@@ -1016,6 +1018,34 @@ begin
   fRenderInterface.Free;
   fSoundList.Free;
   inherited Destroy;
+end;
+
+procedure TLemmingGame.PaintPixels(X, Y: Integer);
+var
+  XOffset, YOffset: Integer;
+begin
+  for XOffset := X to X+2 do
+    for YOffset := Y-2 to Y do
+    begin
+      AddConstructivePixel(XOffset, YOffset, Renderer.BrickPixelColors[11]);
+    end;
+end;
+
+procedure TLemmingGame.ErasePixels(X, Y: Integer);
+var
+  XOffset, YOffset: Integer;
+begin
+  for XOffset := X to X+2 do
+    for YOffset := Y-2 to Y do
+    begin
+      if HasPixelAt(XOffset, YOffset) and not HasSteelAt(XOffset, YOffset) then
+        RemovePixelAt(XOffset, YOffset);
+    end;
+
+  XOffset := X + 0;
+  YOffset := Y - 2;
+
+  fRenderInterface.RemoveTerrain(XOffset, YOffset, 3, 3);
 end;
 
 procedure TLemmingGame.PlayAssignFailSound(PlayForHighlit: Boolean = False);
