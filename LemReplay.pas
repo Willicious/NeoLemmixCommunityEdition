@@ -300,9 +300,9 @@ class function TReplay.GetSaveFileName(aOwner: TComponent; aSaveOccasion: TRepla
   function GetDefaultSavePath: String;
   begin
     if (GameParams.TestModeLevel <> nil) or (GameParams.CurrentLevel.Group = GameParams.BaseLevelPack) then
-      Result := ExtractFilePath(ParamStr(0)) + SFReplays
+      Result := ExtractFilePath(ParamStr(0)) + GameParams.ReplaysFolder
     else
-      Result := ExtractFilePath(ParamStr(0)) + SFReplays + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name) + '\';
+      Result := ExtractFilePath(ParamStr(0)) + GameParams.ReplaysFolder + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name) + '\';
     if aSaveOccasion = rsoAuto then Result := Result + 'Auto\';
   end;
 

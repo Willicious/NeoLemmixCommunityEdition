@@ -131,10 +131,10 @@ begin
   try
     OpenDlg.Title := 'Select any file in the folder containing replays';
 
-    InitialDir := AppPath + SFReplays + MakeSafeForFilename(GameParams.CurrentGroupName);
+    InitialDir := AppPath + GameParams.ReplaysFolder + MakeSafeForFilename(GameParams.CurrentGroupName);
 
     if not SysUtils.DirectoryExists(InitialDir) then
-      InitialDir := AppPath + SFReplays;
+      InitialDir := AppPath + GameParams.ReplaysFolder;
 
     OpenDlg.InitialDir := InitialDir;
     OpenDlg.Filter := 'NeoLemmix Replay (*.nxrp)|*.nxrp';

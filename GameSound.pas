@@ -33,6 +33,7 @@ interface
 uses
   Dialogs,
   Bass,
+  GameControl,
   LemTypes, // only uses AppPath in new-formats but uses other stuff from LemTypes in backwards-compatible
   LemStrings, SharedGlobals, Contnrs, Classes, SysUtils;
 
@@ -244,7 +245,7 @@ begin
   if aIsMusic then
     BasePath := AppPath + SFMusic
   else
-    BasePath := AppPath + SFSounds;
+    BasePath := AppPath + GameParams.SoundsFolder;
 
   Result := FindExtension(aName, BasePath, aIsMusic);
 end;
@@ -278,7 +279,7 @@ begin
     Exit;
 
   if aLoadPath = '' then
-    BasePath := AppPath + SFSounds
+    BasePath := AppPath + GameParams.SoundsFolder
   else
     BasePath := aLoadPath;
 

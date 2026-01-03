@@ -154,6 +154,8 @@ type
     fDoneUpdateCheck: Boolean;
     fCurrentLevel: TNeoLevelEntry;
     fSleeperSpriteMissing: Boolean;
+    fReplaysFolder: string;
+    fSoundsFolder: string;
 
     fCursorResize: Double;
     fZoomLevel: Integer;
@@ -313,6 +315,8 @@ type
     property DoneUpdateCheck: Boolean read fDoneUpdateCheck write fDoneUpdateCheck;
 
     property Directory: string read fDirectory write fDirectory;
+    property ReplaysFolder: string read fReplaysFolder write fReplaysFolder;
+    property SoundsFolder: string read fSoundsFolder write fSoundsFolder;
 
     property CursorResize: Double read fCursorResize write fCursorResize;
     property ZoomLevel: Integer read fZoomLevel write fZoomLevel;
@@ -1144,6 +1148,14 @@ begin
   PlaybackList := TStringList.Create;
   UnmatchedList := TStringList.Create;
   ReplayVerifyList := TStringList.Create;
+
+  ReplaysFolder := SFReplays;
+  if not DirectoryExists(AppPath + SFReplays) then
+    ReplaysFolder := 'Replay\'; // Cross-compatibility with NL 12.14 directories
+
+  SoundsFolder := SFSounds;
+  if not DirectoryExists(AppPath + SFSounds) then
+    SoundsFolder := 'sound\'; // Cross-compatibility with NL 12.14 directories
 end;
 
 procedure TDosGameParams.CreateBasePack;

@@ -75,9 +75,9 @@ begin
   fLoadSuccess := True;
 
   SoundManager := TSoundManager.Create;
-  SoundManager.LoadDefaultSounds;  
-
   GameParams := TDosGameParams.Create;
+
+  SoundManager.LoadDefaultSounds;
   PieceManager := TNeoPieceManager.Create;
   GameParams.CreateBasePack;
 
