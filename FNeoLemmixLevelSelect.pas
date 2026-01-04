@@ -102,6 +102,7 @@ type
     procedure InitializeTreeview;
     procedure MakeTreeviewImages;
     function GetImageIndexFromCompletionStatus(Status: TNeoLevelStatus): Integer;
+    procedure UpdateNodeImage(N: TTreeNode);
     procedure LoadNodeLabels;
 
     procedure WriteToParams;
@@ -302,6 +303,35 @@ begin
     lst_Completed:           Result := 3;
   else
     Result := 0;
+  end;
+end;
+
+procedure TFLevelSelect.UpdateNodeImage(N: TTreeNode);
+var
+  BaseIndex: Integer;
+  L: TNeoLevelEntry;
+  G: TNeoLevelGroup;
+begin
+  if N = nil then Exit;
+
+  if TObject(N.Data) is TNeoLevelGroup then
+  begin
+    G := TNeoLevelGroup(N.Data);
+    BaseIndex := GetImageIndexFromCompletionStatus(G.Status);
+
+    N.ImageIndex := BaseIndex;
+    N.SelectedIndex := BaseIndex;
+  end else if TObject(N.Data) is TNeoLevelEntry then
+  begin
+    L := TNeoLevelEntry(N.Data);
+    BaseIndex := GetImageIndexFromCompletionStatus(L.Status);
+
+    // Talisman overlay
+    if (L.UnlockedTalismanList.Count < L.Talismans.Count) and (BaseIndex < 4) then
+      Inc(BaseIndex, 4);
+
+    N.ImageIndex := BaseIndex;
+    N.SelectedIndex := BaseIndex;
   end;
 end;
 
@@ -637,6 +667,7 @@ begin
   begin
     L.ResetTalismans;
     SetTalismanInfo;
+    UpdateNodeImage(N);
   end;
 end;
 
