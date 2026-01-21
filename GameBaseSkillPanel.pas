@@ -249,26 +249,32 @@ begin
   else if CursorOverReplayIcon then
   begin
     if Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
-                   ButtonHint := 'STOP REPLAY'
+                          ButtonHint := 'STOP REPLAY'
     else if GameParams.PlaybackModeActive then
-                   ButtonHint := 'STOP PLAYBACK'
+                          ButtonHint := 'END PLAYBACK'
     else
-                   ButtonHint := '';
+                          ButtonHint := '';
   end else if CursorOverSkillButton(aButton) then
   begin
     case aButton of
-      spbNone:     ButtonHint := '';
-      spbSlower:   ButtonHint := 'SLOWER';
-      spbFaster:   ButtonHint := 'FASTER';
-      spbPause:    ButtonHint := 'PAUSE';
+      spbNone:            ButtonHint := '';
+      spbSlower:          ButtonHint := 'SLOWER';
+      spbFaster:          ButtonHint := 'FASTER';
+      spbPause:           ButtonHint := 'PAUSE';
       spbFastForward:
 //        if GameParams.TurboFF then
 //                   ButtonHint := 'TURBO-FF'
 //        else
-                   ButtonHint := 'FAST-FORWARD';
-      spbRestart:  ButtonHint := 'RESTART';
-      spbNuke:     ButtonHint := 'NUKE';
-      else         ButtonHint := Uppercase(SKILL_NAMES[aButton]);
+                          ButtonHint := 'FAST-FORWARD';
+      spbRestart:         ButtonHint := 'RESTART';
+      spbNuke:            ButtonHint := 'NUKE';
+      spbBackOneFrame:    ButtonHint := 'FRAMESTEP';
+      spbForwardOneFrame: ButtonHint := 'FRAMESTEP';
+      spbDirLeft:         ButtonHint := 'SELECT LEFT';
+      spbDirRight:        ButtonHint := 'SELECT RIGHT';
+      spbClearPhysics:    ButtonHint := 'VIEW PHYSICS';
+      spbLoadReplay:      ButtonHint := 'LOAD REPLAY';
+      else                ButtonHint := Uppercase(SKILL_NAMES[aButton]);
     end;
   end;
 end;
