@@ -134,6 +134,7 @@ type
     procedure ChangeZoom(aNewZoom: Integer; NoRedraw: Boolean = False);
     procedure FreeCursors;
     procedure HandleSpecialSkip(aSkipType: Integer);
+    procedure HandleMouseWheelFramestep(Ctrl: Boolean = False; Shift: Boolean = False; Alt: Boolean = False; Up: Boolean = False);
 
     function GetLevelMusicName: String;
     function ProcessMusicPriorityOrder(aOptions: String; aIsFromRotation: Boolean): String;
@@ -230,12 +231,27 @@ procedure TGameWindow.Form_MouseWheel(Sender: TObject; Shift: TShiftState;
   WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
 var
   Key: Word;
+  CtrlPressed, ShiftPressed, AltPressed: Boolean;
 begin
   Key := 0;
+  CtrlPressed := ssCtrl in Shift;
+  ShiftPressed := ssShift in Shift;
+  AltPressed := ssAlt in Shift;
+
   if WheelDelta > 0 then
-    Key := $05
+  begin
+    if (CtrlPressed or ShiftPressed or AltPressed) then
+      HandleMouseWheelFramestep(CtrlPressed, ShiftPressed, AltPressed, True)
+    else
+      Key := $05
+  end
   else if WheelDelta < 0 then
-    Key := $06;
+  begin
+    if (CtrlPressed or ShiftPressed or AltPressed) then
+      HandleMouseWheelFramestep(CtrlPressed, ShiftPressed, AltPressed, False)
+    else
+      Key := $06;
+  end;
 
   if Key <> 0 then
     OnKeyDown(Sender, Key, Shift);
@@ -1242,12 +1258,27 @@ begin
   Inc(fActivateCount);
 end;
 
+procedure TGameWindow.HandleMouseWheelFramestep(Ctrl: Boolean = False; Shift: Boolean = False; Alt: Boolean = False; Up: Boolean = False);
+begin
+  if (Up) then
+  begin
+    if (Ctrl ) then GoToSaveState(Game.CurrentIteration - 1);
+    if (Shift) then GoToSaveState(Game.CurrentIteration - 10);
+    if (Alt  ) then GoToSaveState(Game.CurrentIteration - 100);
+  end else begin
+    if (Ctrl ) then fHyperSpeedTarget := Game.CurrentIteration + 1;
+    if (Shift) then fHyperSpeedTarget := Game.CurrentIteration + 10;
+    if (Alt  ) then fHyperSpeedTarget := Game.CurrentIteration + 100;
+  end;
+end;
+
 procedure TGameWindow.Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 var
   CurrTime: Cardinal;
   sn: Integer;
   func: TLemmixHotkey;
   AssignToHighlit: Boolean;
+  CtrlPressed, ShiftPressed, AltPressed: Boolean;
   CursorPointForm: TPoint; // A point in coordinates relative to the main form
 const
   NON_CANCELLING_KEYS = [lka_Null,
@@ -1287,6 +1318,10 @@ const
   SKILL_KEYS = [lka_Skill, lka_SkillLeft, lka_SkillRight];
 begin
   func := GameParams.Hotkeys.CheckKeyEffect(Key);
+
+  CtrlPressed := ssCtrl in Shift;
+  ShiftPressed := ssShift in Shift;
+  AltPressed := ssAlt in Shift;
 
   if func.Action = lka_Exit then
   begin
