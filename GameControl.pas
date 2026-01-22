@@ -382,10 +382,10 @@ begin
   if IsFileModifiedExternally('userdata.nxsv', fLastUserDataWriteTime) then
   begin
     ReloadUserData := True;
-    ReloadSettings := True; // Assume settings.ini is modified too
+    ReloadSettings := True; // Assume settings is modified too
   end
-  // Only check settings.ini separately if userdata.nxsv was NOT modified
-  else if IsFileModifiedExternally('settings.ini', fLastWriteTime) then
+  // Only check settings separately if user data was NOT modified
+  else if IsFileModifiedExternally('NLCESettings.ini', fLastWriteTime) then
   begin
     ReloadSettings := True;
   end;
@@ -490,10 +490,10 @@ begin
   SL2 := TStringList.Create;
   try
     ForceDirectories(AppPath + SFSaveData);
-    if FileExists(AppPath + SFSaveData + 'settings.ini') then
-      SL2.LoadFromFile(AppPath + SFSaveData + 'settings.ini')
-    else if FileExists(AppPath + 'NeoLemmix147Settings.ini') then
-      SL2.LoadFromFile(AppPath + 'NeoLemmix147Settings.ini');
+    if FileExists(AppPath + SFSaveData + 'NLCESettings.ini') then
+      SL2.LoadFromFile(AppPath + SFSaveData + 'NLCESettings.ini')
+    else if FileExists(AppPath + SFSaveData + 'settings.ini') then
+      SL2.LoadFromFile(AppPath + SFSaveData + 'settings.ini');
 
     SL.Add('LastVersion=' + IntToStr(CurrentVersionID));
     SL.Add('UserName=' + UserName);
@@ -589,8 +589,8 @@ begin
 
     AddUnknowns;
 
-    SL.SaveToFile(AppPath + SFSaveData + 'settings.ini');
-    fLastWriteTime := TFile.GetLastWriteTime(AppPath + SFSaveData + 'settings.ini');
+    SL.SaveToFile(AppPath + SFSaveData + 'NLCESettings.ini');
+    fLastWriteTime := TFile.GetLastWriteTime(AppPath + SFSaveData + 'NLCESettings.ini');
   finally
     SL.Free;
     SL2.Free;
@@ -705,9 +705,9 @@ var
 begin
   SL := TStringList.Create;
   try
-    if FileExists(AppPath + SFSaveData + 'settings.ini') then
+    if FileExists(AppPath + SFSaveData + 'NLCESettings.ini') then
     begin
-      SL.LoadFromFile(AppPath + SFSaveData + 'settings.ini');
+      SL.LoadFromFile(AppPath + SFSaveData + 'NLCESettings.ini');
       LoadedConfig := True;
     end else if UnderWine then
     begin
@@ -1068,7 +1068,7 @@ begin
   // Tries to set the exact level. If the level is missing, try to set to
   // the rank it's supposedly in; or if that fails, the pack the rank is in,
   // etc. If there's no sane result whatsoever, do nothing.
-  // This is used for the LastActiveLevel setting in settings.ini, and the
+  // This is used for the LastActiveLevel setting in NLCESettings.ini, and the
   // -shortcut command line parameter.
 
   if not TPath.IsPathRooted(aPattern) then
