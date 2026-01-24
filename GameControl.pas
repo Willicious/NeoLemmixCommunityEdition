@@ -1154,7 +1154,7 @@ begin
     ReplaysFolder := 'Replay\'; // Cross-compatibility with NL 12.14 directories
 
   SoundsFolder := SFSounds;
-  if not DirectoryExists(AppPath + SFSounds) then
+  if not (DirectoryExists(AssetsCEPath + SFSounds) or DirectoryExists(AppPath + SFSounds)) then
     SoundsFolder := 'sound\'; // Cross-compatibility with NL 12.14 directories
 end;
 

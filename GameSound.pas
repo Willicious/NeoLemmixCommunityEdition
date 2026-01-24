@@ -99,6 +99,7 @@ type
       destructor Destroy; override;
 
       procedure LoadDefaultSounds;
+      function ResolveSoundsBasePath: String;
       function LoadSoundFromFile(aName: String; aOrigin: TSoundEffectOrigin; aLoadPath: String = ''): Integer;
       function LoadSoundFromStream(aStream: TStream; aName: String; aOrigin: TSoundEffectOrigin): Integer;
       procedure PurgeNonDefaultSounds;
@@ -238,6 +239,14 @@ begin
     PlayMusic;
 end;
 
+function TSoundManager.ResolveSoundsBasePath: String;
+begin
+  if DirectoryExists(AssetsCEPath + SFSounds) then
+    Result := AssetsCEPath + SFSounds
+  else
+    Result := AppPath + GameParams.SoundsFolder;
+end;
+
 function TSoundManager.FindExtension(const aName: String; aIsMusic: Boolean): String;
 var
   BasePath: String;
@@ -245,7 +254,7 @@ begin
   if aIsMusic then
     BasePath := AppPath + SFMusic
   else
-    BasePath := AppPath + GameParams.SoundsFolder;
+    BasePath := ResolveSoundsBasePath;
 
   Result := FindExtension(aName, BasePath, aIsMusic);
 end;
@@ -279,7 +288,7 @@ begin
     Exit;
 
   if aLoadPath = '' then
-    BasePath := AppPath + GameParams.SoundsFolder
+    BasePath := ResolveSoundsBasePath
   else
     BasePath := aLoadPath;
 
