@@ -406,20 +406,49 @@ end;
 
 procedure TBaseAnimationSet.PrepareAnimations;
 var
-  Fn: string;
   Bmp: TBitmap32;
   TempBitmap: TBitmap32;
-  iAnimation: Integer;
+  X, iAnimation: Integer;
   MLA: TMetaLemmingAnimation;
-  X: Integer;
-
-  SrcFolder: String;
+  Fn, SrcFolder, MetaSrcFolder, ImgSrcFolder, SleeperPath: String;
   ColorDict: TColorDict;
   ShadeDict: TShadeDict;
-
-  MetaSrcFolder, ImgSrcFolder: String;
-
   Info: TUpscaleInfo;
+
+  function IsDefaultSleeper(const aStyle, aAnimName: string): Boolean;
+  begin
+    Result := SameText(aAnimName, 'SLEEPER') and
+              SameText(aStyle, SFDefaultStyle);
+  end;
+
+  function ResolveDefaultSleeperSprite(const aPiecesPath: string): string;
+  var
+    AppPathSprite: string;
+    CEPathSprite: string;
+  begin
+    AppPathSprite := AppPath + SFStyles + SFDefaultStyle + aPiecesPath + 'sleeper.png';
+
+    if FileExists(AppPathSprite) then // Found in default style folder
+      Exit(AppPathSprite);
+
+    CEPathSprite := AssetsCEPath + SFStyles + SFDefaultStyle + aPiecesPath + 'sleeper.png';
+
+    if FileExists(CEPathSprite) then // Found in assets-ce folder
+      Exit(CEPathSprite);
+
+    Result := ''; // Missing
+  end;
+
+  function CustomSleeperSpriteFound(aAnimName, aPath, aMetaPath: String): Boolean;
+  begin
+    if not SameText(aAnimName, 'SLEEPER') then
+      Exit(True);
+
+    if FileExists(aPath + 'sleeper.png') and FileExists(aMetaPath + 'sleeper.png') then
+      Exit(True);
+
+    Result := False;
+  end;
 begin
   TempBitmap := TBitmap32.Create;
   ColorDict := TColorDict.Create;
@@ -452,19 +481,32 @@ begin
       MLA := fMetaLemmingAnimations[iAnimation];
       Fn := RightStr(MLA.Description, Length(MLA.Description) - 1);
 
-      if ((Fn = 'SLEEPER') and not FileExists(ImgSrcFolder + 'sleeper.png'))
-      or ((Fn = 'SLEEPER') and not FileExists(MetaSrcFolder + 'sleeper.png')) then
+      // --- Load Default Sleeper sprite --- //
+      SleeperPath := '';
+      if IsDefaultSleeper(SrcFolder, Fn) then
+      begin
+        if GameParams.HighResolution then
+          SleeperPath := ResolveDefaultSleeperSprite(SFPiecesLemmingsHighRes)
+        else
+          SleeperPath := ResolveDefaultSleeperSprite(SFPiecesLemmings);
+
+        if SleeperPath <> '' then
+          TPngInterface.LoadPngFile(SleeperPath, TempBitmap)
+        else
+          GameParams.SleeperSpriteMissing := True;
+      end else
+      // --- Check for Custom Sleeper sprite --- //
+      if not CustomSleeperSpriteFound(Fn, ImgSrcFolder, MetaSrcFolder) then
         GameParams.SleeperSpriteMissing := True
+      // --- Load all sprites (except default Sleeper) --- //
       else if FileExists(ImgSrcFolder + Fn + '.png') then
         TPngInterface.LoadPngFile(ImgSrcFolder + Fn + '.png', TempBitmap)
+      // --- Upscale low-res sprites --- //
       else begin
         TPngInterface.LoadPngFile(MetaSrcFolder + Fn + '.png', TempBitmap);
 
         Info := PieceManager.GetUpscaleInfo(SrcFolder, rkLemmings);
         UpscaleFrames(TempBitmap, 2, MLA.FrameCount, Info.Settings);
-
-        // I don't think it would EVER be useful to have the TileHorizontal / TileVertical on lemming sprites, but
-        // let's keep support just for consistency.
       end;
 
       MLA.Width := TempBitmap.Width div 2;
