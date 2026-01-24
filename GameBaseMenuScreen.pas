@@ -888,16 +888,22 @@ function TGameBaseMenuScreen.GetBackgroundDrawMode: String;
 var
   Parser: TParser;
   Sec: TParserSection;
+  TitleData: String;
 begin
+  TitleData := 'title.nxmi';
+
   Parser := TParser.Create;
   try
     Result := 'TILE'; // Default
 
     Sec := Parser.MainSection;
-    Parser.LoadFromFile(AppPath + SFData + 'title.nxmi');
 
-    if GameParams.CurrentLevel.Group.FindFile('title.nxmi') <> '' then
-      Parser.LoadFromFile(GameParams.CurrentLevel.Group.FindFile('title.nxmi'));
+    if GameParams.CurrentLevel.Group.FindFile(TitleData) <> '' then
+      Parser.LoadFromFile(GameParams.CurrentLevel.Group.FindFile(TitleData))
+    else if FileExists(AssetsCEPath + SFData + TitleData) then
+      Parser.LoadFromFile(AssetsCEPath + SFData + TitleData)
+    else
+      Parser.LoadFromFile(AppPath + SFData + TitleData);
 
     Result := Sec.LineTrimString['BACKGROUND_DRAW_MODE'];
   finally

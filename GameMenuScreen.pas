@@ -413,6 +413,7 @@ end;
 procedure TGameMenuScreen.LoadLayoutData;
 var
   Parser: TParser;
+  TitleData: String;
 
   procedure ReadPositionData;
   var
@@ -443,16 +444,21 @@ var
     LayoutInfo.ScrollerLemmingFrames := Sec.LineNumericDefault['SCROLLER_LEMMING_FRAMES', LayoutInfo.ScrollerLemmingFrames];
   end;
 begin
+  TitleData := 'title.nxmi';
   Parser := TParser.Create;
   try
     FillChar(LayoutInfo, SizeOf(TGameMenuPositionData), 0);
 
-    Parser.LoadFromFile(AppPath + SFData + 'title.nxmi');
-    ReadPositionData;
-
-    if GameParams.CurrentLevel.Group.FindFile('title.nxmi') <> '' then
+    if GameParams.CurrentLevel.Group.FindFile(TitleData) <> '' then
     begin
-      Parser.LoadFromFile(GameParams.CurrentLevel.Group.FindFile('title.nxmi'));
+      Parser.LoadFromFile(GameParams.CurrentLevel.Group.FindFile(TitleData));
+      ReadPositionData;
+    end else if FileExists(AssetsCEPath + SFData + TitleData) then
+    begin
+      Parser.LoadFromFile(AppPath + SFData + TitleData);
+      ReadPositionData;
+    end else begin
+      Parser.LoadFromFile(AppPath + SFData + TitleData);
       ReadPositionData;
     end;
   finally
@@ -497,12 +503,17 @@ procedure TGameMenuScreen.PrepareScrollerTextList;
 var
   i: Integer;
   Parser: TParser;
+  ScrollerData: String;
 begin
+  ScrollerData := 'scroller.nxmi';
   fScrollerTextList.Clear;
 
   Parser := TParser.Create;
   try
-    Parser.LoadFromFile(AppPath + SFData + 'scroller.nxmi');
+    if FileExists(AssetsCEPath + SFData + ScrollerData) then
+      Parser.LoadFromFile(AppPath + SFData + ScrollerData)
+    else
+      Parser.LoadFromFile(AppPath + SFData + ScrollerData);
     Parser.MainSection.DoForEachLine('LINE', procedure(aLine: TParserLine; const aIteration: Integer)
     begin
       fScrollerTextList.Add(aLine.ValueTrimmed);

@@ -572,13 +572,17 @@ begin
   aPath := AppPath + SFLevels;
 
   if (GameParams.CurrentLevel = nil)
-    or not (FileExists(aPath + aFile) or FileExists(AppPath + SFData + aFile))
+    or not (FileExists(aPath + aFile) or
+            FileExists(AssetsCEPath + SFData + aFile) or
+            FileExists(AppPath + SFData + aFile))
       then Exit;
 
   Parser := TParser.Create;
   try
     if FileExists(aPath + aFile) then
       Parser.LoadFromFile(aPath + aFile)
+    else if FileExists(AssetsCEPath + SFData + aFile) then
+      Parser.LoadFromFile(AssetsCEPath + SFData + aFile)
     else if FileExists(AppPath + SFData + aFile) then
       Parser.LoadFromFile(AppPath + SFData + aFile);
 

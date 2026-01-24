@@ -1133,8 +1133,11 @@ procedure TNeoLevelGroup.LoadMusicData;
 var
   Parser: TParser;
   MainSec: TParserSection;
+  MusicData: String;
 begin
-  if (fParentGroup <> nil) and not FileExists(Path + 'music.nxmi') then
+  MusicData := 'music.nxmi';
+
+  if (fParentGroup <> nil) and not FileExists(Path + MusicData) then
   begin
     fMusicList := fParentGroup.MusicList;
     fHasOwnMusicList := False;
@@ -1145,10 +1148,10 @@ begin
   fHasOwnMusicList := True;
   Parser := TParser.Create;
   try
-    if FileExists(Path + 'music.nxmi') then
-      Parser.LoadFromFile(Path + 'music.nxmi')
-    else if FileExists(AppPath + SFData + 'music.nxmi') then
-      Parser.LoadFromFile(AppPath + SFData + 'music.nxmi');
+    if FileExists(Path + MusicData) then
+      Parser.LoadFromFile(Path + MusicData)
+    else if FileExists(AppPath + SFData + MusicData) then
+      Parser.LoadFromFile(AppPath + SFData + MusicData);
 
     MainSec := Parser.MainSection;
     if (MainSec.Line['random'] <> nil) then
@@ -1168,8 +1171,11 @@ var
   Parser: TParser;
   MainSec: TParserSection;
   buttonSelected: Integer;
+  PostviewData: String;
 begin
-  if (fParentGroup <> nil) and not FileExists(Path + 'postview.nxmi') then
+  PostviewData := 'postview.nxmi';
+
+  if (fParentGroup <> nil) and not FileExists(Path + PostviewData) then
   begin
     fPostviewTexts := fParentGroup.PostviewTexts;
     fHasOwnPostviewTexts := False;
@@ -1180,10 +1186,10 @@ begin
   fHasOwnPostviewTexts := True;
   Parser := TParser.Create;
   try
-    if FileExists(Path + 'postview.nxmi') then
-      Parser.LoadFromFile(Path + 'postview.nxmi')
-    else if FileExists(AppPath + SFData + 'postview.nxmi') then
-      Parser.LoadFromFile(AppPath + SFData + 'postview.nxmi')
+    if FileExists(Path + PostviewData) then
+      Parser.LoadFromFile(Path + PostviewData)
+    else if FileExists(AppPath + SFData + PostviewData) then
+      Parser.LoadFromFile(AppPath + SFData + PostviewData)
     else
     begin
       buttonSelected := MessageDlg('Could not find postview.nxmi in the folder data\. Try to continue?',
