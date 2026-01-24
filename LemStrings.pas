@@ -57,7 +57,7 @@ const
   SFX_VAPORIZING = 'fire';
   SFX_DROWNING = 'glug';
   SFX_EXPLOSION = 'explode';
-  SFX_HITS_STEEL = 'chink';
+  SFX_HITS_STEEL = 'dink';
   SFX_OHNO = 'ohno';
   SFX_OK = 'ok';
   SFX_SKILLBUTTON = 'changeop';

@@ -329,9 +329,9 @@ begin
   Get('assignfail');
   Get('chain');
   Get('changeop');
-  Get('chink');
   Get('deneutralize');
   Get('die');
+  Get('dink');
   Get('door');
   Get('electric');
   Get('explode');
