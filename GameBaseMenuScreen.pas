@@ -865,16 +865,14 @@ var
   AssetPath: String;
 begin
   Result := True;
+  AssetPath := ResolveAsset(SFGraphicsMenu, aName);
 
   if (not (GameParams.CurrentLevel = nil))
     and FileExists(GameParams.CurrentLevel.Group.FindFile(aName)) then
       TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile(aName), aDst)
-  else if (not aFromPackOnly) or (not aAcceptFailure) then
-  begin
-    AssetPath := ResolveAsset(SFGraphicsMenu, aName);
-    if FileExists(AssetPath) then
-      TPngInterface.LoadPngFile(AssetPath, aDst);
-  end else begin
+  else if (AssetPath <> '') and ((not aFromPackOnly) or (not aAcceptFailure)) then // aFromPackOnly + aAcceptFailure is an invalid combination
+    TPngInterface.LoadPngFile(AssetPath, aDst)
+  else begin
     if not aAcceptFailure then
       raise Exception.Create('Could not find gfx\menu\' + aName + '.');
 

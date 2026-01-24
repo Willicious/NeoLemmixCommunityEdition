@@ -141,7 +141,10 @@ begin
   if FileExists(AssetsCEPath + aPath + aName) then
     Exit(AssetsCEPath + aPath + aName);
 
-  Result := AppPath + aPath + aName;
+  if FileExists(AppPath + aPath + aName) then
+    Exit(AppPath + aPath + aName);
+
+  Result := '';
 end;
 
 function GetTemporaryFilename: String;
