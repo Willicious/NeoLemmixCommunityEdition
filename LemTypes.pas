@@ -89,6 +89,7 @@ procedure DrawNineSlice(Dst: TBitmap32; DstRect: TRect; SrcRect: TRect; Margins:
 function CalcFrameRect(Bmp: TBitmap32; FrameCount, FrameIndex: Integer): TRect;
 function AppPath: string;
 function AssetsCEPath: string;
+function ResolveAsset(aPath: String; aName: String): String;
 function MakeSuitableForFilename(const aInput: String): String;
 function LemmingsPath: string;
 function MusicsPath: string;
@@ -133,6 +134,14 @@ begin
   if _AssetsCEPath = '' then
     _AssetsCEPath := AppPath + SFAssetsCE;
   Result := _AssetsCEPath;
+end;
+
+function ResolveAsset(aPath: String; aName: String): String;
+begin
+  if FileExists(AssetsCEPath + aPath + aName) then
+    Exit(AssetsCEPath + aPath + aName);
+
+  Result := AppPath + aPath + aName;
 end;
 
 function GetTemporaryFilename: String;
