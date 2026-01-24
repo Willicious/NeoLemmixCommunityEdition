@@ -331,8 +331,8 @@ begin
   TempBMP := TBitmap32.Create;
 
   if (not (GameParams.CurrentLevel = nil))
-     and FileExists(GameParams.CurrentLevel.Group.FindFile('menu_font.png')) then
-    TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile('menu_font.png'), TempBMP)
+    and FileExists(GameParams.CurrentLevel.Group.FindFile('menu_font.png')) then
+      TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile('menu_font.png'), TempBMP)
   else if FileExists(AppPath + SFGraphicsMenu + 'menu_font.png') then
     TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'menu_font.png', TempBMP)
   else

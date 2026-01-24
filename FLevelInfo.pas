@@ -113,7 +113,7 @@ begin
   if aIconBMP = nil then
   begin
     fIcons := TBitmap32.Create;
-    TPNGInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'levelinfo_icons.png', fIcons);
+    TPNGInterface.LoadPngFile(ResolveAsset(SFGraphicsMenu, 'levelinfo_icons.png'), fIcons);
     fIcons.DrawMode := dmBlend;
     fOwnIcons := True;
   end else if fTalismanOverrideBMP <> nil then

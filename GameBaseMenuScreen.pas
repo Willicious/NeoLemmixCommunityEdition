@@ -861,15 +861,20 @@ begin
 end;
 
 function TGameBaseMenuScreen.GetGraphic(aName: String; aDst: TBitmap32; aAcceptFailure: Boolean = False; aFromPackOnly: Boolean = False): Boolean;
+var
+  AssetPath: String;
 begin
   Result := True;
 
   if (not (GameParams.CurrentLevel = nil))
-     and FileExists(GameParams.CurrentLevel.Group.FindFile(aName)) then
-    TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile(aName), aDst)
-  else if FileExists(AppPath + SFGraphicsMenu + aName) and ((not aFromPackOnly) or (not aAcceptFailure)) then // aFromPackOnly + aAcceptFailure is an invalid combination
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + aName, aDst)
-  else begin
+    and FileExists(GameParams.CurrentLevel.Group.FindFile(aName)) then
+      TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile(aName), aDst)
+  else if (not aFromPackOnly) or (not aAcceptFailure) then
+  begin
+    AssetPath := ResolveAsset(SFGraphicsMenu, aName);
+    if FileExists(AssetPath) then
+      TPngInterface.LoadPngFile(AssetPath, aDst);
+  end else begin
     if not aAcceptFailure then
       raise Exception.Create('Could not find gfx\menu\' + aName + '.');
 

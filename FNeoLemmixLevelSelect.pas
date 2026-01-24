@@ -211,10 +211,10 @@ var
 
   procedure Load(aName: String; aName2: String = '');
   begin
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + aName, BMP32);
+    TPngInterface.LoadPngFile(ResolveAsset(SFGraphicsMenu, aName), BMP32);
     if aName2 <> '' then
     begin
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + aName2, TempBMP);
+      TPngInterface.LoadPngFile(ResolveAsset(SFGraphicsMenu, aName2), TempBMP);
       TempBMP.DrawMode := dmBlend;
       TempBMP.CombineMode := cmMerge;
       TempBMP.DrawTo(BMP32);
@@ -390,7 +390,7 @@ begin
   if FileExists(GameParams.CurrentLevel.Group.FindFile(IconsImg)) then // Then levelpack folder
     TPNGInterface.LoadPngFile(aPath + IconsImg, fIconBMP)
   else
-    TPNGInterface.LoadPngFile(AppPath + SFGraphicsMenu + IconsImg, fIconBMP); // Then default
+    TPNGInterface.LoadPngFile(ResolveAsset(SFGraphicsMenu, IconsImg), fIconBMP); // Then default
 end;
 
 procedure TFLevelSelect.MaybeReloadLevelInfo;
