@@ -9,6 +9,8 @@ uses
 
 const
   // Important paths
+  SFAssetsCE = 'assets-ce\';
+
   SFGraphics = 'gfx\';
     SFGraphicsGame = SFGraphics + 'game\';
     SFGraphicsCursor = SFGraphics + 'cursor\';
