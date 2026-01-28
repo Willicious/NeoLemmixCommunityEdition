@@ -3,16 +3,19 @@ unit NeoLemmixCEResources;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, Dialogs,
   GameControl,
-  LemStrings,
-  LemTypes,
-  LemNeoParser;
+  LemStrings, LemTypes, LemNeoParser,
+  PngInterface,
+  GR32,
+  SharedGlobals;
 
 function HasEmbeddedResource(const ResName: string): Boolean;
 function LoadEmbeddedTextIfExists(const ResName: string; out Text: string): Boolean;
 function LoadEmbeddedNxmiToParser(const ResName: string; Parser: TParser): Boolean;
 function LoadNxmiWithOverrides(const FileName: string; const ResName: string; Parser: TParser): Boolean;
+function LoadEmbeddedResourceToStream(const ResName: string; aStream: TStream): Boolean;
+function LoadGraphicWithOverrides(const aFileName, aEmbeddedName: String; aDst: TBitmap32): Boolean;
 
 implementation
 
@@ -127,6 +130,75 @@ begin
   end;
 
   Result := False;
+end;
+
+function LoadEmbeddedResourceToStream(const ResName: string; aStream: TStream): Boolean;
+var
+  ResStream: TResourceStream;
+begin
+  Result := False;
+  try
+    ResStream := TResourceStream.Create(HInstance, ResName, RT_RCDATA);
+    try
+      aStream.CopyFrom(ResStream, ResStream.Size);
+      aStream.Position := 0;
+      Result := True;
+    finally
+      ResStream.Free;
+    end;
+  except
+    // Resource not found
+    Result := False;
+  end;
+end;
+
+function LoadGraphicWithOverrides(const aFileName, aEmbeddedName: String; aDst: TBitmap32): Boolean;
+var
+  FilePath: String;
+  Stream: TMemoryStream;
+begin
+  Result := False;
+
+  // 1) Level pack override
+  if (GameParams.CurrentLevel <> nil) and
+     (GameParams.CurrentLevel.Group <> nil) and
+     (GameParams.CurrentLevel.Group.FindFile(aFileName) <> '') then
+  begin
+    TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile(aFileName), aDst);
+    Result := True;
+    Exit;
+  end;
+
+  // 2) CE-assets override
+  FilePath := AssetsCEPath + SFGraphicsMenu + aFileName;
+  if FileExists(FilePath) then
+  begin
+    TPngInterface.LoadPngFile(FilePath, aDst);
+    Result := True;
+    Exit;
+  end;
+
+  // 3) Embedded fallback
+  Stream := TMemoryStream.Create;
+  try
+    if LoadEmbeddedResourceToStream(aEmbeddedName, Stream) then
+    begin
+      Stream.Position := 0;
+      TPngInterface.LoadPngStream(Stream, aDst);
+      Result := True;
+      Exit;
+    end;
+  finally
+    Stream.Free;
+  end;
+
+  // 4) Legacy fallback
+  FilePath := AppPath + SFGraphicsMenu + aFileName;
+  if FileExists(FilePath) then
+  begin
+    TPngInterface.LoadPngFile(FilePath, aDst);
+    Result := True;
+  end;
 end;
 
 end.

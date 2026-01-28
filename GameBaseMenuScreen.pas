@@ -862,22 +862,28 @@ begin
 end;
 
 function TGameBaseMenuScreen.GetGraphic(aName: String; aDst: TBitmap32; aAcceptFailure: Boolean = False; aFromPackOnly: Boolean = False): Boolean;
-var
-  AssetPath: String;
 begin
   Result := True;
-  AssetPath := ResolveAsset(SFGraphicsMenu, aName);
 
-  if (not (GameParams.CurrentLevel = nil))
-    and FileExists(GameParams.CurrentLevel.Group.FindFile(aName)) then
-      TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile(aName), aDst)
-  else if (AssetPath <> '') and ((not aFromPackOnly) or (not aAcceptFailure)) then // aFromPackOnly + aAcceptFailure is an invalid combination
-    TPngInterface.LoadPngFile(AssetPath, aDst)
-  else begin
-    if not aAcceptFailure then
-      raise Exception.Create('Could not find gfx\menu\' + aName + '.');
-
-    Result := False;
+  if not aFromPackOnly then
+  begin
+    if not LoadGraphicWithOverrides(aName, Uppercase(StringReplace(aName, '.', '_', [])), aDst) then
+    begin
+      if not aAcceptFailure then
+        raise Exception.Create('Could not find gfx\menu\' + aName);
+      Result := False;
+    end;
+  end else begin
+    if (GameParams.CurrentLevel = nil) or
+       (GameParams.CurrentLevel.Group = nil) or
+       (GameParams.CurrentLevel.Group.FindFile(aName) = '') then
+    begin
+      if not aAcceptFailure then
+        raise Exception.Create('Could not find ' + aName + ' in ' +
+          GameParams.CurrentLevel.Group.ParentBasePack.Name + '/' + GameParams.CurrentGroupName);
+      Result := False;
+    end else
+      TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile(aName), aDst);
   end;
 
   aDst.DrawMode := dmBlend;
