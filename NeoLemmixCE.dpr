@@ -2,9 +2,7 @@
 
 program NeoLemmixCE;
 
-
-
-
+{$R 'NeoLemmixCEResources.res' 'NeoLemmixCEResources.rc'}
 
 uses
   Windows,
@@ -75,7 +73,8 @@ uses
   FLevelInfo in 'FLevelInfo.pas' {LevelInfoPanel},
   FReplayManager in 'FReplayManager.pas' {FReplayManager},
   FLevelListDialog in 'FLevelListDialog.pas' {FLevelListDialog},
-  FPlaybackMode in 'FPlaybackMode.pas' {FPlaybackMode};
+  FPlaybackMode in 'FPlaybackMode.pas' {FPlaybackMode},
+  NeoLemmixCEResources in 'NeoLemmixCEResources.pas';
 
 {$R *.res}
 

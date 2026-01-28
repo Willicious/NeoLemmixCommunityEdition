@@ -207,6 +207,9 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
+        <RcCompile Include="NeoLemmixCEResources.rc">
+            <Form>NeoLemmixCEResources.res</Form>
+        </RcCompile>
         <DCCReference Include="FMain.pas">
             <Form>MainForm</Form>
         </DCCReference>
@@ -299,6 +302,7 @@ $(PreBuildEvent)]]></PreBuildEvent>
             <Form>FPlaybackMode</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="NeoLemmixCEResources.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -338,13 +342,19 @@ $(PreBuildEvent)]]></PreBuildEvent>
             </Platforms>
             <ModelSupport>False</ModelSupport>
             <Deployment Version="3">
+                <DeployFile LocalName="bin\NeoLemmix.exe" Configuration="Debug" Class="ProjectOutput"/>
+                <DeployFile LocalName="bin\NeoLemmixCE.exe" Configuration="RC Release" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>NeoLemmixCE.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="bin\NeoLemmixCE.exe" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>NeoLemmixCE.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="bin\NeoLemmix.exe" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="bin\NeoLemmixCE.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>NeoLemmixCE.exe</RemoteName>

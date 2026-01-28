@@ -12,6 +12,7 @@ uses
   LemNeoParser,
   LemStrings,
   LemTypes,
+  NeoLemmixCEResources,
   GR32, GR32_Resamplers,
   SharedGlobals;
 
@@ -413,13 +414,12 @@ end;
 procedure TGameMenuScreen.LoadLayoutData;
 var
   Parser: TParser;
-  TitleData: String;
 
   procedure ReadPositionData;
   var
     Sec: TParserSection;
   begin
-    // May be called twice - first to load defaults from data/title.nxmi, second to load pack settings.
+    // May be called twice - first to load defaults, second to load pack settings.
     Sec := Parser.MainSection;
 
     LayoutInfo.LogoY := Sec.LineNumericDefault['LOGO_CENTER_Y', LayoutInfo.LogoY];
@@ -444,23 +444,12 @@ var
     LayoutInfo.ScrollerLemmingFrames := Sec.LineNumericDefault['SCROLLER_LEMMING_FRAMES', LayoutInfo.ScrollerLemmingFrames];
   end;
 begin
-  TitleData := 'title.nxmi';
   Parser := TParser.Create;
   try
     FillChar(LayoutInfo, SizeOf(TGameMenuPositionData), 0);
 
-    if GameParams.CurrentLevel.Group.FindFile(TitleData) <> '' then
-    begin
-      Parser.LoadFromFile(GameParams.CurrentLevel.Group.FindFile(TitleData));
+    if LoadNxmiWithOverrides('title.nxmi', 'NXMI_TITLE', Parser) then
       ReadPositionData;
-    end else if FileExists(AssetsCEPath + SFData + TitleData) then
-    begin
-      Parser.LoadFromFile(AssetsCEPath + SFData + TitleData);
-      ReadPositionData;
-    end else begin
-      Parser.LoadFromFile(AppPath + SFData + TitleData);
-      ReadPositionData;
-    end;
   finally
     Parser.Free;
   end;
@@ -510,10 +499,13 @@ begin
 
   Parser := TParser.Create;
   try
+    Parser := TParser.Create;
+
     if FileExists(AssetsCEPath + SFData + ScrollerData) then
       Parser.LoadFromFile(AssetsCEPath + SFData + ScrollerData)
-    else
+    else if not LoadEmbeddedNxmiToParser('NXMI_SCROLLER', Parser) then
       Parser.LoadFromFile(AppPath + SFData + ScrollerData);
+
     Parser.MainSection.DoForEachLine('LINE', procedure(aLine: TParserLine; const aIteration: Integer)
     begin
       fScrollerTextList.Add(aLine.ValueTrimmed);

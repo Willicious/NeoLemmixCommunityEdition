@@ -18,6 +18,7 @@ uses
   FLevelInfo,
   GameBaseScreenCommon,
   GameControl,
+  NeoLemmixCEResources,
   GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   Generics.Collections,
   IOUtils, Vcl.FileCtrl, // For Playback Mode
@@ -891,22 +892,13 @@ function TGameBaseMenuScreen.GetBackgroundDrawMode: String;
 var
   Parser: TParser;
   Sec: TParserSection;
-  TitleData: String;
 begin
-  TitleData := 'title.nxmi';
-
   Parser := TParser.Create;
   try
     Result := 'TILE'; // Default
 
     Sec := Parser.MainSection;
-
-    if GameParams.CurrentLevel.Group.FindFile(TitleData) <> '' then
-      Parser.LoadFromFile(GameParams.CurrentLevel.Group.FindFile(TitleData))
-    else if FileExists(AssetsCEPath + SFData + TitleData) then
-      Parser.LoadFromFile(AssetsCEPath + SFData + TitleData)
-    else
-      Parser.LoadFromFile(AppPath + SFData + TitleData);
+    LoadNxmiWithOverrides('title.nxmi', 'NXMI_TITLE', Parser);
 
     Result := Sec.LineTrimString['BACKGROUND_DRAW_MODE'];
   finally

@@ -19,6 +19,7 @@ uses
   GameControl,
   GameSound,
   GameBaseScreenCommon, GameBaseMenuScreen,
+  NeoLemmixCEResources,
   SharedGlobals;
 
 {-------------------------------------------------------------------------------
@@ -549,8 +550,6 @@ procedure TGamePostviewScreen.LoadPostviewTextColours;
 var
   Parser: TParser;
   Sec: TParserSection;
-  aPath: string;
-  aFile: string;
 
   // Default colours(all blue), loaded if custom files don't exist
   procedure ResetColours;
@@ -565,26 +564,9 @@ var
 begin
   ResetColours;
 
-  aFile := 'textcolours.nxmi';
-  aPath := GameParams.CurrentLevel.Group.ParentBasePack.Path;
-
-  if aPath = '' then
-  aPath := AppPath + SFLevels;
-
-  if (GameParams.CurrentLevel = nil)
-    or not (FileExists(aPath + aFile) or
-            FileExists(AssetsCEPath + SFData + aFile) or
-            FileExists(AppPath + SFData + aFile))
-      then Exit;
-
   Parser := TParser.Create;
   try
-    if FileExists(aPath + aFile) then
-      Parser.LoadFromFile(aPath + aFile)
-    else if FileExists(AssetsCEPath + SFData + aFile) then
-      Parser.LoadFromFile(AssetsCEPath + SFData + aFile)
-    else if FileExists(AppPath + SFData + aFile) then
-      Parser.LoadFromFile(AppPath + SFData + aFile);
+    LoadNxmiWithOverrides('textcolours.nxmi', 'NXMI_TEXTCOLOURS', Parser);
 
     Sec := Parser.MainSection.Section['postview'];
     if Sec = nil then Exit;
