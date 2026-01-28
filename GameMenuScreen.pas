@@ -455,7 +455,7 @@ begin
       ReadPositionData;
     end else if FileExists(AssetsCEPath + SFData + TitleData) then
     begin
-      Parser.LoadFromFile(AppPath + SFData + TitleData);
+      Parser.LoadFromFile(AssetsCEPath + SFData + TitleData);
       ReadPositionData;
     end else begin
       Parser.LoadFromFile(AppPath + SFData + TitleData);
@@ -511,7 +511,7 @@ begin
   Parser := TParser.Create;
   try
     if FileExists(AssetsCEPath + SFData + ScrollerData) then
-      Parser.LoadFromFile(AppPath + SFData + ScrollerData)
+      Parser.LoadFromFile(AssetsCEPath + SFData + ScrollerData)
     else
       Parser.LoadFromFile(AppPath + SFData + ScrollerData);
     Parser.MainSection.DoForEachLine('LINE', procedure(aLine: TParserLine; const aIteration: Integer)
