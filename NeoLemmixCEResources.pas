@@ -4,7 +4,6 @@ interface
 
 uses
   Classes, SysUtils, Dialogs,
-  GameControl,
   LemStrings, LemTypes, LemNeoParser,
   PngInterface,
   GR32,
@@ -16,11 +15,13 @@ function LoadEmbeddedNxmiToParser(const ResName: string; Parser: TParser): Boole
 function LoadNxmiWithOverrides(const FileName: string; const ResName: string; Parser: TParser): Boolean;
 function LoadEmbeddedResourceToStream(const ResName: string; aStream: TStream): Boolean;
 function LoadGraphicWithOverrides(const aFileName, aEmbeddedName: String; aDst: TBitmap32): Boolean;
+function LoadEmbeddedSleeperSpriteToBitmap32(const ResName: string; aDst: TBitmap32): Boolean;
+function LoadEmbeddedSleeperSprite(aDst: TBitmap32; HighRes: Boolean): Boolean;
 
 implementation
 
 uses
-  Windows;
+  Windows, GameControl;
 
 function HasEmbeddedResource(const ResName: string): Boolean;
 begin
@@ -140,7 +141,6 @@ begin
       ResStream.Free;
     end;
   except
-    // Resource not found
     Result := False;
   end;
 end;
@@ -183,6 +183,39 @@ begin
   finally
     Stream.Free;
   end;
+end;
+
+function LoadEmbeddedSleeperSpriteToBitmap32(const ResName: string; aDst: TBitmap32): Boolean;
+var
+  ResStream: TResourceStream;
+begin
+  Result := False;
+  if aDst = nil then Exit;
+
+  try
+    ResStream := TResourceStream.Create(HInstance, ResName, RT_RCDATA);
+    try
+      aDst.LoadFromStream(ResStream);
+      aDst.DrawMode := dmBlend;
+      Result := True;
+    finally
+      ResStream.Free;
+    end;
+  except
+    Result := False;
+  end;
+end;
+
+function LoadEmbeddedSleeperSprite(aDst: TBitmap32; HighRes: Boolean): Boolean;
+var
+  ResName: string;
+begin
+  if HighRes then
+    ResName := 'SLEEPER_HR_PNG'
+  else
+    ResName := 'SLEEPER_PNG';
+
+  Result := LoadEmbeddedSleeperSpriteToBitmap32(ResName, aDst);
 end;
 
 end.

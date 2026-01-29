@@ -32,3 +32,6 @@ STANDARD_REPLAY_PNG RCDATA "data\external\gfx\cursor\ce-standard_replay.png"
 STANDARD_REPLAY_HR_PNG RCDATA "data\external\gfx\cursor-hr\ce-standard_replay.png"
 STANDARD_REPLAY_INSERT_PNG RCDATA "data\external\gfx\cursor\ce-standard_replay_insert.png"
 STANDARD_REPLAY_INSERT_HR_PNG RCDATA "data\external\gfx\cursor-hr\ce-standard_replay_insert.png"
+
+SLEEPER_PNG RCDATA "data\external\styles\default\lemmings\sleeper.png"
+SLEEPER_HR_PNG RCDATA "data\external\styles\default\lemmings-hr\sleeper.png"

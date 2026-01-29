@@ -14,6 +14,7 @@ uses
   LemMetaAnimation,
   LemNeoParser,
   LemStrings,
+  NeoLemmixCEResources,
   SharedGlobals;
 
 const
@@ -424,19 +425,14 @@ var
   function ResolveDefaultSleeperSprite(const aPiecesPath: string): string;
   var
     AppPathSprite: string;
-    CEPathSprite: string;
   begin
     AppPathSprite := AppPath + SFStyles + SFDefaultStyle + aPiecesPath + 'sleeper.png';
 
-    if FileExists(AppPathSprite) then // Found in default style folder
+    if FileExists(AppPathSprite) then
       Exit(AppPathSprite);
 
-    CEPathSprite := AssetsCEPath + SFStyles + SFDefaultStyle + aPiecesPath + 'sleeper.png';
-
-    if FileExists(CEPathSprite) then // Found in assets-ce folder
-      Exit(CEPathSprite);
-
-    Result := ''; // Missing
+    // Request embedded fallback
+    Result := 'USE_EMBEDDED_SLEEPER'
   end;
 
   function CustomSleeperSpriteFound(aAnimName, aPath, aMetaPath: String): Boolean;
@@ -490,10 +486,12 @@ begin
         else
           SleeperPath := ResolveDefaultSleeperSprite(SFPiecesLemmings);
 
-        if SleeperPath <> '' then
+        if (SleeperPath = 'USE_EMBEDDED_SLEEPER') then
+        begin
+          if not LoadEmbeddedSleeperSprite(TempBitmap, GameParams.HighResolution) then
+            GameParams.SleeperSpriteMissing := True;
+        end else
           TPngInterface.LoadPngFile(SleeperPath, TempBitmap)
-        else
-          GameParams.SleeperSpriteMissing := True;
       end else
       // --- Check for Custom Sleeper sprite --- //
       if not CustomSleeperSpriteFound(Fn, ImgSrcFolder, MetaSrcFolder) then
