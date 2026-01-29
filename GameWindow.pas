@@ -7,7 +7,7 @@ interface
 uses
   System.Types, Generics.Collections,
   PngInterface,
-  LemmixHotkeys, SharedGlobals,
+  LemmixHotkeys,
   Windows, Classes, Controls, Graphics, MMSystem, Forms, SysUtils, Dialogs, Math, ExtCtrls, StrUtils,
   GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   LemCore, LemLevel, LemRendering, LemRenderHelpers,
@@ -15,7 +15,9 @@ uses
   GameSound, LemTypes, LemStrings, LemLemming,
   LemCursor,
   GameControl, GameBaseSkillPanel, GameSkillPanel, GameBaseScreenCommon,
-  GameWindowInterface;
+  NeoLemmixCEResources,
+  GameWindowInterface,
+  SharedGlobals;
 
 type
   // For TGameSpeed see unit GameWindowInterface
@@ -1748,24 +1750,42 @@ var
   procedure LoadCursorImage(const aName: string);
   var
     Bmp: TBitmap32;
-    Name, Path: string;
+    Name, Path, ResName: string;
+    MS: TMemoryStream;
   const
     MandatoryCursors: array[0..3] of string = ('standard', 'focused', 'direction_left', 'direction_right');
   begin
     Name := LowerCase(aName);
     Path := AppPath + CursorDir + Name + FileExt;
 
-    if not FileExists(Path) then
-    begin
-      if (IndexText(Name, MandatoryCursors) >= 0) then
-        ShowMessage(Name + FileExt + ' is missing from ' + CursorDir);
-
-      Exit;
-    end;
-
     Bmp := TBitmap32.Create;
     try
-      TPngInterface.LoadPngFile(Path, Bmp);
+      // ---- 1) Legacy path ----
+      if FileExists(Path) then
+        TPngInterface.LoadPngFile(Path, Bmp)
+      else begin
+        // ---- 2) Embedded fallback ----
+        if GameParams.HighResolution then
+          ResName := UpperCase(Name) + '_HR_PNG'
+        else
+          ResName := UpperCase(Name) + '_PNG';
+        MS := TMemoryStream.Create;
+        try
+          if not LoadEmbeddedResourceToStream(ResName, MS) then
+          begin
+            if IndexText(Name, MandatoryCursors) >= 0 then
+              ShowMessage(Name + FileExt + ' is missing from ' + CursorDir);
+
+            Bmp.Free;
+            Exit;
+          end;
+
+          MS.Position := 0;
+          Bmp.LoadFromStream(MS);
+        finally
+          MS.Free;
+        end;
+      end;
 
       if CursorBitmaps.ContainsKey(Name) then
         CursorBitmaps[Name].Free;
