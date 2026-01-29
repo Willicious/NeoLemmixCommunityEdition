@@ -15,19 +15,17 @@ interface
 
 uses
   System.Types, Generics.Collections,
-  SharedGlobals, PngInterface,
+  PngInterface,
   Windows, Classes, Contnrs, SysUtils, Math, Forms, Dialogs,
   Controls, StrUtils, UMisc,
   GR32, GR32_OrdinalMaps,
-  LemCore, LemTypes, LemStrings,
-  LemLevel,
-  LemRenderHelpers, LemRendering,
-  LemNeoTheme,
+  LemCore, LemTypes, LemStrings, LemLevel,
+  LemRenderHelpers, LemRendering, LemNeoTheme,
   LemGadgets, LemGadgetsConstants, LemLemming, LemRecolorSprites,
-  LemReplay,
-  LemTalisman,
-  LemGameMessageQueue,
-  GameControl;
+  LemReplay, LemTalisman, LemGameMessageQueue,
+  GameControl,
+  NeoLemmixCEResources,
+  SharedGlobals;
 
 const
   ParticleColorIndices: array[0..15] of Byte =
@@ -1076,7 +1074,7 @@ procedure TLemmingGame.PrepareParams;
 
   procedure LoadMask(aDst: TBitmap32; aFilename: String; aCombine: TPixelCombineEvent);
   begin
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + aFilename, aDst);
+    LoadEmbeddedGraphic(UpperCase(ChangeFileExt(aFilename, '')) + '_PNG', aDst);
     aDst.DrawMode := dmCustom;
     aDst.OnPixelCombine := aCombine;
   end;
@@ -1100,7 +1098,6 @@ begin
 
   PhysicsMap := Renderer.PhysicsMap;
   RenderInterface.PhysicsMap := PhysicsMap;
-
 end;
 
 procedure TLemmingGame.Start(aReplay: Boolean = False);

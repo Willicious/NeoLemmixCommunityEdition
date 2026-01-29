@@ -36,6 +36,13 @@ STANDARD_REPLAY_INSERT_HR_PNG RCDATA "data\external\gfx\cursor-hr\ce-standard_re
 SLEEPER_PNG RCDATA "data\external\styles\default\lemmings\sleeper.png"
 SLEEPER_HR_PNG RCDATA "data\external\styles\default\lemmings-hr\sleeper.png"
 
+BOMBER_PNG RCDATA "data\external\gfx\mask\bomber.png"
+STONER_PNG RCDATA "data\external\gfx\mask\stoner.png"
+BASHER_PNG RCDATA "data\external\gfx\mask\basher.png"
+FENCER_PNG RCDATA "data\external\gfx\mask\fencer.png"
+MINER_PNG RCDATA "data\external\gfx\mask\miner.png"
+LASER_PNG RCDATA "data\external\gfx\mask\laser.png"
+
 SOUND_ASSIGNFAIL_OGG RCDATA "data\external\sound\dink.ogg"
 SOUND_DINK_OGG RCDATA "data\external\sound\dink.ogg"
 SOUND_OK_OGG RCDATA "data\external\sound\OK.ogg"

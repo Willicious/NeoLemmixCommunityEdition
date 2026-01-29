@@ -17,6 +17,7 @@ function LoadEmbeddedResourceToStream(const ResName: string; aStream: TStream): 
 function LoadGraphicWithOverrides(const aFolder, aFileName, aEmbeddedName: String; aDst: TBitmap32; BypassLevelPack: Boolean = False): Boolean;
 function LoadEmbeddedSleeperSpriteToBitmap32(const ResName: string; aDst: TBitmap32): Boolean;
 function LoadEmbeddedSleeperSprite(aDst: TBitmap32; HighRes: Boolean): Boolean;
+function LoadEmbeddedGraphic(const aEmbeddedName: string; aDst: TBitmap32): Boolean;
 
 implementation
 
@@ -227,6 +228,25 @@ begin
     ResName := 'SLEEPER_PNG';
 
   Result := LoadEmbeddedSleeperSpriteToBitmap32(ResName, aDst);
+end;
+
+function LoadEmbeddedGraphic(const aEmbeddedName: string; aDst: TBitmap32): Boolean;
+var
+  Stream: TMemoryStream;
+begin
+  Result := False;
+
+  Stream := TMemoryStream.Create;
+  try
+    if not LoadEmbeddedResourceToStream(aEmbeddedName, Stream) then
+      Exit;
+
+    Stream.Position := 0;
+    TPngInterface.LoadPngStream(Stream, aDst);
+    Result := True;
+  finally
+    Stream.Free;
+  end;
 end;
 
 end.
