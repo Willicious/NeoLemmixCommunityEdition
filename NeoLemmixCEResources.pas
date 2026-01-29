@@ -14,7 +14,7 @@ function LoadEmbeddedTextIfExists(const ResName: string; out Text: string): Bool
 function LoadEmbeddedNxmiToParser(const ResName: string; Parser: TParser): Boolean;
 function LoadNxmiWithOverrides(const FileName: string; const ResName: string; Parser: TParser): Boolean;
 function LoadEmbeddedResourceToStream(const ResName: string; aStream: TStream): Boolean;
-function LoadGraphicWithOverrides(const aFolder, aFileName, aEmbeddedName: String; aDst: TBitmap32; IsMandatoryCursor: Boolean = False): Boolean;
+function LoadGraphicWithOverrides(const aFolder, aFileName, aEmbeddedName: String; aDst: TBitmap32; IsMandatoryCursor: Boolean = False; BypassLevelPack: Boolean = False): Boolean;
 function LoadEmbeddedSleeperSpriteToBitmap32(const ResName: string; aDst: TBitmap32): Boolean;
 function LoadEmbeddedSleeperSprite(aDst: TBitmap32; HighRes: Boolean): Boolean;
 
@@ -149,7 +149,7 @@ begin
   end;
 end;
 
-function LoadGraphicWithOverrides(const aFolder, aFileName, aEmbeddedName: String; aDst: TBitmap32; IsMandatoryCursor: Boolean = False): Boolean;
+function LoadGraphicWithOverrides(const aFolder, aFileName, aEmbeddedName: String; aDst: TBitmap32; IsMandatoryCursor: Boolean = False; BypassLevelPack: Boolean = False): Boolean;
 var
   FilePath, PackPath, Prefix: String;
   Stream: TMemoryStream;
@@ -157,8 +157,8 @@ begin
   Result := False;
 
   // 1) Level pack override
-  if (GameParams.CurrentLevel <> nil)
-    and (GameParams.CurrentLevel.Group <> nil) then
+  if (GameParams.CurrentLevel <> nil) and (GameParams.CurrentLevel.Group <> nil)
+  and not BypassLevelPack then
   begin
     PackPath := GameParams.CurrentLevel.Group.FindFile(aFileName);
 

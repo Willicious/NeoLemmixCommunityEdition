@@ -213,10 +213,10 @@ var
 
   procedure Load(aName: String; aName2: String = '');
   begin
-    LoadGraphicWithOverrides(SFGraphicsMenu, aName, UpperCase(StringReplace(aName, '.', '_', [])), BMP32);
+    LoadGraphicWithOverrides(SFGraphicsMenu, aName, UpperCase(StringReplace(aName, '.', '_', [])), BMP32, False, True);
     if aName2 <> '' then
     begin
-      LoadGraphicWithOverrides(SFGraphicsMenu, aName2, UpperCase(StringReplace(aName2, '.', '_', [])), TempBMP);
+      LoadGraphicWithOverrides(SFGraphicsMenu, aName2, UpperCase(StringReplace(aName2, '.', '_', [])), TempBMP, False, True);
       TempBMP.DrawMode := dmBlend;
       TempBMP.CombineMode := cmMerge;
       TempBMP.DrawTo(BMP32);
