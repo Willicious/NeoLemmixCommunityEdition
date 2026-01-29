@@ -35,3 +35,7 @@ STANDARD_REPLAY_INSERT_HR_PNG RCDATA "data\external\gfx\cursor-hr\ce-standard_re
 
 SLEEPER_PNG RCDATA "data\external\styles\default\lemmings\sleeper.png"
 SLEEPER_HR_PNG RCDATA "data\external\styles\default\lemmings-hr\sleeper.png"
+
+SOUND_ASSIGNFAIL_OGG RCDATA "data\external\sound\dink.ogg"
+SOUND_DINK_OGG RCDATA "data\external\sound\dink.ogg"
+SOUND_OK_OGG RCDATA "data\external\sound\OK.ogg"

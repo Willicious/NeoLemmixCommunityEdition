@@ -35,7 +35,10 @@ uses
   Bass,
   GameControl,
   LemTypes, // only uses AppPath in new-formats but uses other stuff from LemTypes in backwards-compatible
-  LemStrings, SharedGlobals, Contnrs, Classes, SysUtils;
+  LemStrings,
+  Contnrs, Classes, SysUtils,
+  NeoLemmixCEResources,
+  SharedGlobals;
 
 type
   TSoundEffectOrigin = (seoStyle, seoDefault, seoPack);
@@ -270,8 +273,8 @@ end;
 function TSoundManager.LoadSoundFromFile(aName: String; aOrigin: TSoundEffectOrigin; aLoadPath: String = ''): Integer;
 var
   F: TFileStream;
-  Ext: String;
-  BasePath: String;
+  M: TMemoryStream;
+  Ext, BasePath, ResName: String;
 begin
   Result := FindSoundIndex(aName);
 
@@ -285,14 +288,27 @@ begin
 
   Ext := FindExtension(aName, BasePath, False);
 
-  if Ext = '' then
+  if Ext <> '' then
+  begin
+    F := TFileStream.Create(BasePath + aName + Ext, fmOpenRead);
+    try
+      Result := LoadSoundFromStream(F, aName, aOrigin);
+    finally
+      F.Free;
+    end;
     Exit;
+  end else
+    Ext := 'ogg'; // Always use OGG for embedded sounds
 
-  F := TFileStream.Create(BasePath + aName + Ext, fmOpenRead);
+  ResName := 'SOUND_' + Uppercase(StringReplace(aName, '.', '_', [])) + '_' + Uppercase(Ext);
+  M := TMemoryStream.Create;
   try
-    Result := LoadSoundFromStream(F, aName, aOrigin);
+    if LoadEmbeddedResourceToStream(ResName, M) then
+    begin
+      Result := LoadSoundFromStream(M, aName, aOrigin);
+    end;
   finally
-    F.Free;
+    M.Free;
   end;
 end;
 
