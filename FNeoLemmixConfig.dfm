@@ -30,7 +30,6 @@ object FormNXConfig: TFormNXConfig
     ActivePage = TabSheet2
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
-    ExplicitHeight = 552
     object TabSheet1: TTabSheet
       Caption = 'General'
       object lblUserName: TLabel
@@ -254,21 +253,21 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 0
           OnClick = OptionChanged
         end
-        object cbHideHelpers: TCheckBox
+        object cbShowHelpers: TCheckBox
           Left = 19
           Top = 68
           Width = 177
           Height = 17
-          Caption = 'Deactivate Helper Overlays'
+          Caption = 'Activate Helper Overlays'
           TabOrder = 2
           OnClick = OptionChanged
         end
-        object cbHideShadows: TCheckBox
+        object cbShowShadows: TCheckBox
           Left = 19
           Top = 45
           Width = 153
           Height = 17
-          Caption = 'Deactivate Skill Shadows'
+          Caption = 'Activate Skill Shadows'
           TabOrder = 1
           OnClick = OptionChanged
         end
@@ -626,7 +625,6 @@ object FormNXConfig: TFormNXConfig
     Caption = 'OK'
     TabOrder = 1
     OnClick = btnOKClick
-    ExplicitTop = 558
   end
   object btnCancel: TButton
     Left = 137
@@ -638,7 +636,6 @@ object FormNXConfig: TFormNXConfig
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 2
-    ExplicitTop = 558
   end
   object btnApply: TButton
     Left = 251
@@ -649,6 +646,5 @@ object FormNXConfig: TFormNXConfig
     Caption = 'Apply'
     TabOrder = 3
     OnClick = btnApplyClick
-    ExplicitTop = 558
   end
 end

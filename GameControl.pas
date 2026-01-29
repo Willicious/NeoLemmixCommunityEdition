@@ -92,8 +92,8 @@ type
     moReplayAfterRestart,
     moPauseAfterBackwards,
     moNoBackgrounds,
-    moHideShadows,
-    moHideHelpers,
+    moShowShadows,
+    moShowHelpers,
     moDisableWineWarnings,
     moHighResolution,
     moLinearResampleMenu,
@@ -120,6 +120,8 @@ type
 
 const
   DEF_MISCOPTIONS = [
+    moShowShadows,
+    moShowHelpers,
     moAutoReplaySave,
     moReplayAfterBackskip,
     moReplayAfterRestart,
@@ -276,8 +278,8 @@ type
     property ReplayAfterRestart: Boolean Index moReplayAfterRestart read GetOptionFlag write SetOptionFlag;
     property PauseAfterBackwardsSkip: Boolean Index moPauseAfterBackwards read GetOptionFlag write SetOptionFlag;
     property NoBackgrounds: Boolean Index moNoBackgrounds read GetOptionFlag write SetOptionFlag;
-    property HideShadows: Boolean Index moHideShadows read GetOptionFlag write SetOptionFlag;
-    property HideHelpers: Boolean Index moHideHelpers read GetOptionFlag write SetOptionFlag;
+    property ShowShadows: Boolean Index moShowShadows read GetOptionFlag write SetOptionFlag;
+    property ShowHelpers: Boolean Index moShowHelpers read GetOptionFlag write SetOptionFlag;
     property DisableWineWarnings: Boolean Index moDisableWineWarnings read GetOptionFlag write SetOptionFlag;
     property HighResolution: Boolean Index moHighResolution read GetOptionFlag write SetOptionFlag;
     property LinearResampleMenu: Boolean Index moLinearResampleMenu read GetOptionFlag write SetOptionFlag;
@@ -518,8 +520,8 @@ begin
     SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
     SaveBoolean('NoBackgrounds', NoBackgrounds);
     SaveBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
-    SaveBoolean('HideShadows', HideShadows);
-    SaveBoolean('HideHelpers', HideHelpers);
+    SaveBoolean('ShowShadows', ShowShadows);
+    SaveBoolean('ShowHelpers', ShowHelpers);
     SaveBoolean('CompactSkillPanel', CompactSkillPanel);
     SaveBoolean('HighQualityMinimap', MinimapHighQuality);
     SaveBoolean('FadeMenuScreens', FadeMenuScreens);
@@ -738,8 +740,8 @@ begin
     PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
     NoBackgrounds := LoadBoolean('NoBackgrounds', NoBackgrounds);
     ForceDefaultLemmings := LoadBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
-    HideShadows := LoadBoolean('HideShadows', HideShadows);
-    HideHelpers := LoadBoolean('HideHelpers', HideHelpers);
+    ShowShadows := LoadBoolean('ShowShadows', ShowShadows);
+    ShowHelpers := LoadBoolean('ShowHelpers', ShowHelpers);
     CompactSkillPanel := LoadBoolean('CompactSkillPanel', CompactSkillPanel);
     MinimapHighQuality := LoadBoolean('HighQualityMinimap', MinimapHighQuality);
     FadeMenuScreens := LoadBoolean('FadeMenuScreens', FadeMenuScreens);

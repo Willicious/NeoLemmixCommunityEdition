@@ -1467,7 +1467,7 @@ begin
                         else
                           ClearPhysics := True;
       lka_ToggleShadows: begin
-                           GameParams.HideShadows := not GameParams.HideShadows;
+                           GameParams.ShowShadows := not GameParams.ShowShadows;
                            SetRedraw(rdRedraw);
                            Game.CheckForNewShadow(True);
                          end;

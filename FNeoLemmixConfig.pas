@@ -46,7 +46,7 @@ type
     btnStyleManager: TButton;
     cbResetWindowSize: TCheckBox;
     cbResetWindowPosition: TCheckBox;
-    cbHideShadows: TCheckBox;
+    cbShowShadows: TCheckBox;
     cbAutoSaveReplay: TCheckBox;
     cbAutoSaveReplayPattern: TComboBox;
     lblIngameSaveReplay: TLabel;
@@ -58,7 +58,7 @@ type
     cbForceDefaultLemmings: TCheckBox;
     cbDisableTestplayMusic: TCheckBox;
     rgWhenNoLemmings: TRadioGroup;
-    cbHideHelpers: TCheckBox;
+    cbShowHelpers: TCheckBox;
     cbReplayAfterRestart: TCheckBox;
     rgGameLoadingOptions: TRadioGroup;
     gbVolume: TGroupBox;
@@ -279,8 +279,8 @@ begin
     cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
     cbForceDefaultLemmings.Checked := GameParams.ForceDefaultLemmings;
 
-    cbHideShadows.Checked := GameParams.HideShadows;
-    cbHideHelpers.Checked := GameParams.HideHelpers;
+    cbShowShadows.Checked := GameParams.ShowShadows;
+    cbShowHelpers.Checked := GameParams.ShowHelpers;
     seSkillQFrames.Value := GameParams.SkillQFrames;
 
     cbEdgeScrolling.Checked := GameParams.EdgeScroll;
@@ -353,8 +353,8 @@ begin
   GameParams.NoBackgrounds := cbNoBackgrounds.Checked;
   GameParams.ForceDefaultLemmings := cbForceDefaultLemmings.Checked;
 
-  GameParams.HideShadows := cbHideShadows.Checked;
-  GameParams.HideHelpers := cbHideHelpers.Checked;
+  GameParams.ShowShadows := cbShowShadows.Checked;
+  GameParams.ShowHelpers := cbShowHelpers.Checked;
   GameParams.SkillQFrames := seSkillQFrames.Value;
 
   GameParams.EdgeScroll := cbEdgeScrolling.Checked;

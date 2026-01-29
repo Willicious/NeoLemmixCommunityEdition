@@ -472,7 +472,7 @@ begin
   // Helper for selected lemming
   if (Selected and aLemming.CannotReceiveSkills) or UsefulOnly
     or ((fRenderInterface <> nil) and fRenderInterface.IsStartingSeconds
-      and not GameParams.HideHelpers) then
+      and GameParams.ShowHelpers) then
   begin
     DrawLemmingHelpers(fLayers[rlObjectHelpers], aLemming, UsefulOnly);
     fLayers.fIsEmpty[rlObjectHelpers] := False;
@@ -857,7 +857,7 @@ begin
   end else
     DoProjection := False;
 
-  if (not GameParams.HideShadows) or fUsefulOnly then
+  if GameParams.ShowShadows or fUsefulOnly then
   begin
     case SkillButton of
     spbJumper:
@@ -2735,7 +2735,7 @@ begin
       Continue;
 
     DrawPreassignedHelper := Gadget.HasPreassignedSkills and
-                            (not GameParams.HideHelpers or UsefulOnly);
+                            (GameParams.ShowHelpers or (not UsefulOnly));
 
     DrawOtherHatchHelper := fRenderInterface.IsStartingSeconds() or
                             (DrawHelper and UsefulOnly and IsCursorOnGadget(Gadget));
