@@ -1760,17 +1760,25 @@ var
     try
       IsMandatoryCursor := IndexText(Name, MandatoryCursors) >= 0;
 
-      if GameParams.HighResolution then
-        EmbeddedName := UpperCase(Name) + '_HR_PNG'
-      else
-        EmbeddedName := UpperCase(Name) + '_PNG';
-
-      if not LoadGraphicWithOverrides(CursorDir, Name + '.png', EmbeddedName, Bmp, IsMandatoryCursor) then
+      if IsMandatoryCursor then
       begin
-        if IsMandatoryCursor then
+        Path := AppPath + CursorDir + Name + FileExt;
+        if FileExists(Path) then
+          TPngInterface.LoadPngFile(Path, Bmp)
+        else
           ShowMessage(Name + '.png is missing from ' + CursorDir);
-        Bmp.Free;
-        Exit;
+      end else begin
+        if GameParams.HighResolution then
+          EmbeddedName := UpperCase(Name) + '_HR_PNG'
+        else
+          EmbeddedName := UpperCase(Name) + '_PNG';
+
+        if not LoadGraphicWithOverrides(CursorDir, Name + '.png', EmbeddedName, Bmp) then
+        begin
+          ShowMessage(Name + '.png is missing');
+          Bmp.Free;
+          Exit;
+        end;
       end;
 
       if CursorBitmaps.ContainsKey(Name) then

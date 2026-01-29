@@ -14,7 +14,7 @@ function LoadEmbeddedTextIfExists(const ResName: string; out Text: string): Bool
 function LoadEmbeddedNxmiToParser(const ResName: string; Parser: TParser): Boolean;
 function LoadNxmiWithOverrides(const FileName: string; const ResName: string; Parser: TParser): Boolean;
 function LoadEmbeddedResourceToStream(const ResName: string; aStream: TStream): Boolean;
-function LoadGraphicWithOverrides(const aFolder, aFileName, aEmbeddedName: String; aDst: TBitmap32; IsMandatoryCursor: Boolean = False; BypassLevelPack: Boolean = False): Boolean;
+function LoadGraphicWithOverrides(const aFolder, aFileName, aEmbeddedName: String; aDst: TBitmap32; BypassLevelPack: Boolean = False): Boolean;
 function LoadEmbeddedSleeperSpriteToBitmap32(const ResName: string; aDst: TBitmap32): Boolean;
 function LoadEmbeddedSleeperSprite(aDst: TBitmap32; HighRes: Boolean): Boolean;
 
@@ -149,9 +149,9 @@ begin
   end;
 end;
 
-function LoadGraphicWithOverrides(const aFolder, aFileName, aEmbeddedName: String; aDst: TBitmap32; IsMandatoryCursor: Boolean = False; BypassLevelPack: Boolean = False): Boolean;
+function LoadGraphicWithOverrides(const aFolder, aFileName, aEmbeddedName: String; aDst: TBitmap32; BypassLevelPack: Boolean = False): Boolean;
 var
-  FilePath, PackPath, Prefix: String;
+  FilePath, PackPath: String;
   Stream: TMemoryStream;
 begin
   Result := False;
@@ -174,11 +174,7 @@ begin
   end;
 
   // 2) File system fallback
-  if IsMandatoryCursor then
-    Prefix := ''
-  else
-    Prefix := SFCEPrefix;
-  FilePath := AppPath + aFolder + Prefix + aFileName;
+  FilePath := AppPath + aFolder + SFCEPrefix + aFileName;
   if FileExists(FilePath) then
   begin
     TPngInterface.LoadPngFile(FilePath, aDst);
