@@ -88,8 +88,6 @@ procedure ReplaceColor(B: TBitmap32; FromColor, ToColor: TColor32);
 procedure DrawNineSlice(Dst: TBitmap32; DstRect: TRect; SrcRect: TRect; Margins: TRect; Src: TBitmap32);
 function CalcFrameRect(Bmp: TBitmap32; FrameCount, FrameIndex: Integer): TRect;
 function AppPath: string;
-function AssetsCEPath: string;
-function ResolveAsset(aPath: String; aName: String): String;
 function MakeSuitableForFilename(const aInput: String): String;
 function LemmingsPath: string;
 function MusicsPath: string;
@@ -119,7 +117,6 @@ uses
 
 var
   _AppPath: string;
-  _AssetsCEPath: string;
   _UnderWine: Integer;
 
 function AppPath: string;
@@ -127,24 +124,6 @@ begin
   if _AppPath = '' then
     _AppPath := ExtractFilePath(ParamStr(0));
   Result := _AppPath;
-end;
-
-function AssetsCEPath: string;
-begin
-  if _AssetsCEPath = '' then
-    _AssetsCEPath := AppPath + SFAssetsCE;
-  Result := _AssetsCEPath;
-end;
-
-function ResolveAsset(aPath: String; aName: String): String;
-begin
-  if FileExists(AssetsCEPath + aPath + aName) then
-    Exit(AssetsCEPath + aPath + aName);
-
-  if FileExists(AppPath + aPath + aName) then
-    Exit(AppPath + aPath + aName);
-
-  Result := '';
 end;
 
 function GetTemporaryFilename: String;

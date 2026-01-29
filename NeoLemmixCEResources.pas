@@ -162,13 +162,12 @@ begin
     Exit;
   end;
 
-  // 2) CE-assets override
-  FilePath := AssetsCEPath + SFGraphicsMenu + aFileName;
+  // 2) File system fallback
+  FilePath := AppPath + SFGraphicsMenu + SFCEPrefix + aFileName;
   if FileExists(FilePath) then
   begin
     TPngInterface.LoadPngFile(FilePath, aDst);
     Result := True;
-    Exit;
   end;
 
   // 3) Embedded fallback
@@ -183,14 +182,6 @@ begin
     end;
   finally
     Stream.Free;
-  end;
-
-  // 4) Legacy fallback
-  FilePath := AppPath + SFGraphicsMenu + aFileName;
-  if FileExists(FilePath) then
-  begin
-    TPngInterface.LoadPngFile(FilePath, aDst);
-    Result := True;
   end;
 end;
 

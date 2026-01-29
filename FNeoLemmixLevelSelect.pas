@@ -18,7 +18,9 @@ uses
   Types, IOUtils, Vcl.FileCtrl, // For Playback Mode
   ActiveX, ShlObj, ComObj, // For the shortcut creation
   LemNeoParser, System.ImageList,
-  SharedGlobals, ShellAPI, Vcl.WinXCtrls;
+  ShellAPI, Vcl.WinXCtrls,
+  NeoLemmixCEResources,
+  SharedGlobals;
 
 type
   TFLevelSelect = class(TForm)
@@ -211,17 +213,19 @@ var
 
   procedure Load(aName: String; aName2: String = '');
   begin
-    TPngInterface.LoadPngFile(ResolveAsset(SFGraphicsMenu, aName), BMP32);
+    LoadGraphicWithOverrides(aName, UpperCase(StringReplace(aName, '.', '_', [])), BMP32);
     if aName2 <> '' then
     begin
-      TPngInterface.LoadPngFile(ResolveAsset(SFGraphicsMenu, aName2), TempBMP);
+      LoadGraphicWithOverrides(aName2, UpperCase(StringReplace(aName2, '.', '_', [])), TempBMP);
       TempBMP.DrawMode := dmBlend;
       TempBMP.CombineMode := cmMerge;
       TempBMP.DrawTo(BMP32);
     end;
+
     TPngInterface.SplitBmp32(BMP32, ImgBMP, MaskBMP);
     tvLevelSelect.Images.Add(ImgBMP, MaskBMP);
   end;
+
 begin
   if TreeviewImagesLoaded then Exit;
   tvLevelSelect.Images.Clear;
@@ -237,7 +241,7 @@ begin
     Load('level_completed.png');
 
     Load('level_talisman.png', 'level_not_attempted.png');
-    Load('level_talisman.png', 'level_attempted.png',);
+    Load('level_talisman.png', 'level_attempted.png');
     Load('level_talisman.png', 'level_completed_outdated.png');
     Load('level_talisman.png', 'level_completed.png');
   finally
@@ -376,21 +380,10 @@ end;
 
 procedure TFLevelSelect.LoadIcons;
 var
-  IconsImg, aStyle, aPath //, aStylePath
-  : String;
+  IconsImg: String;
 begin
   IconsImg := 'levelinfo_icons.png';
-  aStyle := GameParams.Level.Info.GraphicSetName;   // Bookmark
-  //aStylePath := AppPath + SFStyles + aStyle + SFIcons;
-  aPath := GameParams.CurrentLevel.Group.ParentBasePack.Path;
-
-  //if FileExists(aStylePath + IconsImg) then // Check styles folder first
-  //  TPNGInterface.LoadPngFile(aStylePath + IconsImg, fIconBMP)
-  //else
-  if FileExists(GameParams.CurrentLevel.Group.FindFile(IconsImg)) then // Then levelpack folder
-    TPNGInterface.LoadPngFile(aPath + IconsImg, fIconBMP)
-  else
-    TPNGInterface.LoadPngFile(ResolveAsset(SFGraphicsMenu, IconsImg), fIconBMP); // Then default
+  LoadGraphicWithOverrides(IconsImg, UpperCase(StringReplace(IconsImg, '.', '_', [])), fIconBMP);
 end;
 
 procedure TFLevelSelect.MaybeReloadLevelInfo;

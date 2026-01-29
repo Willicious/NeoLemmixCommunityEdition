@@ -9,6 +9,7 @@ uses
   LemTypes, LemStrings, LemCore,
   UMisc, Types, Math,
   GR32, GR32_Image, GR32_Resamplers, PngInterface,
+  NeoLemmixCEResources,
   SharedGlobals;
 
 const
@@ -103,6 +104,8 @@ const
 { TLevelInfoPanel }
 
 constructor TLevelInfoPanel.Create(aOwner: TComponent; aIconBMP: TBitmap32; fTalismanOverrideBMP: TBitmap32 = nil);
+var
+  IconsImg: String;
 begin
   inherited Create(aOwner);
 
@@ -113,7 +116,8 @@ begin
   if aIconBMP = nil then
   begin
     fIcons := TBitmap32.Create;
-    TPNGInterface.LoadPngFile(ResolveAsset(SFGraphicsMenu, 'levelinfo_icons.png'), fIcons);
+    IconsImg := 'levelinfo_icons.png';
+    LoadGraphicWithOverrides(IconsImg, UpperCase(StringReplace(IconsImg, '.', '_', [])), fIcons);
     fIcons.DrawMode := dmBlend;
     fOwnIcons := True;
   end else if fTalismanOverrideBMP <> nil then
