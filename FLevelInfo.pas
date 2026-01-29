@@ -117,7 +117,7 @@ begin
   begin
     fIcons := TBitmap32.Create;
     IconsImg := 'levelinfo_icons.png';
-    LoadGraphicWithOverrides(IconsImg, UpperCase(StringReplace(IconsImg, '.', '_', [])), fIcons);
+    LoadGraphicWithOverrides(SFGraphicsMenu, IconsImg, UpperCase(StringReplace(IconsImg, '.', '_', [])), fIcons);
     fIcons.DrawMode := dmBlend;
     fOwnIcons := True;
   end else if fTalismanOverrideBMP <> nil then

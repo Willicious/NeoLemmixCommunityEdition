@@ -213,10 +213,10 @@ var
 
   procedure Load(aName: String; aName2: String = '');
   begin
-    LoadGraphicWithOverrides(aName, UpperCase(StringReplace(aName, '.', '_', [])), BMP32);
+    LoadGraphicWithOverrides(SFGraphicsMenu, aName, UpperCase(StringReplace(aName, '.', '_', [])), BMP32);
     if aName2 <> '' then
     begin
-      LoadGraphicWithOverrides(aName2, UpperCase(StringReplace(aName2, '.', '_', [])), TempBMP);
+      LoadGraphicWithOverrides(SFGraphicsMenu, aName2, UpperCase(StringReplace(aName2, '.', '_', [])), TempBMP);
       TempBMP.DrawMode := dmBlend;
       TempBMP.CombineMode := cmMerge;
       TempBMP.DrawTo(BMP32);
@@ -383,7 +383,7 @@ var
   IconsImg: String;
 begin
   IconsImg := 'levelinfo_icons.png';
-  LoadGraphicWithOverrides(IconsImg, UpperCase(StringReplace(IconsImg, '.', '_', [])), fIconBMP);
+  LoadGraphicWithOverrides(SFGraphicsMenu, IconsImg, UpperCase(StringReplace(IconsImg, '.', '_', [])), fIconBMP);
 end;
 
 procedure TFLevelSelect.MaybeReloadLevelInfo;

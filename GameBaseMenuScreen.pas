@@ -867,7 +867,7 @@ begin
 
   if not aFromPackOnly then
   begin
-    if not LoadGraphicWithOverrides(aName, Uppercase(StringReplace(aName, '.', '_', [])), aDst) then
+    if not LoadGraphicWithOverrides(SFGraphicsMenu, aName, Uppercase(StringReplace(aName, '.', '_', [])), aDst) then
     begin
       if not aAcceptFailure then
         raise Exception.Create('Could not find gfx\menu\' + aName);

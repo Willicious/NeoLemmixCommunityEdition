@@ -1750,41 +1750,27 @@ var
   procedure LoadCursorImage(const aName: string);
   var
     Bmp: TBitmap32;
-    Name, Path, ResName: string;
-    MS: TMemoryStream;
+    Path, Name, EmbeddedName: string;
+    IsMandatoryCursor: Boolean;
   const
     MandatoryCursors: array[0..3] of string = ('standard', 'focused', 'direction_left', 'direction_right');
   begin
     Name := LowerCase(aName);
-    Path := AppPath + CursorDir + Name + FileExt;
-
     Bmp := TBitmap32.Create;
     try
-      // ---- 1) Legacy path ----
-      if FileExists(Path) then
-        TPngInterface.LoadPngFile(Path, Bmp)
-      else begin
-        // ---- 2) Embedded fallback ----
-        if GameParams.HighResolution then
-          ResName := UpperCase(Name) + '_HR_PNG'
-        else
-          ResName := UpperCase(Name) + '_PNG';
-        MS := TMemoryStream.Create;
-        try
-          if not LoadEmbeddedResourceToStream(ResName, MS) then
-          begin
-            if IndexText(Name, MandatoryCursors) >= 0 then
-              ShowMessage(Name + FileExt + ' is missing from ' + CursorDir);
+      IsMandatoryCursor := IndexText(Name, MandatoryCursors) >= 0;
 
-            Bmp.Free;
-            Exit;
-          end;
+      if GameParams.HighResolution then
+        EmbeddedName := UpperCase(Name) + '_HR_PNG'
+      else
+        EmbeddedName := UpperCase(Name) + '_PNG';
 
-          MS.Position := 0;
-          Bmp.LoadFromStream(MS);
-        finally
-          MS.Free;
-        end;
+      if not LoadGraphicWithOverrides(CursorDir, Name + '.png', EmbeddedName, Bmp, IsMandatoryCursor) then
+      begin
+        if IsMandatoryCursor then
+          ShowMessage(Name + '.png is missing from ' + CursorDir);
+        Bmp.Free;
+        Exit;
       end;
 
       if CursorBitmaps.ContainsKey(Name) then

@@ -14,7 +14,7 @@ function LoadEmbeddedTextIfExists(const ResName: string; out Text: string): Bool
 function LoadEmbeddedNxmiToParser(const ResName: string; Parser: TParser): Boolean;
 function LoadNxmiWithOverrides(const FileName: string; const ResName: string; Parser: TParser): Boolean;
 function LoadEmbeddedResourceToStream(const ResName: string; aStream: TStream): Boolean;
-function LoadGraphicWithOverrides(const aFileName, aEmbeddedName: String; aDst: TBitmap32): Boolean;
+function LoadGraphicWithOverrides(const aFolder, aFileName, aEmbeddedName: String; aDst: TBitmap32; IsMandatoryCursor: Boolean = False): Boolean;
 function LoadEmbeddedSleeperSpriteToBitmap32(const ResName: string; aDst: TBitmap32): Boolean;
 function LoadEmbeddedSleeperSprite(aDst: TBitmap32; HighRes: Boolean): Boolean;
 
@@ -105,6 +105,10 @@ begin
     and (GameParams.CurrentLevel.Group <> nil) then
   begin
     PackPath := GameParams.CurrentLevel.Group.FindFile(FileName);
+
+    if PackPath = '' then
+      PackPath := GameParams.CurrentLevel.Group.FindFile(SFCEPrefix + FileName);
+
     if PackPath <> '' then
     begin
       Parser.LoadFromFile(PackPath);
@@ -145,25 +149,36 @@ begin
   end;
 end;
 
-function LoadGraphicWithOverrides(const aFileName, aEmbeddedName: String; aDst: TBitmap32): Boolean;
+function LoadGraphicWithOverrides(const aFolder, aFileName, aEmbeddedName: String; aDst: TBitmap32; IsMandatoryCursor: Boolean = False): Boolean;
 var
-  FilePath: String;
+  FilePath, PackPath, Prefix: String;
   Stream: TMemoryStream;
 begin
   Result := False;
 
   // 1) Level pack override
-  if (GameParams.CurrentLevel <> nil) and
-     (GameParams.CurrentLevel.Group <> nil) and
-     (GameParams.CurrentLevel.Group.FindFile(aFileName) <> '') then
+  if (GameParams.CurrentLevel <> nil)
+    and (GameParams.CurrentLevel.Group <> nil) then
   begin
-    TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile(aFileName), aDst);
-    Result := True;
-    Exit;
+    PackPath := GameParams.CurrentLevel.Group.FindFile(aFileName);
+
+    if PackPath = '' then
+      PackPath := GameParams.CurrentLevel.Group.FindFile(SFCEPrefix + aFileName);
+
+    if PackPath <> '' then
+    begin
+      TPngInterface.LoadPngFile(PackPath, aDst);
+      Result := True;
+      Exit;
+    end;
   end;
 
   // 2) File system fallback
-  FilePath := AppPath + SFGraphicsMenu + SFCEPrefix + aFileName;
+  if IsMandatoryCursor then
+    Prefix := ''
+  else
+    Prefix := SFCEPrefix;
+  FilePath := AppPath + aFolder + Prefix + aFileName;
   if FileExists(FilePath) then
   begin
     TPngInterface.LoadPngFile(FilePath, aDst);
