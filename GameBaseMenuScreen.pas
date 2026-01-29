@@ -904,7 +904,7 @@ begin
     Result := 'TILE'; // Default
 
     Sec := Parser.MainSection;
-    LoadNxmiWithOverrides('title.nxmi', 'NXMI_TITLE', Parser);
+    LoadNxmiWithOverrides('title.nxmi', 'TITLE_NXMI', Parser);
 
     Result := Sec.LineTrimString['BACKGROUND_DRAW_MODE'];
   finally

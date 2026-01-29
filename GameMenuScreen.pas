@@ -448,7 +448,7 @@ begin
   try
     FillChar(LayoutInfo, SizeOf(TGameMenuPositionData), 0);
 
-    if LoadNxmiWithOverrides('title.nxmi', 'NXMI_TITLE', Parser) then
+    if LoadNxmiWithOverrides('title.nxmi', 'TITLE_NXMI', Parser) then
       ReadPositionData;
   finally
     Parser.Free;
@@ -501,10 +501,9 @@ begin
   try
     Parser := TParser.Create;
 
-    if FileExists(AssetsCEPath + SFData + ScrollerData) then
-      Parser.LoadFromFile(AssetsCEPath + SFData + ScrollerData)
-    else if not LoadEmbeddedNxmiToParser('NXMI_SCROLLER', Parser) then
-      Parser.LoadFromFile(AppPath + SFData + ScrollerData);
+    if FileExists(SFData + SFCEPrefix + ScrollerData) then
+      Parser.LoadFromFile(SFData + SFCEPrefix + ScrollerData)
+    else LoadEmbeddedNxmiToParser('SCROLLER_NXMI', Parser);
 
     Parser.MainSection.DoForEachLine('LINE', procedure(aLine: TParserLine; const aIteration: Integer)
     begin

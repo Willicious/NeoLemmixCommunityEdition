@@ -566,7 +566,7 @@ begin
 
   Parser := TParser.Create;
   try
-    LoadNxmiWithOverrides('textcolours.nxmi', 'NXMI_TEXTCOLOURS', Parser);
+    LoadNxmiWithOverrides('textcolours.nxmi', 'TEXTCOLOURS_NXMI', Parser);
 
     Sec := Parser.MainSection.Section['preview'];
     if Sec = nil then Exit;

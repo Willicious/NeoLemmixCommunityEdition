@@ -111,23 +111,16 @@ begin
     end;
   end;
 
-  // 2) CE-assets override
-  if FileExists(AssetsCEPath + SFData + FileName) then
+  // 2) File system fallback
+  if FileExists(AppPath + SFData + SFCEPrefix + FileName) then
   begin
-    Parser.LoadFromFile(AssetsCEPath + SFData + FileName);
+    Parser.LoadFromFile(AppPath + SFData + SFCEPrefix + FileName);
     Exit;
   end;
 
   // 3) Embedded fallback
   if LoadEmbeddedNxmiToParser(ResName, Parser) then
     Exit;
-
-  // 4) Legacy fallback
-  if FileExists(AppPath + SFData + FileName) then
-  begin
-    Parser.LoadFromFile(AppPath + SFData + FileName);
-    Exit;
-  end;
 
   Result := False;
 end;

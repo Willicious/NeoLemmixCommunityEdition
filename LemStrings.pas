@@ -9,7 +9,7 @@ uses
 
 const
   // Important paths
-  SFAssetsCE = 'assets-ce\';
+  SFCEPrefix = 'ce-';
 
   SFGraphics = 'gfx\';
     SFGraphicsGame = SFGraphics + 'game\';
