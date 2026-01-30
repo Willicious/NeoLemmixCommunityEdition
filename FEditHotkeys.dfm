@@ -158,6 +158,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Fall Distance Template'
       'Zoom In'
       'Zoom Out'
+      'Cycle Zoom'
       'Hold-To-Scroll')
   end
   object btnSaveClose: TButton

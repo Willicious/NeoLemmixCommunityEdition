@@ -3,7 +3,7 @@ unit GameBaseSkillPanel;
 interface
 
 uses
-  System.Types,
+  System.Types, Graphics,
   Classes, Controls, GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   GameWindowInterface,
   LemAnimationSet, LemMetaAnimation, LemNeoLevelPack,
@@ -26,6 +26,7 @@ type
     fRRIsPressed          : Boolean;
 
     fSetInitialZoom       : Boolean;
+    fShowMinimapZoomText  : Boolean;
 
     fRectColor            : TColor32;
     fSelectDx             : Integer;
@@ -167,6 +168,7 @@ type
 
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
     procedure DrawMinimapMessage(const GraphicName: string; out MessageImage: TBitmap32);
+    procedure DrawMinimapZoomText;
     procedure DrawMinimap; virtual;
 
     property Minimap: TBitmap32 read fMinimap;
@@ -181,6 +183,7 @@ type
     property RRIsPressed: Boolean read fRRIsPressed write fRRIsPressed;
     property ButtonHint: String read fButtonHint write fButtonHint;
     procedure GetButtonHints(aButton: TSkillPanelButton);
+    property ShowMinimapZoomText: Boolean read fShowMinimapZoomText write fShowMinimapZoomText;
     function IsReplaying: Boolean;
 
     function CursorOverSkillButton(out Button: TSkillPanelButton): Boolean;
@@ -470,6 +473,7 @@ begin
     fSkillOvercount[i] := TBitmap32.Create;
 
   fRRIsPressed := False;
+  fShowMinimapZoomText := False;
 end;
 
 destructor TBaseSkillPanel.Destroy;
@@ -1216,6 +1220,23 @@ begin
     fMinimapImage.OffsetHorz := OH * fMinimapImage.Scale;
     fMinimapImage.OffsetVert := OV * fMinimapImage.Scale;
   end;
+
+  if ShowMinimapZoomText then
+    DrawMinimapZoomText;
+end;
+
+procedure TBaseSkillPanel.DrawMinimapZoomText;
+var
+  ZoomText: String;
+  TextX, TextY: Integer;
+begin
+  ZoomText := 'Z' + IntToStr(fGameWindow.InternalZoom - 1);
+  TextX := fMinimapImage.Bitmap.Width - (9 * ResMod);
+  TextY := ResMod;
+  fMinimapImage.Bitmap.Font.Name := 'Tahoma';
+  fMinimapImage.Bitmap.Font.Size := 3 * ResMod;
+  fMinimapImage.Bitmap.Font.Color := clWhite;
+  fMinimapImage.Bitmap.Textout(TextX, TextY, ZoomText);
 end;
 
 procedure TBaseSkillPanel.DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
@@ -1507,7 +1528,6 @@ begin
     end;
 
     DrawButtonSelector(spbNuke, (Game.UserSetNuking or (Game.ReplayManager.Assignment[Game.CurrentIteration, 0] is TReplayNuke)));
-
   finally
     Image.EndUpdate;
   end;

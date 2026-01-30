@@ -73,6 +73,7 @@ type
     fSaveList: TLemmingGameSavedStateList;
     fReplayKilled: Boolean;
     fInternalZoom: Integer;
+    fZoomDirection: Integer;
     fMaxZoom: Integer;
     fMinimapBuffer: TBitmap32;
   { detecting if redraw is needed. These are a bit kludgy but I'm strongly considering a full rewrite of TGameWindow }
@@ -130,9 +131,11 @@ type
     procedure ExecuteReplayEdit;
     procedure SetClearPhysics(aValue: Boolean);
     function GetClearPhysics: Boolean;
+    function GetInternalZoom: Integer;
     procedure SetProjectionType(aValue: Integer);
     procedure ProcessGameMessages;
     procedure ApplyResize(NoRecenter: Boolean = False);
+    procedure CycleZoom;
     procedure ChangeZoom(aNewZoom: Integer; NoRedraw: Boolean = False);
     procedure FreeCursors;
     procedure HandleSpecialSkip(aSkipType: Integer);
@@ -198,6 +201,7 @@ type
     property VScroll: TGameScroll read GameVScroll write GameVScroll;
     property ClearPhysics: Boolean read fClearPhysics write SetClearPhysics;
     property ProjectionType: Integer read fProjectionType write SetProjectionType;
+    property InternalZoom: Integer read fInternalZoom;
     function DoSuspendCursor: Boolean;
 
     property GameSpeed: TGameSpeed read GetGameSpeed write SetGameSpeed;
@@ -265,6 +269,27 @@ procedure TGameWindow.MainFormResized;
 begin
   ApplyResize;
   DoDraw;
+end;
+
+procedure TGameWindow.CycleZoom;
+begin
+  if fZoomDirection = 1 then
+  begin
+    if fInternalZoom >= fMaxZoom then
+      fZoomDirection := -1
+    else
+      ChangeZoom(fInternalZoom + 1);
+  end;
+
+  if fZoomDirection = -1 then
+  begin
+    if fInternalZoom <= 1 then
+      fZoomDirection := 1
+    else
+      ChangeZoom(fInternalZoom - 1);
+  end;
+
+  SkillPanel.ShowMinimapZoomText := True;
 end;
 
 procedure TGameWindow.ChangeZoom(aNewZoom: Integer; NoRedraw: Boolean = False);
@@ -439,6 +464,11 @@ end;
 function TGameWindow.GetClearPhysics: Boolean;
 begin
   Result := fClearPhysics;
+end;
+
+function TGameWindow.GetInternalZoom: Integer;
+begin
+  Result := fInternalZoom;
 end;
 
 procedure TGameWindow.RenderMinimap;
@@ -1315,6 +1345,7 @@ const
                          lka_ShowUsedSkills,
                          lka_ZoomIn,
                          lka_ZoomOut,
+                         lka_CycleZoom,
                          lka_Scroll];
   SKILL_KEYS = [lka_Skill, lka_SkillLeft, lka_SkillRight];
 begin
@@ -1482,6 +1513,7 @@ begin
       lka_ReplayInsert: Game.ReplayInsert := not Game.ReplayInsert;
       lka_ZoomIn: ChangeZoom(fInternalZoom + 1);
       lka_ZoomOut: ChangeZoom(fInternalZoom - 1);
+      lka_CycleZoom: CycleZoom;
       lka_Scroll: begin
                     CursorPointForm := ScreenToClient(Mouse.CursorPos);
                     if PtInRect(Img.BoundsRect, CursorPointForm) and not fHoldScrollData.Active then
@@ -1906,6 +1938,8 @@ begin
   Sca := Max(Min(Sca, fMaxZoom), 1);
 
   fInternalZoom := Sca;
+  fZoomDirection := 1;
+
   GameParams.TargetBitmap := Img.Bitmap;
   GameParams.TargetBitmap.SetSize(GameParams.Level.Info.Width * ResMod, GameParams.Level.Info.Height * ResMod);
   fGame.PrepareParams;
