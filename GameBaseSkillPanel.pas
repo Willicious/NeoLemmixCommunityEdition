@@ -1373,7 +1373,6 @@ var
   SpecialCombine: Boolean;
   Red, Blue, Purple, Teal, Yellow{, Orange}: Single;
   LemmingKinds: TLemmingKinds;
-  CursorPos, P: TPoint;
 begin
   LemmingKinds := Game.ActiveLemmingTypes;
 
@@ -1635,7 +1634,6 @@ end;
 procedure TBaseSkillPanel.SetInfoLemIn(Pos: Integer);
 var
   MinusSaveCount, SaveCount: Integer;
-  CursorPos, P: TPoint;
   S: string;
 const
   LEN = 4;
@@ -1695,11 +1693,11 @@ begin
 end;
 
 procedure TBaseSkillPanel.SetReplayIcon(Pos: Integer);
-var
-  TickCount: Cardinal;
+//var
+  //TickCount: Cardinal;
   //BlinkIcon: Boolean;
 begin
-  TickCount := GetTickCount;
+  //TickCount := GetTickCount;
   //BlinkIcon := ((TickCount div 500) mod 2) = 0;
 
   if //BlinkIcon or

@@ -353,7 +353,7 @@ var
   Results: TGameResultsRec;
   Entry: TNeoLevelEntry;
   WhichText: TPostviewText;
-  STarget, SRescued, STimeSR, STimeTotal: string;
+  STarget, SRescued, STimeSR: string;
   SRescueRecord, STimeRecord, SSkillsRecord, SThisLine: string;
   // InfiniteHotkeysUsed,
   LevelHasTalismans, LevelPassed, ShowSavedRecord: Boolean;

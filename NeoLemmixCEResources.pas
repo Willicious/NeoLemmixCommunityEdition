@@ -135,7 +135,6 @@ function LoadEmbeddedResourceToStream(const ResName: string; aStream: TStream): 
 var
   ResStream: TResourceStream;
 begin
-  Result := False;
   try
     ResStream := TResourceStream.Create(HInstance, ResName, RT_RCDATA);
     try

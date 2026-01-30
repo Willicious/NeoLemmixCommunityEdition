@@ -1280,7 +1280,6 @@ var
   sn: Integer;
   func: TLemmixHotkey;
   AssignToHighlit: Boolean;
-  CtrlPressed, ShiftPressed, AltPressed: Boolean;
   CursorPointForm: TPoint; // A point in coordinates relative to the main form
 const
   NON_CANCELLING_KEYS = [lka_Null,
@@ -1320,10 +1319,6 @@ const
   SKILL_KEYS = [lka_Skill, lka_SkillLeft, lka_SkillRight];
 begin
   func := GameParams.Hotkeys.CheckKeyEffect(Key);
-
-  CtrlPressed := ssCtrl in Shift;
-  ShiftPressed := ssShift in Shift;
-  AltPressed := ssAlt in Shift;
 
   if func.Action = lka_Exit then
   begin

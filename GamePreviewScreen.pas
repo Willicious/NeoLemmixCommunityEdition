@@ -359,14 +359,12 @@ end;
 procedure TGamePreviewScreen.SetWindowCaption;
 var
   S, Title, Pack: string;
-  CurTheme: TNeoTheme;
-  RescueCount, LemCount, CollectibleCount: Integer;
+  RescueCount, LemCount: Integer;
 begin
   Title := GameParams.Level.Info.Title;
   Pack := GameParams.CurrentLevel.Group.ParentBasePack.Name;
   RescueCount := GameParams.Level.Info.RescueCount;
   LemCount := GameParams.Level.Info.LemmingsCount;
-  CurTheme := GameParams.Renderer.Theme;
 
   S := SProgramName + ' - ' + Pack + ' - ' + Title + ' - Save ' + IntToStr(RescueCount)
        + ' of ' + IntToStr(LemCount) + ' ';
@@ -375,9 +373,6 @@ begin
     S := S + 'lemming' // CurTheme.LemNamesSingular // Bookmark - Add support for singular/plural names
   else
     S := S + 'lemmings'; // CurTheme.LemNamesPlural;
-
-  if CollectibleCount <> 0 then
-    S := S + ' - ' + IntToStr(CollectibleCount) + ' Diamonds to collect';
 
   GameParams.MainForm.Caption := S;
 end;
@@ -442,7 +437,6 @@ var
   HueShift: TColorDiff;
   Entry: TNeoLevelEntry;
   Level: TLevel;
-  Theme: TNeoTheme;
 
   function HasSpecialLemmings: Boolean;
   begin
@@ -458,7 +452,6 @@ var
 begin
   Entry := GameParams.CurrentLevel;
   Level := GameParams.Level;
-  Theme := GameParams.Renderer.Theme;
 
   FillChar(HueShift, SizeOf(TColorDiff), 0);
 
