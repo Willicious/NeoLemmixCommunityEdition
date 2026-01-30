@@ -243,14 +243,14 @@ begin
   if WheelDelta > 0 then
   begin
     if (CtrlPressed or ShiftPressed or AltPressed) then
-      HandleMouseWheelFramestep(CtrlPressed, ShiftPressed, AltPressed, True)
+      HandleMouseWheelFramestep(CtrlPressed, ShiftPressed, AltPressed, GameParams.InvertMouseWheelFramesteps)
     else
       Key := $05
   end
   else if WheelDelta < 0 then
   begin
     if (CtrlPressed or ShiftPressed or AltPressed) then
-      HandleMouseWheelFramestep(CtrlPressed, ShiftPressed, AltPressed, False)
+      HandleMouseWheelFramestep(CtrlPressed, ShiftPressed, AltPressed, not GameParams.InvertMouseWheelFramesteps)
     else
       Key := $06;
   end;

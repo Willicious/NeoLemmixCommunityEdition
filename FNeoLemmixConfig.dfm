@@ -6,7 +6,7 @@ object FormNXConfig: TFormNXConfig
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'NeoLemmix Configuration'
-  ClientHeight = 615
+  ClientHeight = 595
   ClientWidth = 382
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -19,17 +19,18 @@ object FormNXConfig: TFormNXConfig
   OnClick = OptionChanged
   DesignSize = (
     382
-    615)
+    595)
   PixelsPerInch = 96
   TextHeight = 13
   object NXConfigPages: TPageControl
     Left = 0
     Top = 0
     Width = 382
-    Height = 576
+    Height = 556
     ActivePage = TabSheet2
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
+    ExplicitHeight = 576
     object TabSheet1: TTabSheet
       Caption = 'General'
       object lblUserName: TLabel
@@ -193,7 +194,7 @@ object FormNXConfig: TFormNXConfig
       ImageIndex = 2
       object rgWhenNoLemmings: TRadioGroup
         Left = 19
-        Top = 450
+        Top = 410
         Width = 336
         Height = 85
         Caption = 'When No Lemmings Remain'
@@ -206,7 +207,7 @@ object FormNXConfig: TFormNXConfig
       end
       object gbReplayOptions: TGroupBox
         Left = 19
-        Top = 362
+        Top = 322
         Width = 336
         Height = 70
         Caption = 'Replay Options'
@@ -232,7 +233,7 @@ object FormNXConfig: TFormNXConfig
       end
       object gbHelperOptions: TGroupBox
         Left = 19
-        Top = 228
+        Top = 180
         Width = 336
         Height = 119
         Caption = 'Helper Options'
@@ -285,9 +286,9 @@ object FormNXConfig: TFormNXConfig
       end
       object gbInterfaceOptions: TGroupBox
         Left = 19
-        Top = 3
+        Top = 16
         Width = 336
-        Height = 118
+        Height = 145
         Caption = 'Interface Options'
         TabOrder = 0
         object cbEdgeScrolling: TCheckBox
@@ -326,30 +327,16 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 3
           OnClick = OptionChanged
         end
-      end
-      object gbVisualCustomizationOptions: TGroupBox
-        Left = 19
-        Top = 137
-        Width = 336
-        Height = 77
-        Caption = 'Visual/Customization Options'
-        TabOrder = 4
-        object cbForceDefaultLemmings: TCheckBox
+        object cbInvertMouseWheelFramesteps: TCheckBox
           Left = 19
-          Top = 21
-          Width = 173
+          Top = 114
+          Width = 294
           Height = 17
-          Caption = 'Force Default Lemming Sprites'
-          TabOrder = 1
-          OnClick = OptionChanged
-        end
-        object cbNoBackgrounds: TCheckBox
-          Left = 19
-          Top = 44
-          Width = 193
-          Height = 17
-          Caption = 'Disable Background Images'
-          TabOrder = 0
+          Hint = 
+            'Pressing Ctrl, Shift or Alt whilst using the mousewheel allows f' +
+            'orwards/backwards framestepping'
+          Caption = 'Invert Mouse Wheel Framestep Direction'
+          TabOrder = 4
           OnClick = OptionChanged
         end
       end
@@ -427,7 +414,7 @@ object FormNXConfig: TFormNXConfig
         Left = 19
         Top = 173
         Width = 336
-        Height = 153
+        Height = 204
         Caption = 'Visual Options'
         TabOrder = 1
         object cbLinearResampleMenu: TCheckBox
@@ -475,10 +462,28 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 4
           OnClick = OptionChanged
         end
+        object cbForceDefaultLemmings: TCheckBox
+          Left = 28
+          Top = 140
+          Width = 173
+          Height = 17
+          Caption = 'Force Default Lemming Sprites'
+          TabOrder = 5
+          OnClick = OptionChanged
+        end
+        object cbNoBackgrounds: TCheckBox
+          Left = 29
+          Top = 163
+          Width = 193
+          Height = 17
+          Caption = 'Disable Background Images'
+          TabOrder = 6
+          OnClick = OptionChanged
+        end
       end
       object gbWindowOptions: TGroupBox
         Left = 19
-        Top = 340
+        Top = 396
         Width = 336
         Height = 120
         Caption = 'Window Options'
@@ -618,17 +623,18 @@ object FormNXConfig: TFormNXConfig
   end
   object btnOK: TButton
     Left = 23
-    Top = 582
+    Top = 562
     Width = 108
     Height = 25
     Anchors = [akLeft, akBottom]
     Caption = 'OK'
     TabOrder = 1
     OnClick = btnOKClick
+    ExplicitTop = 582
   end
   object btnCancel: TButton
     Left = 137
-    Top = 582
+    Top = 562
     Width = 108
     Height = 25
     Anchors = [akLeft, akBottom]
@@ -636,15 +642,17 @@ object FormNXConfig: TFormNXConfig
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 2
+    ExplicitTop = 582
   end
   object btnApply: TButton
     Left = 251
-    Top = 582
+    Top = 562
     Width = 108
     Height = 25
     Anchors = [akLeft, akBottom]
     Caption = 'Apply'
     TabOrder = 3
     OnClick = btnApplyClick
+    ExplicitTop = 582
   end
 end

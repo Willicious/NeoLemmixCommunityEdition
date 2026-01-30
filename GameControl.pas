@@ -109,6 +109,7 @@ type
     moUseSpawnInterval,
     moUseNegativeSaveCount,
     moShowButtonHints,
+    moInvertMouseWheelFramesteps,
     moShowLevelSelectOptions,
     moFileCaching,
     moPostviewJingles,
@@ -294,6 +295,7 @@ type
     property UseSpawnInterval: Boolean Index moUseSpawnInterval read GetOptionFlag write SetOptionFlag;
     property UseNegativeSaveCount: Boolean Index moUseNegativeSaveCount read GetOptionFlag write SetOptionFlag;
     property ShowButtonHints: Boolean Index moShowButtonHints read GetOptionFlag write SetOptionFlag;
+    property InvertMouseWheelFramesteps: Boolean Index moInvertMouseWheelFramesteps read GetOptionFlag write SetOptionFlag;
     property ForceDefaultLemmings: Boolean Index moForceDefaultLemmings read GetOptionFlag write SetOptionFlag;
     property DisableMusicInTestplay: Boolean Index moDisableMusicInTestplay read GetOptionFlag write SetOptionFlag;
 
@@ -529,6 +531,7 @@ begin
     SaveBoolean('UseSpawnInterval', UseSpawnInterval);
     SaveBoolean('UseNegativeSaveCount', UseNegativeSaveCount);
     SaveBoolean('ShowButtonHints', ShowButtonHints);
+    SaveBoolean('InvertMouseWheelFramesteps', InvertMouseWheelFramesteps);
 
     SL.Add('SkillQFrames=' + IntToStr(SkillQFrames));
     SL.Add('ZoomLevel=' + IntToStr(ZoomLevel));
@@ -750,6 +753,7 @@ begin
     UseSpawnInterval := LoadBoolean('UseSpawnInterval', UseSpawnInterval);
     UseNegativeSaveCount := LoadBoolean('UseNegativeSaveCount', UseNegativeSaveCount);
     ShowButtonHints := LoadBoolean('ShowButtonHints', ShowButtonHints);
+    InvertMouseWheelFramesteps := LoadBoolean('InvertMouseWheelFramesteps', InvertMouseWheelFramesteps);
 
     SetCurrentLevelToBestMatch(SL.Values['LastActiveLevel']);
 

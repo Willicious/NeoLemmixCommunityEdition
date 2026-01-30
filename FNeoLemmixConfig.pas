@@ -23,7 +23,6 @@ type
     Label5: TLabel;
     tbMusicVol: TTrackBar;
     cbPostviewJingles: TCheckBox;
-    cbNoBackgrounds: TCheckBox;
     gbInternetOptions: TGroupBox;
     cbEnableOnline: TCheckBox;
     cbUpdateCheck: TCheckBox;
@@ -55,7 +54,6 @@ type
     lblPostviewSaveReplay: TLabel;
     cbPanelZoom: TComboBox;
     Label2: TLabel;
-    cbForceDefaultLemmings: TCheckBox;
     cbDisableTestplayMusic: TCheckBox;
     rgWhenNoLemmings: TRadioGroup;
     cbShowHelpers: TCheckBox;
@@ -74,10 +72,12 @@ type
     gbMusicOptions: TGroupBox;
     lblSkillQFrames: TLabel;
     seSkillQFrames: TSpinEdit;
-    gbVisualCustomizationOptions: TGroupBox;
     cbFadeMenuScreens: TCheckBox;
     cbUseNegativeSaveCount: TCheckBox;
     cbShowButtonHints: TCheckBox;
+    cbForceDefaultLemmings: TCheckBox;
+    cbNoBackgrounds: TCheckBox;
+    cbInvertMouseWheelFramesteps: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -287,6 +287,7 @@ begin
     cbUseSpawnInterval.Checked := GameParams.UseSpawnInterval;
     cbUseNegativeSaveCount.Checked := GameParams.UseNegativeSaveCount;
     cbShowButtonHints.Checked := GameParams.ShowButtonHints;
+    cbInvertMouseWheelFramesteps.Checked := GameParams.InvertMouseWheelFramesteps;
 
     rgWhenNoLemmings.ItemIndex := Ord(GameParams.ExitToPostview);
 
@@ -361,6 +362,7 @@ begin
   GameParams.UseSpawnInterval := cbUseSpawnInterval.Checked;
   GameParams.UseNegativeSaveCount := cbUseNegativeSaveCount.Checked;
   GameParams.ShowButtonHints := cbShowButtonHints.Checked;
+  GameParams.InvertMouseWheelFramesteps := cbInvertMouseWheelFramesteps.Checked;
 
   if (rgWhenNoLemmings.ItemIndex >= Ord(Low(TExitToPostview)))
     and (rgWhenNoLemmings.ItemIndex <= Ord(High(TExitToPostview))) then
