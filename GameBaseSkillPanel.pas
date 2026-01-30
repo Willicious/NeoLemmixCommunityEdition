@@ -1228,10 +1228,11 @@ end;
 procedure TBaseSkillPanel.DrawMinimapZoomText;
 var
   ZoomText: String;
-  TextX, TextY: Integer;
+  TextX, TextY, XOffset: Integer;
 begin
   ZoomText := 'Z' + IntToStr(fGameWindow.InternalZoom - 1);
-  TextX := fMinimapImage.Bitmap.Width - (9 * ResMod);
+  XOffset := IfThen(ZoomText.Length >= 3, 12, 9);
+  TextX := fMinimapImage.Bitmap.Width - (XOffset * ResMod);
   TextY := ResMod;
   fMinimapImage.Bitmap.Font.Name := 'Tahoma';
   fMinimapImage.Bitmap.Font.Size := 3 * ResMod;
