@@ -283,14 +283,14 @@ object FLemmixHotkeys: TFLemmixHotkeys
     TabOrder = 11
     OnClick = btnTraditionalLayoutClick
   end
-  object btnMinimalLayout: TButton
+  object btnAdvancedLayout: TButton
     Left = 331
     Top = 101
     Width = 174
     Height = 30
-    Caption = 'Set to Minimal Layout'
+    Caption = 'Set to Advanced Layout'
     TabOrder = 13
-    OnClick = btnMinimalLayoutClick
+    OnClick = btnAdvancedLayoutClick
   end
   object btnClearAllKeys: TButton
     Left = 331

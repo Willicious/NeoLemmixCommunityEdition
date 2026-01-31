@@ -26,7 +26,7 @@ type
     lblSkip: TLabel;
     btnFunctionalLayout: TButton;
     btnTraditionalLayout: TButton;
-    btnMinimalLayout: TButton;
+    btnAdvancedLayout: TButton;
     btnCancel: TBitBtn;
     btnReset: TBitBtn;
     lblSkillButton: TLabel;
@@ -49,7 +49,7 @@ type
     procedure cbSpecialSkipChange(Sender: TObject);
     procedure btnFunctionalLayoutClick(Sender: TObject);
     procedure btnTraditionalLayoutClick(Sender: TObject);
-    procedure btnMinimalLayoutClick(Sender: TObject);
+    procedure btnAdvancedLayoutClick(Sender: TObject);
     procedure btnClearAllKeysClick(Sender: TObject);
     procedure btnResetClick(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
@@ -565,10 +565,10 @@ begin
   RefreshList;
 end;
 
-procedure TFLemmixHotkeys.btnMinimalLayoutClick(Sender: TObject);
+procedure TFLemmixHotkeys.btnAdvancedLayoutClick(Sender: TObject);
 begin
   fHotkeys.ClearAllKeys;
-  fHotkeys.SetDefaultsMinimal;
+  fHotkeys.SetDefaultsAdvanced;
   RefreshList;
 end;
 

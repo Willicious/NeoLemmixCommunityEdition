@@ -91,7 +91,7 @@ type
 
       procedure SetDefaultsTraditional;
       procedure SetDefaultsFunctional;
-      procedure SetDefaultsMinimal;
+      procedure SetDefaultsAdvanced;
 
       procedure SetKeyFunction(aKey: Word; aFunc: TLemmixHotkeyAction; aMod: Integer = 0);
       function CheckKeyEffect(aKey: Word): TLemmixHotkey;
@@ -200,15 +200,79 @@ begin
                                                            // cloner, <none>
 end;
 
-procedure TLemmixHotkeyManager.SetDefaultsMinimal;
+procedure TLemmixHotkeyManager.SetDefaultsAdvanced;
 begin
   ClearAllKeys;
 
+  SetKeyFunction($02, lka_Skip, -1);
   SetKeyFunction($04, lka_Pause);
+  SetKeyFunction($50, lka_Pause);
+  SetKeyFunction($4E, lka_Nuke);
+  SetKeyFunction($52, lka_Restart);
+  SetKeyFunction($46, lka_FastForward);
+//  SetKeyFunction($54, lka_Turbo);
+//  SetKeyFunction($44, lka_Rewind);
+  SetKeyFunction($1B, lka_Exit);
   SetKeyFunction($05, lka_ZoomIn);
   SetKeyFunction($06, lka_ZoomOut);
-  SetKeyFunction($02, lka_Scroll);
-  SetKeyFunction($1B, lka_Exit);
+  SetKeyFunction($4D, lka_Music);
+  SetKeyFunction($58, lka_Sound);
+  SetKeyFunction($41, lka_ShowAthleteInfo);
+  SetKeyFunction($BB, lka_ReleaseRateUp);
+  SetKeyFunction($BD, lka_ReleaseRateDown);
+  SetKeyFunction($6B, lka_ReleaseRateMax);
+  SetKeyFunction($6D, lka_ReleaseRateMin);
+  SetKeyFunction($48, lka_Highlight);
+  SetKeyFunction($19, lka_ForceWalker);
+  SetKeyFunction($57, lka_ForceWalker);
+  SetKeyFunction($25, lka_DirLeft);
+  SetKeyFunction($27, lka_DirRight);
+  SetKeyFunction($28, lka_SkillLeft);
+  SetKeyFunction($26, lka_SkillRight);
+  SetKeyFunction($49, lka_FallDistance);
+  SetKeyFunction($0D, lka_ReleaseMouse);
+  SetKeyFunction($BA, lka_ShowUsedSkills);
+  SetKeyFunction($08, lka_Skip, -25);
+  SetKeyFunction($4A, lka_Skip, 20);
+  SetKeyFunction($60, lka_Skip, 100);
+  SetKeyFunction($20, lka_Skip, 1000);
+  SetKeyFunction($5A, lka_SpecialSkip, 0);
+  SetKeyFunction($09, lka_SpecialSkip, 1);
+  SetKeyFunction($10, lka_SpecialSkip, 1);
+  SetKeyFunction($30, lka_SlowMotion);
+  SetKeyFunction($BE, lka_SlowMotion);
+  SetKeyFunction($2E, lka_Cheat);
+//  SetKeyFunction($68, lka_InfiniteSkills);
+//  SetKeyFunction($69, lka_InfiniteTime);
+  SetKeyFunction($56, lka_ClearPhysics, 1);
+  SetKeyFunction($14, lka_ClearPhysics, 0);
+  SetKeyFunction($4C, lka_LoadReplay);
+  SetKeyFunction($53, lka_SaveReplay);
+  SetKeyFunction($43, lka_CancelReplay);
+  SetKeyFunction($45, lka_EditReplay);
+  SetKeyFunction($4F, lka_ReplayInsert);
+  SetKeyFunction($7A, lka_SaveState);
+  SetKeyFunction($7B, lka_LoadState);
+  SetKeyFunction($59, lka_CancelPlayback);
+  SetKeyFunction($79, lka_SaveImage);
+//  SetKeyFunction($31, lka_SkillButton, 1);
+//  SetKeyFunction($32, lka_SkillButton, 2);
+//  SetKeyFunction($33, lka_SkillButton, 3);
+//  SetKeyFunction($34, lka_SkillButton, 4);
+//  SetKeyFunction($35, lka_SkillButton, 5);
+//  SetKeyFunction($36, lka_SkillButton, 6);
+//  SetKeyFunction($37, lka_SkillButton, 7);
+//  SetKeyFunction($38, lka_SkillButton, 8);
+//  SetKeyFunction($39, lka_SkillButton, 9);
+//  SetKeyFunction($30, lka_SkillButton, 10);
+//  SetKeyFunction($70, lka_SkillButton, 11);
+//  SetKeyFunction($71, lka_SkillButton, 12);
+//  SetKeyFunction($72, lka_SkillButton, 13);
+//  SetKeyFunction($73, lka_SkillButton, 14);
+//  SetKeyFunction($65, lka_NudgeUp, 160);
+//  SetKeyFunction($62, lka_NudgeDown, 160);
+//  SetKeyFunction($61, lka_NudgeLeft, 160);
+//  SetKeyFunction($63, lka_NudgeRight, 160);
 end;
 
 procedure TLemmixHotkeyManager.SetDefaultsTraditional;
