@@ -149,14 +149,8 @@ begin
   if WindowScale < ResMod then
     WindowScale := ResMod;
 
-  if GameParams.CompactSkillPanel then
-  begin
-    ClientWidth := Max(WindowScale * 360, 360 * ResMod);
-    ClientHeight := ClientWidth * 9 div 16;
-  end else begin
-    ClientWidth := Max(WindowScale * 420, 420 * ResMod);
-    ClientHeight := ClientWidth * 9 div 16;
-  end;
+  ClientWidth := Max(WindowScale * 420, 420 * ResMod);
+  ClientHeight := ClientWidth * 9 div 16;
 end;
 
 procedure TMainForm.FormActivate(Sender: TObject);
