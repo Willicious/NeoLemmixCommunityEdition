@@ -15,6 +15,7 @@ uses
   LemmixHotkeys,
   Math,
   Dialogs, StdCtrls, SysUtils, StrUtils, IOUtils, Classes, Forms, Types,
+  System.Generics.Collections,
   GR32,
   LemVersion,
   LemTypes, LemLevel,
@@ -207,7 +208,8 @@ type
   public
     OpenedViaReplay: Boolean;
     LoadedReplayFile: string;
-    LoadedReplayID: string;  
+    LoadedReplayID: Int64;
+    LoadedReplayIDString: String;
   
     SoundOptions   : TGameSoundOptions;
 
@@ -262,7 +264,7 @@ type
     procedure PrevGroup;
     procedure LoadCurrentLevel(NoOutput: Boolean = False); // loads level specified by CurrentLevel into Level, and prepares renderer
     procedure ReloadCurrentLevel(NoOutput: Boolean = False); // re-prepares using the existing TLevel in memory
-    function FindLevelFileByID(LevelID: string): string;
+    function FindLevelByID(aID: Int64): TNeoLevelEntry;
     function LoadLevelByID(aID: Int64): Boolean;
 
     procedure ElevateSaveCriticality(aCriticality: TGameParamsSaveCriticality);
@@ -851,108 +853,63 @@ begin
   Result := SearchGroup(G);
 end;
 
-function TDosGameParams.FindLevelFileByID(LevelID: string): string;
+function TDosGameParams.FindLevelByID(aID: Int64): TNeoLevelEntry;
 var
-  LevelFiles: TStringDynArray;
-  RootDir, LevelsDir, RelativePath, FolderNames: string;
-  MatchingFiles: TStringList;
-  i, ListWidth, StringWidth: Integer;
-  AdjustDialogWidth: Boolean;
-  FileContent: TStringList;
+  BaseGroup: TNeoLevelGroup;
+  MatchingLevels: TObjectList<TNeoLevelEntry>;
+
+  procedure SearchGroup(aGroup: TNeoLevelGroup);
+  var
+    i: Integer;
+  begin
+    for i := 0 to aGroup.Children.Count - 1 do
+      SearchGroup(aGroup.Children[i]);
+
+    for i := 0 to aGroup.Levels.Count - 1 do
+      if aGroup.Levels[i].LevelID = aID then
+        MatchingLevels.Add(aGroup.Levels[i]);
+  end;
+var
   LevelDialog: TFLevelListDialog;
 begin
-  Result := '';
+  Result := nil;
+  MatchingLevels := TObjectList<TNeoLevelEntry>.Create(False);
+  try
+    BaseGroup := GameParams.BaseLevelPack;
+    SearchGroup(BaseGroup);
 
-  // Get the directory containing the .exe and find the levels folder
-  RootDir := ExtractFilePath(ParamStr(0));
-  LevelsDir := TPath.Combine(RootDir, SFLevels);
+    if MatchingLevels.Count = 0 then
+      Exit;
 
-  // Search for .nxlv files in the levels folder, or cancel if it doesn't exist
-  if TDirectory.Exists(LevelsDir) then
-    LevelFiles := TDirectory.GetFiles(LevelsDir, '*.nxlv', TSearchOption.soAllDirectories)
-  else
-  begin
-    ShowMessage('Levels folder not found.');
-    Exit;
-  end;
-
-  if Length(LevelFiles) > 0 then
-  begin
-    MatchingFiles := TStringList.Create;
-
-    try
-      // Check each .nxlv file for matching LevelID
-      for i := 0 to Length(LevelFiles) - 1 do
-      begin
-        FileContent := TStringList.Create;
-        try
-          FileContent.LoadFromFile(LevelFiles[i]);
-
-          if Pos('ID ' + LevelID, FileContent.Text) > 0 then
-            MatchingFiles.Add(LevelFiles[i]);
-        finally
-          FileContent.Free;
-        end;
-      end;
-
-      if MatchingFiles.Count = 0 then
-      begin
-        ShowMessage('No .nxlv files found with Level ID: ' + LevelID);
-        Exit;
-      // If only one matching file is found, load it directly
-      end else if MatchingFiles.Count = 1 then
-        Result := MatchingFiles[0]
-      else begin
-        // If multiple matching files are found, show level select dialog
-        LevelDialog := TFLevelListDialog.Create(nil);
-        try
-          ListWidth := LevelDialog.MatchingLevelsList.Width;
-          AdjustDialogWidth := False;
-
-          for i := 0 to MatchingFiles.Count - 1 do
-          begin
-            // Extract the relative path starting after the 'levels' directory
-            RelativePath := StringReplace(MatchingFiles[i], LevelsDir, '', [rfIgnoreCase]);
-
-            // Extract the folder names and replace characters
-            FolderNames := ExtractFileDir(RelativePath);
-            FolderNames := StringReplace(FolderNames, '\', ' / ', [rfReplaceAll]);
-            FolderNames := StringReplace(FolderNames, '_', ' ', [rfReplaceAll]);
-
-            // Construct the display string and add it to the matching levels list
-            var DisplayString := ExtractFileName(MatchingFiles[i]) + ' (' + FolderNames + ')';
-            LevelDialog.MatchingLevelsList.Items.Add(DisplayString);
-
-            // Measure the width of the string so the dialog can fully accomodate it
-            StringWidth := LevelDialog.Canvas.TextWidth(DisplayString);
-
-            if StringWidth > ListWidth then
-            begin
-              ListWidth := StringWidth;
-              AdjustDialogWidth := True;
-            end;
-          end;
-
-          // If necessary, adjust the width of the dialog (include padding)
-          if AdjustDialogWidth then
-          begin
-            LevelDialog.ClientWidth := ListWidth + 40;
-            LevelDialog.MatchingLevelsList.Width := ListWidth + 20;
-          end;
-
-          if LevelDialog.ShowModal = mrOk then
-            Result := MatchingFiles[LevelDialog.MatchingLevelsList.ItemIndex]
-          else
-            Exit;
-        finally
-          LevelDialog.Free;
-        end;
-      end;
-    finally
-      MatchingFiles.Free;
+    if MatchingLevels.Count = 1 then
+    begin
+      Result := MatchingLevels[0];
+      Exit;
     end;
-  end else
-    ShowMessage('No .nxlv files found in directory: ' + LevelsDir);
+
+    // If multiple matches are found, show selection dialog
+    LevelDialog := TFLevelListDialog.Create(nil);
+    try
+      LevelDialog.MatchingLevelsList.Clear;
+
+      for var L in MatchingLevels do
+      begin
+        var RelPath := L.RelativePath;
+        var DisplayStr := Format('%s (%s)', [L.Filename, StringReplace(RelPath, '\', ' / ', [rfReplaceAll])]);
+        LevelDialog.MatchingLevelsList.Items.AddObject(DisplayStr, L);
+      end;
+
+      if LevelDialog.ShowModal = mrOk then
+        Result := LevelDialog.SelectedLevel
+      else
+        Result := nil;
+    finally
+      LevelDialog.Free;
+    end;
+
+  finally
+    MatchingLevels.Free;
+  end;
 end;
 
 procedure TDosGameParams.LoadCurrentLevel(NoOutput: Boolean = False);
