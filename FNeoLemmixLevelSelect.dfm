@@ -79,12 +79,12 @@ object FLevelSelect: TFLevelSelect
     Font.Style = []
     ParentFont = False
   end
-  object lblRecordsOptions: TLabel
+  object lblProgressOptions: TLabel
     Left = 992
     Top = 17
-    Width = 85
+    Width = 89
     Height = 13
-    Caption = 'Records Options'
+    Caption = 'Progress Options'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -93,8 +93,8 @@ object FLevelSelect: TFLevelSelect
     ParentFont = False
   end
   object lblAdvancedOptions: TLabel
-    Left = 987
-    Top = 119
+    Left = 985
+    Top = 151
     Width = 96
     Height = 13
     Caption = 'Advanced Options'
@@ -106,8 +106,8 @@ object FLevelSelect: TFLevelSelect
     ParentFont = False
   end
   object lblReplayOptions: TLabel
-    Left = 992
-    Top = 288
+    Left = 990
+    Top = 320
     Width = 79
     Height = 13
     Caption = 'Replay Options'
@@ -132,8 +132,8 @@ object FLevelSelect: TFLevelSelect
     ParentFont = False
   end
   object lblEditingOptions: TLabel
-    Left = 992
-    Top = 388
+    Left = 990
+    Top = 420
     Width = 81
     Height = 13
     Caption = 'Editing Options'
@@ -206,21 +206,21 @@ object FLevelSelect: TFLevelSelect
     Caption = '<placeholder for level info>'
     TabOrder = 11
   end
-  object btnClearRecords: TButton
+  object btnResetRecords: TButton
     Left = 967
-    Top = 36
+    Top = 67
     Width = 134
     Height = 25
     Hint = 'Reset all user records for the selected level pack'
-    Caption = 'Clear Records'
+    Caption = 'Reset Records'
     ParentShowHint = False
     ShowHint = True
     TabOrder = 2
-    OnClick = btnClearRecordsClick
+    OnClick = btnResetRecordsClick
   end
   object btnCleanseOne: TButton
-    Left = 967
-    Top = 233
+    Left = 965
+    Top = 265
     Width = 134
     Height = 25
     Hint = 'Save a copy of this level in the latest NeoLemmix format'
@@ -231,8 +231,8 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnCleanseOneClick
   end
   object btnCleanseLevels: TButton
-    Left = 967
-    Top = 202
+    Left = 965
+    Top = 234
     Width = 134
     Height = 25
     Hint = 
@@ -245,8 +245,8 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnCleanseLevelsClick
   end
   object btnReplayManager: TButton
-    Left = 967
-    Top = 307
+    Left = 965
+    Top = 339
     Width = 134
     Height = 25
     Hint = 'Perform a replay check for every level in the selected pack'
@@ -257,8 +257,8 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnReplayManagerClick
   end
   object btnSaveImage: TButton
-    Left = 967
-    Top = 171
+    Left = 965
+    Top = 203
     Width = 134
     Height = 25
     Hint = 'Save an image of the current level as a .png file'
@@ -269,8 +269,8 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnSaveImageClick
   end
   object btnMakeShortcut: TButton
-    Left = 967
-    Top = 138
+    Left = 965
+    Top = 170
     Width = 134
     Height = 25
     Hint = 
@@ -284,7 +284,7 @@ object FLevelSelect: TFLevelSelect
   end
   object btnResetTalismans: TBitBtn
     Left = 967
-    Top = 67
+    Top = 98
     Width = 134
     Height = 25
     Hint = 
@@ -297,8 +297,8 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnResetTalismansClick
   end
   object btnPlaybackMode: TButton
-    Left = 967
-    Top = 338
+    Left = 965
+    Top = 370
     Width = 134
     Height = 25
     Hint = 
@@ -358,8 +358,8 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnCloseSearchClick
   end
   object btnEditLevel: TButton
-    Left = 967
-    Top = 407
+    Left = 965
+    Top = 439
     Width = 134
     Height = 25
     Hint = 
@@ -387,6 +387,18 @@ object FLevelSelect: TFLevelSelect
     Height = 17
     TabOrder = 18
     Visible = False
+  end
+  object btnResetAllProgress: TButton
+    Left = 967
+    Top = 36
+    Width = 134
+    Height = 25
+    Hint = 'Reset all user records for the selected level pack'
+    Caption = 'Reset All Progress'
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 19
+    OnClick = btnResetAllProgressClick
   end
   object ilStatuses: TImageList
     AllocBy = 8
