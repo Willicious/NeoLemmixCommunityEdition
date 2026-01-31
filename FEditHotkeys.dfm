@@ -118,6 +118,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Items.Strings = (
       'Nothing'
       'Select Skill'
+      'Select Skill Button'
       'Show Athlete Info'
       'Quit'
       'Max Release Rate'

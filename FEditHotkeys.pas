@@ -54,7 +54,7 @@ type
     procedure btnResetClick(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
     procedure btnSaveCloseClick(Sender: TObject);
-//    procedure seSkillButtonChange(Sender: TObject);  // Bookmark
+    procedure seSkillButtonChange(Sender: TObject);
 //    procedure ebNudgeAmountChange(Sender: TObject);  // Bookmark
     procedure ebClick(Sender: TObject);
   private
@@ -130,7 +130,7 @@ begin
   cbFunctions.ItemIndex := Integer(fHotkeys.CheckKeyEffect(i).Action);
   case fHotkeys.CheckKeyEffect(i).Action of
     lka_Skill: cbSkill.ItemIndex := fHotkeys.CheckKeyEffect(i).Modifier;
-//    lka_SkillButton: seSkillButton.Value := fHotkeys.CheckKeyEffect(i).Modifier;
+    lka_SkillButton: seSkillButton.Value := fHotkeys.CheckKeyEffect(i).Modifier;
     lka_Skip: ebSkipDuration.Text := IntToStr(fHotkeys.CheckKeyEffect(i).Modifier);
 //    lka_NudgeUp,
 //    lka_NudgeDown,
@@ -257,9 +257,9 @@ begin
                      else s := s + '???';
                    end;
                  end;
-//      lka_SkillButton: begin
-//                         s := 'Select Skill Button: ' + IntToStr(Hotkey.Modifier);
-//                       end;
+      lka_SkillButton: begin
+                         s := 'Select Skill Button: ' + IntToStr(Hotkey.Modifier);
+                       end;
       lka_Skip: begin
                   if Hotkey.Modifier < -1 then
                     s := 'Time Skip: Back ' + IntToStr(Hotkey.Modifier * -1) + ' Frames'
@@ -382,11 +382,11 @@ begin
                  cbSkill.Visible := True;
                  cbSkill.Enabled := True;
                end;
-//    lka_SkillButton: begin
-//                       lblSkillButton.Visible := True;
-//                       seSkillButton.Visible := True;
-//                       seSkillButton.Enabled := True;
-//                     end;
+    lka_SkillButton: begin
+                       lblSkillButton.Visible := True;
+                       seSkillButton.Visible := True;
+                       seSkillButton.Enabled := True;
+                     end;
     lka_Skip: begin
                 lblDuration.Visible := True;
                 ebSkipDuration.Visible := True;
@@ -424,12 +424,12 @@ begin
                  if cbSkill.ItemIndex = -1 then cbSkill.ItemIndex := 0;
                  fHotkeys.SetKeyFunction(i, lka_Skill, cbSkill.ItemIndex);
                end;
-//    lka_SkillButton: begin
-//                       if seSkillButton.Value <= 0 then seSkillButton.Value := 1;
-//                       if seSkillButton.Value >= 15 then seSkillButton.Value := 14;
-//
-//                       fHotkeys.SetKeyFunction(i, lka_SkillButton, seSkillButton.Value);
-//                     end;
+    lka_SkillButton: begin
+                       if seSkillButton.Value <= 0 then seSkillButton.Value := 1;
+                       if seSkillButton.Value >= 15 then seSkillButton.Value := 14;
+
+                       fHotkeys.SetKeyFunction(i, lka_SkillButton, seSkillButton.Value);
+                     end;
     lka_Skip: begin
                 ebSkipDuration.Text := IntToStr(StrToIntDef(ebSkipDuration.Text, 0)); // Destroys non-numeric values
                 fHotkeys.SetKeyFunction(i, lka_Skip, StrToInt(ebSkipDuration.Text));
@@ -478,17 +478,17 @@ begin
   RefreshList;
 end;
 
-//procedure TFLemmixHotkeys.seSkillButtonChange(Sender: TObject);
-//var
-//  i: Integer;
-//begin
-//  i := FindKeyFromList(lvHotkeys.ItemIndex);
-//  if (i = -1) then Exit; // Safety; should never happen
-//  if fHotkeys.CheckKeyEffect(i).Action <> lka_SkillButton then Exit;
-//
-//  fHotkeys.SetKeyFunction(i, lka_SkillButton, seSkillButton.Value);
-//  RefreshList;
-//end;
+procedure TFLemmixHotkeys.seSkillButtonChange(Sender: TObject);
+var
+  i: Integer;
+begin
+  i := FindKeyFromList(lvHotkeys.ItemIndex);
+  if (i = -1) then Exit; // Safety; should never happen
+  if fHotkeys.CheckKeyEffect(i).Action <> lka_SkillButton then Exit;
+
+  fHotkeys.SetKeyFunction(i, lka_SkillButton, seSkillButton.Value);
+  RefreshList;
+end;
 
 procedure TFLemmixHotkeys.ebSkipDurationChange(Sender: TObject);
 var

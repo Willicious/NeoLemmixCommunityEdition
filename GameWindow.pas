@@ -1308,6 +1308,7 @@ procedure TGameWindow.Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShift
 var
   CurrTime: Cardinal;
   sn: Integer;
+  ButtonIndex: Integer;
   func: TLemmixHotkey;
   AssignToHighlit: Boolean;
   CursorPointForm: TPoint; // A point in coordinates relative to the main form
@@ -1347,7 +1348,7 @@ const
                          lka_ZoomOut,
                          lka_CycleZoom,
                          lka_Scroll];
-  SKILL_KEYS = [lka_Skill, lka_SkillLeft, lka_SkillRight];
+  SKILL_KEYS = [lka_Skill, lka_SkillButton, lka_SkillLeft, lka_SkillRight];
 begin
   func := GameParams.Hotkeys.CheckKeyEffect(Key);
 
@@ -1474,6 +1475,12 @@ begin
                           SetSelectedSkill(fActiveSkills[sn]);
                         end;
                       end;
+      lka_SkillButton: begin
+                         ButtonIndex := func.Modifier -1;
+                         AssignToHighlit := GameParams.Hotkeys.CheckForKey(lka_Highlight);
+
+                         SetSelectedSkill(fActiveSkills[ButtonIndex], True, AssignToHighlit);
+                       end;
       lka_Skip: if Game.Playing then
                   if func.Modifier < 0 then
                   begin

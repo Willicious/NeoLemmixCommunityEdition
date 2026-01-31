@@ -19,6 +19,7 @@ const
 type
   TLemmixHotkeyAction = (lka_Null,
                          lka_Skill,
+                         lka_SkillButton,
                          lka_ShowAthleteInfo,
                          lka_Exit,
                          lka_ReleaseRateMax,
@@ -255,20 +256,20 @@ begin
   SetKeyFunction($7B, lka_LoadState);
   SetKeyFunction($59, lka_CancelPlayback);
   SetKeyFunction($79, lka_SaveImage);
-//  SetKeyFunction($31, lka_SkillButton, 1);
-//  SetKeyFunction($32, lka_SkillButton, 2);
-//  SetKeyFunction($33, lka_SkillButton, 3);
-//  SetKeyFunction($34, lka_SkillButton, 4);
-//  SetKeyFunction($35, lka_SkillButton, 5);
-//  SetKeyFunction($36, lka_SkillButton, 6);
-//  SetKeyFunction($37, lka_SkillButton, 7);
-//  SetKeyFunction($38, lka_SkillButton, 8);
-//  SetKeyFunction($39, lka_SkillButton, 9);
-//  SetKeyFunction($30, lka_SkillButton, 10);
-//  SetKeyFunction($70, lka_SkillButton, 11);
-//  SetKeyFunction($71, lka_SkillButton, 12);
-//  SetKeyFunction($72, lka_SkillButton, 13);
-//  SetKeyFunction($73, lka_SkillButton, 14);
+  SetKeyFunction($31, lka_SkillButton, 1);
+  SetKeyFunction($32, lka_SkillButton, 2);
+  SetKeyFunction($33, lka_SkillButton, 3);
+  SetKeyFunction($34, lka_SkillButton, 4);
+  SetKeyFunction($35, lka_SkillButton, 5);
+  SetKeyFunction($36, lka_SkillButton, 6);
+  SetKeyFunction($37, lka_SkillButton, 7);
+  SetKeyFunction($38, lka_SkillButton, 8);
+  SetKeyFunction($39, lka_SkillButton, 9);
+  SetKeyFunction($30, lka_SkillButton, 10);
+  SetKeyFunction($70, lka_SkillButton, 11);
+  SetKeyFunction($71, lka_SkillButton, 12);
+  SetKeyFunction($72, lka_SkillButton, 13);
+  SetKeyFunction($73, lka_SkillButton, 14);
 //  SetKeyFunction($65, lka_NudgeUp, 160);
 //  SetKeyFunction($62, lka_NudgeDown, 160);
 //  SetKeyFunction($61, lka_NudgeLeft, 160);
@@ -360,6 +361,7 @@ begin
   s := LowerCase(s);
   Result := lka_Null;
   if s = 'skill' then Result := lka_Skill;
+  if s = 'skill_button' then Result := lka_SkillButton;
   if s = 'athlete_info' then Result := lka_ShowAthleteInfo;
   if s = 'quit' then Result := lka_Exit;
   if s = 'rr_max' then Result := lka_ReleaseRateMax;
@@ -511,6 +513,7 @@ var
   begin
     case aValue of
       lka_Skill:            Result := 'Skill';
+      lka_SkillButton:      Result := 'Skill_Button';
       lka_ShowAthleteInfo:  Result := 'Athlete_Info';
       lka_Exit:             Result := 'Quit';
       lka_ReleaseRateMax:   Result := 'RR_Max';
@@ -601,7 +604,11 @@ begin
   begin
     s := InterpretMain(fKeyFunctions[i].Action);
     if s = 'Null' then Continue;
-    if fKeyFunctions[i].Action in [lka_Skill, lka_Skip, lka_SpecialSkip, lka_ClearPhysics, lka_Projection, lka_SkillProjection, lka_ShowUsedSkills] then
+    if fKeyFunctions[i].Action in [lka_Skill, lka_SkillButton,
+                                   lka_Skip, lka_SpecialSkip,
+                                   lka_ClearPhysics,
+                                   lka_Projection, lka_SkillProjection,
+                                   lka_ShowUsedSkills] then
       s := s + ':' + InterpretSecondary(fKeyFunctions[i].Modifier, fKeyFunctions[i].Action);
     StringList.Add(IntToHex(i, MAX_KEY_LEN) + '=' + s);
   end;
