@@ -139,27 +139,23 @@ end;
 procedure TMainForm.RestoreDefaultSize;
 var
   WindowScale: Integer;
-  MaxHeight: Integer;
 begin
-  WindowScale := Min(Screen.Width div 320, Screen.Height div 180);
+  GameParams.ZoomLevel := Max(Max((Screen.Width - 100) div 420 div ResMod,
+                                 (Screen.Height - 100) div 200 div ResMod), 1);
+
+  WindowScale := Min(Screen.Width div 420, Screen.Height div 200);
   WindowScale := Min(WindowScale, GameParams.ZoomLevel * ResMod);
 
   if WindowScale < ResMod then
     WindowScale := ResMod;
 
   if GameParams.CompactSkillPanel then
-    ClientWidth := WindowScale * 320
-  else
-    ClientWidth := Max(WindowScale * 320, 416 * ResMod);
-
-  ClientHeight := ClientWidth * 9 div 16; // 16:9 aspect ratio
-
-  MaxHeight := Screen.Height - 280;
-
-  if ClientHeight > MaxHeight then
   begin
-    ClientHeight := MaxHeight;
-    ClientWidth := (ClientHeight * 16 div 9);
+    ClientWidth := Max(WindowScale * 360, 360 * ResMod);
+    ClientHeight := ClientWidth * 9 div 16;
+  end else begin
+    ClientWidth := Max(WindowScale * 420, 420 * ResMod);
+    ClientHeight := ClientWidth * 9 div 16;
   end;
 end;
 
