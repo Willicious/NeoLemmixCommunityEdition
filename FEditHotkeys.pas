@@ -55,7 +55,7 @@ type
     procedure btnCancelClick(Sender: TObject);
     procedure btnSaveCloseClick(Sender: TObject);
     procedure seSkillButtonChange(Sender: TObject);
-//    procedure ebNudgeAmountChange(Sender: TObject);  // Bookmark
+    procedure ebNudgeAmountChange(Sender: TObject);
     procedure ebClick(Sender: TObject);
   private
     fKeyNames: TKeyNameArray;
@@ -132,10 +132,10 @@ begin
     lka_Skill: cbSkill.ItemIndex := fHotkeys.CheckKeyEffect(i).Modifier;
     lka_SkillButton: seSkillButton.Value := fHotkeys.CheckKeyEffect(i).Modifier;
     lka_Skip: ebSkipDuration.Text := IntToStr(fHotkeys.CheckKeyEffect(i).Modifier);
-//    lka_NudgeUp,
-//    lka_NudgeDown,
-//    lka_NudgeLeft,
-//    lka_NudgeRight: ebNudgeAmount.Text := IntToStr(fHotkeys.CheckKeyEffect(i).Modifier);
+    lka_NudgeUp,
+    lka_NudgeDown,
+    lka_NudgeLeft,
+    lka_NudgeRight: ebNudgeAmount.Text := IntToStr(fHotkeys.CheckKeyEffect(i).Modifier);
     lka_ClearPhysics,
     lka_ShowUsedSkills: cbHoldKey.Checked := fHotkeys.CheckKeyEffect(i).Modifier = 1;
   end;
@@ -294,18 +294,18 @@ begin
                            ssc_HighlitStateChange: s := s + 'Highlit Lemming State Change';
                          end;
                        end;
-//      lka_NudgeUp:    begin
-//                        s := 'Nudge viewport up ' + IntToStr(Abs(Hotkey.Modifier)) + ' pixels';
-//                      end;
-//      lka_NudgeDown:  begin
-//                        s := 'Nudge viewport down ' + IntToStr(Abs(Hotkey.Modifier)) + ' pixels';
-//                      end;
-//      lka_NudgeLeft:  begin
-//                        s := 'Nudge viewport left ' + IntToStr(Abs(Hotkey.Modifier)) + ' pixels';
-//                      end;
-//      lka_NudgeRight: begin
-//                        s := 'Nudge viewport right ' + IntToStr(Abs(Hotkey.Modifier)) + ' pixels';
-//                      end;
+      lka_NudgeUp:    begin
+                        s := 'Nudge viewport up ' + IntToStr(Abs(Hotkey.Modifier)) + ' pixels';
+                      end;
+      lka_NudgeDown:  begin
+                        s := 'Nudge viewport down ' + IntToStr(Abs(Hotkey.Modifier)) + ' pixels';
+                      end;
+      lka_NudgeLeft:  begin
+                        s := 'Nudge viewport left ' + IntToStr(Abs(Hotkey.Modifier)) + ' pixels';
+                      end;
+      lka_NudgeRight: begin
+                        s := 'Nudge viewport right ' + IntToStr(Abs(Hotkey.Modifier)) + ' pixels';
+                      end;
       else s := cbFunctions.Items[Integer(fHotkeys.CheckKeyEffect(i).Action)];
     end;
     if e < lvHotkeys.Items.Count then
@@ -404,12 +404,12 @@ begin
                        cbSpecialSkip.Visible := True;
                        cbSpecialSkip.Enabled := True;
                      end;
-//    lka_NudgeUp, lka_NudgeDown, lka_NudgeLeft, lka_NudgeRight:
-//                     begin
-//                       lblNudgeAmount.Visible := True;
-//                       ebNudgeAmount.Visible := True;
-//                       ebNudgeAmount.Enabled := True;
-//                     end;
+    lka_NudgeUp, lka_NudgeDown, lka_NudgeLeft, lka_NudgeRight:
+                     begin
+                       lblNudgeAmount.Visible := True;
+                       ebNudgeAmount.Visible := True;
+                       ebNudgeAmount.Enabled := True;
+                     end;
   end;
 end;
 
@@ -445,22 +445,22 @@ begin
                           fHotkeys.SetKeyFunction(i, TLemmixHotkeyAction(cbFunctions.ItemIndex), 1)
                         else
                           fHotkeys.SetKeyFunction(i, TLemmixHotkeyAction(cbFunctions.ItemIndex), 0);
-//    lka_NudgeUp:    begin
-//                      ebNudgeAmount.Text := IntToStr(StrToIntDef(ebNudgeAmount.Text, 160));
-//                      fHotkeys.SetKeyFunction(i, lka_NudgeUp, StrToInt(ebNudgeAmount.Text));
-//                    end;
-//    lka_NudgeDown:  begin
-//                      ebNudgeAmount.Text := IntToStr(StrToIntDef(ebNudgeAmount.Text, 160));
-//                      fHotkeys.SetKeyFunction(i, lka_NudgeDown, StrToInt(ebNudgeAmount.Text));
-//                    end;
-//    lka_NudgeLeft:  begin
-//                      ebNudgeAmount.Text := IntToStr(StrToIntDef(ebNudgeAmount.Text, 160));
-//                      fHotkeys.SetKeyFunction(i, lka_NudgeLeft, StrToInt(ebNudgeAmount.Text));
-//                    end;
-//    lka_NudgeRight: begin
-//                      ebNudgeAmount.Text := IntToStr(StrToIntDef(ebNudgeAmount.Text, 160));
-//                      fHotkeys.SetKeyFunction(i, lka_NudgeRight, StrToInt(ebNudgeAmount.Text));
-//                    end;
+    lka_NudgeUp:    begin
+                      ebNudgeAmount.Text := IntToStr(StrToIntDef(ebNudgeAmount.Text, 160));
+                      fHotkeys.SetKeyFunction(i, lka_NudgeUp, StrToInt(ebNudgeAmount.Text));
+                    end;
+    lka_NudgeDown:  begin
+                      ebNudgeAmount.Text := IntToStr(StrToIntDef(ebNudgeAmount.Text, 160));
+                      fHotkeys.SetKeyFunction(i, lka_NudgeDown, StrToInt(ebNudgeAmount.Text));
+                    end;
+    lka_NudgeLeft:  begin
+                      ebNudgeAmount.Text := IntToStr(StrToIntDef(ebNudgeAmount.Text, 160));
+                      fHotkeys.SetKeyFunction(i, lka_NudgeLeft, StrToInt(ebNudgeAmount.Text));
+                    end;
+    lka_NudgeRight: begin
+                      ebNudgeAmount.Text := IntToStr(StrToIntDef(ebNudgeAmount.Text, 160));
+                      fHotkeys.SetKeyFunction(i, lka_NudgeRight, StrToInt(ebNudgeAmount.Text));
+                    end;
     else fHotkeys.SetKeyFunction(i, TLemmixHotkeyAction(cbFunctions.ItemIndex));
   end;
   SetVisibleModifier(TLemmixHotkeyAction(cbFunctions.ItemIndex));
@@ -523,33 +523,33 @@ begin
     TEdit(Sender).SelectAll;
 end;
 
-//procedure TFLemmixHotkeys.ebNudgeAmountChange(Sender: TObject);
-//var
-//  i: Integer;
-//  aAction: TLemmixHotkeyAction;
-//  TextValue: Integer;
-//begin
-//  i := FindKeyFromList(lvHotkeys.ItemIndex);
-//  if i = -1 then Exit; // Safety; should never happen
-//
-//  aAction := fHotkeys.CheckKeyEffect(i).Action;
-//
-//  if not (aAction in [lka_NudgeUp, lka_NudgeDown,
-//                      lka_NudgeLeft, lka_NudgeRight]) then Exit;
-//
-//  if not TryStrToInt(ebNudgeAmount.Text, TextValue) or (TextValue <= 0) then
-//  begin
-//    TextValue := 160;
-//    if ebNudgeAmount.Text <> '' then
-//    begin
-//      ebNudgeAmount.Text := '160';
-//      ebNudgeAmount.SelStart := Length(ebNudgeAmount.Text); // Move caret to the end
-//    end;
-//  end;
-//
-//  fHotkeys.SetKeyFunction(i, aAction, TextValue);
-//  RefreshList;
-//end;
+procedure TFLemmixHotkeys.ebNudgeAmountChange(Sender: TObject);
+var
+  i: Integer;
+  aAction: TLemmixHotkeyAction;
+  TextValue: Integer;
+begin
+  i := FindKeyFromList(lvHotkeys.ItemIndex);
+  if i = -1 then Exit; // Safety; should never happen
+
+  aAction := fHotkeys.CheckKeyEffect(i).Action;
+
+  if not (aAction in [lka_NudgeUp, lka_NudgeDown,
+                      lka_NudgeLeft, lka_NudgeRight]) then Exit;
+
+  if not TryStrToInt(ebNudgeAmount.Text, TextValue) or (TextValue <= 0) then
+  begin
+    TextValue := 160;
+    if ebNudgeAmount.Text <> '' then
+    begin
+      ebNudgeAmount.Text := '160';
+      ebNudgeAmount.SelStart := Length(ebNudgeAmount.Text); // Move caret to the end
+    end;
+  end;
+
+  fHotkeys.SetKeyFunction(i, aAction, TextValue);
+  RefreshList;
+end;
 
 procedure TFLemmixHotkeys.lvHotkeysSelectItem(Sender: TObject;
   Item: TListItem; Selected: Boolean);

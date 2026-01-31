@@ -119,6 +119,7 @@ type
   { internal }
     procedure ReleaseMouse(releaseInFullScreen: Boolean = False);
     procedure CheckResetCursor(aForce: Boolean = False);
+    procedure ApplyScroll(dX, dY: Integer);
     function CheckScroll: Boolean;
     procedure AddSaveState;
     procedure CheckAdjustSpawnInterval;
@@ -1105,6 +1106,16 @@ begin
   Result := fSuspendCursor;
 end;
 
+procedure TGameWindow.ApplyScroll(dX, dY: Integer);
+begin
+  Img.OffsetHorz := Img.OffsetHorz - fInternalZoom * dX;
+  Img.OffsetVert := Img.OffsetVert - fInternalZoom * dY;
+  Img.OffsetHorz := Max(MinScroll, Img.OffsetHorz);
+  Img.OffsetHorz := Min(MaxScroll, Img.OffsetHorz);
+  Img.OffsetVert := Max(MinVScroll, Img.OffsetVert);
+  Img.OffsetVert := Min(MaxVScroll, Img.OffsetVert);
+end;
+
 function TGameWindow.CheckScroll: Boolean;
   procedure Scroll(dx, dy: Integer);
   begin
@@ -1347,7 +1358,11 @@ const
                          lka_ZoomIn,
                          lka_ZoomOut,
                          lka_CycleZoom,
-                         lka_Scroll];
+                         lka_Scroll,
+                         lka_NudgeUp,
+                         lka_NudgeDown,
+                         lka_NudgeLeft,
+                         lka_NudgeRight];
   SKILL_KEYS = [lka_Skill, lka_SkillButton, lka_SkillLeft, lka_SkillRight];
 begin
   func := GameParams.Hotkeys.CheckKeyEffect(Key);
@@ -1529,8 +1544,12 @@ begin
                       fHoldScrollData.StartCursor := Mouse.CursorPos;
                     end;
                   end;
-      end;
+      lka_NudgeUp: ApplyScroll(0, -Abs(func.Modifier));
+      lka_NudgeDown: ApplyScroll(0, Abs(func.Modifier));
+      lka_NudgeLeft: ApplyScroll(-Abs(func.Modifier), 0);
+      lka_NudgeRight: ApplyScroll(Abs(func.Modifier), 0);
     end;
+  end;
 
   CheckShifts(Shift);
 

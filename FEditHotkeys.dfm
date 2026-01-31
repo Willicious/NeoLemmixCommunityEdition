@@ -161,7 +161,11 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Zoom In'
       'Zoom Out'
       'Cycle Zoom'
-      'Hold-To-Scroll')
+      'Hold-To-Scroll'
+      'Nudge Viewport Up'
+      'Nudge Viewport Down'
+      'Nudge Viewport Left'
+      'Nudge Viewport Right')
   end
   object btnSaveClose: TButton
     Left = 331

@@ -62,7 +62,11 @@ type
                          lka_ZoomIn,
                          lka_ZoomOut,
                          lka_CycleZoom,
-                         lka_Scroll);
+                         lka_Scroll,
+                         lka_NudgeUp,
+                         lka_NudgeDown,
+                         lka_NudgeLeft,
+                         lka_NudgeRight);
   PLemmixHotkeyAction = ^TLemmixHotkeyAction;
 
   TSpecialSkipCondition = (ssc_LastAction,
@@ -199,6 +203,10 @@ begin
   SetKeyFunction($47, lka_Skill, Integer(spbMiner));       // miner, G
   SetKeyFunction($57, lka_Skill, Integer(spbDigger));      // digger, W
                                                            // cloner, <none>
+  SetKeyFunction($68, lka_NudgeUp, 160);
+  SetKeyFunction($62, lka_NudgeDown, 160);
+  SetKeyFunction($64, lka_NudgeLeft, 160);
+  SetKeyFunction($66, lka_NudgeRight, 160);
 end;
 
 procedure TLemmixHotkeyManager.SetDefaultsAdvanced;
@@ -212,7 +220,6 @@ begin
   SetKeyFunction($52, lka_Restart);
   SetKeyFunction($46, lka_FastForward);
 //  SetKeyFunction($54, lka_Turbo);
-//  SetKeyFunction($44, lka_Rewind);
   SetKeyFunction($1B, lka_Exit);
   SetKeyFunction($05, lka_ZoomIn);
   SetKeyFunction($06, lka_ZoomOut);
@@ -243,8 +250,6 @@ begin
   SetKeyFunction($30, lka_SlowMotion);
   SetKeyFunction($BE, lka_SlowMotion);
   SetKeyFunction($2E, lka_Cheat);
-//  SetKeyFunction($68, lka_InfiniteSkills);
-//  SetKeyFunction($69, lka_InfiniteTime);
   SetKeyFunction($56, lka_ClearPhysics, 1);
   SetKeyFunction($14, lka_ClearPhysics, 0);
   SetKeyFunction($4C, lka_LoadReplay);
@@ -270,10 +275,10 @@ begin
   SetKeyFunction($71, lka_SkillButton, 12);
   SetKeyFunction($72, lka_SkillButton, 13);
   SetKeyFunction($73, lka_SkillButton, 14);
-//  SetKeyFunction($65, lka_NudgeUp, 160);
-//  SetKeyFunction($62, lka_NudgeDown, 160);
-//  SetKeyFunction($61, lka_NudgeLeft, 160);
-//  SetKeyFunction($63, lka_NudgeRight, 160);
+  SetKeyFunction($68, lka_NudgeUp, 160);
+  SetKeyFunction($62, lka_NudgeDown, 160);
+  SetKeyFunction($64, lka_NudgeLeft, 160);
+  SetKeyFunction($66, lka_NudgeRight, 160);
 end;
 
 procedure TLemmixHotkeyManager.SetDefaultsTraditional;
@@ -354,6 +359,11 @@ begin
   SetKeyFunction($78, lka_Skill, Integer(spbMiner));
   SetKeyFunction($79, lka_Skill, Integer(spbDigger));
   SetKeyFunction($BB, lka_Skill, Integer(spbJumper));
+
+  SetKeyFunction($68, lka_NudgeUp, 160);
+  SetKeyFunction($62, lka_NudgeDown, 160);
+  SetKeyFunction($64, lka_NudgeLeft, 160);
+  SetKeyFunction($66, lka_NudgeRight, 160);
 end;
 
 class function TLemmixHotkeyManager.InterpretMain(s: String): TLemmixHotkeyAction;
@@ -405,6 +415,10 @@ begin
   if s = 'zoom_out' then Result := lka_ZoomOut;
   if s = 'cycle_zoom' then Result := lka_CycleZoom;
   if s = 'scroll' then Result := lka_Scroll;
+  if s = 'nudge_up' then Result := lka_NudgeUp;
+  if s = 'nudge_down' then Result := lka_NudgeDown;
+  if s = 'nudge_left' then Result := lka_NudgeLeft;
+  if s = 'nudge_right' then Result := lka_NudgeRight;
 end;
 
 class function TLemmixHotkeyManager.InterpretSecondary(s: String): Integer;
@@ -557,6 +571,10 @@ var
       lka_ZoomOut:          Result := 'Zoom_Out';
       lka_CycleZoom:        Result := 'Cycle_Zoom';
       lka_Scroll:           Result := 'Scroll';
+      lka_NudgeUp:          Result := 'Nudge_Up';
+      lka_NudgeDown:        Result := 'Nudge_Down';
+      lka_NudgeLeft:        Result := 'Nudge_Left';
+      lka_NudgeRight:       Result := 'Nudge_Right';
       else Result := 'Null';
     end;
   end;
@@ -610,6 +628,14 @@ begin
                                    lka_Projection, lka_SkillProjection,
                                    lka_ShowUsedSkills] then
       s := s + ':' + InterpretSecondary(fKeyFunctions[i].Modifier, fKeyFunctions[i].Action);
+
+        // And, ensure these modifiers always have positive integers
+    if fKeyFunctions[i].Action in [lka_NudgeUp,
+                                   lka_NudgeDown,
+                                   lka_NudgeLeft,
+                                   lka_NudgeRight] then
+    s := s + ':' + InterpretSecondary(Abs(fKeyFunctions[i].Modifier), fKeyFunctions[i].Action);
+
     StringList.Add(IntToHex(i, MAX_KEY_LEN) + '=' + s);
   end;
   try
