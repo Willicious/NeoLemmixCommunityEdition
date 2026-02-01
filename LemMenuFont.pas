@@ -8,6 +8,7 @@ uses
   Dialogs, Controls, Forms,
   GR32,
   Classes, SysUtils,
+  NeoLemmixCEResources,
   SharedGlobals;
 
 const
@@ -325,22 +326,14 @@ end;
 procedure TMenuFont.Load;
 var
   i: Integer;
+  MenuFont: String;
   TempBMP: TBitmap32;
   buttonSelected: Integer;
 begin
   TempBMP := TBitmap32.Create;
+  MenuFont := 'menu_font.png';
 
-  if (not (GameParams.CurrentLevel = nil))
-    and FileExists(GameParams.CurrentLevel.Group.FindFile('menu_font.png')) then
-      TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile('menu_font.png'), TempBMP)
-  else if FileExists(AppPath + SFGraphicsMenu + 'menu_font.png') then
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'menu_font.png', TempBMP)
-  else
-  begin
-    buttonSelected := MessageDlg('Could not find the menu font gfx\menu\menu_font.png. Try to continue?',
-                                 mtWarning, mbOKCancel, 0);
-    if buttonSelected = mrCancel then Application.Terminate();
-  end;
+  LoadGraphicWithOverrides(SFGraphicsMenu, MenuFont, UpperCase(StringReplace(MenuFont, '.', '_', [])), TempBMP);
 
   for i := 0 to MENU_FONT_COUNT-1 do
   begin
