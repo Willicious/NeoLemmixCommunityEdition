@@ -10,6 +10,7 @@ LEVEL_NOT_ATTEMPTED_PNG RCDATA "data\external\gfx\menu\ce-level_not_attempted.pn
 LEVEL_TALISMAN_PNG RCDATA "data\external\gfx\menu\ce-level_talisman.png"
 LEVELINFO_ICONS_PNG RCDATA "data\external\gfx\menu\ce-levelinfo_icons.png"
 LOGO_PNG RCDATA "data\external\gfx\menu\ce-logo.png"
+MENU_FONT_PNG RCDATA "data\external\gfx\menu\ce-menu_font.png"
 SCROLLER_LEMMINGS_PNG RCDATA "data\external\gfx\menu\ce-scroller_lemmings.png"
 SCROLLER_SEGMENT_PNG RCDATA "data\external\gfx\menu\ce-scroller_segment.png"
 SIGN_CONFIG_PNG RCDATA "data\external\gfx\menu\ce-sign_config.png"
