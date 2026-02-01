@@ -4,7 +4,9 @@ unit AppController;
 interface
 
 uses
-  SharedGlobals,
+  Windows, Classes, SysUtils,
+  StrUtils, IOUtils, UMisc,
+  Forms, Dialogs, Messages,
   GameCommandLine,
   GR32, PngInterface,
   LemSystemMessages,
@@ -16,7 +18,7 @@ uses
   LemNeoPieceManager, // initial creation
   FBaseDosForm, GameBaseScreenCommon,
   CustomPopup,
-  Classes, SysUtils, StrUtils, IOUtils, UMisc, Windows, Forms, Dialogs, Messages;
+  SharedGlobals;
 
 type
   {-------------------------------------------------------------------------------
@@ -50,6 +52,7 @@ type
     procedure FreeScreen;
 	procedure CheckIfOpenedViaReplay;
     procedure HandleOpenedViaReplay;
+    function LoadEmbeddedFont(const ResName: string): Boolean;
 
     property LoadSuccess: Boolean read fLoadSuccess; // currently unused!
   end;
@@ -73,6 +76,8 @@ begin
 
   // Set to True as default; change to False if any failure.
   fLoadSuccess := True;
+
+  LoadEmbeddedFont('HOBO_STD_FONT');
 
   SoundManager := TSoundManager.Create;
   GameParams := TDosGameParams.Create;
@@ -240,6 +245,22 @@ begin
 
   GameParams.NextScreen := gstPreview;
   fActiveForm.LoadReplay;
+end;
+
+function TAppController.LoadEmbeddedFont(const ResName: string): Boolean;
+var
+  RS: TResourceStream;
+  FontsAdded: DWORD;
+begin
+  Result := False;
+
+  RS := TResourceStream.Create(HInstance, ResName, RT_RCDATA);
+  try
+    if AddFontMemResourceEx(RS.Memory, RS.Size, nil, @FontsAdded) <> 0 then
+      Result := True;
+  finally
+    RS.Free;
+  end;
 end;
 
 function TAppController.Execute: Boolean;

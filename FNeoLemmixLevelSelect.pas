@@ -433,6 +433,9 @@ end;
 
 procedure TFLevelSelect.FormCreate(Sender: TObject);
 begin
+  lblName.Font.Name := 'Hobo Std';
+  lblName.Font.Style := [];
+
   fTalismanButtons := TObjectList<TSpeedButton>.Create;
 
   fIconBMP := TBitmap32.Create;
