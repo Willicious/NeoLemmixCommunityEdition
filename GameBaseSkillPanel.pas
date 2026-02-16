@@ -273,8 +273,8 @@ begin
                           ButtonHint := 'FAST-FORWARD';
       spbRestart:         ButtonHint := 'RESTART';
       spbNuke:            ButtonHint := 'NUKE';
-      spbBackOneFrame:    ButtonHint := 'FRAMESTEP';
-      spbForwardOneFrame: ButtonHint := 'FRAMESTEP';
+      spbBackOneFrame:    ButtonHint := 'FRAMESTEP-';
+      spbForwardOneFrame: ButtonHint := 'FRAMESTEP+';
       spbDirLeft:         ButtonHint := 'SELECT LEFT';
       spbDirRight:        ButtonHint := 'SELECT RIGHT';
       spbClearPhysics:    ButtonHint := 'VIEW PHYSICS';
