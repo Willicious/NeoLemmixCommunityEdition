@@ -35,7 +35,6 @@ type
     cbIncreaseZoom: TCheckBox;
     cbCompactSkillPanel: TCheckBox;
     cbEdgeScrolling: TCheckBox;
-    cbUseSpawnInterval: TCheckBox;
     btnHotkeys: TButton;
     cbReplayAfterBackskip: TCheckBox;
     cbPauseAfterBackwards: TCheckBox;
@@ -62,7 +61,7 @@ type
     gbVolume: TGroupBox;
     gbReplayOptions: TGroupBox;
     gbHelperOptions: TGroupBox;
-    gbInterfaceOptions: TGroupBox;
+    gbMouseOptions: TGroupBox;
     gbZoomOptions: TGroupBox;
     gbVisualOptions: TGroupBox;
     gbWindowOptions: TGroupBox;
@@ -73,11 +72,13 @@ type
     lblSkillQFrames: TLabel;
     seSkillQFrames: TSpinEdit;
     cbFadeMenuScreens: TCheckBox;
-    cbUseNegativeSaveCount: TCheckBox;
-    cbShowButtonHints: TCheckBox;
     cbForceDefaultLemmings: TCheckBox;
     cbNoBackgrounds: TCheckBox;
     cbInvertMouseWheelFramesteps: TCheckBox;
+    gbSkillPanelOptions: TGroupBox;
+    cbUseSpawnInterval: TCheckBox;
+    cbCountDownFromSR: TCheckBox;
+    cbShowButtonHints: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -285,7 +286,7 @@ begin
 
     cbEdgeScrolling.Checked := GameParams.EdgeScroll;
     cbUseSpawnInterval.Checked := GameParams.UseSpawnInterval;
-    cbUseNegativeSaveCount.Checked := GameParams.UseNegativeSaveCount;
+    cbCountDownFromSR.Checked := GameParams.CountDownFromSR;
     cbShowButtonHints.Checked := GameParams.ShowButtonHints;
     cbInvertMouseWheelFramesteps.Checked := GameParams.InvertMouseWheelFramesteps;
 
@@ -360,7 +361,7 @@ begin
 
   GameParams.EdgeScroll := cbEdgeScrolling.Checked;
   GameParams.UseSpawnInterval := cbUseSpawnInterval.Checked;
-  GameParams.UseNegativeSaveCount := cbUseNegativeSaveCount.Checked;
+  GameParams.CountDownFromSR := cbCountDownFromSR.Checked;
   GameParams.ShowButtonHints := cbShowButtonHints.Checked;
   GameParams.InvertMouseWheelFramesteps := cbInvertMouseWheelFramesteps.Checked;
 

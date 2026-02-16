@@ -1684,7 +1684,7 @@ begin
   ExtraSaved := 0;
   TotalSaved := 0;
 
-  if GameParams.UseNegativeSaveCount then
+  if GameParams.CountDownFromSR then
   begin
     SaveCount := Level.Info.RescueCount - Game.LemmingsSaved;
     ExtraSaved := Game.LemmingsSaved - Level.Info.RescueCount;

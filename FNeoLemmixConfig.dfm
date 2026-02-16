@@ -30,7 +30,6 @@ object FormNXConfig: TFormNXConfig
     ActivePage = TabSheet2
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
-    ExplicitHeight = 576
     object TabSheet1: TTabSheet
       Caption = 'General'
       object lblUserName: TLabel
@@ -194,7 +193,7 @@ object FormNXConfig: TFormNXConfig
       ImageIndex = 2
       object rgWhenNoLemmings: TRadioGroup
         Left = 19
-        Top = 410
+        Top = 434
         Width = 336
         Height = 85
         Caption = 'When No Lemmings Remain'
@@ -207,7 +206,7 @@ object FormNXConfig: TFormNXConfig
       end
       object gbReplayOptions: TGroupBox
         Left = 19
-        Top = 322
+        Top = 346
         Width = 336
         Height = 70
         Caption = 'Replay Options'
@@ -233,7 +232,7 @@ object FormNXConfig: TFormNXConfig
       end
       object gbHelperOptions: TGroupBox
         Left = 19
-        Top = 180
+        Top = 212
         Width = 336
         Height = 119
         Caption = 'Helper Options'
@@ -284,12 +283,12 @@ object FormNXConfig: TFormNXConfig
           OnChange = OptionChanged
         end
       end
-      object gbInterfaceOptions: TGroupBox
+      object gbMouseOptions: TGroupBox
         Left = 19
-        Top = 16
+        Top = 11
         Width = 336
-        Height = 145
-        Caption = 'Interface Options'
+        Height = 73
+        Caption = 'Mouse Options'
         TabOrder = 0
         object cbEdgeScrolling: TCheckBox
           Left = 19
@@ -300,43 +299,51 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 0
           OnClick = OptionChanged
         end
-        object cbUseSpawnInterval: TCheckBox
-          Left = 19
-          Top = 45
-          Width = 294
-          Height = 17
-          Caption = 'Use Spawn Interval Instead of Release Rate'
-          TabOrder = 1
-          OnClick = OptionChanged
-        end
-        object cbUseNegativeSaveCount: TCheckBox
-          Left = 19
-          Top = 68
-          Width = 238
-          Height = 17
-          Caption = 'Use Negative Save Count'
-          TabOrder = 2
-          OnClick = OptionChanged
-        end
-        object cbShowButtonHints: TCheckBox
-          Left = 19
-          Top = 91
-          Width = 238
-          Height = 17
-          Caption = 'Show Skill Panel Button Hints'
-          TabOrder = 3
-          OnClick = OptionChanged
-        end
         object cbInvertMouseWheelFramesteps: TCheckBox
           Left = 19
-          Top = 114
+          Top = 45
           Width = 294
           Height = 17
           Hint = 
             'Pressing Ctrl, Shift or Alt whilst using the mousewheel allows f' +
             'orwards/backwards framestepping'
           Caption = 'Invert Mouse Wheel Framestep Direction'
-          TabOrder = 4
+          TabOrder = 1
+          OnClick = OptionChanged
+        end
+      end
+      object gbSkillPanelOptions: TGroupBox
+        Left = 19
+        Top = 100
+        Width = 336
+        Height = 95
+        Caption = 'Skill Panel Options'
+        TabOrder = 4
+        object cbUseSpawnInterval: TCheckBox
+          Left = 19
+          Top = 21
+          Width = 294
+          Height = 17
+          Caption = 'Use Spawn Interval Instead of Release Rate'
+          TabOrder = 0
+          OnClick = OptionChanged
+        end
+        object cbCountDownFromSR: TCheckBox
+          Left = 19
+          Top = 44
+          Width = 238
+          Height = 17
+          Caption = 'Count Downwards from Save Requirement'
+          TabOrder = 1
+          OnClick = OptionChanged
+        end
+        object cbShowButtonHints: TCheckBox
+          Left = 19
+          Top = 67
+          Width = 238
+          Height = 17
+          Caption = 'Show Skill Panel Button Hints'
+          TabOrder = 2
           OnClick = OptionChanged
         end
       end
@@ -630,7 +637,6 @@ object FormNXConfig: TFormNXConfig
     Caption = 'OK'
     TabOrder = 1
     OnClick = btnOKClick
-    ExplicitTop = 582
   end
   object btnCancel: TButton
     Left = 137
@@ -642,7 +648,6 @@ object FormNXConfig: TFormNXConfig
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 2
-    ExplicitTop = 582
   end
   object btnApply: TButton
     Left = 251
@@ -653,6 +658,5 @@ object FormNXConfig: TFormNXConfig
     Caption = 'Apply'
     TabOrder = 3
     OnClick = btnApplyClick
-    ExplicitTop = 582
   end
 end

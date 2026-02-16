@@ -108,7 +108,7 @@ type
     moCompactSkillPanel,
     moEdgeScroll,
     moUseSpawnInterval,
-    moUseNegativeSaveCount,
+    moCountDownFromSR,
     moShowButtonHints,
     moInvertMouseWheelFramesteps,
     moShowLevelSelectOptions,
@@ -134,7 +134,7 @@ const
     moFadeMenuScreens,
     moIncreaseZoom,
     moEdgeScroll,
-    moUseNegativeSaveCount,
+    moCountDownFromSR,
     moShowButtonHints,
     moShowLevelSelectOptions
   ];
@@ -295,7 +295,7 @@ type
     property CompactSkillPanel: Boolean Index moCompactSkillPanel read GetOptionFlag write SetOptionFlag;
     property EdgeScroll: Boolean Index moEdgeScroll read GetOptionFlag write SetOptionFlag;
     property UseSpawnInterval: Boolean Index moUseSpawnInterval read GetOptionFlag write SetOptionFlag;
-    property UseNegativeSaveCount: Boolean Index moUseNegativeSaveCount read GetOptionFlag write SetOptionFlag;
+    property CountDownFromSR: Boolean Index moCountDownFromSR read GetOptionFlag write SetOptionFlag;
     property ShowButtonHints: Boolean Index moShowButtonHints read GetOptionFlag write SetOptionFlag;
     property InvertMouseWheelFramesteps: Boolean Index moInvertMouseWheelFramesteps read GetOptionFlag write SetOptionFlag;
     property ForceDefaultLemmings: Boolean Index moForceDefaultLemmings read GetOptionFlag write SetOptionFlag;
@@ -531,7 +531,7 @@ begin
     SaveBoolean('FadeMenuScreens', FadeMenuScreens);
     SaveBoolean('EdgeScrolling', EdgeScroll);
     SaveBoolean('UseSpawnInterval', UseSpawnInterval);
-    SaveBoolean('UseNegativeSaveCount', UseNegativeSaveCount);
+    SaveBoolean('CountDownFromSR', CountDownFromSR);
     SaveBoolean('ShowButtonHints', ShowButtonHints);
     SaveBoolean('InvertMouseWheelFramesteps', InvertMouseWheelFramesteps);
 
@@ -753,7 +753,7 @@ begin
     EdgeScroll := LoadBoolean('EdgeScrolling', EdgeScroll);
     IncreaseZoom := LoadBoolean('IncreaseZoom', IncreaseZoom);
     UseSpawnInterval := LoadBoolean('UseSpawnInterval', UseSpawnInterval);
-    UseNegativeSaveCount := LoadBoolean('UseNegativeSaveCount', UseNegativeSaveCount);
+    CountDownFromSR := LoadBoolean('CountDownFromSR', CountDownFromSR);
     ShowButtonHints := LoadBoolean('ShowButtonHints', ShowButtonHints);
     InvertMouseWheelFramesteps := LoadBoolean('InvertMouseWheelFramesteps', InvertMouseWheelFramesteps);
 
@@ -809,6 +809,9 @@ begin
     SoundManager.SoundVolume := StrToIntDef(SL.Values['SoundVolume'], 50);
     SoundManager.MuteMusic := not LoadBoolean('MusicEnabled', not SoundManager.MuteMusic);
     SoundManager.MusicVolume := StrToIntDef(SL.Values['MusicVolume'], 50);
+
+    // Backwards compatibility
+    CountDownFromSR := LoadBoolean('UseNegativeSaveCount', CountDownFromSR);
   except
     on E: Exception do
     begin
