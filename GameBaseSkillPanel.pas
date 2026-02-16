@@ -1461,7 +1461,7 @@ begin
             fCombineHueShift := Teal;
         end else
           SpecialCombine := False;
-      end else if (not GameParams.UseNegativeSaveCount) and (CurChar > SaveCountStartIndex) and (CurChar <= SaveCountStartIndex + 5) then
+      end else if (CurChar > SaveCountStartIndex) and (CurChar <= SaveCountStartIndex + 5) then
       begin
         if CursorOverRescueCount then
         begin
@@ -1671,40 +1671,43 @@ end;
 
 procedure TBaseSkillPanel.SetInfoLemIn(Pos: Integer);
 var
-  MinusSaveCount, SaveCount, TotalSaved: Integer;
+  SaveCount, ExtraSaved, TotalSaved: Integer;
   S: string;
 const
   LEN = 4;
 begin
+  SaveCount := 0;
+  ExtraSaved := 0;
+  TotalSaved := 0;
+
   if GameParams.UseNegativeSaveCount then
   begin
-    MinusSaveCount := (Game.LemmingsSaved - Level.Info.RescueCount);
-    S := IntToStr(MinusSaveCount);
-
-    if (MinusSaveCount <= -999) then
-      S := '-999'
-    else if (MinusSaveCount >= 999) then // Should never happen
-      S := ' 999'
-    else if Length(S) < LEN then
-      S := PadL(PadR(S, LEN - 1), LEN);
-  end else begin
     SaveCount := Level.Info.RescueCount - Game.LemmingsSaved;
+    ExtraSaved := Game.LemmingsSaved - Level.Info.RescueCount;
+
+    if CursorOverRescueCount then
+      S := IntToStr(Level.Info.RescueCount)
+    else if (ExtraSaved > 0) then
+      S := '+' + IntToStr(ExtraSaved)
+    else
+      S := IntToStr(SaveCount);
+  end else begin
     TotalSaved := Game.LemmingsSaved;
 
     if CursorOverRescueCount then
       S := IntToStr(Level.Info.RescueCount)
-    else if (SaveCount < 0) then
-      S := IntToStr(TotalSaved)
     else
-      S := IntToStr(SaveCount);
-
-    if (SaveCount <= -999) then // Should never happen
-      S := '-999'
-    else if (SaveCount >= 999) then
-      S := ' 999'
-    else if Length(S) < LEN then
-      S := PadL(PadR(S, LEN - 1), LEN);
+      S := IntToStr(TotalSaved);
   end;
+
+  if (SaveCount <= -999) or (TotalSaved <= -999) or (ExtraSaved <= -999) then // Should never happen
+    S := '-999'
+  else if (ExtraSaved >= 999) then
+    S := '+999'   
+  else if (SaveCount >= 999) or (TotalSaved >= 999) then
+    S := ' 999'
+  else if Length(S) < LEN then
+    S := PadL(PadR(S, LEN - 1), LEN);
 
   ModString(fNewDrawStr, S, Pos);
 end;
