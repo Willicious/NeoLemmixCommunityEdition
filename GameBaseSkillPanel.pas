@@ -189,7 +189,7 @@ type
     function IsReplaying: Boolean;
 
     function CursorOverSkillButton(out Button: TSkillPanelButton): Boolean;
-    function CursorOverClickableItem: Boolean;
+    function CursorOverPanelItem: Boolean;
     function CursorOverRescueCount: Boolean;
     function CursorOverReplayIcon: Boolean;
     function CursorOverMinimap: Boolean;
@@ -250,7 +250,9 @@ begin
   ButtonHint := '';
 
   if CursorOverMinimap then
-                   ButtonHint := 'MINIMAP'
+                          ButtonHint := 'MINIMAP'
+  else if CursorOverRescueCount then
+                          ButtonHint := 'SAVE COUNT'
   else if CursorOverReplayIcon then
   begin
     if Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
@@ -358,11 +360,12 @@ begin
   end;
 end;
 
-function TBaseSkillPanel.CursorOverClickableItem: Boolean;
+function TBaseSkillPanel.CursorOverPanelItem: Boolean;
 var
   aButton: TSkillPanelButton;
 begin
   Result := False or CursorOverSkillButton(aButton)
+                  or CursorOverRescueCount
                   or CursorOverReplayIcon
                   or CursorOverMinimap;
 end;
@@ -1485,7 +1488,7 @@ begin
           fCombineHueShift := Red
         else
           fCombineHueShift := Yellow;
-      end else if (CurChar <= CursorInfoEndIndex) and CursorOverClickableItem then
+      end else if (CurChar <= CursorInfoEndIndex) and CursorOverPanelItem then
       begin
         SpecialCombine := True;
         fCombineHueShift := Blue;
@@ -1610,7 +1613,7 @@ begin
 
   S := '';
 
-  if CursorOverClickableItem and GameParams.ShowButtonHints then
+  if CursorOverPanelItem and GameParams.ShowButtonHints then
     S := ButtonHint + StringOfChar(' ', 13 - Length(ButtonHint))
   else begin
 
