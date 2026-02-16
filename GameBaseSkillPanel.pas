@@ -96,7 +96,10 @@ type
     function MinimapWidth: Integer;
     function MinimapHeight: Integer;
     function ReplayIconRect: TRect; virtual; abstract;
-    function RescueCountRect: TRect; virtual; abstract;
+    function HatchIconRect: TRect; virtual; abstract;
+    function AliveIconRect: TRect; virtual; abstract;
+    function ExitIconRect: TRect; virtual; abstract;
+    function TimeIconRect: TRect; virtual; abstract;
 
     function FirstSkillButtonIndex: Integer; virtual;
     function LastSkillButtonIndex: Integer; virtual;
@@ -191,8 +194,7 @@ type
 
     function CursorOverSkillButton(out Button: TSkillPanelButton): Boolean;
     function CursorOverPanelItem: Boolean;
-    function CursorOverRescueCount: Boolean;
-    function CursorOverReplayIcon: Boolean;
+    function CursorOverIcon(aIconRect: TRect): Boolean;
     function CursorOverMinimap: Boolean;
   end;
 
@@ -252,9 +254,15 @@ begin
 
   if CursorOverMinimap then
                           ButtonHint := 'MINIMAP'
-  else if CursorOverRescueCount then
-                          ButtonHint := 'SAVE COUNT'
-  else if CursorOverReplayIcon then
+  else if CursorOverIcon(HatchIconRect) then
+                          ButtonHint := 'TO SPAWN'
+  else if CursorOverIcon(AliveIconRect) then
+                          ButtonHint := 'AVAILABLE'
+  else if CursorOverIcon(ExitIconRect) then
+                          ButtonHint := 'TO SAVE'
+  else if CursorOverIcon(TimeIconRect)then
+                          ButtonHint := 'TIMER'
+  else if CursorOverIcon(ReplayIconRect) then
   begin
     if Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
                           ButtonHint := 'STOP REPLAY'
@@ -287,7 +295,7 @@ begin
   end;
 end;
 
-function TBaseSkillPanel.CursorOverRescueCount: Boolean;
+function TBaseSkillPanel.CursorOverIcon(aIconRect: TRect): Boolean;
 var
   CursorPos: TPoint;
   P: TPoint;
@@ -296,7 +304,7 @@ begin
   CursorPos := Mouse.CursorPos;
   P := Image.ControlToBitmap(Image.ScreenToClient(CursorPos));
 
-  if PtInRect(RescueCountRect, P) then
+  if PtInRect(aIconRect, P) then
   begin
     Result := True;
     Exit;
@@ -329,22 +337,6 @@ begin
   Button := spbNone;
 end;
 
-function TBaseSkillPanel.CursorOverReplayIcon: Boolean;
-var
-  CursorPos: TPoint;
-  P: TPoint;
-begin
-  Result := False;
-  CursorPos := Mouse.CursorPos;
-  P := Image.ControlToBitmap(Image.ScreenToClient(CursorPos));
-
-  if PtInRect(ReplayIconRect, P) then
-  begin
-    Result := True;
-    Exit;
-  end;
-end;
-
 function TBaseSkillPanel.CursorOverMinimap: Boolean;
 var
   CursorPos: TPoint;
@@ -366,8 +358,11 @@ var
   aButton: TSkillPanelButton;
 begin
   Result := False or CursorOverSkillButton(aButton)
-                  or CursorOverRescueCount
-                  or CursorOverReplayIcon
+                  or CursorOverIcon(ReplayIconRect)
+                  or CursorOverIcon(HatchIconRect)
+                  or CursorOverIcon(AliveIconRect)
+                  or CursorOverIcon(ExitIconRect)
+                  or CursorOverIcon(TimeIconRect)
                   or CursorOverMinimap;
 end;
 
@@ -1467,7 +1462,7 @@ begin
           SpecialCombine := False;
       end else if (CurChar > SaveCountStartIndex) and (CurChar <= SaveCountStartIndex + 5) then
       begin
-        if CursorOverRescueCount then
+        if CursorOverIcon(ExitIconRect) then
         begin
           SpecialCombine := True;
           fCombineHueShift := Teal;
@@ -1689,7 +1684,7 @@ begin
     SaveCount := Level.Info.RescueCount - Game.LemmingsSaved;
     ExtraSaved := Game.LemmingsSaved - Level.Info.RescueCount;
 
-    if CursorOverRescueCount then
+    if CursorOverIcon(ExitIconRect) then
       S := IntToStr(Level.Info.RescueCount)
     else if (ExtraSaved > 0) then
       S := '+' + IntToStr(ExtraSaved)
@@ -1698,7 +1693,7 @@ begin
   end else begin
     TotalSaved := Game.LemmingsSaved;
 
-    if CursorOverRescueCount then
+    if CursorOverIcon(ExitIconRect) then
       S := IntToStr(Level.Info.RescueCount)
     else
       S := IntToStr(TotalSaved);
@@ -1795,7 +1790,7 @@ begin
   if GameParams.EdgeScroll then fGameWindow.ApplyMouseTrap;
   if fGameWindow.IsHyperSpeed then Exit;
 
-  if CursorOverReplayIcon then
+  if CursorOverIcon(ReplayIconRect) then
   begin
     // Stop playback if the "P" icon is clicked (replay must have finished or been cancelled, so this needs to be called first)
     if GameParams.PlaybackModeActive and (Game.CurrentIteration > Game.ReplayManager.LastActionFrame) then

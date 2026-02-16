@@ -20,7 +20,10 @@ type
     function MinimapRect: TRect; override;
 
     function ReplayIconRect: TRect; override;
-    function RescueCountRect: TRect; override;
+    function HatchIconRect: TRect; override;
+    function AliveIconRect: TRect; override;
+    function ExitIconRect: TRect; override;
+    function TimeIconRect: TRect; override;
 
     procedure CreateNewInfoString; override;
     function DrawStringLength: Integer; override;
@@ -45,7 +48,10 @@ type
     function MinimapRect: TRect; override;
 
     function ReplayIconRect: TRect; override;
-    function RescueCountRect: TRect; override;
+    function HatchIconRect: TRect; override;
+    function AliveIconRect: TRect; override;
+    function ExitIconRect: TRect; override;
+    function TimeIconRect: TRect; override;
 
     procedure CreateNewInfoString; override;
     function DrawStringLength: Integer; override;
@@ -128,10 +134,28 @@ begin
   Result := Rect(94 * ResMod, 2 * ResMod, 104 * ResMod, 16 * ResMod);
 end;
 
-// Assigns a non-clickable rectangle to the rescue count icon & digits
-function TSkillPanelStandard.RescueCountRect: TRect;
+// Assigns a non-clickable rectangle to the hatch count icon & digits
+function TSkillPanelStandard.HatchIconRect: TRect;
 begin
-  Result := Rect(208 * ResMod, 2 * ResMod, 258 * ResMod, 16 * ResMod);
+  Result := Rect(112 * ResMod, 2 * ResMod, 156 * ResMod, 16 * ResMod);
+end;
+
+// Assigns a non-clickable rectangle to the alive count icon & digits
+function TSkillPanelStandard.AliveIconRect: TRect;
+begin
+  Result := Rect(160 * ResMod, 2 * ResMod, 204 * ResMod, 16 * ResMod);
+end;
+
+// Assigns a non-clickable rectangle to the exit count icon & digits
+function TSkillPanelStandard.ExitIconRect: TRect;
+begin
+  Result := Rect(208 * ResMod, 2 * ResMod, 252 * ResMod, 16 * ResMod);
+end;
+
+// Assigns a non-clickable rectangle to the timer icon & digits
+function TSkillPanelStandard.TimeIconRect: TRect;
+begin
+  Result := Rect(256 * ResMod, 2 * ResMod, 304 * ResMod, 16 * ResMod);
 end;
 
 procedure TSkillPanelStandard.CreateNewInfoString;
@@ -247,10 +271,28 @@ begin
   Result := Rect(94 * ResMod, 2 * ResMod, 104 * ResMod, 16 * ResMod);
 end;
 
-// Assigns a non-clickable rectangle to the rescue count icon & digits
-function TSkillPanelCompact.RescueCountRect: TRect;
+// Assigns a non-clickable rectangle to the hatch count icon & digits
+function TSkillPanelCompact.HatchIconRect: TRect;
 begin
-  Result := Rect(208 * ResMod, 2 * ResMod, 258 * ResMod, 16 * ResMod);
+  Result := Rect(112 * ResMod, 2 * ResMod, 156 * ResMod, 16 * ResMod);
+end;
+
+// Assigns a non-clickable rectangle to the alive count icon & digits
+function TSkillPanelCompact.AliveIconRect: TRect;
+begin
+  Result := Rect(160 * ResMod, 2 * ResMod, 204 * ResMod, 16 * ResMod);
+end;
+
+// Assigns a non-clickable rectangle to the saved count icon & digits
+function TSkillPanelCompact.ExitIconRect: TRect;
+begin
+  Result := Rect(208 * ResMod, 2 * ResMod, 252 * ResMod, 16 * ResMod);
+end;
+
+// Assigns a non-clickable rectangle to the timer icon & digits
+function TSkillPanelCompact.TimeIconRect: TRect;
+begin
+  Result := Rect(256 * ResMod, 2 * ResMod, 304 * ResMod, 16 * ResMod);
 end;
 
 procedure TSkillPanelCompact.CreateNewInfoString;
