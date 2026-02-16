@@ -45,8 +45,6 @@ type
     procedure SetClearPhysics(aValue: Boolean);
     function GetClearPhysics: Boolean;
     property ClearPhysics: Boolean read GetClearPhysics write SetClearPhysics;
-    function GetInternalZoom: Integer;
-    property InternalZoom: Integer read GetInternalZoom;
   end;
 
 implementation

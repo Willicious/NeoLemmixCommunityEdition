@@ -132,7 +132,6 @@ type
     procedure ExecuteReplayEdit;
     procedure SetClearPhysics(aValue: Boolean);
     function GetClearPhysics: Boolean;
-    function GetInternalZoom: Integer;
     procedure SetProjectionType(aValue: Integer);
     procedure ProcessGameMessages;
     procedure ApplyResize(NoRecenter: Boolean = False);
@@ -289,8 +288,6 @@ begin
     else
       ChangeZoom(fInternalZoom - 1);
   end;
-
-  SkillPanel.ShowMinimapZoomText := True;
 end;
 
 procedure TGameWindow.ChangeZoom(aNewZoom: Integer; NoRedraw: Boolean = False);
@@ -465,11 +462,6 @@ end;
 function TGameWindow.GetClearPhysics: Boolean;
 begin
   Result := fClearPhysics;
-end;
-
-function TGameWindow.GetInternalZoom: Integer;
-begin
-  Result := fInternalZoom;
 end;
 
 procedure TGameWindow.RenderMinimap;
