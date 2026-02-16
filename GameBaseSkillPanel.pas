@@ -7,7 +7,9 @@ uses
   Classes, Controls, GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   GameWindowInterface,
   LemAnimationSet, LemMetaAnimation, LemNeoLevelPack,
-  LemCore, LemLemming, LemGame, LemLevel, SharedGlobals;
+  LemCore, LemLemming, LemGame, LemLevel,
+  NeoLemmixCEResources,
+  SharedGlobals;
 
 type
   TMinimapClickEvent = procedure(Sender: TObject; const P: TPoint) of object;
@@ -196,26 +198,26 @@ type
   procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
 
 const
-  NUM_FONT_CHARS = 45;
+  NUM_FONT_CHARS = 46;
 
 const
   // WARNING: The order of the strings has to correspond to the one
   //          of TSkillPanelButton in LemCore.pas!
   // As skill icons are dealt with separately, we use a placeholder here
   BUTTON_TO_STRING: array[TSkillPanelButton] of string = (
-    'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
-    'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
-    'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
-    'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
-    'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
-    'empty_slot.png', {Skills end here}
+    'empty_slot', 'empty_slot', 'empty_slot', 'empty_slot',
+    'empty_slot', 'empty_slot', 'empty_slot', 'empty_slot',
+    'empty_slot', 'empty_slot', 'empty_slot', 'empty_slot',
+    'empty_slot', 'empty_slot', 'empty_slot', 'empty_slot',
+    'empty_slot', 'empty_slot', 'empty_slot', 'empty_slot',
+    'empty_slot', {Skills end here}
 
-    'empty_slot.png', 'icon_rr_plus.png', 'icon_rr_minus.png', 'icon_pause.png',
-    'icon_nuke.png', 'icon_ff.png', 'icon_restart.png', 'icon_frameskip.png',
-    'icon_directional.png', 'icon_cpm_and_replay.png',
+    'empty_slot', 'icon_rr_plus', 'icon_rr_minus', 'icon_pause',
+    'icon_nuke', 'icon_ff', 'icon_restart', 'icon_frameskip',
+    'icon_directional', 'icon_cpm_and_replay',
 
     // These ones are placeholders - they're the bottom half of splits
-    'icon_frameskip.png', 'icon_directional.png', 'icon_cpm_and_replay.png'
+    'icon_frameskip', 'icon_directional', 'icon_cpm_and_replay'
     );
 
 
@@ -566,14 +568,32 @@ end;
 procedure GetGraphic(aName: String; aDst: TBitmap32);
 var
   MaskColor: TColor32;
-  SrcFile, SrcFileHr, SrcFileHrMask: String;
+  Name, SrcFile, SrcFileHr, SrcFileHrMask, EmbeddedName, PanelDir: String;
   Target: TNeoLevelGroup;
-
   UpscaleSettings: TUpscaleSettings;
 begin
+  // 1) Try override system first
+  if GameParams.HighResolution then
+  begin
+    EmbeddedName := UpperCase(aName) + '_HR_PNG';
+    PanelDir := SFGraphicsPanelHighRes;
+  end else begin
+    EmbeddedName := UpperCase(aName) + '_PNG';
+    PanelDir := SFGraphicsPanel;
+  end;
+
+  Name := aName + '.png';
+
+  if LoadGraphicWithOverrides(PanelDir, Name, EmbeddedName, aDst) then
+  begin
+    aDst.DrawMode := dmBlend;
+    Exit;
+  end;
+
+  // 2) Fallback to legacy logic
   Target := GameParams.CurrentLevel.Group;
 
-  SrcFile := Target.Path + aName;
+  SrcFile := Target.Path + Name;
   if GameParams.HighResolution then
   begin
     SrcFileHr := ChangeFileExt(SrcFile, '-hr.png');
@@ -583,7 +603,7 @@ begin
   while not (FileExists(SrcFile) or Target.IsBasePack or (Target.Parent = nil)) do
   begin
     Target := Target.Parent;
-    SrcFile := Target.Path + aName;
+    SrcFile := Target.Path + Name;
     if GameParams.HighResolution then
     begin
       SrcFileHr := ChangeFileExt(SrcFile, '-hr.png');
@@ -593,11 +613,11 @@ begin
 
   if not FileExists(SrcFile) then
   begin
-    SrcFile := AppPath + SFGraphicsPanel + aName;
+    SrcFile := AppPath + SFGraphicsPanel + Name;
     if GameParams.HighResolution then
     begin
-      SrcFileHr := AppPath + SFGraphicsPanelHighRes + aName;
-      SrcFileHrMask := AppPath + SFGraphicsPanelHighRes + ChangeFileExt(aName, '_mask.png');
+      SrcFileHr := AppPath + SFGraphicsPanelHighRes + Name;
+      SrcFileHrMask := AppPath + SFGraphicsPanelHighRes + ChangeFileExt(Name, '_mask.png');
     end;
   end;
 
@@ -638,7 +658,7 @@ begin
   BlankPanel := TBitmap32.Create;
   BlankPanel.DrawMode := dmBlend;
   BlankPanel.CombineMode := cmMerge;
-  GetGraphic('skill_panels.png', BlankPanel);
+  GetGraphic('skill_panels', BlankPanel);
 
   SrcRect := BlankPanel.BoundsRect;
   SrcWidth := SrcRect.Right - SrcRect.Left;
@@ -675,9 +695,9 @@ var
   i: Integer;
 begin
   // Load first the characters
-  GetGraphic('panel_font.png', fIconBmp);
+  GetGraphic('panel_font', fIconBmp);
   SrcRect := Rect(0, 0, 8 * ResMod, 16 * ResMod);
-  for i := 0 to 37 do
+  for i := 0 to 38 do
   begin
     fInfoFont[i].SetSize(8 * ResMod, 16 * ResMod);
     fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
@@ -685,9 +705,9 @@ begin
   end;
 
   // Load now the icons for the text panel
-  GetGraphic('panel_icons.png', fIconBmp);
+  GetGraphic('panel_icons', fIconBmp);
   SrcRect := Rect(0, 0, 8 * ResMod, 16 * ResMod);
-  for i := 38 to NUM_FONT_CHARS - 1 do
+  for i := 39 to NUM_FONT_CHARS - 1 do
   begin
     fInfoFont[i].SetSize(8 * ResMod, 16 * ResMod);
     fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
@@ -807,8 +827,8 @@ var
   end;
 begin
   // Load the erasing icon and selection outline first
-  GetGraphic('skill_count_erase.png', fSkillCountErase);
-  GetGraphic('skill_selected.png', fSkillSelected);
+  GetGraphic('skill_count_erase', fSkillCountErase);
+  GetGraphic('skill_selected', fSkillSelected);
 
   fSkillCountEraseInvert.Assign(fSkillCountErase);
   for y := 0 to fSkillCountEraseInvert.Height-1 do
@@ -934,7 +954,7 @@ var
   end;
 
 begin
-  GetGraphic('skill_count_digits.png', fIconBmp);
+  GetGraphic('skill_count_digits', fIconBmp);
   SrcRect := Rect(0, 0, 4 * ResMod, 8 * ResMod);
   for c := '0' to '9' do
   begin
@@ -1024,7 +1044,7 @@ begin
 
   // Draw minimap region
   MinimapRegion := TBitmap32.Create;
-  GetGraphic('minimap_region.png', MinimapRegion);
+  GetGraphic('minimap_region', MinimapRegion);
   ResizeMinimapRegion(MinimapRegion);
   MinimapRegion.DrawTo(fOriginal, MinimapRect.Left - (3 * ResMod), MinimapRect.Top - (2 * ResMod));
   MinimapRegion.Free;
@@ -1087,7 +1107,7 @@ begin
   begin
     EmptySlot := TBitmap32.Create;
     try
-      GetGraphic('empty_slot.png', EmptySlot);
+      GetGraphic('empty_slot', EmptySlot);
       EmptySlot.DrawMode := dmBlend;
       EmptySlot.CombineMode := cmMerge;
       while ButtonIndex <= LastSkillButtonIndex do
@@ -1172,7 +1192,7 @@ begin
 
   // Draw a message instead of the minimap in certain conditions
   if Game.StateIsUnplayable and not Game.ShouldWeExitBecauseOfOptions then
-    DrawMinimapMessage('nolems_message.png', MinimapMessage)
+    DrawMinimapMessage('nolems_message', MinimapMessage)
   else begin
     // Add some space for when the viewport rect lies on the very edges
     fMinimapTemp.SetSize(fMinimap.Width + 2 * ResMod, fMinimap.Height + 2 * ResMod);
@@ -1417,8 +1437,9 @@ begin
       '%':        CharID := 0;
       '0'..'9':   CharID := ord(New) - ord('0') + 1;
       '-':        CharID := 11;
-      'A'..'Z':   CharID := ord(New) - ord('A') + 12;
-      #91 .. #97: CharID := ord(New) - ord('A') + 12;
+      '+':        CharID := 12;
+      'A'..'Z':   CharID := ord(New) - ord('A') + 13;
+      #92 .. #98: CharID := ord(New) - ord('A') + 13;
     else CharID := -1;
     end;
 
@@ -1724,17 +1745,17 @@ begin
   Game.StateIsUnplayable or (not GameParams.PlaybackModeActive and not IsReplaying) then
     fNewDrawStr[Pos] := ' '
   else if Game.ReplayInsert or (GameParams.PlaybackModeActive and not IsReplaying) then
-    fNewDrawStr[Pos] := #97 // Blue "R"
+    fNewDrawStr[Pos] := #98 // Blue "R"
   else if not RRIsPressed then
-    fNewDrawStr[Pos] := #91; // Red "R"
+    fNewDrawStr[Pos] := #92; // Red "R"
 end;
 
 procedure TBaseSkillPanel.SetTimeLimit(Pos: Integer);
 begin
   if Level.Info.HasTimeLimit then
-    fNewDrawStr[Pos] := #96
+    fNewDrawStr[Pos] := #97
   else
-    fNewDrawStr[Pos] := #95;
+    fNewDrawStr[Pos] := #96;
 end;
 
 
