@@ -255,11 +255,21 @@ begin
                           ButtonHint := 'TO SPAWN'
   else if CursorOverIcon(AliveIconRect) then
                           ButtonHint := 'AVAILABLE'
-  else if CursorOverIcon(ExitIconRect) then
-                          ButtonHint := 'TO SAVE'
   else if CursorOverIcon(TimeIconRect)then
                           ButtonHint := 'TIMER'
-  else if CursorOverIcon(ReplayIconRect) then
+  else if CursorOverIcon(ExitIconRect) then
+  begin
+    var ShowToSaveHint: Boolean;
+    if GameParams.CountDownFromSR then
+      ShowToSaveHint := Game.LemmingsSaved <= Level.Info.RescueCount
+    else
+      ShowToSaveHint := Game.LemmingsSaved < Level.Info.RescueCount;
+
+    if ShowToSaveHint then
+                   ButtonHint := 'TO SAVE'
+    else
+                   ButtonHint := 'SAVED';
+  end else if CursorOverIcon(ReplayIconRect) then
   begin
     if Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
                           ButtonHint := 'STOP REPLAY'
@@ -1440,12 +1450,13 @@ begin
           SpecialCombine := False;
       end else if (CurChar > SaveCountStartIndex) and (CurChar <= SaveCountStartIndex + 5) then
       begin
-        if CursorOverIcon(ExitIconRect) then
+        var LevelPassed := (Game.LemmingsSaved >= Level.Info.RescueCount);
+        if CursorOverIcon(ExitIconRect) and not LevelPassed and not GameParams.CountDownFromSR then
         begin
           SpecialCombine := True;
           fCombineHueShift := Teal;
         end else begin
-          if Game.LemmingsSaved < Level.Info.RescueCount then
+          if not LevelPassed then
           begin
             SpecialCombine := True;
             fCombineHueShift := Blue;
@@ -1648,40 +1659,38 @@ end;
 
 procedure TBaseSkillPanel.SetInfoLemIn(Pos: Integer);
 var
-  SaveCount, ExtraSaved, TotalSaved: Integer;
+  ToSave, Required, TotalSaved: Integer;
+  //ExtraSaved: Integer;
   S: string;
 const
   LEN = 4;
 begin
-  SaveCount := 0;
-  ExtraSaved := 0;
-  TotalSaved := 0;
+  Required := Level.Info.RescueCount;
+  TotalSaved := Game.LemmingsSaved;
+  ToSave := Required - TotalSaved;
+  //ExtraSaved := TotalSaved - Required;
 
   if GameParams.CountDownFromSR then
   begin
-    SaveCount := Level.Info.RescueCount - Game.LemmingsSaved;
-    ExtraSaved := Game.LemmingsSaved - Level.Info.RescueCount;
-
-    if CursorOverIcon(ExitIconRect) then
-      S := IntToStr(Level.Info.RescueCount)
-    else if (ExtraSaved > 0) then
-      S := '+' + IntToStr(ExtraSaved)
+//    if (ExtraSaved > 0) then
+//      S := '+' + IntToStr(ExtraSaved)
+    if (TotalSaved > Required) then
+      S := IntToStr(TotalSaved)
     else
-      S := IntToStr(SaveCount);
+      S := IntToStr(ToSave);
   end else begin
-    TotalSaved := Game.LemmingsSaved;
-
-    if CursorOverIcon(ExitIconRect) then
-      S := IntToStr(Level.Info.RescueCount)
+    if CursorOverIcon(ExitIconRect) and (TotalSaved < Required) then
+      S := IntToStr(Required)
     else
       S := IntToStr(TotalSaved);
   end;
 
-  if (SaveCount <= -999) or (TotalSaved <= -999) or (ExtraSaved <= -999) then // Should never happen
+  if //(ExtraSaved <= -999) or
+    (ToSave <= -999) or (TotalSaved <= -999) or (Required <= -999) then // Should never happen
     S := '-999'
-  else if (ExtraSaved >= 999) then
-    S := '+999'   
-  else if (SaveCount >= 999) or (TotalSaved >= 999) then
+//  else if (ExtraSaved >= 999) then
+//    S := '+999'
+  else if (ToSave >= 999) or (TotalSaved >= 999) or (Required >= 999) then
     S := ' 999'
   else if Length(S) < LEN then
     S := PadL(PadR(S, LEN - 1), LEN);
