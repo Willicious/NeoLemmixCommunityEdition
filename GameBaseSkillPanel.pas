@@ -131,6 +131,7 @@ type
     procedure SetInfoTime(PosMin, PosSec: Integer);
     procedure SetReplayIcon(Pos: Integer);
     procedure SetTimeLimit(Pos: Integer);
+    procedure SetExitIcon(Pos:Integer);
 
     // Event handlers for user interaction and related routines.
     function MousePos(X, Y: Integer): TPoint;
@@ -198,7 +199,7 @@ type
   procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
 
 const
-  NUM_FONT_CHARS = 46;
+  NUM_FONT_CHARS = 47;
 
 const
   // WARNING: The order of the strings has to correspond to the one
@@ -1442,7 +1443,7 @@ begin
       '-':        CharID := 11;
       '+':        CharID := 12;
       'A'..'Z':   CharID := ord(New) - ord('A') + 13;
-      #92 .. #98: CharID := ord(New) - ord('A') + 13;
+      #92 .. #99: CharID := ord(New) - ord('A') + 13;
     else CharID := -1;
     end;
 
@@ -1751,7 +1752,7 @@ begin
   Game.StateIsUnplayable or (not GameParams.PlaybackModeActive and not IsReplaying) then
     fNewDrawStr[Pos] := ' '
   else if Game.ReplayInsert or (GameParams.PlaybackModeActive and not IsReplaying) then
-    fNewDrawStr[Pos] := #98 // Blue "R"
+    fNewDrawStr[Pos] := #99 // Blue "R"
   else if not RRIsPressed then
     fNewDrawStr[Pos] := #92; // Red "R"
 end;
@@ -1764,6 +1765,13 @@ begin
     fNewDrawStr[Pos] := #96;
 end;
 
+procedure TBaseSkillPanel.SetExitIcon(Pos: Integer);
+begin
+  if (Game.LemmingsSaved >= Level.Info.RescueCount) then
+    fNewDrawStr[Pos] := #95
+  else
+    fNewDrawStr[Pos] := #94;
+end;
 
 {-----------------------------------------
     User interaction

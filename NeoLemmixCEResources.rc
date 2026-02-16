@@ -25,6 +25,9 @@ SIGN_QUIT_PNG RCDATA "data\external\gfx\menu\ce-sign_quit.png"
 
 PANEL_FONT_PNG RCDATA "data\external\gfx\panel\ce-panel_font.png"
 PANEL_FONT_HR_PNG RCDATA "data\external\gfx\panel-hr\ce-panel_font.png"
+PANEL_ICONS_PNG RCDATA "data\external\gfx\panel\ce-panel_icons.png"
+PANEL_ICONS_HR_PNG RCDATA "data\external\gfx\panel-hr\ce-panel_icons.png"
+
 FOCUSED_PLAYBACK_PNG RCDATA "data\external\gfx\cursor\ce-focused_playback.png"
 FOCUSED_PLAYBACK_HR_PNG RCDATA "data\external\gfx\cursor-hr\ce-focused_playback.png"
 FOCUSED_REPLAY_PNG RCDATA "data\external\gfx\cursor\ce-focused_replay.png"

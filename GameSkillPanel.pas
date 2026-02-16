@@ -140,6 +140,7 @@ begin
   SetReplayIcon(13);
   SetInfoLemHatch(16);
   SetInfoLemAlive(22);
+  SetExitIcon(27);
   SetInfoLemIn(28);
   SetTimeLimit(33);
   SetInfoTime(34, 37);
@@ -258,6 +259,7 @@ begin
   SetReplayIcon(13);
   SetInfoLemHatch(16);
   SetInfoLemAlive(22);
+  SetExitIcon(27);
   SetInfoLemIn(28);
   SetTimeLimit(33);
   SetInfoTime(34, 37);
