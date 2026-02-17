@@ -52,6 +52,7 @@ const
   SFX_BUILDER_WARNING = 'ting';
   SFX_ASSIGN_SKILL = 'mousepre';
   SFX_YIPPEE = 'yippee';
+  SFX_BOING = 'boing';
   SFX_SPLAT = 'splat';
   SFX_LETSGO = 'letsgo';
   SFX_ENTRANCE = 'door';

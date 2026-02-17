@@ -27,7 +27,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 382
     Height = 556
-    ActivePage = TabSheet2
+    ActivePage = TabSheet4
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
     object TabSheet1: TTabSheet
@@ -582,21 +582,20 @@ object FormNXConfig: TFormNXConfig
         Left = 19
         Top = 160
         Width = 336
-        Height = 65
+        Height = 121
         Caption = 'Sound Options'
         TabOrder = 1
-        object rgSoundScheme: TRadioGroup
-          Left = 20
-          Top = 46
-          Width = 293
-          Height = 57
-          Caption = 'Sound Scheme'
+        object rgExitSound: TRadioGroup
+          Left = 16
+          Top = 56
+          Width = 305
+          Height = 47
+          Caption = 'Exit Sound'
           Columns = 2
           Items.Strings = (
-            'NeoLemmix'
-            'NeoLemmix CE')
+            'Yippee'
+            'Boing')
           TabOrder = 0
-          Visible = False
           OnClick = OptionChanged
         end
         object cbPostviewJingles: TCheckBox
@@ -611,7 +610,7 @@ object FormNXConfig: TFormNXConfig
       end
       object gbMusicOptions: TGroupBox
         Left = 19
-        Top = 248
+        Top = 304
         Width = 336
         Height = 65
         Caption = 'Music Options'

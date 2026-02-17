@@ -114,6 +114,7 @@ type
     moShowLevelSelectOptions,
     moFileCaching,
     moPostviewJingles,
+    moPreferYippee,
     moForceDefaultLemmings,
     moDisableMusicInTestplay
   );
@@ -136,7 +137,8 @@ const
     moEdgeScroll,
     moCountDownFromSR,
     moShowButtonHints,
-    moShowLevelSelectOptions
+    moShowLevelSelectOptions,
+    moPreferYippee
   ];
 
 type
@@ -306,6 +308,7 @@ type
     property FileCaching: Boolean Index moFileCaching read GetOptionFlag write SetOptionFlag;
     property MatchBlankReplayUsername: Boolean Index moMatchBlankReplayUsername read GetOptionFlag write SetOptionFlag;
     property PostviewJingles: Boolean Index moPostviewJingles read GetOptionFlag write SetOptionFlag;
+    property PreferYippee: Boolean Index moPreferYippee read GetOptionFlag write SetOptionFlag;
 
     property PlaybackModeActive: Boolean read fPlaybackModeActive write fPlaybackModeActive;
     property PlaybackOrder: TPlaybackOrder read fPlaybackOrder write fPlaybackOrder;
@@ -567,6 +570,7 @@ begin
     SL.Add('SoundVolume=' + IntToStr(SoundManager.SoundVolume));
     SaveBoolean('DisableTestplayMusic', DisableMusicInTestplay);
     SaveBoolean('PostviewJingles', PostviewJingles);
+    SaveBoolean('PreferYippee', PreferYippee);
 
     SL.Add('');
     SL.Add('# Playback Options');
@@ -803,6 +807,7 @@ begin
     else
       PostviewJingles := LoadBoolean('PostviewJingles', PostviewJingles);
 
+    PreferYippee := LoadBoolean('PreferYippee', PreferYippee);
     DisableMusicInTestplay := LoadBoolean('DisableTestplayMusic', DisableMusicInTestplay);
 
     SoundManager.MuteSound := not LoadBoolean('SoundEnabled', not SoundManager.MuteSound);

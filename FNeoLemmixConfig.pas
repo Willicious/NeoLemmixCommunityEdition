@@ -66,7 +66,7 @@ type
     gbVisualOptions: TGroupBox;
     gbWindowOptions: TGroupBox;
     btnResetWindow: TButton;
-    rgSoundScheme: TRadioGroup;
+    rgExitSound: TRadioGroup;
     gbSoundOptions: TGroupBox;
     gbMusicOptions: TGroupBox;
     lblSkillQFrames: TLabel;
@@ -322,6 +322,11 @@ begin
     cbDisableTestplayMusic.Checked := GameParams.DisableMusicInTestplay;
     cbPostviewJingles.Checked := GameParams.PostviewJingles;
 
+    if GameParams.PreferYippee then
+      rgExitSound.ItemIndex := 0
+    else
+      rgExitSound.ItemIndex := 1;
+
     btnApply.Enabled := False;
   finally
     fIsSetting := False;
@@ -394,6 +399,7 @@ begin
 
   GameParams.DisableMusicInTestplay := cbDisableTestplayMusic.Checked;
   GameParams.PostviewJingles := cbPostviewJingles.Checked;
+  GameParams.PreferYippee := rgExitSound.ItemIndex = 0;
 
   btnApply.Enabled := False;
 end;

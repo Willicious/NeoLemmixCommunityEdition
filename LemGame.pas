@@ -1613,7 +1613,11 @@ begin
     baExiting    : begin
                      if not IsOutOfTime then
                        L.LemExplosionTimer := 0;
-                     CueSoundEffect(SFX_YIPPEE, L.Position);
+
+                     if GameParams.PreferYippee then
+                       CueSoundEffect(SFX_YIPPEE, L.Position)
+                     else
+                       CueSoundEffect(SFX_BOING, L.Position);
                    end;
     baVaporizing : L.LemExplosionTimer := 0;
     baBuilding   : begin
@@ -3049,8 +3053,6 @@ begin
 
       Exit;
     end;
-
-    CueSoundEffect(SFX_YIPPEE, L.Position);
   end;
 end;
 

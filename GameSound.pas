@@ -343,6 +343,7 @@ begin
   if not fIsBassLoaded then Exit;
 
   Get('assignfail');
+  Get('boing');
   Get('chain');
   Get('changeop');
   Get('deneutralize');
