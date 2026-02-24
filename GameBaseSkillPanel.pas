@@ -259,13 +259,7 @@ begin
                           ButtonHint := 'TIMER'
   else if CursorOverIcon(ExitIconRect) then
   begin
-    var ShowToSaveHint: Boolean;
-    if GameParams.CountDownFromSR then
-      ShowToSaveHint := Game.LemmingsSaved <= Level.Info.RescueCount
-    else
-      ShowToSaveHint := Game.LemmingsSaved < Level.Info.RescueCount;
-
-    if ShowToSaveHint then
+    if (Game.LemmingsSaved < Level.Info.RescueCount) then
                    ButtonHint := 'TO SAVE'
     else
                    ButtonHint := 'SAVED';
@@ -1450,19 +1444,12 @@ begin
           SpecialCombine := False;
       end else if (CurChar > SaveCountStartIndex) and (CurChar <= SaveCountStartIndex + 5) then
       begin
-        var LevelPassed := (Game.LemmingsSaved >= Level.Info.RescueCount);
-        if CursorOverIcon(ExitIconRect) and not LevelPassed and not GameParams.CountDownFromSR then
+        if not (Game.LemmingsSaved >= Level.Info.RescueCount) then
         begin
           SpecialCombine := True;
-          fCombineHueShift := Teal;
-        end else begin
-          if not LevelPassed then
-          begin
-            SpecialCombine := True;
-            fCombineHueShift := Blue;
-          end else
-            SpecialCombine := False;
-        end;
+          fCombineHueShift := Blue;
+        end else
+          SpecialCombine := False;
       end else if Level.Info.HasTimeLimit and (CurChar > TimeLimitStartIndex) and (CurChar <= TimeLimitStartIndex + 5) then
       begin
         SpecialCombine := True;
@@ -1659,8 +1646,7 @@ end;
 
 procedure TBaseSkillPanel.SetInfoLemIn(Pos: Integer);
 var
-  ToSave, Required, TotalSaved: Integer;
-  //ExtraSaved: Integer;
+  ToSave, Required, TotalSaved, ExtraSaved: Integer;
   S: string;
 const
   LEN = 4;
@@ -1668,19 +1654,19 @@ begin
   Required := Level.Info.RescueCount;
   TotalSaved := Game.LemmingsSaved;
   ToSave := Required - TotalSaved;
-  //ExtraSaved := TotalSaved - Required;
+  ExtraSaved := TotalSaved - Required;
 
   if GameParams.CountDownFromSR then
   begin
-//    if (ExtraSaved > 0) then
-//      S := '+' + IntToStr(ExtraSaved)
-    if (TotalSaved > Required) then
+    if CursorOverIcon(ExitIconRect) and (TotalSaved >= Required) then
       S := IntToStr(TotalSaved)
+    else if (ExtraSaved > 0) then
+      S := '+' + IntToStr(ExtraSaved)
     else
       S := IntToStr(ToSave);
   end else begin
     if CursorOverIcon(ExitIconRect) and (TotalSaved < Required) then
-      S := IntToStr(Required)
+      S := IntToStr(ToSave)
     else
       S := IntToStr(TotalSaved);
   end;
