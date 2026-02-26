@@ -1420,7 +1420,7 @@ begin
       '-':        CharID := 11;
       '+':        CharID := 12;
       'A'..'Z':   CharID := ord(New) - ord('A') + 13;
-      #92 .. #99: CharID := ord(New) - ord('A') + 13;
+      #91 .. #98: CharID := ord(New) - ord('A') + 13;
     else CharID := -1;
     end;
 
@@ -1720,9 +1720,9 @@ begin
   Game.StateIsUnplayable or (not GameParams.PlaybackModeActive and not IsReplaying) then
     fNewDrawStr[Pos] := ' '
   else if Game.ReplayInsert or (GameParams.PlaybackModeActive and not IsReplaying) then
-    fNewDrawStr[Pos] := #99 // Blue "R"
+    fNewDrawStr[Pos] := #98 // Blue "R"
   else if not RRIsPressed then
-    fNewDrawStr[Pos] := #92; // Red "R"
+    fNewDrawStr[Pos] := #91; // Red "R"
 end;
 
 procedure TBaseSkillPanel.SetTimeLimit(Pos: Integer);
