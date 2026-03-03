@@ -3,11 +3,12 @@ unit GameBaseSkillPanel;
 interface
 
 uses
-  System.Types, Graphics,
+  System.Types, System.StrUtils, Graphics,
   Classes, Controls, GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   GameWindowInterface,
   LemAnimationSet, LemMetaAnimation, LemNeoLevelPack,
   LemCore, LemLemming, LemGame, LemLevel,
+  LemGadgets,
   NeoLemmixCEResources,
   SharedGlobals;
 
@@ -127,6 +128,7 @@ type
     procedure CreateNewInfoString; virtual; abstract;
     procedure SetInfoCursor(Pos: Integer);
       function GetSkillString(L: TLemming): String;
+      function GetPickupString(P: TGadget): String;
     procedure SetInfoLemHatch(Pos: Integer);
     procedure SetInfoLemAlive(Pos: Integer);
     procedure SetInfoLemIn(Pos: Integer);
@@ -1526,6 +1528,11 @@ begin
   end;
 end;
 
+function TBaseSkillPanel.GetPickupString(P: TGadget): String;
+begin
+  Result := IntToStr(P.SkillCount) + ' ' + Uppercase(SKILL_NAMES[P.SkillType] + IfThen(P.SkillCount > 1, 'S', ''));
+end;
+
 function TBaseSkillPanel.GetSkillString(L: TLemming): String;
 var
   i: Integer;
@@ -1577,18 +1584,23 @@ end;
 procedure TBaseSkillPanel.SetInfoCursor(Pos: Integer);
 var
   S: string;
+  SelectedLemming: TLemming;
+  PickupInCursor: TGadget;
 const
   LEN = 12;
 begin
 //  if (Game.StateIsUnplayable and not Game.ShouldExitToPostview) then  // Bookmark - for when panel message is added
 //    Exit;
+  SelectedLemming := Game.RenderInterface.SelectedLemming;
+  PickupInCursor := Game.RenderInterface.PickupInCursor;
 
   S := '';
 
-  if CursorOverPanelItem and GameParams.ShowButtonHints then
+  if ((PickupInCursor <> nil) and (SelectedLemming = nil)) then
+    S := Uppercase(GetPickupString(PickupInCursor))
+  else if CursorOverPanelItem and GameParams.ShowButtonHints then
     S := ButtonHint + StringOfChar(' ', 13 - Length(ButtonHint))
   else begin
-
     S := Uppercase(GetSkillString(Game.RenderInterface.SelectedLemming));
     if S = '' then
       S := StringOfChar(' ', LEN)

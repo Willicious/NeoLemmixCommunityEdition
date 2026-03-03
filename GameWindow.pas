@@ -1742,11 +1742,8 @@ begin
 
     SkillPanel.MinimapScrollFreeze := False;
 
-    if fGameSpeed = gspPause then
-    begin
-      if fRenderInterface.UserHelper <> hpi_None then
-        SetRedraw(rdRedraw);
-    end;
+    if (fGameSpeed = gspPause) then
+      SetRedraw(rdRedraw);
   end;
 end;
 

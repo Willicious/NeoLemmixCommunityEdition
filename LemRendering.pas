@@ -2818,7 +2818,6 @@ begin
 
   if fRenderInterface.UserHelper <> hpi_None then
       DrawUserHelper;
-
 end;
 
 procedure TRenderer.DrawTriggerAreaRectOnLayer(TriggerRect: TRect);
