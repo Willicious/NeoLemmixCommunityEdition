@@ -2515,8 +2515,9 @@ var
 
   procedure AddPickupSkillNumber;
   begin
-    if (Gadget.SkillCount > 1) or (Gadget.MetaObj.DigitMinLength >= 1) then
-      DrawNumber(Gadget.Left + Gadget.MetaObj.DigitX, Gadget.Top + Gadget.MetaObj.DigitY, Gadget.SkillCount, Gadget.MetaObj.DigitMinLength, Gadget.MetaObj.DigitAlign);
+    if ((Gadget.SkillCount > 1) or (Gadget.MetaObj.DigitMinLength >= 1))
+      and not (Gadget.CurrentFrame mod 2 = 0) then
+        DrawNumber(Gadget.Left + Gadget.MetaObj.DigitX, Gadget.Top + Gadget.MetaObj.DigitY, Gadget.SkillCount, Gadget.MetaObj.DigitMinLength, Gadget.MetaObj.DigitAlign);
   end;
 
   procedure AddLemmingCountNumber;
