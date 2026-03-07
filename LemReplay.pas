@@ -423,23 +423,23 @@ end;
 
 procedure TReplay.EraseLemSkillAssignment(L: TLemming; aFrame: Integer; DoCutFuture: Boolean);
 var
-  Assignment: TReplaySkillAssignment;
+  Item: TBaseReplayItem;
   i: Integer;
 begin
   for i := fAssignments.Count - 1 downto 0 do
   begin
-    Assignment := TReplaySkillAssignment(fAssignments[i]);
+    Item := fAssignments.Items[i];
+    if ((Item.Frame < aFrame) or ((Item.Frame <> aFrame) and not DoCutFuture)) then
+      Continue;
 
-    if (Assignment.LemmingIndex = L.LemIndex) then
-    begin
-      if DoCutFuture then
-      begin
-        if (Assignment.Frame >= aFrame) then
-          fAssignments.Delete(i);
-      end else
-        if (Assignment.Frame = aFrame) then
-          fAssignments.Delete(i);
-    end;
+    if (Item is TReplayNuke) then
+      Continue // <--- Use this to keep the nuke
+      // OR leave blank to always delete a future nuke, like in Lix
+    else if (Item is TReplaySkillAssignment) then
+      if ((Item as TReplaySkillAssignment).LemmingIndex = L.LemIndex) then
+        Continue;
+
+    fAssignments.Delete(i);
   end;
 end;
 
