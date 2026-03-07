@@ -5887,8 +5887,15 @@ end;
 function TLemmingGame.ProcessSkillAssignment(IsHighlight: Boolean = False): Boolean;
 var
   Sel: TBasicLemmingAction;
+  L: TLemming;
 begin
   Result := False;
+
+  L := fRenderInterface.SelectedLemming;
+
+  // Allow same-frame-same-lemming assignment (cut future assignments for this lemming)
+  if (L <> nil) and ReplayManager.LemHasAssignmentAt(L, CurrentIteration) then
+    //ReplayManager.EraseLemSkillAssignment(L, CurrentIteration, True);
 
   // Prevents overwriting same-frame assignments in ReplayInsert Mode
   if not (ReplayInsert and ReplayManager.HasAssignmentAt(CurrentIteration)) then

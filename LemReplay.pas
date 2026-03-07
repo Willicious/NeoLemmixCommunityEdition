@@ -156,11 +156,13 @@ type
       procedure LoadFromStream(aStream: TStream; aInternal: Boolean = False);
       procedure SaveToStream(aStream: TStream; aMarkAsUnmodified: Boolean = False; aInternal: Boolean = False);
       procedure Cut(aLastFrame: Integer; aExpectedSpawnInterval: Integer);
+      procedure EraseLemSkillAssignment(L: TLemming; aFrame: Integer; DoCutFuture: Boolean);
       function CheckForAction(aList: TReplayItemList; aFrame: Integer): Boolean;
       function HasAnyActionAt(aFrame: Integer): Boolean;
       function HasAssignmentAt(aFrame: Integer): Boolean;
       function HasRRChangeAt(aFrame: Integer): Boolean;
       function IsThisLatestAction(aAction: TBaseReplayItem): Boolean;
+      function LemHasAssignmentAt(L: TLemming; aFrame: Integer): Boolean;
       property PlayerName: String read fPlayerName write fPlayerName;
       property LevelName: String read fLevelName write fLevelName;
       property LevelAuthor: String read fLevelAuthor write fLevelAuthor;
@@ -419,6 +421,28 @@ begin
   fExpectedCompletionIteration := 0;
 end;
 
+procedure TReplay.EraseLemSkillAssignment(L: TLemming; aFrame: Integer; DoCutFuture: Boolean);
+var
+  Assignment: TReplaySkillAssignment;
+  i: Integer;
+begin
+  for i := fAssignments.Count - 1 downto 0 do
+  begin
+    Assignment := TReplaySkillAssignment(fAssignments[i]);
+
+    if (Assignment.LemmingIndex = L.LemIndex) then
+    begin
+      if DoCutFuture then
+      begin
+        if (Assignment.Frame >= aFrame) then
+          fAssignments.Delete(i);
+      end else
+        if (Assignment.Frame = aFrame) then
+          fAssignments.Delete(i);
+    end;
+  end;
+end;
+
 procedure TReplay.Cut(aLastFrame: Integer; aExpectedSpawnInterval: Integer);
 var
   NextSI: TReplayChangeSpawnInterval;
@@ -495,6 +519,24 @@ begin
   end;
 
   Result := True;
+end;
+
+function TReplay.LemHasAssignmentAt(L: TLemming; aFrame: Integer): Boolean;
+var
+  CurrentItem: TBaseReplayItem;
+  CurrentLemmingIndex: Integer;
+begin
+  Result := False;
+
+  CurrentItem := GetItemByFrame(aFrame, 0, 1);
+
+  if (CurrentItem = nil) then
+    Exit;
+
+  CurrentLemmingIndex := TReplaySkillAssignment(CurrentItem).LemmingIndex;
+
+  if (L.LemIndex = CurrentLemmingIndex) then
+    Result := True;
 end;
 
 function TReplay.GetLastActionFrame: Integer;
