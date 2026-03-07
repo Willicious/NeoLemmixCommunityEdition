@@ -6,7 +6,7 @@ object FormNXConfig: TFormNXConfig
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'NeoLemmix Configuration'
-  ClientHeight = 595
+  ClientHeight = 612
   ClientWidth = 382
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -19,17 +19,18 @@ object FormNXConfig: TFormNXConfig
   OnClick = OptionChanged
   DesignSize = (
     382
-    595)
+    612)
   PixelsPerInch = 96
   TextHeight = 13
   object NXConfigPages: TPageControl
     Left = 0
     Top = 0
     Width = 382
-    Height = 556
-    ActivePage = TabSheet4
+    Height = 573
+    ActivePage = TabSheet2
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
+    ExplicitHeight = 556
     object TabSheet1: TTabSheet
       Caption = 'General'
       object lblUserName: TLabel
@@ -193,7 +194,7 @@ object FormNXConfig: TFormNXConfig
       ImageIndex = 2
       object rgWhenNoLemmings: TRadioGroup
         Left = 19
-        Top = 434
+        Top = 458
         Width = 336
         Height = 85
         Caption = 'When No Lemmings Remain'
@@ -208,7 +209,7 @@ object FormNXConfig: TFormNXConfig
         Left = 19
         Top = 346
         Width = 336
-        Height = 70
+        Height = 95
         Caption = 'Replay Options'
         TabOrder = 2
         object cbReplayAfterBackskip: TCheckBox
@@ -227,6 +228,15 @@ object FormNXConfig: TFormNXConfig
           Height = 17
           Caption = 'Auto-Replay After Restart'
           TabOrder = 1
+          OnClick = OptionChanged
+        end
+        object cbOverwriteSameLemming: TCheckBox
+          Left = 19
+          Top = 66
+          Width = 314
+          Height = 17
+          Caption = 'Overwrite Same-Lemming Assignments in Replay Insert'
+          TabOrder = 2
           OnClick = OptionChanged
         end
       end
@@ -629,17 +639,18 @@ object FormNXConfig: TFormNXConfig
   end
   object btnOK: TButton
     Left = 23
-    Top = 562
+    Top = 579
     Width = 108
     Height = 25
     Anchors = [akLeft, akBottom]
     Caption = 'OK'
     TabOrder = 1
     OnClick = btnOKClick
+    ExplicitTop = 562
   end
   object btnCancel: TButton
     Left = 137
-    Top = 562
+    Top = 579
     Width = 108
     Height = 25
     Anchors = [akLeft, akBottom]
@@ -647,15 +658,17 @@ object FormNXConfig: TFormNXConfig
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 2
+    ExplicitTop = 562
   end
   object btnApply: TButton
     Left = 251
-    Top = 562
+    Top = 579
     Width = 108
     Height = 25
     Anchors = [akLeft, akBottom]
     Caption = 'Apply'
     TabOrder = 3
     OnClick = btnApplyClick
+    ExplicitTop = 562
   end
 end

@@ -157,6 +157,7 @@ type
 
   { vars }
     fCurrentIteration          : Integer;
+    fSelectedLemFutureTaskCount: Integer;
     fClockFrame                : Integer; // 17 frames is one game-second
     ButtonsRemain              : Byte;
     LemmingsToRelease          : Integer; // number of lemmings that were created
@@ -427,6 +428,7 @@ type
     procedure Finish(aReason: Integer);
     procedure Cheat;
     procedure HitTest(Autofail: Boolean = False);
+    procedure UpdateSelectedLemFutureTaskCount;
     function ProcessSkillAssignment(IsHighlight: Boolean = False): Boolean;
     function ProcessHighlightAssignment: Boolean;
     procedure RegainControl(Force: Boolean = False);
@@ -447,6 +449,8 @@ type
 
   { properties }
     property CurrentIteration: Integer read fCurrentIteration;
+    property DoneAssignmentThisFrame: Boolean read fDoneAssignmentThisFrame;
+    property SelectedLemFutureTaskCount: Integer read fSelectedLemFutureTaskCount write fSelectedLemFutureTaskCount;
     property LemmingsToSpawn: Integer read LemmingsToRelease;
     property SpawnedDead: Integer read fSpawnedDead;
     property LemmingsActive: Integer read LemmingsOut;
@@ -5882,15 +5886,44 @@ begin
     fLemSelected := L;
     fRenderInterface.SelectedLemming := L;
   end;
+
+  UpdateSelectedLemFutureTaskCount;
+end;
+
+procedure TLemmingGame.UpdateSelectedLemFutureTaskCount;
+var
+  L: TLemming;
+begin
+  SelectedLemFutureTaskCount := 0;
+
+  if not ReplayInsert or not GameParams.OverwriteSameLemming then
+    Exit;
+
+  L := RenderInterface.SelectedLemming;
+
+  if (L = nil) then
+    Exit;
+
+  SelectedLemFutureTaskCount := ReplayManager.FutureTaskCount(L, CurrentIteration);
 end;
 
 function TLemmingGame.ProcessSkillAssignment(IsHighlight: Boolean = False): Boolean;
 var
   Sel: TBasicLemmingAction;
+  L: TLemming;
 begin
   Result := False;
 
-  // Prevents overwriting same-frame assignments in ReplayInsert Mode
+  // Erase future tasks for this lemming if same-lemming-overwrite is enabled
+  if GameParams.OverwriteSameLemming then
+  begin
+    L := fRenderInterface.SelectedLemming;
+
+    if (L <> nil) and (SelectedLemFutureTaskCount > 0) then
+      ReplayManager.EraseLemSkillAssignment(L, CurrentIteration, True); // "True" here erases all future assignments for this lemming
+  end;
+
+  // Prevent overwriting assignments in ReplayInsert Mode
   if not (ReplayInsert and ReplayManager.HasAssignmentAt(CurrentIteration)) then
   begin
     // Convert buttontype to skilltype
@@ -5904,7 +5937,11 @@ begin
   if not Result then PlayAssignFailSound;
 
   if Result then
-    CheckForNewShadow;        // probably unneeded now?
+  begin
+    UpdateSelectedLemFutureTaskCount;
+
+    CheckForNewShadow; // probably unneeded now?
+  end;
 end;
 
 function TLemmingGame.ProcessHighlightAssignment: Boolean;

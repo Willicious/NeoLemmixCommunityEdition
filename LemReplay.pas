@@ -156,11 +156,14 @@ type
       procedure LoadFromStream(aStream: TStream; aInternal: Boolean = False);
       procedure SaveToStream(aStream: TStream; aMarkAsUnmodified: Boolean = False; aInternal: Boolean = False);
       procedure Cut(aLastFrame: Integer; aExpectedSpawnInterval: Integer);
+      procedure EraseLemSkillAssignment(L: TLemming; aFrame: Integer; DoCutFuture: Boolean);
       function CheckForAction(aList: TReplayItemList; aFrame: Integer): Boolean;
       function HasAnyActionAt(aFrame: Integer): Boolean;
       function HasAssignmentAt(aFrame: Integer): Boolean;
       function HasRRChangeAt(aFrame: Integer): Boolean;
       function IsThisLatestAction(aAction: TBaseReplayItem): Boolean;
+      function LemHasAssignmentAt(L: TLemming; aFrame: Integer): Boolean;
+      function FutureTaskCount(L: TLemming; aFrame: Integer): Integer;
       property PlayerName: String read fPlayerName write fPlayerName;
       property LevelName: String read fLevelName write fLevelName;
       property LevelAuthor: String read fLevelAuthor write fLevelAuthor;
@@ -419,6 +422,28 @@ begin
   fExpectedCompletionIteration := 0;
 end;
 
+procedure TReplay.EraseLemSkillAssignment(L: TLemming; aFrame: Integer; DoCutFuture: Boolean);
+var
+  Item: TBaseReplayItem;
+  i: Integer;
+begin
+  for i := fAssignments.Count - 1 downto 0 do
+  begin
+    Item := fAssignments.Items[i];
+    if ((Item.Frame < aFrame) or ((Item.Frame <> aFrame) and not DoCutFuture)) then
+      Continue;
+
+    if (Item is TReplayNuke) then
+      Continue // <--- Use this to keep the nuke
+      // OR leave blank to always delete a future nuke, like in Lix
+    else if (Item is TReplaySkillAssignment) then
+      if ((Item as TReplaySkillAssignment).LemmingIndex <> L.LemIndex) then
+        Continue;
+
+    fAssignments.Delete(i);
+  end;
+end;
+
 procedure TReplay.Cut(aLastFrame: Integer; aExpectedSpawnInterval: Integer);
 var
   NextSI: TReplayChangeSpawnInterval;
@@ -495,6 +520,54 @@ begin
   end;
 
   Result := True;
+end;
+
+function TReplay.FutureTaskCount(L: TLemming; aFrame: Integer): Integer;
+var
+  Item: TBaseReplayItem;
+  i, Count: Integer;
+begin
+  Count := 0;
+
+  if (L <> nil) then
+  begin
+    for i := fAssignments.Count - 1 downto 0 do
+    begin
+      Item := fAssignments.Items[i];
+      if (Item.Frame < aFrame) then
+        Continue;
+      if (Item is TReplayNuke) then
+        Continue
+      else if (Item is TReplaySkillAssignment) then
+      begin
+        if ((Item as TReplaySkillAssignment).LemmingIndex <> L.LemIndex) then
+          Continue
+      end else
+        Exit(Count);
+
+      Inc(Count);
+    end;
+  end;
+
+  Result := Count;
+end;
+
+function TReplay.LemHasAssignmentAt(L: TLemming; aFrame: Integer): Boolean;
+var
+  CurrentItem: TBaseReplayItem;
+  CurrentLemmingIndex: Integer;
+begin
+  Result := False;
+
+  CurrentItem := GetItemByFrame(aFrame, 0, 1);
+
+  if (CurrentItem = nil) or (L = nil) or not (CurrentItem is TReplaySkillAssignment) then
+    Exit;
+
+  CurrentLemmingIndex := TReplaySkillAssignment(CurrentItem).LemmingIndex;
+
+  if (L.LemIndex = CurrentLemmingIndex) then
+    Result := True;
 end;
 
 function TReplay.GetLastActionFrame: Integer;
