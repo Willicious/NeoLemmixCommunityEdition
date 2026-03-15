@@ -162,7 +162,6 @@ type
       function HasAssignmentAt(aFrame: Integer): Boolean;
       function HasRRChangeAt(aFrame: Integer): Boolean;
       function IsThisLatestAction(aAction: TBaseReplayItem): Boolean;
-      function LemHasAssignmentAt(L: TLemming; aFrame: Integer): Boolean;
       function FutureTaskCount(L: TLemming; aFrame: Integer): Integer;
       property PlayerName: String read fPlayerName write fPlayerName;
       property LevelName: String read fLevelName write fLevelName;
@@ -550,24 +549,6 @@ begin
   end;
 
   Result := Count;
-end;
-
-function TReplay.LemHasAssignmentAt(L: TLemming; aFrame: Integer): Boolean;
-var
-  CurrentItem: TBaseReplayItem;
-  CurrentLemmingIndex: Integer;
-begin
-  Result := False;
-
-  CurrentItem := GetItemByFrame(aFrame, 0, 1);
-
-  if (CurrentItem = nil) or (L = nil) or not (CurrentItem is TReplaySkillAssignment) then
-    Exit;
-
-  CurrentLemmingIndex := TReplaySkillAssignment(CurrentItem).LemmingIndex;
-
-  if (L.LemIndex = CurrentLemmingIndex) then
-    Result := True;
 end;
 
 function TReplay.GetLastActionFrame: Integer;
