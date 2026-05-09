@@ -328,7 +328,6 @@ var
   i: Integer;
   MenuFont: String;
   TempBMP: TBitmap32;
-  buttonSelected: Integer;
 begin
   TempBMP := TBitmap32.Create;
   MenuFont := 'menu_font.png';
