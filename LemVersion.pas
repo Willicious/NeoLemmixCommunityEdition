@@ -8,10 +8,10 @@ uses
   UMisc, Classes, SysUtils;
 
 const
-  FORMAT_VERSION = 1;
-  CORE_VERSION = 1;
-  FEATURES_VERSION = 0;
-  HOTFIX_VERSION = 0; // or RC version
+  MAJOR_VERSION = 1;
+  MINOR_VERSION = 1;
+  HOTFIX_VERSION = 0;
+  RC_VERSION = 0;
 
   STYLE_VERSION = '12.11/'; // For server usage - a new style version should only be used when backwards compatibility breaks.
                             // Make sure to include the trailing backslash.
@@ -35,12 +35,12 @@ end;
 
 function CurrentVersionString: String;
 begin
-  Result := MakeVersionString(FORMAT_VERSION, CORE_VERSION, FEATURES_VERSION, HOTFIX_VERSION);
+  Result := MakeVersionString(MAJOR_VERSION, MINOR_VERSION, HOTFIX_VERSION, RC_VERSION);
 end;
 
 function CurrentVersionID: Int64;
 begin
-  Result := MakeVersionID(FORMAT_VERSION, CORE_VERSION, FEATURES_VERSION, HOTFIX_VERSION);
+  Result := MakeVersionID(MAJOR_VERSION, MINOR_VERSION, HOTFIX_VERSION, RC_VERSION);
 end;
 
 function MakeVersionString(aFormat, aCore, aFeature, aHotfix: Integer): String;

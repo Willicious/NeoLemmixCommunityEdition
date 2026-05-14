@@ -376,10 +376,10 @@ var
 begin
   SL := TStringList.Create;
   try
-    SL.Add('formats=' + IntToStr(FORMAT_VERSION));
-    SL.Add('core=' + IntToStr(CORE_VERSION));
-    SL.Add('features=' + IntToStr(FEATURES_VERSION));
+    SL.Add('major=' + IntToStr(MAJOR_VERSION));
+    SL.Add('minor=' + IntToStr(MINOR_VERSION));
     SL.Add('hotfix=' + IntToStr(HOTFIX_VERSION));
+    SL.Add('rc=' + IntToStr(RC_VERSION));
     SL.Add('commit=' + COMMIT_ID);
 
     SL.Add('level_formats=');
@@ -391,7 +391,7 @@ begin
     WriteInfo;
 
     if LowerCase(ParamStr(2)) <> 'silent' then
-      SL.SaveToFile(AppPath + 'NeoLemmixVersion.ini');
+      SL.SaveToFile(AppPath + 'NeoLemmixCEVersion.ini');
   finally
     SL.Free;
   end;
