@@ -179,6 +179,7 @@ begin
   begin
     TPngInterface.LoadPngFile(FilePath, aDst);
     Result := True;
+    Exit;
   end;
 
   // 3) Embedded fallback
