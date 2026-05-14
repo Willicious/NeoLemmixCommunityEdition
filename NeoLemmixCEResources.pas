@@ -155,6 +155,7 @@ var
   Stream: TMemoryStream;
 begin
   Result := False;
+  aDst.Clear(0);
 
   // 1) Level pack override
   if (GameParams.CurrentLevel <> nil) and (GameParams.CurrentLevel.Group <> nil)
