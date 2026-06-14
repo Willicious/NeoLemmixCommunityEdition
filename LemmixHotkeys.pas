@@ -471,7 +471,9 @@ var
 begin
   StringList := TStringList.Create;
   try
-    if FileExists(AppPath + SFSaveData + 'hotkeys.ini') then
+    if FileExists(AppPath + SFSaveData + 'NLCEHotkeys.ini') then
+      StringList.LoadFromFile(AppPath + SFSaveData + 'NLCEHotkeys.ini')
+    else if FileExists(AppPath + SFSaveData + 'hotkeys.ini') then
       StringList.LoadFromFile(AppPath + SFSaveData + 'hotkeys.ini')
     else if FileExists(AppPath + 'NeoLemmixHotkeys.ini') then
       StringList.LoadFromFile(AppPath + 'NeoLemmixHotkeys.ini')
@@ -640,7 +642,7 @@ begin
   end;
   try
     ForceDirectories(AppPath + SFSaveData);
-    StringList.SaveToFile(AppPath + SFSaveData + 'hotkeys.ini')
+    StringList.SaveToFile(AppPath + SFSaveData + 'NLCEHotkeys.ini')
   finally
     StringList.Free;
   end;

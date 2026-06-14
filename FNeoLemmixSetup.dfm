@@ -47,13 +47,13 @@ object FNLSetup: TFNLSetup
         ParentFont = False
       end
       object lblOptionsText1: TLabel
-        Left = 36
+        Left = 33
         Top = 48
-        Width = 477
+        Width = 475
         Height = 13
         Caption = 
-          'It appears that this is your first time using NeoLemmix, or that' +
-          ' your settings.ini file is missing.'
+          'It appears that this is your first time using NeoLemmix CE, or t' +
+          'hat NLCESettings.ini is missing.'
       end
       object lblOptionsText2: TLabel
         Left = 88

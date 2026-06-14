@@ -334,19 +334,19 @@ end;
 
 procedure TFLemmixHotkeys.btnResetClick(Sender: TObject);
 begin
-  fHotkeys.LoadFile; // Loads the previously saved hotkeys.ini file
+  fHotkeys.LoadFile; // Loads the previously saved hotkeys
   RefreshList;
 end;
 
 procedure TFLemmixHotkeys.btnSaveCloseClick(Sender: TObject);
 begin
-  fHotkeys.SaveFile; // Saves current layout to hotkeys.ini
+  fHotkeys.SaveFile; // Saves current layout
   Close;
 end;
 
 procedure TFLemmixHotkeys.btnCancelClick(Sender: TObject);
 begin
-  fHotkeys.LoadFile; // Loads previous hotkeys.ini file to prevent saving changes
+  fHotkeys.LoadFile; // Load previous hotkeys to prevent saving changes
   RefreshList;
   Close;
 end;

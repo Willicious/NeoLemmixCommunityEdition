@@ -614,6 +614,7 @@ end;
 procedure TDosGameParams.LoadFromIniFile;
 var
   SL: TStringList;
+  SettingsINI: String;
 
   function LoadBoolean(aLabel: String; aDefault: Boolean): Boolean;
   begin
@@ -720,8 +721,15 @@ begin
   SL := TStringList.Create;
   try
     if FileExists(AppPath + SFSaveData + 'NLCESettings.ini') then
+      SettingsINI := (AppPath + SFSaveData + 'NLCESettings.ini')
+    else if FileExists(AppPath + SFSaveData + 'settings.ini') then
+      SettingsINI := (AppPath + SFSaveData + 'settings.ini')
+    else
+      SettingsINI := '';
+
+    if FileExists(SettingsINI) then
     begin
-      SL.LoadFromFile(AppPath + SFSaveData + 'NLCESettings.ini');
+      SL.LoadFromFile(SettingsINI);
       LoadedConfig := True;
     end else if UnderWine then
     begin
