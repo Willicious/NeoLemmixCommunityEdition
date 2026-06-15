@@ -1547,7 +1547,7 @@ var
   Tasks: Integer;
 begin
   Tasks := Game.SelectedLemFutureTaskCount;
-  Result := 'CUT ' + IntToStr(Tasks) + ' TASK' + IfThen(Tasks > 1, 'S', '');
+  Result := 'CUT ' + IntToStr(Tasks) + ' TASK' + IfThen(Tasks > 1, 'S', ' ');
 end;
 
 function TBaseSkillPanel.GetSkillString(L: TLemming): String;
