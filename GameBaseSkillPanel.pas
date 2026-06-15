@@ -1618,7 +1618,7 @@ begin
   else if CursorOverPanelItem and GameParams.ShowButtonHints then
     S := ButtonHint + StringOfChar(' ', 13 - Length(ButtonHint))
   else begin
-    if (Game.SelectedLemFutureTaskCount > 0) and not Game.DoneAssignmentThisFrame then
+    if (Game.SelectedLemFutureTaskCount > 0) then
       S := Uppercase(GetLemReplayTaskString(SelectedLemming))
     else begin
       S := Uppercase(GetSkillString(SelectedLemming));
