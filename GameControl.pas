@@ -93,7 +93,7 @@ type
     moReplayAfterBackskip,
     moReplayAfterRestart,
     moPauseAfterBackwards,
-    moNoBackgrounds,
+    moShowDecorations,
     moShowShadows,
     moShowHelpers,
     moDisableWineWarnings,
@@ -284,7 +284,7 @@ type
     property ReplayAfterBackskip: Boolean Index moReplayAfterBackskip read GetOptionFlag write SetOptionFlag;
     property ReplayAfterRestart: Boolean Index moReplayAfterRestart read GetOptionFlag write SetOptionFlag;
     property PauseAfterBackwardsSkip: Boolean Index moPauseAfterBackwards read GetOptionFlag write SetOptionFlag;
-    property NoBackgrounds: Boolean Index moNoBackgrounds read GetOptionFlag write SetOptionFlag;
+    property ShowDecorations: Boolean Index moShowDecorations read GetOptionFlag write SetOptionFlag;
     property ShowShadows: Boolean Index moShowShadows read GetOptionFlag write SetOptionFlag;
     property ShowHelpers: Boolean Index moShowHelpers read GetOptionFlag write SetOptionFlag;
     property DisableWineWarnings: Boolean Index moDisableWineWarnings read GetOptionFlag write SetOptionFlag;
@@ -528,7 +528,7 @@ begin
     SaveBoolean('ReplayAfterBackskip', ReplayAfterBackskip);
     SaveBoolean('ReplayAfterRestart', ReplayAfterRestart);
     SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
-    SaveBoolean('NoBackgrounds', NoBackgrounds);
+    SaveBoolean('ShowDecorations', ShowDecorations);
     SaveBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
     SaveBoolean('ShowShadows', ShowShadows);
     SaveBoolean('ShowHelpers', ShowHelpers);
@@ -759,7 +759,7 @@ begin
     ReplayAfterBackskip := LoadBoolean('ReplayAfterBackskip', ReplayAfterBackskip);
     ReplayAfterRestart := LoadBoolean('ReplayAfterRestart', ReplayAfterRestart);
     PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
-    NoBackgrounds := LoadBoolean('NoBackgrounds', NoBackgrounds);
+    ShowDecorations := LoadBoolean('ShowDecorations', ShowDecorations);
     ForceDefaultLemmings := LoadBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
     ShowShadows := LoadBoolean('ShowShadows', ShowShadows);
     ShowHelpers := LoadBoolean('ShowHelpers', ShowHelpers);
@@ -829,6 +829,7 @@ begin
 
     // Backwards compatibility
     CountDownFromSR := LoadBoolean('UseNegativeSaveCount', CountDownFromSR);
+    ShowDecorations := not LoadBoolean('NoBackgrounds', ShowDecorations);
   except
     on E: Exception do
     begin

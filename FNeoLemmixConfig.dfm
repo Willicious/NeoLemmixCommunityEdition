@@ -488,12 +488,12 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 5
           OnClick = OptionChanged
         end
-        object cbNoBackgrounds: TCheckBox
-          Left = 29
+        object cbShowDecorations: TCheckBox
+          Left = 28
           Top = 163
-          Width = 193
+          Width = 252
           Height = 17
-          Caption = 'Disable Background Images'
+          Caption = 'Show Backgrounds and Decorations'
           TabOrder = 6
           OnClick = OptionChanged
         end

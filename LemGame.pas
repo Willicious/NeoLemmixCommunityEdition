@@ -2900,7 +2900,7 @@ var
 begin
   Result := False;
 
-  if GameParams.NoBackgrounds then
+  if not GameParams.ShowDecorations then
     Exit;
 
   GadgetID := FindGadgetID(PosX, PosY, trAnim);

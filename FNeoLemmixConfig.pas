@@ -73,7 +73,7 @@ type
     seSkillQFrames: TSpinEdit;
     cbFadeMenuScreens: TCheckBox;
     cbForceDefaultLemmings: TCheckBox;
-    cbNoBackgrounds: TCheckBox;
+    cbShowDecorations: TCheckBox;
     cbInvertMouseWheelFramesteps: TCheckBox;
     gbSkillPanelOptions: TGroupBox;
     cbUseSpawnInterval: TCheckBox;
@@ -279,7 +279,7 @@ begin
     cbReplayAfterRestart.Checked := GameParams.ReplayAfterRestart;
     cbOverwriteSameLemming.Checked := GameParams.OverwriteSameLemming;
 
-    cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
+    cbShowDecorations.Checked := GameParams.ShowDecorations;
     cbForceDefaultLemmings.Checked := GameParams.ForceDefaultLemmings;
 
     cbShowShadows.Checked := GameParams.ShowShadows;
@@ -360,7 +360,7 @@ begin
   GameParams.ReplayAfterRestart := cbReplayAfterRestart.Checked;
   GameParams.OverwriteSameLemming := cbOverwriteSameLemming.Checked;
 
-  GameParams.NoBackgrounds := cbNoBackgrounds.Checked;
+  GameParams.ShowDecorations := cbShowDecorations.Checked;
   GameParams.ForceDefaultLemmings := cbForceDefaultLemmings.Checked;
 
   GameParams.ShowShadows := cbShowShadows.Checked;
