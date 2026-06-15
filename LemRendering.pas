@@ -2562,7 +2562,7 @@ const
          DOM_ONEWAYDOWN, DOM_WINDOW, DOM_BACKGROUND, DOM_ONEWAYUP,
          DOM_PAINT];
 begin
-  if (Gadget.TriggerEffect in [DOM_ANIMATION, DOM_ANIMONCE]) and GameParams.NoBackgrounds then
+  if (Gadget.TriggerEffect in [DOM_ANIMATION, DOM_ANIMONCE, DOM_BACKGROUND, DOM_PAINT]) and GameParams.NoBackgrounds then
     Exit;
 
   if not (Gadget.TriggerEffect in DO_NOT_DRAW) then
@@ -2652,7 +2652,7 @@ var
     Gadget: TGadget;
   begin
     Gadget := fGadgets[aIndex];
-    if (Gadget.TriggerEffectBase in [DOM_ANIMATION, DOM_ANIMONCE]) and GameParams.NoBackgrounds then Exit;
+    if (Gadget.TriggerEffectBase in [DOM_ANIMATION, DOM_ANIMONCE, DOM_BACKGROUND, DOM_PAINT]) and GameParams.NoBackgrounds then Exit;
     if not (IsValidForLayer(Gadget) and IsUseful(Gadget)) then Exit;
 
     if (aLayer = rlBackgroundObjects) and (Gadget.CanDrawToBackground) then
