@@ -55,6 +55,7 @@ type
       constructor Create(aOwner: TComponent); override;
       destructor Destroy; override;
 
+      function ResolvedMissingPieces: Boolean;
       procedure BuildScreen; override;
       procedure PrepareGameParams; override;
       procedure CloseScreen(NextScreen: TGameScreenType); override;
@@ -86,42 +87,53 @@ begin
   inherited;
 end;
 
-procedure TGamePreviewScreen.CloseScreen(NextScreen: TGameScreenType);
+function TGamePreviewScreen.ResolvedMissingPieces: Boolean;
 var
   F: TFManageStyles;
 begin
-  if NextScreen = gstPlay then
+  Result := True;
+
+  if not GameParams.Level.HasAnyFallbacks then
+    Exit;
+
+  if not GameParams.EnableOnline then
   begin
-    if GameParams.Level.HasAnyFallbacks then
-    begin
-      if GameParams.EnableOnline then
-      begin
-        case RunCustomPopup(Self, 'Missing styles',
-          'Some pieces used by this level are missing. Do you want to attempt to download missing styles?',
-          'Yes|No|Open Style Manager') of
-          1:
-            begin
-              DownloadMissingStyles;
-              inherited CloseScreen(gstPreview);
-            end;
-          3:
-            begin
-              F := TFManageStyles.Create(Self);
-              try
-                F.ShowModal;
-              finally
-                F.Free;
-                inherited CloseScreen(gstPreview);
-              end;
-            end;
-        end;
-      end else
-        ShowMessage('This level contains pieces which are missing from the styles folder. ' +
-                    'Please contact the level author or download the style manually ' +
-                    'via www.lemmingsforums.net.');
-    end else
-      inherited CloseScreen(gstPlay);
-  end else if NextScreen = gstText then
+    ShowMessage('This level contains pieces which are missing from the styles folder. ' +
+            'Please contact the level author or download the style manually ' +
+            'via www.lemmingsforums.net.');
+    Result := False;
+    Exit;
+  end;
+
+  case RunCustomPopup(Self, 'Missing styles',
+    'Some pieces used by this level are missing. Do you want to attempt to download missing styles?',
+    'Yes|No|Open Style Manager') of
+    1: begin
+      DownloadMissingStyles;
+      Result := False; // Need to reload preview and check again
+      CloseScreen(gstPreview);
+    end;
+
+    2: Result := False;
+
+    3: begin
+      F := TFManageStyles.Create(Self);
+      try
+        F.ShowModal;
+      finally
+        F.Free;
+      end;
+      Result := False; // Need to reload preview and check again
+      CloseScreen(gstPreview);
+    end;
+  end;
+end;
+
+procedure TGamePreviewScreen.CloseScreen(NextScreen: TGameScreenType);
+begin
+  if (NextScreen = gstPlay) then
+    inherited CloseScreen(gstPlay)
+  else if (NextScreen = gstText) then
     inherited CloseScreen(gstText)
   else
     inherited;
@@ -173,6 +185,10 @@ begin
   CurLevel := GameParams.Level;
   CurInfo := CurLevel.Info;
   CurTheme := GameParams.Renderer.Theme;
+
+  // Check for missing pieces
+  if not ResolvedMissingPieces then
+    Exit;
 
   // See if we need to show the sprites fallback message
   if (CurTheme.SpriteFallbackMessage <> '') then
