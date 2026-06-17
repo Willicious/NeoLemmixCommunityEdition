@@ -112,6 +112,7 @@ type
     procedure ProcessDrawFrame(Gadget: TGadget; Dst: TBitmap32);
     procedure DrawTriggerArea(Gadget: TGadget);
     procedure DrawUserHelper;
+    procedure MakeColorCycle;
     function IsUseful(Gadget: TGadget): Boolean;
 
     procedure InternalDrawTerrain(Dst: TBitmap32; T: TTerrain; IsPhysicsDraw: Boolean; IsHighRes: Boolean);
@@ -2334,6 +2335,13 @@ begin
   end;
 end;
 
+procedure TRenderer.MakeColorCycle;
+var
+  H: Integer;
+begin
+  H := GetTickCount mod 5000;
+  fFixedDrawColor := HSVToRGB(H / 5000, 1, 0.75);
+end;
 
 procedure TRenderer.DrawLemmingHelpers(Dst: TBitmap32; L: TLemming; IsClearPhysics: Boolean = True);
 var
@@ -2693,14 +2701,6 @@ procedure TRenderer.DrawAllGadgets(Gadgets: TGadgetList; DrawHelper: Boolean = T
                       fRenderInterface.MousePos)
   end;
 
-  procedure MakeFixedDrawColor;
-  var
-    H: Integer;
-  begin
-    H := GetTickCount mod 5000;
-    fFixedDrawColor := HSVToRGB(H / 5000, 1, 0.75);
-  end;
-
 var
   Gadget: TGadget;
   i, i2: Integer;
@@ -2712,7 +2712,12 @@ begin
   fUsefulOnly := UsefulOnly;
 
   if fUsefulOnly then
-    MakeFixedDrawColor;
+  begin
+    if GameParams.UseColorCycle then
+      MakeColorCycle
+    else
+      fFixedDrawColor := $FF008800;
+  end;
 
   if not fLayers.fIsEmpty[rlTriggers] then fLayers[rlTriggers].Clear(0);
   if not fLayers.fIsEmpty[rlObjectHelpers] then fLayers[rlObjectHelpers].Clear(0);

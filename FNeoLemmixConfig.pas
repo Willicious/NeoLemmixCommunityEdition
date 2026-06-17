@@ -80,6 +80,7 @@ type
     cbCountDownFromSR: TCheckBox;
     cbShowButtonHints: TCheckBox;
     cbOverwriteSameLemming: TCheckBox;
+    cbUseColorCycle: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -279,6 +280,7 @@ begin
     cbReplayAfterRestart.Checked := GameParams.ReplayAfterRestart;
     cbOverwriteSameLemming.Checked := GameParams.OverwriteSameLemming;
 
+    cbUseColorCycle.Checked := GameParams.UseColorCycle;
     cbShowDecorations.Checked := GameParams.ShowDecorations;
     cbForceDefaultLemmings.Checked := GameParams.ForceDefaultLemmings;
 
@@ -360,6 +362,7 @@ begin
   GameParams.ReplayAfterRestart := cbReplayAfterRestart.Checked;
   GameParams.OverwriteSameLemming := cbOverwriteSameLemming.Checked;
 
+  GameParams.UseColorCycle := cbUseColorCycle.Checked;
   GameParams.ShowDecorations := cbShowDecorations.Checked;
   GameParams.ForceDefaultLemmings := cbForceDefaultLemmings.Checked;
 

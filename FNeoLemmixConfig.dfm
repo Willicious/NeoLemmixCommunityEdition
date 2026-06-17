@@ -27,10 +27,9 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 382
     Height = 573
-    ActivePage = TabSheet2
+    ActivePage = TabSheet3
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
-    ExplicitHeight = 556
     object TabSheet1: TTabSheet
       Caption = 'General'
       object lblUserName: TLabel
@@ -431,7 +430,7 @@ object FormNXConfig: TFormNXConfig
         Left = 19
         Top = 173
         Width = 336
-        Height = 204
+        Height = 220
         Caption = 'Visual Options'
         TabOrder = 1
         object cbLinearResampleMenu: TCheckBox
@@ -497,10 +496,19 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 6
           OnClick = OptionChanged
         end
+        object cbUseColorCycle: TCheckBox
+          Left = 28
+          Top = 186
+          Width = 253
+          Height = 17
+          Caption = 'Use Color Cycle in Clear Physics Mode'
+          TabOrder = 7
+          OnClick = OptionChanged
+        end
       end
       object gbWindowOptions: TGroupBox
         Left = 19
-        Top = 396
+        Top = 417
         Width = 336
         Height = 120
         Caption = 'Window Options'
@@ -646,7 +654,6 @@ object FormNXConfig: TFormNXConfig
     Caption = 'OK'
     TabOrder = 1
     OnClick = btnOKClick
-    ExplicitTop = 562
   end
   object btnCancel: TButton
     Left = 137
@@ -658,7 +665,6 @@ object FormNXConfig: TFormNXConfig
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 2
-    ExplicitTop = 562
   end
   object btnApply: TButton
     Left = 251
@@ -669,6 +675,5 @@ object FormNXConfig: TFormNXConfig
     Caption = 'Apply'
     TabOrder = 3
     OnClick = btnApplyClick
-    ExplicitTop = 562
   end
 end
