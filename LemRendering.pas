@@ -2716,7 +2716,7 @@ begin
     if GameParams.UseColorCycle then
       MakeColorCycle
     else
-      fFixedDrawColor := $FF008800;
+      fFixedDrawColor := $FF004400;
   end;
 
   if not fLayers.fIsEmpty[rlTriggers] then fLayers[rlTriggers].Clear(0);
