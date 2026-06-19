@@ -10,7 +10,7 @@ uses
 const
   MAJOR_VERSION = 1;
   MINOR_VERSION = 1;
-  HOTFIX_VERSION = 1;
+  HOTFIX_VERSION = 2;
   RC_VERSION = 0;
 
   STYLE_VERSION = '12.11/'; // For server usage - a new style version should only be used when backwards compatibility breaks.
