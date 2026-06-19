@@ -242,6 +242,15 @@ var
     ClearPhysicsLemmingSelected := $FFFFFF77;
   end;
 
+  function ReadColor32(Sec: TParserSection; const Key: String; Default: TColor32): TColor32;
+  begin
+    try
+      Result := TColor32(StrToUInt(Sec.LineString[Key]));
+    except
+      Result := Default;
+    end;
+  end;
+
 begin
   ResetColours;
 
@@ -252,11 +261,11 @@ begin
     Sec := Parser.MainSection.Section['lemmings'];
     if Sec = nil then Exit;
 
-    ClearPhysicsLemmingNormal := StrToIntDef(Sec.LineString['normal'], $FF7777FF);
-    ClearPhysicsLemmingAthlete := StrToIntDef(Sec.LineString['athlete'], $FF00FFFF);
-    ClearPhysicsLemmingNeutral := StrToIntDef(Sec.LineString['neutral'], $FFAA00FF);
-    ClearPhysicsLemmingZombie := StrToIntDef(Sec.LineString['zombie'], $FF777744);
-    ClearPhysicsLemmingSelected := StrToIntDef(Sec.LineString['selected'], $FFFFFF77);
+    ClearPhysicsLemmingNormal := ReadColor32(Sec, 'normal', $FF7777FF);
+    ClearPhysicsLemmingAthlete := ReadColor32(Sec, 'athlete', $FF00FFFF);
+    ClearPhysicsLemmingNeutral := ReadColor32(Sec, 'neutral', $FFAA00FF);
+    ClearPhysicsLemmingZombie := ReadColor32(Sec, 'zombie', $FF777744);
+    ClearPhysicsLemmingSelected := ReadColor32(Sec, 'selected', $FFFFFF77);
   finally
     Parser.Free;
   end;

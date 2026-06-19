@@ -2941,6 +2941,15 @@ var
     TriggerBaseColor := $FFFF00FF;
   end;
 
+  function ReadColor32(Sec: TParserSection; const Key: String; Default: TColor32): TColor32;
+  begin
+    try
+      Result := TColor32(StrToUInt(Sec.LineString[Key]));
+    except
+      Result := Default;
+    end;
+  end;
+
 begin
   ResetColours;
 
@@ -2951,8 +2960,8 @@ begin
     Sec := Parser.MainSection.Section['gadgets'];
     if Sec = nil then Exit;
 
-    GadgetShapeColor := StrToIntDef(Sec.LineString['shape'], $FF004400);
-    TriggerBaseColor := StrToIntDef(Sec.LineString['trigger'], $FFFF00FF);
+    GadgetShapeColor := ReadColor32(Sec, 'shape', $FF004400);
+    TriggerBaseColor := ReadColor32(Sec, 'trigger', $FFFF00FF);
   finally
     Parser.Free;
   end;
