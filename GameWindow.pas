@@ -958,6 +958,7 @@ var
   SDir: Integer;
 begin
   Game.IsSelectWalkerHotkey := GameParams.Hotkeys.CheckForKey(lka_ForceWalker);
+  Game.IsSelectUnassignedHotkey := GameParams.Hotkeys.CheckForKey(lka_ForceUnassigned);
   Game.IsHighlightHotkey := GameParams.Hotkeys.CheckForKey(lka_Highlight);
   Game.IsShowAthleteInfo := GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo);
 
@@ -1326,6 +1327,7 @@ const
                          lka_DirLeft,
                          lka_DirRight,
                          lka_ForceWalker,
+                         lka_ForceUnassigned,
                          lka_Cheat,
                          lka_Skip,
                          lka_SpecialSkip,
