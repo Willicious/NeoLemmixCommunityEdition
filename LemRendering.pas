@@ -20,7 +20,8 @@ uses
   LemGadgets, LemGadgetsMeta, LemGadgetAnimation, LemGadgetsConstants,
   LemLemming,
   LemAnimationSet, LemMetaAnimation, LemCore,
-  LemLevel, LemStrings;
+  LemLevel, LemStrings,
+  LemNeoParser, NeoLemmixCEResources;
 
 type
   TParticleRec = packed record
@@ -103,6 +104,7 @@ type
     procedure PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; IsZombie: Boolean = False; IsNeutral: Boolean = False);
 
     procedure DrawTriggerAreaRectOnLayer(TriggerRect: TRect);
+    procedure LoadClearPhysicsColors;
 
     function GetTerrainLayer: TBitmap32;
     function GetParticleLayer: TBitmap32;
@@ -198,6 +200,10 @@ type
 
     property TransparentBackground: Boolean read fTransparentBackground write fTransparentBackground;
   end;
+
+var
+  GadgetShapeColor: TColor32;
+  TriggerBaseColor: TColor32;
 
 implementation
 
@@ -2716,7 +2722,7 @@ begin
     if GameParams.UseColorCycle then
       MakeColorCycle
     else
-      fFixedDrawColor := $FF004400;
+      fFixedDrawColor := GadgetShapeColor;
   end;
 
   if not fLayers.fIsEmpty[rlTriggers] then fLayers[rlTriggers].Clear(0);
@@ -2836,23 +2842,39 @@ var
 
   DrawRect: TRect;
 
+  function DarkenColor(C: TColor32; K: Byte): TColor32; inline;
+  begin
+    Result :=
+      (C and $FF000000) or
+      ((((C shr 16) and $FF) * K shr 8) shl 16) or
+      ((((C shr 8)  and $FF) * K shr 8) shl 8)  or
+      (((C and $FF) * K shr 8));
+  end;
+
   procedure DrawTriggerPixel();
   var
     AlreadyPresent: Boolean;
+    CheckPatternOffset: Integer;
   begin
     AlreadyPresent := PDst^ <> $00000000;
     if PPhys^ and PM_SOLID = 0 then
-      PDst^ := $FFFF00FF
-    else if PPhys^ and PM_STEEL <> 0 then
-      PDst^ := $FF600060
-    else
-      PDst^ := $FFA000A0;
+    begin
+      PDst^ := TriggerBaseColor;
+      CheckPatternOffset := 216;
+    end else if PPhys^ and PM_STEEL <> 0 then
+    begin
+      PDst^ := DarkenColor(TriggerBaseColor, 112);
+      CheckPatternOffset := 128;
+    end else begin
+      PDst^ := DarkenColor(TriggerBaseColor, 192);
+      CheckPatternOffset := 200;
+    end;
 
     if (x - y) mod 2 <> 0 then
-      PDst^ := PDst^ - $00200020;
+      PDst^ := DarkenColor(PDst^, CheckPatternOffset);
 
     if AlreadyPresent then
-      PDst^ := PDst^ - $00300030;
+      PDst^ := DarkenColor(PDst^, 224);
   end;
 
 begin
@@ -2907,6 +2929,34 @@ begin
   fLayers.fIsEmpty[rlTriggers] := False;
 end;
 
+procedure TRenderer.LoadClearPhysicsColors;
+var
+  Parser: TParser;
+  Sec: TParserSection;
+
+  // Default colours, loaded if custom files don't exist
+  procedure ResetColours;
+  begin
+    GadgetShapeColor := $FF004400;
+    TriggerBaseColor := $FFFF00FF;
+  end;
+
+begin
+  ResetColours;
+
+  Parser := TParser.Create;
+  try
+    LoadNxmiWithOverrides('clearphysicscolours.nxmi', 'CLEARPHYSICSCOLOURS_NXMI', Parser);
+
+    Sec := Parser.MainSection.Section['gadgets'];
+    if Sec = nil then Exit;
+
+    GadgetShapeColor := StrToIntDef(Sec.LineString['shape'], $FF004400);
+    TriggerBaseColor := StrToIntDef(Sec.LineString['trigger'], $FFFF00FF);
+  finally
+    Parser.Free;
+  end;
+end;
 
 constructor TRenderer.Create;
 var
@@ -2928,6 +2978,7 @@ begin
   fLaserGraphic.OnPixelCombine := CombineFixedColor;
 
   LoadHelperImages;
+  LoadClearPhysicsColors;
 
   FillChar(fParticles, SizeOf(TParticleTable), $80);
   S := TResourceStream.Create(HInstance, 'particles', 'lemdata');

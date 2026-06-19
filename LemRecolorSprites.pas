@@ -8,15 +8,15 @@ uses
   LemNeoParser,
   LemNeoTheme,
   LemLemming, LemTypes, LemStrings,
+  NeoLemmixCEResources,
   GR32, GR32_Blend;
 
-const
-  CPM_LEMMING_NORMAL = $FF7777FF;  // used for a non-athlete
-  CPM_LEMMING_ATHLETE = $FF00FFFF; // used for an athlete
-  CPM_LEMMING_SELECTED = $00FFFF00; // OR'd to base value for selected lemming
-  CPM_LEMMING_ZOMBIE_OR = $00007F00; // OR'd to base value for zombies
-  CPM_LEMMING_ZOMBIE_NOT = $000000C0; // AND-NOT'd to base value for zombies
-  CPM_LEMMING_NEUTRAL = $00FFFFFF; // XOR'd to base value for neutrals
+var
+  ClearPhysicsLemmingNormal: TColor32;
+  ClearPhysicsLemmingAthlete: TColor32;
+  ClearPhysicsLemmingNeutral: TColor32;
+  ClearPhysicsLemmingZombie: TColor32;
+  ClearPhysicsLemmingSelected: TColor32;
 
 type
   TColorSwapType = (rcl_Selected,
@@ -52,6 +52,7 @@ type
       procedure ApplyPaletteSwapping(aColorDict: TColorDict; aShadeDict: TShadeDict; aTheme: TNeoTheme);
       procedure CombineLemmingPixels(F: TColor32; var B: TColor32; M: Cardinal);
       procedure CombineLemmingHighlight(F: TColor32; var B: TColor32; M: Cardinal);
+      procedure LoadClearPhysicsShades;
 
       property Lemming: TLemming write fLemming;
       property DrawAsSelected: Boolean write fDrawAsSelected;
@@ -68,6 +69,7 @@ begin
 
   // Until proper loading exists
   LoadSwaps(SFDefaultStyle);
+  LoadClearPhysicsShades;
 end;
 
 procedure TRecolorImage.SwapColors(F: TColor32; var B: TColor32);
@@ -82,18 +84,18 @@ begin
   if fClearPhysics then
   begin
     if fLemming.HasPermanentSkills then
-      B := CPM_LEMMING_ATHLETE
+      B := ClearPhysicsLemmingAthlete
     else
-      B := CPM_LEMMING_NORMAL;
-
-    if fDrawAsSelected then
-      B := B or CPM_LEMMING_SELECTED;
+      B := ClearPhysicsLemmingNormal;
 
     if fLemming.LemIsNeutral then
-      B := B xor CPM_LEMMING_NEUTRAL;
+      B := ClearPhysicsLemmingNeutral;
 
     if fLemming.LemIsZombie then
-      B := (B or CPM_LEMMING_ZOMBIE_OR) and not CPM_LEMMING_ZOMBIE_NOT;
+      B := ClearPhysicsLemmingZombie;
+
+    if fDrawAsSelected then
+      B := ClearPhysicsLemmingSelected;
   end else
     for i := 0 to Length(fSwaps)-1 do
     begin
@@ -222,6 +224,41 @@ begin
         MoveLastTo(i);
         Inc(i);
       end;
+  end;
+end;
+
+procedure TRecolorImage.LoadClearPhysicsShades;
+var
+  Parser: TParser;
+  Sec: TParserSection;
+
+  // Default colours, loaded if custom files don't exist
+  procedure ResetColours;
+  begin
+    ClearPhysicsLemmingNormal := $FF7777FF;
+    ClearPhysicsLemmingAthlete := $FF00FFFF;
+    ClearPhysicsLemmingNeutral := $FFAA00FF;
+    ClearPhysicsLemmingZombie := $FF777744;
+    ClearPhysicsLemmingSelected := $FFFFFF77;
+  end;
+
+begin
+  ResetColours;
+
+  Parser := TParser.Create;
+  try
+    LoadNxmiWithOverrides('clearphysicscolours.nxmi', 'CLEARPHYSICSCOLOURS_NXMI', Parser);
+
+    Sec := Parser.MainSection.Section['lemmings'];
+    if Sec = nil then Exit;
+
+    ClearPhysicsLemmingNormal := StrToIntDef(Sec.LineString['normal'], $FF7777FF);
+    ClearPhysicsLemmingAthlete := StrToIntDef(Sec.LineString['athlete'], $FF00FFFF);
+    ClearPhysicsLemmingNeutral := StrToIntDef(Sec.LineString['neutral'], $FFAA00FF);
+    ClearPhysicsLemmingZombie := StrToIntDef(Sec.LineString['zombie'], $FF777744);
+    ClearPhysicsLemmingSelected := StrToIntDef(Sec.LineString['selected'], $FFFFFF77);
+  finally
+    Parser.Free;
   end;
 end;
 
