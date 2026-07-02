@@ -1367,6 +1367,11 @@ begin
     Exit;
   end;
 
+  // Eat preview/postview key presses in Playback Mode + Auto skip
+  if (GameParams.PlaybackModeActive) and (GameParams.AutoSkipPreviewPostview)
+    and (Game.CurrentIteration <= 0) then
+      Exit;
+
   if not Game.Playing then
     Exit;
 
@@ -1664,6 +1669,12 @@ var
 begin
   if (not fMouseTrapped) and (not fSuspendCursor) and GameParams.EdgeScroll then
     ApplyMouseTrap;
+
+  // Eat preview/postview mouse clicks in Playback Mode + Auto skip
+  if (GameParams.PlaybackModeActive) and (GameParams.AutoSkipPreviewPostview)
+    and (Game.CurrentIteration <= 0) then
+      Exit;
+
   // interrupting hyperspeed can break the handling of savestates
   // so we're not allowing it
   if Game.Playing and not IsHyperSpeed then
