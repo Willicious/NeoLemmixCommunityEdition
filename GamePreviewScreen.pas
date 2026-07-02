@@ -99,8 +99,8 @@ begin
   if not GameParams.EnableOnline then
   begin
     ShowMessage('This level contains pieces which are missing from the styles folder. ' +
-            'Please contact the level author or download the style manually ' +
-            'via www.lemmingsforums.net.');
+      'Please contact the level author or download the style manually ' +
+      'via www.lemmingsforums.net.');
     Result := False;
     Exit;
   end;
