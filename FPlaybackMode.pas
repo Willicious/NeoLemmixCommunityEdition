@@ -53,37 +53,38 @@ implementation
 
 {$R *.dfm}
 
+
 procedure TFPlaybackMode.btnBrowseClick(Sender: TObject);
 var
-  OpenDlg: TOpenDialog;
+  Dialog: TFileOpenDialog;
   InitialDir: String;
 begin
-  OpenDlg := TOpenDialog.Create(Self);
+  InitialDir := AppPath + GameParams.ReplaysFolder +
+    MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name);
+
+  if not DirectoryExists(InitialDir) then
+    InitialDir := AppPath + GameParams.ReplaysFolder;
+
+  Dialog := TFileOpenDialog.Create(Self);
   try
-    OpenDlg.Title := 'Select any file in the folder containing replays';
+    Dialog.Title := 'Select a folder containing replays';
+    Dialog.DefaultFolder := InitialDir;
+    Dialog.Options := Dialog.Options + [fdoPickFolders];
 
-    InitialDir := AppPath + GameParams.ReplaysFolder + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name);
-
-    if not SysUtils.DirectoryExists(InitialDir) then
-      InitialDir := AppPath + GameParams.ReplaysFolder;
-
-    OpenDlg.InitialDir := InitialDir;
-    OpenDlg.Filter := 'NeoLemmix Replay (*.nxrp)|*.nxrp';
-    OpenDlg.Options := [ofFileMustExist, ofHideReadOnly, ofEnableSizing, ofPathMustExist];
-
-    if OpenDlg.Execute then
+    if Dialog.Execute then
     begin
-      fSelectedFolder := ExtractFilePath(OpenDlg.FileName);
+      fSelectedFolder := Dialog.FileName;
 
-      if SysUtils.DirectoryExists(fSelectedFolder) then
+      if DirectoryExists(fSelectedFolder) then
       begin
         SetCurrentDir(fSelectedFolder);
-        stSelectedFolder.Caption := ExtractFileName(ExcludeTrailingPathDelimiter(fSelectedFolder));
+        stSelectedFolder.Caption :=
+          ExtractFileName(ExcludeTrailingPathDelimiter(fSelectedFolder));
       end else
         ShowMessage('The selected folder path is invalid.');
     end;
   finally
-    OpenDlg.Free;
+    Dialog.Free;
   end;
 end;
 
