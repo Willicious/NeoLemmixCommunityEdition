@@ -7,7 +7,7 @@ uses
   Classes, SysUtils,
   LemNeoParser,
   LemNeoTheme,
-  LemLemming, LemTypes, LemStrings,
+  LemLemming, LemTypes, LemStrings, LemPalette,
   NeoLemmixCEResources,
   GR32, GR32_Blend;
 
@@ -84,18 +84,18 @@ begin
   if fClearPhysics then
   begin
     if fLemming.HasPermanentSkills then
-      B := ClearPhysicsLemmingAthlete
+      B := ResolveColor(ClearPhysicsLemmingAthlete)
     else
-      B := ClearPhysicsLemmingNormal;
+      B := ResolveColor(ClearPhysicsLemmingNormal);
 
     if fLemming.LemIsNeutral then
-      B := ClearPhysicsLemmingNeutral;
+      B := ResolveColor(ClearPhysicsLemmingNeutral);
 
     if fLemming.LemIsZombie then
-      B := ClearPhysicsLemmingZombie;
+      B := ResolveColor(ClearPhysicsLemmingZombie);
 
     if fDrawAsSelected then
-      B := ClearPhysicsLemmingSelected;
+      B := ResolveColor(ClearPhysicsLemmingSelected);
   end else
     for i := 0 to Length(fSwaps)-1 do
     begin
@@ -242,15 +242,6 @@ var
     ClearPhysicsLemmingSelected := $FFFFFF77;
   end;
 
-  function ReadColor32(Sec: TParserSection; const Key: String; Default: TColor32): TColor32;
-  begin
-    try
-      Result := TColor32(StrToUInt(Sec.LineString[Key]));
-    except
-      Result := Default;
-    end;
-  end;
-
 begin
   ResetColours;
 
@@ -261,11 +252,11 @@ begin
     Sec := Parser.MainSection.Section['lemmings'];
     if Sec = nil then Exit;
 
-    ClearPhysicsLemmingNormal := ReadColor32(Sec, 'normal', $FF7777FF);
-    ClearPhysicsLemmingAthlete := ReadColor32(Sec, 'athlete', $FF00FFFF);
-    ClearPhysicsLemmingNeutral := ReadColor32(Sec, 'neutral', $FFAA00FF);
-    ClearPhysicsLemmingZombie := ReadColor32(Sec, 'zombie', $FF777744);
-    ClearPhysicsLemmingSelected := ReadColor32(Sec, 'selected', $FFFFFF77);
+    ClearPhysicsLemmingNormal := ParseColor32(Sec, 'normal', $FF7777FF);
+    ClearPhysicsLemmingAthlete := ParseColor32(Sec, 'athlete', $FF00FFFF);
+    ClearPhysicsLemmingNeutral := ParseColor32(Sec, 'neutral', $FFAA00FF);
+    ClearPhysicsLemmingZombie := ParseColor32(Sec, 'zombie', $FF777744);
+    ClearPhysicsLemmingSelected := ParseColor32(Sec, 'selected', $FFFFFF77);
   finally
     Parser.Free;
   end;

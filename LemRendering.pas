@@ -20,7 +20,7 @@ uses
   LemGadgets, LemGadgetsMeta, LemGadgetAnimation, LemGadgetsConstants,
   LemLemming,
   LemAnimationSet, LemMetaAnimation, LemCore,
-  LemLevel, LemStrings,
+  LemLevel, LemStrings, LemPalette,
   LemNeoParser, NeoLemmixCEResources;
 
 type
@@ -114,7 +114,6 @@ type
     procedure ProcessDrawFrame(Gadget: TGadget; Dst: TBitmap32);
     procedure DrawTriggerArea(Gadget: TGadget);
     procedure DrawUserHelper;
-    procedure MakeColorCycle;
     function IsUseful(Gadget: TGadget): Boolean;
 
     procedure InternalDrawTerrain(Dst: TBitmap32; T: TTerrain; IsPhysicsDraw: Boolean; IsHighRes: Boolean);
@@ -2341,14 +2340,6 @@ begin
   end;
 end;
 
-procedure TRenderer.MakeColorCycle;
-var
-  H: Integer;
-begin
-  H := GetTickCount mod 5000;
-  fFixedDrawColor := HSVToRGB(H / 5000, 1, 0.75);
-end;
-
 procedure TRenderer.DrawLemmingHelpers(Dst: TBitmap32; L: TLemming; IsClearPhysics: Boolean = True);
 var
   numHelpers, indexHelper: Integer;
@@ -2718,12 +2709,7 @@ begin
   fUsefulOnly := UsefulOnly;
 
   if fUsefulOnly then
-  begin
-    if GameParams.UseColorCycle then
-      MakeColorCycle
-    else
-      fFixedDrawColor := GadgetShapeColor;
-  end;
+    fFixedDrawColor := ResolveColor(GadgetShapeColor);
 
   if not fLayers.fIsEmpty[rlTriggers] then fLayers[rlTriggers].Clear(0);
   if not fLayers.fIsEmpty[rlObjectHelpers] then fLayers[rlObjectHelpers].Clear(0);
@@ -2853,20 +2839,23 @@ var
 
   procedure DrawTriggerPixel();
   var
+    TriggerColor: TColor32;
     AlreadyPresent: Boolean;
     CheckPatternOffset: Integer;
   begin
+    TriggerColor := ResolveColor(TriggerBaseColor);
     AlreadyPresent := PDst^ <> $00000000;
+
     if PPhys^ and PM_SOLID = 0 then
     begin
-      PDst^ := TriggerBaseColor;
+      PDst^ := TriggerColor;
       CheckPatternOffset := 216;
     end else if PPhys^ and PM_STEEL <> 0 then
     begin
-      PDst^ := DarkenColor(TriggerBaseColor, 112);
+      PDst^ := DarkenColor(TriggerColor, 112);
       CheckPatternOffset := 128;
     end else begin
-      PDst^ := DarkenColor(TriggerBaseColor, 192);
+      PDst^ := DarkenColor(TriggerColor, 192);
       CheckPatternOffset := 200;
     end;
 
@@ -2941,15 +2930,6 @@ var
     TriggerBaseColor := $FFFF00FF;
   end;
 
-  function ReadColor32(Sec: TParserSection; const Key: String; Default: TColor32): TColor32;
-  begin
-    try
-      Result := TColor32(StrToUInt(Sec.LineString[Key]));
-    except
-      Result := Default;
-    end;
-  end;
-
 begin
   ResetColours;
 
@@ -2960,8 +2940,8 @@ begin
     Sec := Parser.MainSection.Section['gadgets'];
     if Sec = nil then Exit;
 
-    GadgetShapeColor := ReadColor32(Sec, 'shape', $FF004400);
-    TriggerBaseColor := ReadColor32(Sec, 'trigger', $FFFF00FF);
+    GadgetShapeColor := ParseColor32(Sec, 'shape', $FF004400);
+    TriggerBaseColor := ParseColor32(Sec, 'trigger', $FFFF00FF);
   finally
     Parser.Free;
   end;

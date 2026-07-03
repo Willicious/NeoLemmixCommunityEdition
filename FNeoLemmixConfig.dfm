@@ -428,9 +428,9 @@ object FormNXConfig: TFormNXConfig
       end
       object gbVisualOptions: TGroupBox
         Left = 19
-        Top = 173
+        Top = 186
         Width = 336
-        Height = 220
+        Height = 196
         Caption = 'Visual Options'
         TabOrder = 1
         object cbLinearResampleMenu: TCheckBox
@@ -496,19 +496,10 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 6
           OnClick = OptionChanged
         end
-        object cbUseColorCycle: TCheckBox
-          Left = 28
-          Top = 186
-          Width = 253
-          Height = 17
-          Caption = 'Use Color Cycle in Clear Physics Mode'
-          TabOrder = 7
-          OnClick = OptionChanged
-        end
       end
       object gbWindowOptions: TGroupBox
         Left = 19
-        Top = 417
+        Top = 414
         Width = 336
         Height = 120
         Caption = 'Window Options'

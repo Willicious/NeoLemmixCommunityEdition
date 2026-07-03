@@ -101,7 +101,6 @@ type
     moReplayAfterRestart,
     moPauseAfterBackwards,
     moShowDecorations,
-    moUseColorCycle,
     moShowShadows,
     moShowHelpers,
     moDisableWineWarnings,
@@ -139,7 +138,6 @@ const
     moReplayAfterRestart,
     moPauseAfterBackwards,
     moLinearResampleMenu,
-    moUseColorCycle,
     moFullScreen,
     moMinimapHighQuality,
     moFadeMenuScreens,
@@ -293,7 +291,6 @@ type
     property ReplayAfterRestart: Boolean Index moReplayAfterRestart read GetOptionFlag write SetOptionFlag;
     property PauseAfterBackwardsSkip: Boolean Index moPauseAfterBackwards read GetOptionFlag write SetOptionFlag;
     property ShowDecorations: Boolean Index moShowDecorations read GetOptionFlag write SetOptionFlag;
-    property UseColorCycle: Boolean Index moUseColorCycle read GetOptionFlag write SetOptionFlag;
     property ShowShadows: Boolean Index moShowShadows read GetOptionFlag write SetOptionFlag;
     property ShowHelpers: Boolean Index moShowHelpers read GetOptionFlag write SetOptionFlag;
     property DisableWineWarnings: Boolean Index moDisableWineWarnings read GetOptionFlag write SetOptionFlag;
@@ -536,7 +533,6 @@ begin
     SaveBoolean('ReplayAfterRestart', ReplayAfterRestart);
     SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
     SaveBoolean('ShowDecorations', ShowDecorations);
-    SaveBoolean('UseColorCycle', UseColorCycle);
     SaveBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
     SaveBoolean('ShowShadows', ShowShadows);
     SaveBoolean('ShowHelpers', ShowHelpers);
@@ -768,7 +764,6 @@ begin
     ReplayAfterRestart := LoadBoolean('ReplayAfterRestart', ReplayAfterRestart);
     PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
     ShowDecorations := LoadBoolean('ShowDecorations', ShowDecorations);
-    UseColorCycle := LoadBoolean('UseColorCycle', UseColorCycle);
     ForceDefaultLemmings := LoadBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
     ShowShadows := LoadBoolean('ShowShadows', ShowShadows);
     ShowHelpers := LoadBoolean('ShowHelpers', ShowHelpers);
