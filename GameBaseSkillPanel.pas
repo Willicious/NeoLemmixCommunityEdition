@@ -1404,7 +1404,7 @@ begin
   LemmingKinds := Game.ActiveLemmingTypes;
   SelectedLemming := Game.RenderInterface.SelectedLemming;
 
-  // Define hue shift colours
+  // Define hue shift colors
   Red    := -1 / 3;
   Blue   :=  1 / 4;
   Purple :=  1 / 2;

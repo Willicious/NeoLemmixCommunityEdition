@@ -2923,19 +2923,19 @@ var
   Parser: TParser;
   Sec: TParserSection;
 
-  // Default colours, loaded if custom files don't exist
-  procedure ResetColours;
+  // Default colors, loaded if custom file doesn't exist
+  procedure ResetColors;
   begin
     GadgetShapeColor := $FF004400;
     TriggerBaseColor := $FFFF00FF;
   end;
 
 begin
-  ResetColours;
+  ResetColors;
 
   Parser := TParser.Create;
   try
-    LoadNxmiWithOverrides('clearphysicscolours.nxmi', 'CLEARPHYSICSCOLOURS_NXMI', Parser);
+    LoadNxmiWithOverrides('clearphysicscolors.nxmi', 'CLEARPHYSICSCOLORS_NXMI', Parser);
 
     Sec := Parser.MainSection.Section['gadgets'];
     if Sec = nil then Exit;

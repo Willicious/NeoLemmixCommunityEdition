@@ -31,7 +31,7 @@ type
       fAdvanceLevel: Boolean;
 
       function GetPostviewText: TextLineArray;
-      procedure LoadPostviewTextColours;
+      procedure LoadPostviewTextColors;
 
       function GetResultIndex: Integer;
       procedure NextLevel;
@@ -384,7 +384,7 @@ begin
   Entry := GameParams.CurrentLevel;
   FillChar(HueShift, SizeOf(TColorDiff), 0);
   SetLength(Result, 10);
-  LoadPostviewTextColours;
+  LoadPostviewTextColors;
 
   STarget := IntToStr(Results.gToRescue);
   SRescued := IntToStr(Results.gRescued);
@@ -545,13 +545,13 @@ begin
   Result[8].ColorShift := HueShift;
 end;
 
-procedure TGamePostviewScreen.LoadPostviewTextColours;
+procedure TGamePostviewScreen.LoadPostviewTextColors;
 var
   Parser: TParser;
   Sec: TParserSection;
 
-  // Default colours(all blue), loaded if custom files don't exist
-  procedure ResetColours;
+  // Default colors (all blue), loaded if custom files don't exist
+  procedure ResetColors;
   begin
     TopTextShift := 0;
     RescueRecordShift := 0;
@@ -561,11 +561,11 @@ var
   end;
 
 begin
-  ResetColours;
+  ResetColors;
 
   Parser := TParser.Create;
   try
-    LoadNxmiWithOverrides('textcolours.nxmi', 'TEXTCOLOURS_NXMI', Parser);
+    LoadNxmiWithOverrides('textcolors.nxmi', 'TEXTCOLORS_NXMI', Parser);
 
     Sec := Parser.MainSection.Section['postview'];
     if Sec = nil then Exit;

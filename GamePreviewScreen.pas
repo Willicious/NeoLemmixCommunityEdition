@@ -24,7 +24,7 @@ type
   TGamePreviewScreen = class(TGameBaseMenuScreen)
     private
       function GetPreviewText: TextLineArray;
-      procedure LoadPreviewTextColours;
+      procedure LoadPreviewTextColors;
 
       procedure NextLevel;
       procedure PreviousLevel;
@@ -472,7 +472,7 @@ begin
   FillChar(HueShift, SizeOf(TColorDiff), 0);
 
   SetLength(Result, 7);
-  LoadPreviewTextColours;
+  LoadPreviewTextColors;
 
   HueShift.HShift := TitleShift;
   Result[0].Line := Entry.Title;
@@ -553,13 +553,13 @@ begin
   Result[6].ColorShift := HueShift;
 end;
 
-procedure TGamePreviewScreen.LoadPreviewTextColours;
+procedure TGamePreviewScreen.LoadPreviewTextColors;
 var
   Parser: TParser;
   Sec: TParserSection;
 
-  // Default colours (all blue), loaded if custom files don't exist
-  procedure ResetColours;
+  // Default colors (all blue), loaded if custom files don't exist
+  procedure ResetColors;
   begin
     TitleShift := 0;
     GroupShift := 0;
@@ -571,11 +571,11 @@ var
   end;
 
 begin
-  ResetColours;
+  ResetColors;
 
   Parser := TParser.Create;
   try
-    LoadNxmiWithOverrides('textcolours.nxmi', 'TEXTCOLOURS_NXMI', Parser);
+    LoadNxmiWithOverrides('textcolors.nxmi', 'TEXTCOLORS_NXMI', Parser);
 
     Sec := Parser.MainSection.Section['preview'];
     if Sec = nil then Exit;
