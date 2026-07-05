@@ -1,6 +1,5 @@
 HOBO_STD_FONT RCDATA "data\external\data\HoboStd.otf"
 
-CLEARPHYSICSCOLORS_NXMI RCDATA "data\external\data\ce-clearphysicscolors.nxmi"
 SCROLLER_NXMI RCDATA "data\external\data\ce-scroller.nxmi"
 TEXTCOLORS_NXMI RCDATA "data\external\data\ce-textcolors.nxmi"
 TITLE_NXMI RCDATA "data\external\data\ce-title.nxmi"

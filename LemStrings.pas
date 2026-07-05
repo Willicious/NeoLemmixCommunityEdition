@@ -210,6 +210,31 @@ const
     SSleeper
   );
 
+
+{-------------------------------------------------------------------------------
+  NLCEClearPhysicsColors.nxmi
+-------------------------------------------------------------------------------}
+const
+  DEFAULT_CLEAR_PHYSICS_COLORS =
+    '$LEMMINGS' + sLineBreak +
+    '  NORMAL $FF7777FF' + sLineBreak +
+    '  ATHLETE $FF00FFFF' + sLineBreak +
+    '  NEUTRAL $FFAA00FF' + sLineBreak +
+    '  ZOMBIE $FF777744' + sLineBreak +
+    '  SELECTED $FFFFFF77' + sLineBreak +
+    '$END' + sLineBreak +
+    sLineBreak +
+    '$GADGETS' + sLineBreak +
+    '  SHAPE $FF004400' + sLineBreak +
+    '  TRIGGER $FFFF00FF' + sLineBreak +
+    '$END' + sLineBreak +
+    sLineBreak +
+    '# If you want the colour to cycle, type ''CYCLE'' rather than a hex code.' + sLineBreak +
+    '# For example:' + sLineBreak +
+    '#   SELECTED CYCLE' + sLineBreak +
+    '#   SHAPE CYCLE' + sLineBreak +
+    '#   TRIGGER CYCLE' + sLineBreak;
+
 implementation
 
 end.

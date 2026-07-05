@@ -229,6 +229,7 @@ end;
 
 procedure TRecolorImage.LoadClearPhysicsShades;
 var
+  Nxmi: String;
   Parser: TParser;
   Sec: TParserSection;
 
@@ -247,7 +248,20 @@ begin
 
   Parser := TParser.Create;
   try
-    LoadNxmiWithOverrides('clearphysicscolors.nxmi', 'CLEARPHYSICSCOLORS_NXMI', Parser);
+    Nxmi := 'NLCEClearPhysicsColors.nxmi';
+
+    if not FileExists(AppPath + SFSaveData + Nxmi) then
+    begin
+      with TStringList.Create do
+      try
+        Text := DEFAULT_CLEAR_PHYSICS_COLORS;
+        SaveToFile(AppPath + SFSaveData + Nxmi);
+      finally
+        Free;
+      end;
+    end;
+
+    Parser.LoadFromFile(AppPath + SFSaveData + Nxmi);
 
     Sec := Parser.MainSection.Section['lemmings'];
     if Sec = nil then Exit;
