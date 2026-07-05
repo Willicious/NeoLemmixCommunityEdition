@@ -274,7 +274,7 @@ begin
 
   // Apply framestep action
   if Direction < 0 then
-    GoToSaveState(Game.CurrentIteration - FrameStepAmount)
+    GotoSaveState(Max(Game.LastDisplayedIteration - FrameStepAmount, 0))
   else
     fHyperSpeedTarget := Game.CurrentIteration + FrameStepAmount;
 end;
@@ -591,7 +591,7 @@ begin
   if PanelFrameSkip < 0 then
   begin
     if not GameParams.ReplayAfterBackskip then Game.CancelReplayAfterSkip := True;
-    GotoSaveState(Max(Game.CurrentIteration-1, 0));
+    GotoSaveState(Max(Game.LastDisplayedIteration - 1, 0));
   end;
 
   Pause := (fGameSpeed = gspPause);
@@ -716,6 +716,9 @@ begin
 
   // Update drawing
   DoDraw;
+
+  // Ensure this frame has been rendered (prevents overshooting when backstepping)
+  Game.LastDisplayedIteration := Game.CurrentIteration;
 
   if TimeForFrame then
     ProcessGameMessages;
@@ -1500,7 +1503,7 @@ begin
                   begin
                     if not GameParams.ReplayAfterBackskip then Game.CancelReplayAfterSkip := True;
                     if CurrentIteration > (func.Modifier * -1) then
-                      GotoSaveState(CurrentIteration + func.Modifier)
+                      GotoSaveState(Max(Game.LastDisplayedIteration + func.Modifier, 0))
                     else
                       GotoSaveState(0);
                   end else if func.Modifier > 1 then

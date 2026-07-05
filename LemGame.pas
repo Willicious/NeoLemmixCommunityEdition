@@ -200,6 +200,7 @@ type
     NextLemmingCountDown       : Integer;
     fFastForward               : Boolean;
     fTargetIteration           : Integer; // this is used in hyperspeed
+    fLastDisplayedIteration    : Integer; // last fully rendered iteration
     fHyperSpeedCounter         : Integer; // no screenoutput
     fHyperSpeed                : Boolean; // we are at hyperspeed no targetbitmap output
     fLeavingHyperSpeed         : Boolean; // in between state (see UpdateLemmings)
@@ -473,6 +474,7 @@ type
     property IsShowAthleteInfo: Boolean read fIsShowAthleteInfo write fIsShowAthleteInfo;
     property IsHighlightHotkey: Boolean read fIsHighlightHotkey write fIsHighlightHotkey;
     property TargetIteration: Integer read fTargetIteration write fTargetIteration;
+    property LastDisplayedIteration: Integer read fLastDisplayedIteration write fLastDisplayedIteration;
     property CancelReplayAfterSkip: Boolean read fCancelReplayAfterSkip write fCancelReplayAfterSkip;
     property HitTestAutoFail: Boolean read fHitTestAutoFail write fHitTestAutoFail;
     property IsOutOfTime: Boolean read GetOutOfTime;
@@ -1116,6 +1118,7 @@ begin
 
   // hyperspeed things
   fTargetIteration := 0;
+  fLastDisplayedIteration := 0;
   fHyperSpeedCounter := 0;
   fHyperSpeed := False;
   fLeavingHyperSpeed := False;
