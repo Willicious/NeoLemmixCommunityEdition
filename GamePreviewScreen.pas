@@ -452,6 +452,7 @@ const
 var
   HueShift: TColorDiff;
   Entry: TNeoLevelEntry;
+  SpecialLemCount: Integer;
   Level: TLevel;
 
   function HasSpecialLemmings: Boolean;
@@ -497,12 +498,13 @@ begin
 
   if HasSpecialLemmings then
   begin
-    if (Level.Info.LemmingsCount = 1) then
+    SpecialLemCount := Level.Info.NeutralCount + Level.Info.ZombieCount;
+    if (Level.Info.LemmingsCount - SpecialLemCount = 1) then
       Result[2].Line := Result[2].Line + IntToStr(RegularLemmingsCount) + ' '
-                        + 'lemming' // Theme.LemNamesSingular // Bookmark - Add support for this
+                        + 'Lemming' // Theme.LemNamesSingular // Bookmark - Add support for this
     else if (Level.Info.LemmingsCount > 1) then
       Result[2].Line := Result[2].Line + IntToStr(RegularLemmingsCount) + ' '
-                        + 'lemmings'; // Theme.LemNamesPlural; // Bookmark - Add support for this
+                        + 'Lemmings'; // Theme.LemNamesPlural; // Bookmark - Add support for this
 
     if (Level.Info.NeutralCount = 1) then
       Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.NeutralCount) + ' Neutral'
@@ -514,9 +516,9 @@ begin
     else if (Level.Info.ZombieCount > 1) then
       Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.ZombieCount) + ' Zombies';
   end else if (Level.Info.LemmingsCount = 1) then
-    Result[2].Line := IntToStr(Level.Info.LemmingsCount) + ' ' + 'lemming' // Theme.LemNamesSingular // Bookmark - Add support for this
+    Result[2].Line := IntToStr(Level.Info.LemmingsCount) + ' ' + 'Lemming' // Theme.LemNamesSingular // Bookmark - Add support for this
   else
-    Result[2].Line := IntToStr(Level.Info.LemmingsCount) + ' ' + 'lemmings'; // Theme.LemNamesPlural; // Bookmark - Add support for this
+    Result[2].Line := IntToStr(Level.Info.LemmingsCount) + ' ' + 'Lemmings'; // Theme.LemNamesPlural; // Bookmark - Add support for this
   Result[2].ColorShift := HueShift;
 
   HueShift.HShift := RescueLemsShift;
