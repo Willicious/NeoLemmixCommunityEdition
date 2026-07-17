@@ -453,8 +453,9 @@ var
   HueShift: TColorDiff;
   Entry: TNeoLevelEntry;
   NormalCount, SaveableCount, NeutralCount, ZombieCount: Integer;
-  RescueLemLine, SpecialLemLine, ReleaseRateLine: String;
+  PositionLine, SpecialLemLine, ReleaseRateLine: String;
   TimeLimitString: String;
+  PackName, GroupName, LevelPosition: String;
   Level: TLevel;
 
   function HasSpecialLemmings: Boolean;
@@ -520,14 +521,21 @@ begin
 
   HueShift.HShift := GroupShift;
   Result[2].yPos := Result[1].yPos + LINE_Y_SPACING;
-  Result[2].Line := Entry.Group.Name;
+  GroupName := Entry.Group.Name;
+  Result[2].Line := GroupName;
   if Entry.Group.Parent = nil then
   begin
     Result[2].Line := 'Miscellaneous Levels'
-  end else
-  begin
+  end else begin
     if Entry.Group.IsOrdered then
-      Result[2].Line := Result[2].Line + ' ' + IntToStr(Entry.GroupIndex + 1);
+    begin
+      PackName := Entry.Group.ParentBasePack.Name;
+      LevelPosition := GroupName + ' ' + IntToStr(Entry.GroupIndex + 1);
+      PositionLine := PackName + ' - ' + LevelPosition;
+      if (PositionLine.Length > 48) then
+        PositionLine := LevelPosition;
+      Result[2].Line := PositionLine;
+    end;
   end;
   Result[2].ColorShift := HueShift;
 

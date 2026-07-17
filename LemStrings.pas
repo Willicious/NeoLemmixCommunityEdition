@@ -88,8 +88,6 @@ resourcestring
   {-------------------------------------------------------------------------------
     PreviewScreen
   -------------------------------------------------------------------------------}
-  SPreviewLemmings = ' Lemmings';
-  SPreviewSave = ' to be saved';
   SPreviewReleaseRate = 'Release Rate ';
   SPreviewSpawnInterval = 'Spawn Interval ';
   SPreviewRRLocked = '  (Locked)';
