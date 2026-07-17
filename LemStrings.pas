@@ -89,13 +89,12 @@ resourcestring
     PreviewScreen
   -------------------------------------------------------------------------------}
   SPreviewLemmings = ' Lemmings';
-  SPreviewSave = ' To Be Saved';
+  SPreviewSave = ' to be saved';
   SPreviewReleaseRate = 'Release Rate ';
   SPreviewSpawnInterval = 'Spawn Interval ';
   SPreviewRRLocked = '  (Locked)';
   SPreviewTimeLimit = 'Time Limit ';
-  SPreviewGroup = 'Group: ';
-  SPreviewAuthor = 'Author: ';
+  SPreviewAuthor = 'By ';
 
   {-------------------------------------------------------------------------------
     Game Screen Info Panel

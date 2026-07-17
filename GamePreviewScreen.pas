@@ -454,6 +454,7 @@ var
   Entry: TNeoLevelEntry;
   SpecialLemCount: Integer;
   ReleaseRateLine: String;
+  TimeLimitString: String;
   Level: TLevel;
 
   function HasSpecialLemmings: Boolean;
@@ -481,82 +482,79 @@ begin
   Result[0].ColorShift := HueShift;
   Result[0].yPos := 168;
 
-  HueShift.HShift := GroupShift;
+  HueShift.HShift := AuthorShift;
   Result[1].yPos := Result[0].yPos + 40;
-  Result[1].Line := Entry.Group.Name;
+  if Level.Info.Author <> '' then
+    Result[1].Line := SPreviewAuthor + Level.Info.Author
+  else
+    Result[1].Line := '';
+  Result[1].ColorShift := HueShift;
+
+  HueShift.HShift := GroupShift;
+  Result[2].yPos := Result[1].yPos + LINE_Y_SPACING;
+  Result[2].Line := Entry.Group.Name;
   if Entry.Group.Parent = nil then
   begin
-    Result[1].Line := 'Miscellaneous Levels'
+    Result[2].Line := 'Miscellaneous Levels'
   end else
   begin
     if Entry.Group.IsOrdered then
-    Result[1].Line := Result[1].Line + ' ' + IntToStr(Entry.GroupIndex + 1);
+      Result[2].Line := Result[2].Line + ' ' + IntToStr(Entry.GroupIndex + 1);
   end;
-  Result[1].ColorShift := HueShift;
+  Result[2].ColorShift := HueShift;
 
   HueShift.HShift := NumLemsShift;
-  Result[2].yPos := Result[1].yPos + LINE_Y_SPACING;
-
+  Result[3].yPos := Result[2].yPos + LINE_Y_SPACING;
   if HasSpecialLemmings then
   begin
     SpecialLemCount := Level.Info.NeutralCount + Level.Info.ZombieCount;
     if (Level.Info.LemmingsCount - SpecialLemCount = 1) then
-      Result[2].Line := Result[2].Line + IntToStr(RegularLemmingsCount) + ' '
+      Result[3].Line := Result[3].Line + IntToStr(RegularLemmingsCount) + ' '
                         + 'Lemming' // Theme.LemNamesSingular // Bookmark - Add support for this
     else if (Level.Info.LemmingsCount > 1) then
-      Result[2].Line := Result[2].Line + IntToStr(RegularLemmingsCount) + ' '
+      Result[3].Line := Result[3].Line + IntToStr(RegularLemmingsCount) + ' '
                         + 'Lemmings'; // Theme.LemNamesPlural; // Bookmark - Add support for this
 
     if (Level.Info.NeutralCount = 1) then
-      Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.NeutralCount) + ' Neutral'
+      Result[3].Line := Result[3].Line + ', ' + IntToStr(Level.Info.NeutralCount) + ' Neutral'
     else if (Level.Info.NeutralCount > 1) then
-      Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.NeutralCount) + ' Neutrals';
+      Result[3].Line := Result[3].Line + ', ' + IntToStr(Level.Info.NeutralCount) + ' Neutrals';
 
     if (Level.Info.ZombieCount = 1) then
-      Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.ZombieCount) + ' Zombie'
+      Result[3].Line := Result[3].Line + ', ' + IntToStr(Level.Info.ZombieCount) + ' Zombie'
     else if (Level.Info.ZombieCount > 1) then
-      Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.ZombieCount) + ' Zombies';
+      Result[3].Line := Result[3].Line + ', ' + IntToStr(Level.Info.ZombieCount) + ' Zombies';
   end else if (Level.Info.LemmingsCount = 1) then
-    Result[2].Line := IntToStr(Level.Info.LemmingsCount) + ' ' + 'Lemming' // Theme.LemNamesSingular // Bookmark - Add support for this
+    Result[3].Line := IntToStr(Level.Info.LemmingsCount) + ' ' + 'Lemming' // Theme.LemNamesSingular // Bookmark - Add support for this
   else
-    Result[2].Line := IntToStr(Level.Info.LemmingsCount) + ' ' + 'Lemmings'; // Theme.LemNamesPlural; // Bookmark - Add support for this
-  Result[2].ColorShift := HueShift;
-
-  HueShift.HShift := RescueLemsShift;
-  Result[3].yPos := Result[2].yPos + LINE_Y_SPACING;
-  Result[3].Line := IntToStr(Level.Info.RescueCount) + SPreviewSave;
+    Result[3].Line := IntToStr(Level.Info.LemmingsCount) + ' ' + 'Lemmings'; // Theme.LemNamesPlural; // Bookmark - Add support for this
   Result[3].ColorShift := HueShift;
 
-  HueShift.HShift := ReleaseRateShift;
+  HueShift.HShift := RescueLemsShift;
   Result[4].yPos := Result[3].yPos + LINE_Y_SPACING;
+  Result[4].Line := IntToStr(Level.Info.RescueCount) + SPreviewSave;
+  Result[4].ColorShift := HueShift;
+
+  HueShift.HShift := ReleaseRateShift;
+  Result[5].yPos := Result[4].yPos + LINE_Y_SPACING;
   if GameParams.UseSpawnInterval then
     ReleaseRateLine := SPreviewSpawnInterval + IntToStr(Level.Info.SpawnInterval)
   else
     ReleaseRateLine := SPreviewReleaseRate + IntToStr(103 - Level.Info.SpawnInterval);
-
   if Level.Info.SpawnIntervalLocked then
     ReleaseRateLine := ReleaseRateLine + SPreviewRRLocked;
-
-  Result[4].Line := ReleaseRateLine;
-  Result[4].ColorShift := HueShift;
-
-  HueShift.HShift := TimeLimitShift;
-  Result[5].yPos := Result[4].yPos + LINE_Y_SPACING;
-  if Level.Info.HasTimeLimit then
-  begin
-    Result[5].Line := SPreviewTimeLimit + IntToStr(Level.Info.TimeLimit div 60) + ':'
-                    + LeadZeroStr(Level.Info.TimeLimit mod 60, 2);
-  end else
-  Result[5].Line := 'Infinite Time';
+  Result[5].Line := ReleaseRateLine;
   Result[5].ColorShift := HueShift;
 
-  HueShift.HShift := AuthorShift;
+  HueShift.HShift := TimeLimitShift;
   Result[6].yPos := Result[5].yPos + LINE_Y_SPACING;
-  if Level.Info.Author <> '' then
+  TimeLimitString := '';
+  if Level.Info.HasTimeLimit then
   begin
-    Result[6].Line := SPreviewAuthor + Level.Info.Author;
+    TimeLimitString := IntToStr(Level.Info.TimeLimit div 60) + ':' + LeadZeroStr(Level.Info.TimeLimit mod 60, 2);
+    Result[6].Line := SPreviewTimeLimit + TimeLimitString;
   end else
-  Result[6].Line := SPreviewAuthor + ' Anonymous';
+    Result[6].Line := '';
   Result[6].ColorShift := HueShift;
 end;
 
