@@ -452,8 +452,8 @@ const
 var
   HueShift: TColorDiff;
   Entry: TNeoLevelEntry;
-  SpecialLemCount: Integer;
-  ReleaseRateLine: String;
+  NormalCount, SaveableCount, NeutralCount, ZombieCount: Integer;
+  RescueLemLine, SpecialLemLine, ReleaseRateLine: String;
   TimeLimitString: String;
   Level: TLevel;
 
@@ -463,14 +463,42 @@ var
                     or (Level.Info.ZombieCount > 0);
   end;
 
-  function RegularLemmingsCount: Integer;
+  function GetNormalCount: Integer;
   begin
     Result := (Level.Info.LemmingsCount - Level.Info.ZombieCount
                                         - Level.Info.NeutralCount);
   end;
+
+  function Pluralize(aCount: Integer): String;
+  begin
+    Result := '';
+    if (aCount > 1) then
+      Result := 's';
+  end;
+
+  function ResolveString(aCount: Integer; aString: String; UseComma: Boolean = True): String;
+  var
+    s: String;
+  begin
+    s := '';
+    Result := s;
+
+    if (aCount <= 0) then
+      Exit;
+
+    if UseComma then
+      s := ', ';
+
+    Result := s + IntToStr(aCount) + aString + Pluralize(aCount);
+  end;
 begin
   Entry := GameParams.CurrentLevel;
   Level := GameParams.Level;
+
+  NeutralCount := Level.Info.NeutralCount;
+  ZombieCount := Level.Info.ZombieCount;
+  NormalCount := GetNormalCount;
+  SaveableCount := NormalCount + NeutralCount;
 
   FillChar(HueShift, SizeOf(TColorDiff), 0);
 
@@ -503,36 +531,24 @@ begin
   end;
   Result[2].ColorShift := HueShift;
 
-  HueShift.HShift := NumLemsShift;
+  HueShift.HShift := RescueLemsShift;
   Result[3].yPos := Result[2].yPos + LINE_Y_SPACING;
-  if HasSpecialLemmings then
-  begin
-    SpecialLemCount := Level.Info.NeutralCount + Level.Info.ZombieCount;
-    if (Level.Info.LemmingsCount - SpecialLemCount = 1) then
-      Result[3].Line := Result[3].Line + IntToStr(RegularLemmingsCount) + ' '
-                        + 'Lemming' // Theme.LemNamesSingular // Bookmark - Add support for this
-    else if (Level.Info.LemmingsCount > 1) then
-      Result[3].Line := Result[3].Line + IntToStr(RegularLemmingsCount) + ' '
-                        + 'Lemmings'; // Theme.LemNamesPlural; // Bookmark - Add support for this
-
-    if (Level.Info.NeutralCount = 1) then
-      Result[3].Line := Result[3].Line + ', ' + IntToStr(Level.Info.NeutralCount) + ' Neutral'
-    else if (Level.Info.NeutralCount > 1) then
-      Result[3].Line := Result[3].Line + ', ' + IntToStr(Level.Info.NeutralCount) + ' Neutrals';
-
-    if (Level.Info.ZombieCount = 1) then
-      Result[3].Line := Result[3].Line + ', ' + IntToStr(Level.Info.ZombieCount) + ' Zombie'
-    else if (Level.Info.ZombieCount > 1) then
-      Result[3].Line := Result[3].Line + ', ' + IntToStr(Level.Info.ZombieCount) + ' Zombies';
-  end else if (Level.Info.LemmingsCount = 1) then
-    Result[3].Line := IntToStr(Level.Info.LemmingsCount) + ' ' + 'Lemming' // Theme.LemNamesSingular // Bookmark - Add support for this
-  else
-    Result[3].Line := IntToStr(Level.Info.LemmingsCount) + ' ' + 'Lemmings'; // Theme.LemNamesPlural; // Bookmark - Add support for this
+  Result[3].Line := 'Save ' + IntToStr(Level.Info.RescueCount) + ' of ' +
+                    IntToStr(SaveableCount) + ' Lemming' + Pluralize(SaveableCount);
   Result[3].ColorShift := HueShift;
 
-  HueShift.HShift := RescueLemsShift;
-  Result[4].yPos := Result[3].yPos + LINE_Y_SPACING;
-  Result[4].Line := IntToStr(Level.Info.RescueCount) + SPreviewSave;
+  HueShift.HShift := NumLemsShift;
+  if HasSpecialLemmings then
+  begin
+    Result[4].yPos := Result[3].yPos + LINE_Y_SPACING;
+    SpecialLemLine := ResolveString(NormalCount, ' Normal', False) +
+                      ResolveString(NeutralCount, ' Neutral') +
+                      ResolveString(ZombieCount, ' Zombie');
+  end else begin
+    Result[4].yPos := Result[2].yPos + LINE_Y_SPACING;
+    SpecialLemLine := '';
+  end;
+  Result[4].Line := SpecialLemLine;
   Result[4].ColorShift := HueShift;
 
   HueShift.HShift := ReleaseRateShift;
