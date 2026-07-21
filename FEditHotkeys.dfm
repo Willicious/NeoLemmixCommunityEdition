@@ -340,6 +340,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
     TabOrder = 16
     Value = 1
     Visible = False
+    OnChange = seSkillButtonChange
   end
   object ebNudgeAmount: TEdit
     Left = 447
@@ -349,6 +350,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Enabled = False
     TabOrder = 17
     Visible = False
+    OnChange = ebNudgeAmountChange
     OnClick = ebClick
   end
 end
