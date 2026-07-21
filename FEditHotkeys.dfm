@@ -20,7 +20,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   PixelsPerInch = 96
   TextHeight = 13
   object lblSkill: TLabel
-    Left = 345
+    Left = 343
     Top = 257
     Width = 24
     Height = 13
@@ -179,9 +179,9 @@ object FLemmixHotkeys: TFLemmixHotkeys
     OnClick = btnSaveCloseClick
   end
   object cbSkill: TComboBox
-    Left = 377
+    Left = 373
     Top = 254
-    Width = 129
+    Width = 142
     Height = 21
     Style = csDropDownList
     DropDownCount = 18
@@ -330,7 +330,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
     OnClick = btnResetClick
   end
   object seSkillButton: TSpinEdit
-    Left = 436
+    Left = 437
     Top = 281
     Width = 41
     Height = 22
