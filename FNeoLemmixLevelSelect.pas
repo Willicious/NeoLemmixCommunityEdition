@@ -648,7 +648,7 @@ begin
 
     if PlaybackModeForm.ShowModal = mrOk then
     begin
-      GameParams.MainForm.Caption := 'NeoLemmix CE - Beginning Playback...';
+      GameParams.MainForm.Caption := SProgramNameFull + ' - Beginning Playback...';
       Application.ProcessMessages;
 
       WriteToParams;
