@@ -230,7 +230,7 @@ end;
 
 procedure TGameTextScreen.ExitToMenu;
 begin
-  if GameParams.TestModeLevel <> nil then
+  if GameParams.IsPlaytesting then
     CloseScreen(gstExit)
   else
     CloseScreen(gstMenu);

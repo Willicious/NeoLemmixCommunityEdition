@@ -113,7 +113,7 @@ procedure TGamePostviewScreen.MakeShowSkillsUsedClickable;
 var
   R: TClickableRegion;
 begin
-  if GameParams.PlaybackModeActive or (GameParams.TestModeLevel = nil) then
+  if GameParams.PlaybackModeActive or not GameParams.IsPlaytesting then
     Exit;
 
   R := MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y - 40), 'Show Skills Used', ShowSkillsUsed, True);
@@ -261,7 +261,7 @@ begin
     end;
 
     // If in Playtest mode, show the Skills Used clickable
-    if (GameParams.TestModeLevel <> nil) then
+    if (GameParams.IsPlaytesting) then
       MakeShowSkillsUsedClickable;
 
     // Prepare some more clickables and hotkey options
@@ -283,7 +283,7 @@ end;
 
 procedure TGamePostviewScreen.ExitToMenu;
 begin
-  if GameParams.TestModeLevel <> nil then
+  if GameParams.IsPlaytesting then
     CloseScreen(gstExit)
   else begin
     GameParams.PlaybackModeActive := False;
@@ -352,6 +352,7 @@ var
   SRescueRecord, STimeRecord, SSkillsRecord, SThisLine: string;
   // InfiniteHotkeysUsed,
   LevelHasTalismans, LevelPassed, ShowSavedRecord: Boolean;
+  Playtesting: Boolean;
 
   function MakeTimeString(aFrames: Integer): String;
   const
@@ -401,21 +402,21 @@ begin
 
   with GameParams, Results do
   begin
-    if GameParams.OneLevelMode then
+    if OneLevelMode then
     begin
      gSuccess := False;
      gCheated := False;
      fLevelOverride := $0000;
     end;
 
-    if TestModeLevel <> nil then
+    if IsPlaytesting then
     begin
       gSuccess := False;
       gCheated := False;
       fLevelOverride := $0000;
     end;
 
-    if GameParams.PostviewJingles then
+    if PostviewJingles then
     begin
       SoundManager.PurgePackSounds;
 
@@ -426,8 +427,10 @@ begin
     end;
   end;
 
-  LevelPassed := (Results.gSuccess) or ((GameParams.TestModeLevel <> nil) and
-                                        (Results.gRescued >= Results.gToRescue));
+  Playtesting := GameParams.IsPlaytesting;
+
+  LevelPassed := (Results.gSuccess) or
+    (Playtesting and (Results.gRescued >= Results.gToRescue));
 
   // Top text
   HueShift.HShift := TopTextShift;
@@ -518,7 +521,7 @@ begin
 
   // Time taken to reach SR
   if (Results.gSuccess and not (Results.gToRescue <= 0))
-  or ((GameParams.TestModeLevel <> nil) and (Results.gRescued >= Results.gToRescue)) then
+  or (Playtesting and (Results.gRescued >= Results.gToRescue)) then
     Result[6 {Bookmark - Needs to be 7 if using TotalTime}].Line := SYourTime + STimeSR
   else
     Result[6].Line := '';
@@ -592,7 +595,7 @@ var
   S: TStringList;
   Results: TGameResultsRec;
 begin
-  if GameParams.TestModeLevel = nil then
+  if not GameParams.IsPlaytesting then
     Exit;
 
   Results := GameParams.GameResult;

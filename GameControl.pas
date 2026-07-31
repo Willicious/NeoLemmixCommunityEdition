@@ -252,7 +252,8 @@ type
     //SysDat               : TSysDatRec;
     ReplayCheckPath: String;
 
-    TestModeLevel: TNeoLevelEntry;
+    TestModeLevel : TNeoLevelEntry;
+    fIsPlaytesting: Boolean;
 
     constructor Create;
     destructor Destroy; override;
@@ -276,6 +277,7 @@ type
     procedure PrevGroup;
     procedure LoadCurrentLevel(NoOutput: Boolean = False); // loads level specified by CurrentLevel into Level, and prepares renderer
     procedure ReloadCurrentLevel(NoOutput: Boolean = False); // re-prepares using the existing TLevel in memory
+    function GetIsPlaytesting: Boolean;
 
     procedure ElevateSaveCriticality(aCriticality: TGameParamsSaveCriticality);
     property LastUserDataWriteTime: TDateTime read fLastUserDataWriteTime write fLastUserDataWriteTime;
@@ -323,6 +325,8 @@ type
     property PlaybackItems: TList<TPlaybackItem> read fPlaybackItems write fPlaybackItems;
     property PlaybackIndex: Integer read fPlaybackIndex write fPlaybackIndex;
     property AutoSkipPreviewPostview: Boolean read fAutoSkipPreviewPostview write fAutoSkipPreviewPostview;
+
+    property IsPlaytesting: Boolean read GetIsPlaytesting write fIsPlaytesting;
 
     property DumpMode: Boolean read fDumpMode write fDumpMode;
     property OneLevelMode: Boolean read fOneLevelMode write fOneLevelMode;
@@ -413,7 +417,7 @@ begin
 
   ElevateSaveCriticality(aCriticality);
 
-  if TestModeLevel <> nil then Exit;
+  if IsPlaytesting then Exit;
   if fDisableSaveOptions then Exit;
   if not LoadedConfig then Exit;
   if IsHalting then Exit;
@@ -994,6 +998,11 @@ begin
   Level.LoadFromFile(CurrentLevel.Path);
   PieceManager.Tidy;
   Renderer.PrepareGameRendering(Level, NoOutput);
+end;
+
+function TDosGameParams.GetIsPlaytesting: Boolean;
+begin
+  Result := TestModeLevel <> nil;
 end;
 
 procedure TDosGameParams.ReloadCurrentLevel(NoOutput: Boolean = False);

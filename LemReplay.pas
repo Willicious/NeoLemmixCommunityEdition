@@ -263,7 +263,7 @@ begin
   SplitPos := Pos('|', aPattern);
   if SplitPos > 0 then
   begin
-    if (GameParams.TestModeLevel <> nil) or (GameParams.CurrentLevel.Group = GameParams.BaseLevelPack) or
+    if GameParams.IsPlaytesting or (GameParams.CurrentLevel.Group = GameParams.BaseLevelPack) or
        (not GameParams.CurrentLevel.Group.IsOrdered) then
       aPattern := MidStr(aPattern, SplitPos + 1, Length(aPattern) - SplitPos)
     else
@@ -301,7 +301,7 @@ end;
 class function TReplay.GetSaveFileName(aOwner: TComponent; aSaveOccasion: TReplaySaveOccasion; aReplay: TReplay = nil): String;
   function GetDefaultSavePath: String;
   begin
-    if (GameParams.TestModeLevel <> nil) or (GameParams.CurrentLevel.Group = GameParams.BaseLevelPack) then
+    if GameParams.IsPlaytesting or (GameParams.CurrentLevel.Group = GameParams.BaseLevelPack) then
       Result := ExtractFilePath(ParamStr(0)) + GameParams.ReplaysFolder
     else
       Result := ExtractFilePath(ParamStr(0)) + GameParams.ReplaysFolder + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name) + '\';

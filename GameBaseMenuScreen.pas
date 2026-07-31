@@ -1029,7 +1029,7 @@ var
 
   PopupResult: Integer;
 begin
-  if GameParams.TestModeLevel <> nil then Exit;
+  if GameParams.IsPlaytesting then Exit;
 
   OldLevel := GameParams.CurrentLevel;
   F := TFLevelSelect.Create(Self);

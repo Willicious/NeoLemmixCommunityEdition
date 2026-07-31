@@ -394,7 +394,7 @@ begin
 
     if SL.Count > 0 then
     begin
-      if (GameParams.TestModeLevel <> nil) or (GameParams.CurrentLevel.Group = GameParams.BaseLevelPack) then
+      if GameParams.IsPlaytesting or (GameParams.CurrentLevel.Group = GameParams.BaseLevelPack) then
         MusicIndex := Random(SL.Count)
       else
         MusicIndex := GameParams.CurrentLevel.MusicRotationIndex;
@@ -2018,7 +2018,7 @@ begin
   fRenderer.SetInterface(fRenderInterface);
 
   if FileExists(AppPath + SFMusic + GetLevelMusicName + SoundManager.FindExtension(GetLevelMusicName, True)) and
-    not (GameParams.DisableMusicInTestplay and (GameParams.TestModeLevel <> nil)) then
+    not (GameParams.DisableMusicInTestplay and GameParams.IsPlaytesting) then
     SoundManager.LoadMusicFromFile(GetLevelMusicName)
   else
     SoundManager.FreeMusic; // This is safe to call even if no music is loaded, but ensures we don't just get the previous level's music
