@@ -96,7 +96,7 @@ type
     moEnableOnline,
     moCheckUpdates,
     moLoadNextUnsolvedLevel,
-    moOverwriteSameLemming,
+    moSameLemmingOverwrite,
     moReplayAfterBackskip,
     moReplayAfterRestart,
     moPauseAfterBackwards,
@@ -286,7 +286,7 @@ type
     property EnableOnline: Boolean Index moEnableOnline read GetOptionFlag write SetOptionFlag;
     property CheckUpdates: Boolean Index moCheckUpdates read GetOptionFlag write SetOptionFlag;
     property LoadNextUnsolvedLevel: Boolean Index moLoadNextUnsolvedLevel read GetOptionFlag write SetOptionFlag;
-    property OverwriteSameLemming: Boolean Index moOverwriteSameLemming read GetOptionFlag write SetOptionFlag;
+    property SameLemmingOverwrite: Boolean Index moSameLemmingOverwrite read GetOptionFlag write SetOptionFlag;
     property ReplayAfterBackskip: Boolean Index moReplayAfterBackskip read GetOptionFlag write SetOptionFlag;
     property ReplayAfterRestart: Boolean Index moReplayAfterRestart read GetOptionFlag write SetOptionFlag;
     property PauseAfterBackwardsSkip: Boolean Index moPauseAfterBackwards read GetOptionFlag write SetOptionFlag;
@@ -528,7 +528,7 @@ begin
     else if (ExitToPostview = etpNever) then
       SaveString('ExitToPostview', 'Never');
 
-    SaveBoolean('OverwriteSameLemming', OverwriteSameLemming);
+    SaveBoolean('SameLemmingOverwrite', SameLemmingOverwrite);
     SaveBoolean('ReplayAfterBackskip', ReplayAfterBackskip);
     SaveBoolean('ReplayAfterRestart', ReplayAfterRestart);
     SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
@@ -747,6 +747,7 @@ begin
     // Backwards compatibility
     CountDownFromSR := LoadBoolean('UseNegativeSaveCount', CountDownFromSR);
     ShowDecorations := not LoadBoolean('NoBackgrounds', ShowDecorations);
+    SameLemmingOverwrite := LoadBoolean('OverwriteSameLemming', SameLemmingOverwrite);
 
     // Load settings
     UserName := SL.Values['UserName'];
@@ -764,7 +765,7 @@ begin
     if IngameSaveReplayPattern = '' then IngameSaveReplayPattern := DEFAULT_REPLAY_PATTERN_INGAME;
     if PostviewSaveReplayPattern = '' then PostviewSaveReplayPattern := DEFAULT_REPLAY_PATTERN_POSTVIEW;
 
-    OverwriteSameLemming := LoadBoolean('OverwriteSameLemming', OverwriteSameLemming);
+    SameLemmingOverwrite := LoadBoolean('SameLemmingOverwrite', SameLemmingOverwrite);
     ReplayAfterBackskip := LoadBoolean('ReplayAfterBackskip', ReplayAfterBackskip);
     ReplayAfterRestart := LoadBoolean('ReplayAfterRestart', ReplayAfterRestart);
     PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);

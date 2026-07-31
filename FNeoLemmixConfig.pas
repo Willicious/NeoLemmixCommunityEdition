@@ -79,7 +79,7 @@ type
     cbUseSpawnInterval: TCheckBox;
     cbCountDownFromSR: TCheckBox;
     cbShowButtonHints: TCheckBox;
-    cbOverwriteSameLemming: TCheckBox;
+    cbSameLemmingOverwrite: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -277,7 +277,7 @@ begin
     cbPauseAfterBackwards.Checked := GameParams.PauseAfterBackwardsSkip;
     cbReplayAfterBackskip.Checked := GameParams.ReplayAfterBackskip;
     cbReplayAfterRestart.Checked := GameParams.ReplayAfterRestart;
-    cbOverwriteSameLemming.Checked := GameParams.OverwriteSameLemming;
+    cbSameLemmingOverwrite.Checked := GameParams.SameLemmingOverwrite;
 
     cbShowDecorations.Checked := GameParams.ShowDecorations;
     cbForceDefaultLemmings.Checked := GameParams.ForceDefaultLemmings;
@@ -358,7 +358,7 @@ begin
   GameParams.PauseAfterBackwardsSkip := cbPauseAfterBackwards.Checked;
   GameParams.ReplayAfterBackskip := cbReplayAfterBackskip.Checked;
   GameParams.ReplayAfterRestart := cbReplayAfterRestart.Checked;
-  GameParams.OverwriteSameLemming := cbOverwriteSameLemming.Checked;
+  GameParams.SameLemmingOverwrite := cbSameLemmingOverwrite.Checked;
 
   GameParams.ShowDecorations := cbShowDecorations.Checked;
   GameParams.ForceDefaultLemmings := cbForceDefaultLemmings.Checked;

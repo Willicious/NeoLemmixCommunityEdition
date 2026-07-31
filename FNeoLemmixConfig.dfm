@@ -27,7 +27,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 382
     Height = 573
-    ActivePage = TabSheet3
+    ActivePage = TabSheet2
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
     object TabSheet1: TTabSheet
@@ -229,12 +229,12 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 1
           OnClick = OptionChanged
         end
-        object cbOverwriteSameLemming: TCheckBox
+        object cbSameLemmingOverwrite: TCheckBox
           Left = 19
           Top = 66
-          Width = 314
+          Width = 294
           Height = 17
-          Caption = 'Overwrite Same-Lemming Assignments in Replay Insert'
+          Caption = 'Allow Same-Lemming-Overwrite in Replay Insert'
           TabOrder = 2
           OnClick = OptionChanged
         end

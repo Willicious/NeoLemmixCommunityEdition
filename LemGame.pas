@@ -5902,7 +5902,7 @@ var
 begin
   SelectedLemFutureTaskCount := 0;
 
-  if not ReplayInsert or not GameParams.OverwriteSameLemming then
+  if not ReplayInsert or not GameParams.SameLemmingOverwrite then
     Exit;
 
   L := RenderInterface.SelectedLemming;
@@ -5921,7 +5921,7 @@ begin
   Result := False;
 
   // Erase future tasks for this lemming if same-lemming-overwrite is enabled
-  if GameParams.OverwriteSameLemming then
+  if GameParams.SameLemmingOverwrite then
   begin
     L := fRenderInterface.SelectedLemming;
 
