@@ -328,10 +328,9 @@ begin
   s := '';
   GlobalGame.ReplayManager.ReplayLoadSuccess := False;
 
-  if GameParams.OpenedViaReplay or GameParams.PlaybackModeActive
-  then
+  if GameParams.OpenedViaReplay or GameParams.PlaybackModeActive or GameParams.IsPlaytesting then
   begin
-    Result := True; // Return True if NLCE was opened by replay or if PlaybackMode is active
+    Result := True; // Return True if opened via replay or NLCE is in Playback/Playtest Mode
     s := GameParams.LoadedReplayFile;
   end else begin
     Dlg := TOpenDialog.Create(Self);
@@ -370,7 +369,7 @@ begin
       ShowMessage('Warning: This replay appears to be from a different level. NeoLemmix' + #13 +
                   'will attempt to play the replay anyway.');
 	
-	GlobalGame.ReplayManager.ReplayLoadSuccess := True;
+	  GlobalGame.ReplayManager.ReplayLoadSuccess := True;
   end;
 end;
 
