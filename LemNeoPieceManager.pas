@@ -12,7 +12,8 @@ uses
   LemMetaTerrain, LemTerrainGroup, LemGadgetsMeta, LemGadgetsConstants, LemTypes, GR32, LemStrings,
   Generics.Collections,
   StrUtils, Classes, SysUtils,
-  LemNeoParser;
+  LemNeoParser,
+  SharedGlobals;
 
 const
   RETAIN_PIECE_CYCLES = 20; // how many times Tidy can be called without a piece being used before it's discarded

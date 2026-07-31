@@ -6,7 +6,8 @@ interface
 uses
   System.SysUtils, Windows,
   LemNeoParser,
-  GR32;
+  GR32,
+  SharedGlobals;
 
 const
   COLOR_CYCLE = TColor32($00FFFFFF); // Fully transparent color treated as cycle

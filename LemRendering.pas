@@ -21,7 +21,8 @@ uses
   LemLemming,
   LemAnimationSet, LemMetaAnimation, LemCore,
   LemLevel, LemStrings, LemPalette,
-  LemNeoParser, NeoLemmixCEResources;
+  LemNeoParser, NeoLemmixCEResources,
+  SharedGlobals;
 
 type
   TParticleRec = packed record
@@ -207,7 +208,6 @@ var
 implementation
 
 uses
-  SharedGlobals,
   GameControl;
 
 { TRenderer }

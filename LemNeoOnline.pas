@@ -8,7 +8,8 @@ interface
 
 uses
   URLMon, Windows, Wininet, ActiveX, Axctrls, // Don't ask. It's just where these are.
-  Classes, SysUtils;
+  Classes, SysUtils,
+  SharedGlobals;
 
 const
   BASE_URL = 'https://www.neolemmix.com/';

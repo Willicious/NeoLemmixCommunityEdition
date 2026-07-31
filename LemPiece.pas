@@ -4,7 +4,7 @@ unit LemPiece;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, SharedGlobals;
 
 type
   // abstract ancestor for object, terrain and steel

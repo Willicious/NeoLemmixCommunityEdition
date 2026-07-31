@@ -12,7 +12,8 @@ uses
   UMisc,
   GR32, GR32_Layers, GR32_Image,
   LemTypes, LemStrings, LemGame,
-  GameControl, GameBaseScreenCommon, GameBaseMenuScreen;
+  GameControl, GameBaseScreenCommon, GameBaseMenuScreen,
+  SharedGlobals;
 
 {-------------------------------------------------------------------------------
    The dos postview screen, which shows you how you've done it.

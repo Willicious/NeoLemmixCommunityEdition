@@ -7,7 +7,8 @@ uses
   Zip, IOUtils,
   LemTypes, DateUtils,
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
-  Controls, Forms, Dialogs, StdCtrls, ValEdit, ComCtrls, Vcl.ExtCtrls;
+  Controls, Forms, Dialogs, StdCtrls, ValEdit, ComCtrls, Vcl.ExtCtrls,
+  SharedGlobals;
 
 type
   TFManageStyles = class(TForm)

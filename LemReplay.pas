@@ -20,7 +20,8 @@ uses
   LemLevel,
   LemLemming, LemCore, LemVersion, LemStrings,
   Contnrs, Classes, SysUtils, StrUtils, Windows,
-  LemNeoParser;
+  LemNeoParser,
+  SharedGlobals;
 
 const
   SKILL_REPLAY_NAME_COUNT = 21;
@@ -194,7 +195,7 @@ var
 implementation
 
 uses
-  CustomPopup, LemNeoLevelPack, LemTypes, GameControl, uMisc, SharedGlobals; // in TReplay.GetSaveFileName
+  CustomPopup, LemNeoLevelPack, LemTypes, GameControl, uMisc; // in TReplay.GetSaveFileName
 
 var
   IncludeInternalInfo: Boolean;

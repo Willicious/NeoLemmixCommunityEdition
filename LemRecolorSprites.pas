@@ -9,7 +9,8 @@ uses
   LemNeoTheme,
   LemLemming, LemTypes, LemStrings, LemPalette,
   NeoLemmixCEResources,
-  GR32, GR32_Blend;
+  GR32, GR32_Blend,
+  SharedGlobals;
 
 var
   ClearPhysicsLemmingNormal: TColor32;

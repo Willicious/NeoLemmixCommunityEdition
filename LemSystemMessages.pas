@@ -5,7 +5,7 @@ unit LemSystemMessages;
 interface
 
 uses
-  Messages;
+  Messages, SharedGlobals;
 
 const
   LM_START = WM_USER + 1;

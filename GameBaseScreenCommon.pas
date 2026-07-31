@@ -12,6 +12,7 @@ uses
   LemSystemMessages,
   PngInterface, LemTypes,
   LemReplay, LemGame, LemStrings,
+  SharedGlobals,
   SysUtils;
 
 const

@@ -5,7 +5,8 @@ interface
 uses
   GameControl, GameSound, FEditHotkeys, FStyleManager, Math,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, Vcl.ExtCtrls, Vcl.Samples.Spin;
+  Dialogs, ComCtrls, StdCtrls, Vcl.ExtCtrls, Vcl.Samples.Spin,
+  SharedGlobals;
 
 type
   TFormNXConfig = class(TForm)

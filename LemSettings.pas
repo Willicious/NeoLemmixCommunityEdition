@@ -3,7 +3,7 @@ unit LemSettings;
 interface
 
 uses
-  Classes;
+  Classes, SharedGlobals;
 
 type
   TProgramSettings = class(TPersistent)

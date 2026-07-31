@@ -9,7 +9,8 @@ uses
   LemTypes,
   LemStrings,
   LemCore,
-  Windows, Classes, SysUtils;
+  Windows, Classes, SysUtils,
+  SharedGlobals;
 
 const
   MAX_KEY = 255;
