@@ -695,36 +695,31 @@ procedure TBaseSkillPanel.LoadPanelFont;
 var
   SrcRect: TRect;
   i: Integer;
+
+  procedure DrawCharacters(aChar: Integer);
+  begin
+    fInfoFont[aChar].SetSize(8 * ResMod, 16 * ResMod);
+    fIconBmp.DrawTo(fInfoFont[aChar], 0, 0, SrcRect);
+    OffsetRect(SrcRect, 8 * ResMod, 0);
+  end;
 begin
   // Load first the characters
   GetGraphic('panel_font', fIconBmp);
   SrcRect := Rect(0, 0, 8 * ResMod, 16 * ResMod);
   for i := 0 to 37 do
-  begin
-    fInfoFont[i].SetSize(8 * ResMod, 16 * ResMod);
-    fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
-    OffsetRect(SrcRect, 8 * ResMod, 0);
-  end;
+    DrawCharacters(i);
 
   // Load now the icons for the text panel
   GetGraphic('panel_icons', fIconBmp);
   SrcRect := Rect(0, 0, 8 * ResMod, 16 * ResMod);
   for i := 38 to 44 do
-  begin
-    fInfoFont[i].SetSize(8 * ResMod, 16 * ResMod);
-    fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
-    OffsetRect(SrcRect, 8 * ResMod, 0);
-  end;
+    DrawCharacters(i);
 
   // Finally, load the CE-specific icons
   GetGraphic('panel_chars', fIconBmp);
   SrcRect := Rect(0, 0, 8 * ResMod, 16 * ResMod);
   for i := 45 to NUM_FONT_CHARS - 1 do
-  begin
-    fInfoFont[i].SetSize(8 * ResMod, 16 * ResMod);
-    fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
-    OffsetRect(SrcRect, 8 * ResMod, 0);
-  end;
+    DrawCharacters(i);
 end;
 
 procedure TBaseSkillPanel.LoadSkillIcons;
