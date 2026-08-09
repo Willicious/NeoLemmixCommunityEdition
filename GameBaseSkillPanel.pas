@@ -699,7 +699,7 @@ begin
   // Load first the characters
   GetGraphic('panel_font', fIconBmp);
   SrcRect := Rect(0, 0, 8 * ResMod, 16 * ResMod);
-  for i := 0 to 38 do
+  for i := 0 to 37 do
   begin
     fInfoFont[i].SetSize(8 * ResMod, 16 * ResMod);
     fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
@@ -709,7 +709,17 @@ begin
   // Load now the icons for the text panel
   GetGraphic('panel_icons', fIconBmp);
   SrcRect := Rect(0, 0, 8 * ResMod, 16 * ResMod);
-  for i := 39 to NUM_FONT_CHARS - 1 do
+  for i := 38 to 44 do
+  begin
+    fInfoFont[i].SetSize(8 * ResMod, 16 * ResMod);
+    fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
+    OffsetRect(SrcRect, 8 * ResMod, 0);
+  end;
+
+  // Finally, load the CE-specific icons
+  GetGraphic('panel_chars', fIconBmp);
+  SrcRect := Rect(0, 0, 8 * ResMod, 16 * ResMod);
+  for i := 45 to NUM_FONT_CHARS - 1 do
   begin
     fInfoFont[i].SetSize(8 * ResMod, 16 * ResMod);
     fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
@@ -1420,12 +1430,18 @@ begin
     New := fNewDrawStr[CurChar];
 
     case New of
+      // panel font characters
       '%':        CharID := 0;
       '0'..'9':   CharID := ord(New) - ord('0') + 1;
       '-':        CharID := 11;
-      '+':        CharID := 12;
-      'A'..'Z':   CharID := ord(New) - ord('A') + 13;
-      #91 .. #98: CharID := ord(New) - ord('A') + 13;
+      'A'..'Z':   CharID := ord(New) - ord('A') + 12;
+
+      // panel icons
+      #91 .. #97: CharID := ord(New) - ord('A') + 12;
+
+      // ce-specific icons/characters
+      #98:        CharID := 45;
+      '+':        CharID := 46;
     else CharID := -1;
     end;
 
@@ -1753,7 +1769,7 @@ begin
   Game.StateIsUnplayable or (not GameParams.PlaybackModeActive and not IsReplaying) then
     fNewDrawStr[Pos] := ' '
   else if Game.ReplayInsert or (GameParams.PlaybackModeActive and not IsReplaying) then
-    fNewDrawStr[Pos] := #98 // Blue "R"
+    fNewDrawStr[Pos] := #97 // Blue "R"
   else if not RRIsPressed then
     fNewDrawStr[Pos] := #91; // Red "R"
 end;
@@ -1761,15 +1777,15 @@ end;
 procedure TBaseSkillPanel.SetTimeLimit(Pos: Integer);
 begin
   if Level.Info.HasTimeLimit then
-    fNewDrawStr[Pos] := #97
+    fNewDrawStr[Pos] := #96
   else
-    fNewDrawStr[Pos] := #96;
+    fNewDrawStr[Pos] := #95;
 end;
 
 procedure TBaseSkillPanel.SetExitIcon(Pos: Integer);
 begin
   if (Game.LemmingsSaved >= Level.Info.RescueCount) then
-    fNewDrawStr[Pos] := #95
+    fNewDrawStr[Pos] := #98
   else
     fNewDrawStr[Pos] := #94;
 end;
