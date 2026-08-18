@@ -1881,6 +1881,7 @@ begin
                     Game.CancelReplayAfterSkip := True;
 
                   fGameWindow.GotoSaveState(0);
+                  Game.Restarted := True;
                 end;
     spbBackOneFrame:
       begin

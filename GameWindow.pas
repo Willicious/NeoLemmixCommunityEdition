@@ -1372,7 +1372,7 @@ begin
 
   // Eat preview/postview key presses in Playback Mode + Auto skip
   if (GameParams.PlaybackModeActive) and (GameParams.AutoSkipPreviewPostview)
-    and (Game.CurrentIteration <= 0) then
+    and ((Game.CurrentIteration <= 0) and not Game.Restarted) then
       Exit;
 
   if not Game.Playing then
@@ -1470,6 +1470,7 @@ begin
                        Game.CancelReplayAfterSkip := True;
 
                      GotoSaveState(0);
+                     Game.Restarted := True;
                    end;
       lka_Sound: SoundManager.MuteSound := not SoundManager.MuteSound;
       lka_SaveReplay: SaveReplay;
@@ -1675,7 +1676,7 @@ begin
 
   // Eat preview/postview mouse clicks in Playback Mode + Auto skip
   if (GameParams.PlaybackModeActive) and (GameParams.AutoSkipPreviewPostview)
-    and (Game.CurrentIteration <= 0) then
+    and ((Game.CurrentIteration <= 0) and not Game.Restarted) then
       Exit;
 
   // interrupting hyperspeed can break the handling of savestates

@@ -408,6 +408,7 @@ type
     fActiveSkills              : array[0..MAX_SKILL_TYPES_PER_LEVEL-1] of TSkillPanelButton;
     SpawnIntervalModifier      : Integer; //negative = decrease each update, positive = increase each update, 0 = no change
     ReplayInsert               : Boolean;
+    Restarted                  : Boolean;
 
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -1237,6 +1238,7 @@ begin
   MessageQueue.Clear;
 
   ReplayInsert := False;
+  Restarted := False;
 
   Playing := True;
 
