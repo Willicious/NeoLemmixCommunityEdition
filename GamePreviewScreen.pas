@@ -69,8 +69,8 @@ uses
 var
   TitleShift: Extended;
   GroupShift: Extended;
-  NumLemsShift: Extended;
   RescueLemsShift: Extended;
+  SpecialLemsShift: Extended;
   ReleaseRateShift: Extended;
   TimeLimitShift: Extended;
   AuthorShift: Extended;
@@ -545,7 +545,7 @@ begin
                     IntToStr(SaveableCount) + ' Lemming' + Pluralize(SaveableCount);
   Result[3].ColorShift := HueShift;
 
-  HueShift.HShift := NumLemsShift;
+  HueShift.HShift := SpecialLemsShift;
   if HasSpecialLemmings then
   begin
     Result[4].yPos := Result[3].yPos + LINE_Y_SPACING;
@@ -592,8 +592,8 @@ var
   begin
     TitleShift := 0;
     GroupShift := 0;
-    NumLemsShift := 0;
     RescueLemsShift := 0;
+    SpecialLemsShift := 0;
     ReleaseRateShift := 0;
     TimeLimitShift := 0;
     AuthorShift := 0;
@@ -611,8 +611,8 @@ begin
 
     TitleShift := StrToFloatDef(Sec.LineString['title'], 0);
     GroupShift := StrToFloatDef(Sec.LineString['group'], 0);
-    NumLemsShift := StrToFloatDef(Sec.LineString['lem_count'], 0);
     RescueLemsShift := StrToFloatDef(Sec.LineString['rescue_count'], 0);
+    SpecialLemsShift := StrToFloatDef(Sec.LineString['special_count'], 0);
     ReleaseRateShift := StrToFloatDef(Sec.LineString['release_rate'], 0);
     TimeLimitShift := StrToFloatDef(Sec.LineString['time_limit'], 0);
     AuthorShift := StrToFloatDef(Sec.LineString['author'], 0);
