@@ -1456,10 +1456,10 @@ begin
           SpecialCombine := False;
       end else if (CurChar > SaveCountStartIndex) and (CurChar <= SaveCountStartIndex + 5) then
       begin
-        if not (Game.LemmingsSaved >= Level.Info.RescueCount) then
+        if (Game.LemmingsSaved >= Level.Info.RescueCount) then
         begin
           SpecialCombine := True;
-          fCombineHueShift := Blue;
+          fCombineHueShift := Teal;
         end else
           SpecialCombine := False;
       end else if Level.Info.HasTimeLimit and (CurChar > TimeLimitStartIndex) and (CurChar <= TimeLimitStartIndex + 5) then
