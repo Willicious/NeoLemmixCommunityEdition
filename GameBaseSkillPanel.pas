@@ -1412,7 +1412,7 @@ begin
   // Define hue shift colors
   Red    := -1 / 3;
   Blue   :=  1 / 4;
-  Purple :=  1 / 2;
+  //Purple :=  1 / 2;
   Teal   :=  1 / 6;
   Yellow := -1 / 6;
   //Orange := -1 / 4;
@@ -1477,7 +1477,7 @@ begin
         if CursorOverPanelItem then
           fCombineHueShift := Blue
         else if (Game.SelectedLemFutureTaskCount > 0) then
-          fCombineHueShift := Purple
+          fCombineHueShift := Teal
         else
           SpecialCombine := False;
       end else if (CurChar = CursorInfoEndIndex + 1) and GameParams.PlaybackModeActive and not IsReplaying then
