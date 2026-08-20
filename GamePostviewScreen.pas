@@ -514,7 +514,7 @@ begin
   Result[5].ColorShift := HueShift;
 
 //  // Always show total time taken // Bookmark - See if people want total time to be shown
-//  HueShift.HShift := TimeRecordShift;
+  HueShift.HShift := TimeRecordShift;
 //  Result[6].Line := SYourTotalTime + STimeTotal;
 //  Result[6].yPos := Result[5].yPos + (LINE_Y_SPACING * 2);
 //  Result[6].ColorShift := HueShift;
@@ -525,7 +525,7 @@ begin
     Result[6 {Bookmark - Needs to be 7 if using TotalTime}].Line := SYourTime + STimeSR
   else
     Result[6].Line := '';
-  Result[6].yPos := Result[5 {Bookmark - Needs to be 6 if using TotalTime}].yPos + LINE_Y_SPACING;
+  Result[6].yPos := Result[5 {Bookmark - Needs to be 6 if using TotalTime}].yPos + (LINE_Y_SPACING * 2);
   Result[6].ColorShift := HueShift;
 
   // Time record
