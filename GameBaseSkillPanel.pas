@@ -1467,8 +1467,6 @@ begin
         SpecialCombine := True;
 
         if Game.IsOutOfTime then
-          fCombineHueShift := Purple
-        else if Level.Info.TimeLimit * 17 < Game.CurrentIteration + 255 {15 * 17} then
           fCombineHueShift := Red
         else
           fCombineHueShift := Yellow;
