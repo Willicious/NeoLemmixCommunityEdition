@@ -454,8 +454,7 @@ var
   HueShift: TColorDiff;
   Entry: TNeoLevelEntry;
   NormalCount, SaveableCount, NeutralCount, ZombieCount: Integer;
-  PositionLine, SpecialLemLine, ReleaseRateLine: String;
-  TimeLimitString: String;
+  PositionLine, SpecialLemLine, TimeLimitString: String;
   PackName, GroupName, LevelPosition: String;
   Level: TLevel;
 
@@ -560,27 +559,27 @@ begin
   Result[4].Line := SpecialLemLine;
   Result[4].ColorShift := HueShift;
 
-  HueShift.HShift := ReleaseRateShift;
-  Result[5].yPos := Result[4].yPos + LINE_Y_SPACING_EXTRA;
-  if GameParams.UseSpawnInterval then
-    ReleaseRateLine := SPreviewSpawnInterval + IntToStr(Level.Info.SpawnInterval)
-  else
-    ReleaseRateLine := SPreviewReleaseRate + IntToStr(103 - Level.Info.SpawnInterval);
-  if Level.Info.SpawnIntervalLocked then
-    ReleaseRateLine := ReleaseRateLine + SPreviewRRLocked;
-  Result[5].Line := ReleaseRateLine;
-  Result[5].ColorShift := HueShift;
+//  HueShift.HShift := ReleaseRateShift;
+//  Result[5].yPos := Result[4].yPos + LINE_Y_SPACING_EXTRA;
+//  if GameParams.UseSpawnInterval then
+//    ReleaseRateLine := SPreviewSpawnInterval + IntToStr(Level.Info.SpawnInterval)
+//  else
+//    ReleaseRateLine := SPreviewReleaseRate + IntToStr(103 - Level.Info.SpawnInterval);
+//  if Level.Info.SpawnIntervalLocked then
+//    ReleaseRateLine := ReleaseRateLine + SPreviewRRLocked;
+//  Result[5].Line := ReleaseRateLine;
+//  Result[5].ColorShift := HueShift;
 
   HueShift.HShift := TimeLimitShift;
-  Result[6].yPos := Result[5].yPos + LINE_Y_SPACING;
+  Result[5].yPos := Result[4].yPos + LINE_Y_SPACING_EXTRA;
   TimeLimitString := '';
   if Level.Info.HasTimeLimit then
   begin
     TimeLimitString := IntToStr(Level.Info.TimeLimit div 60) + ':' + LeadZeroStr(Level.Info.TimeLimit mod 60, 2);
-    Result[6].Line := SPreviewTimeLimit + TimeLimitString;
+    Result[5].Line := SPreviewTimeLimit + TimeLimitString;
   end else
-    Result[6].Line := '';
-  Result[6].ColorShift := HueShift;
+    Result[5].Line := '';
+  Result[5].ColorShift := HueShift;
 end;
 
 procedure TGamePreviewScreen.LoadPreviewTextColors;
