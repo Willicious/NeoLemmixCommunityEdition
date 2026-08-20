@@ -1448,14 +1448,10 @@ begin
         begin
           SpecialCombine := True;
           fCombineHueShift := Red;
-        end else if (lkNeutral in LemmingKinds) then
+        end else if (lkNeutral in LemmingKinds) and not (lkNormal in LemmingKinds) then
         begin
           SpecialCombine := True;
-
-          if lkNormal in LemmingKinds then
-            fCombineHueShift := Yellow
-          else
-            fCombineHueShift := Teal;
+          fCombineHueShift := Teal;
         end else
           SpecialCombine := False;
       end else if (CurChar > SaveCountStartIndex) and (CurChar <= SaveCountStartIndex + 5) then
