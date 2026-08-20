@@ -391,7 +391,6 @@ begin
   SRescued := IntToStr(Results.gRescued);
 
   STimeSR := MakeTimeString(Results.gLastRescueIteration);
-//  STimeTotal := MakeTimeString(Results.gLastIteration);  // Bookmark
 
   SRescueRecord := IntToStr(Entry.UserRecords.LemmingsRescued.Value);
   STimeRecord := MakeTimeString(Entry.UserRecords.TimeTaken.Value);
@@ -513,38 +512,34 @@ begin
   Result[4].ColorShift := HueShift;
   Result[5].ColorShift := HueShift;
 
-//  // Always show total time taken // Bookmark - See if people want total time to be shown
-  HueShift.HShift := TimeRecordShift;
-//  Result[6].Line := SYourTotalTime + STimeTotal;
-//  Result[6].yPos := Result[5].yPos + (LINE_Y_SPACING * 2);
-//  Result[6].ColorShift := HueShift;
-
   // Time taken to reach SR
+  HueShift.HShift := TimeRecordShift;
+
   if (Results.gSuccess and not (Results.gToRescue <= 0))
   or (Playtesting and (Results.gRescued >= Results.gToRescue)) then
-    Result[6 {Bookmark - Needs to be 7 if using TotalTime}].Line := SYourTime + STimeSR
+    Result[6].Line := SYourTime + STimeSR
   else
     Result[6].Line := '';
-  Result[6].yPos := Result[5 {Bookmark - Needs to be 6 if using TotalTime}].yPos + (LINE_Y_SPACING * 2);
+  Result[6].yPos := Result[5].yPos + (LINE_Y_SPACING * 2);
   Result[6].ColorShift := HueShift;
 
   // Time record
   if (Results.gSuccess and (Entry.UserRecords.TimeTaken.Value > 0))
   and (not Results.gToRescue <= 0) {Bookmark - and not InfiniteHotkeysUsed} then
-    Result[7 {Bookmark - Needs to be 8 if using TotalTime}].Line := SYourTimeRecord + STimeRecord
+    Result[7].Line := SYourTimeRecord + STimeRecord
   else
     Result[7].Line := '';
-  Result[7].yPos := Result[6 {Bookmark - Needs to be 7 if using TotalTime}].yPos + LINE_Y_SPACING;
+  Result[7].yPos := Result[6].yPos + LINE_Y_SPACING;
   Result[7].ColorShift := HueShift;
 
   // Skills record
   HueShift.HShift := SkillsRecordShift;
   if (Results.gSuccess and (Entry.UserRecords.TotalSkills.Value >= 0))
   and (not Results.gToRescue <= 0) {Bookmark - and not InfiniteHotkeysUsed} then
-    Result[8 {Bookmark - Needs to be 9 if using TotalTime}].Line := SYourFewestSkills + SSkillsRecord
+    Result[8].Line := SYourFewestSkills + SSkillsRecord
   else
     Result[8].Line := '';
-  Result[8].yPos := Result[7 {Bookmark - Needs to be 8 if using TotalTime}].yPos + (LINE_Y_SPACING * 2);
+  Result[8].yPos := Result[7].yPos + (LINE_Y_SPACING * 2);
   Result[8].ColorShift := HueShift;
 end;
 
