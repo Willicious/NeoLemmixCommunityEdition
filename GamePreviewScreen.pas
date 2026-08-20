@@ -449,6 +449,7 @@ end;
 function TGamePreviewScreen.GetPreviewText: TextLineArray;
 const
   LINE_Y_SPACING = 28;
+  LINE_Y_SPACING_EXTRA = 40;
 var
   HueShift: TColorDiff;
   Entry: TNeoLevelEntry;
@@ -512,7 +513,7 @@ begin
   Result[0].yPos := 168;
 
   HueShift.HShift := AuthorShift;
-  Result[1].yPos := Result[0].yPos + 40;
+  Result[1].yPos := Result[0].yPos + LINE_Y_SPACING_EXTRA;
   if Level.Info.Author <> '' then
     Result[1].Line := SPreviewAuthor + Level.Info.Author
   else
@@ -540,7 +541,7 @@ begin
   Result[2].ColorShift := HueShift;
 
   HueShift.HShift := RescueLemsShift;
-  Result[3].yPos := Result[2].yPos + LINE_Y_SPACING;
+  Result[3].yPos := Result[2].yPos + LINE_Y_SPACING_EXTRA;
   Result[3].Line := 'Save ' + IntToStr(Level.Info.RescueCount) + ' of ' +
                     IntToStr(SaveableCount) + ' Lemming' + Pluralize(SaveableCount);
   Result[3].ColorShift := HueShift;
@@ -560,7 +561,7 @@ begin
   Result[4].ColorShift := HueShift;
 
   HueShift.HShift := ReleaseRateShift;
-  Result[5].yPos := Result[4].yPos + LINE_Y_SPACING;
+  Result[5].yPos := Result[4].yPos + LINE_Y_SPACING_EXTRA;
   if GameParams.UseSpawnInterval then
     ReleaseRateLine := SPreviewSpawnInterval + IntToStr(Level.Info.SpawnInterval)
   else
