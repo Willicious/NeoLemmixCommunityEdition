@@ -201,7 +201,7 @@ type
   procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
 
 const
-  NUM_FONT_CHARS = 47;
+  NUM_FONT_CHARS = 48;
 
 const
   // WARNING: The order of the strings has to correspond to the one
@@ -1435,8 +1435,9 @@ begin
       #91 .. #97: CharID := ord(New) - ord('A') + 12;
 
       // ce-specific icons/characters
-      #98:        CharID := 45;
-      '+':        CharID := 46;
+      '+':        CharID := 45;
+      #98:        CharID := 46;
+      #99:        CharID := 47;
     else CharID := -1;
     end;
 
@@ -1766,8 +1767,12 @@ end;
 procedure TBaseSkillPanel.SetTimeLimit(Pos: Integer);
 begin
   if Level.Info.HasTimeLimit then
-    fNewDrawStr[Pos] := #96
-  else
+  begin
+    if Game.IsOutOfTime then
+      fNewDrawStr[Pos] := #99
+    else
+      fNewDrawStr[Pos] := #96;
+  end else
     fNewDrawStr[Pos] := #95;
 end;
 
