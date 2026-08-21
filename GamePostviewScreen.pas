@@ -112,11 +112,23 @@ end;
 procedure TGamePostviewScreen.MakeShowSkillsUsedClickable;
 var
   R: TClickableRegion;
+  SSkillsUsed: String;
+
+  function GetTotalSkillsUsed(const SkillsUsedList: TSkillsUsedList): Integer;
+  var
+    i: Integer;
+  begin
+    Result := 0;
+    for i := Low(SkillsUsedList) to High(SkillsUsedList) do
+      Inc(Result, SkillsUsedList[i].Count);
+  end;
 begin
-  if GameParams.PlaybackModeActive or not GameParams.IsPlaytesting then
+  if GameParams.PlaybackModeActive then
     Exit;
 
-  R := MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y - 40), 'Show Skills Used', ShowSkillsUsed, True);
+  SSkillsUsed := IntToStr(GetTotalSkillsUsed(GameParams.GameResult.gSkillsUsedList));
+
+  R := MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y - 40), 'Show skills used ' + SSkillsUsed, ShowSkillsUsed, True);
 
   R.ShortcutKeys.Add(VK_RETURN);
   R.ShortcutKeys.Add(VK_SPACE);
@@ -256,13 +268,10 @@ begin
       MakeTalismanOptions;
       MakeNextLevelClickable;
       MakeRetryLevelClickable(True);
+      MakeShowSkillsUsedClickable;
     end else begin
       MakeRetryLevelClickable(False);
     end;
-
-    // If in Playtest mode, show the Skills Used clickable
-    if (GameParams.IsPlaytesting) then
-      MakeShowSkillsUsedClickable;
 
     // Prepare some more clickables and hotkey options
     MakeLevelSelectClickable;
@@ -348,7 +357,7 @@ var
   Results: TGameResultsRec;
   Entry: TNeoLevelEntry;
   WhichText: TPostviewText;
-  STarget, SRescued, STimeSR: string;
+  STarget, SRescued, STimeSR, SSkillsUsed: string;
   SRescueRecord, STimeRecord, SSkillsRecord, SThisLine: string;
   // InfiniteHotkeysUsed,
   LevelHasTalismans, LevelPassed, ShowSavedRecord: Boolean;
@@ -590,9 +599,6 @@ var
   S: TStringList;
   Results: TGameResultsRec;
 begin
-  if not GameParams.IsPlaytesting then
-    Exit;
-
   Results := GameParams.GameResult;
 
   TotalSkills := 0;
@@ -600,7 +606,7 @@ begin
 
   S := TStringList.Create;
   try
-    S.Add('Skills used during this playtest:');
+    S.Add('Skills used during this playthrough:');
     S.Add('');
 
     for i := 0 to High(Results.gSkillsUsedList) do
@@ -621,6 +627,8 @@ begin
       S.Add('');
       S.Add(Format('Total Skills: %d', [TotalSkills]));
       S.Add(Format('Total Skill Types: %d', [TotalTypes]));
+      S.Add('');
+      S.Add(Format('Total Skills Record: %d', [GameParams.CurrentLevel.UserRecords.TotalSkills.Value]));
     end;
 
     MessageDlg(S.Text, mtInformation, [mbOK], 0);
