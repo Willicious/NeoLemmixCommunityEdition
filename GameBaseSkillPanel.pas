@@ -201,7 +201,7 @@ type
   procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
 
 const
-  NUM_FONT_CHARS = 48;
+  NUM_FONT_CHARS = 51;
 
 const
   // WARNING: The order of the strings has to correspond to the one
@@ -1438,6 +1438,9 @@ begin
       '+':        CharID := 45;
       #98:        CharID := 46;
       #99:        CharID := 47;
+      #100:       CharID := 48;
+      #101:       CharID := 49;
+      #102:       CharID := 50;
     else CharID := -1;
     end;
 
@@ -1765,13 +1768,22 @@ begin
 end;
 
 procedure TBaseSkillPanel.SetTimeLimit(Pos: Integer);
+  function IsTimeRemainingPercent(aPercent: Integer): Boolean;
+  begin
+    Result := ((Level.Info.TimeLimit * 17) - Game.CurrentIteration <=
+               (Level.Info.TimeLimit * 17 * aPercent) div 100);
+  end;
 begin
   if Level.Info.HasTimeLimit then
   begin
     if Game.IsOutOfTime then
       fNewDrawStr[Pos] := #99
+    else if IsTimeRemainingPercent(35) then
+      fNewDrawStr[Pos] := #100
+    else if IsTimeRemainingPercent(70) then
+      fNewDrawStr[Pos] := #101
     else
-      fNewDrawStr[Pos] := #96;
+      fNewDrawStr[Pos] := #102;
   end else
     fNewDrawStr[Pos] := #95;
 end;
