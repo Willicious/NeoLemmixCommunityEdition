@@ -509,7 +509,7 @@ begin
   HueShift.HShift := TitleShift;
   Result[0].Line := Entry.Title;
   Result[0].ColorShift := HueShift;
-  Result[0].yPos := 168;
+  Result[0].yPos := 172;
 
   HueShift.HShift := AuthorShift;
   Result[1].yPos := Result[0].yPos + LINE_Y_SPACING_EXTRA;
