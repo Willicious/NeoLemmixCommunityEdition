@@ -3,7 +3,7 @@ unit GamePreviewScreen;
 interface
 
 uses
-  System.Types,
+  System.Types, System.Math,
   StrUtils,
   Generics.Collections,
   LemTypes,
@@ -453,6 +453,7 @@ const
 var
   HueShift: TColorDiff;
   Entry: TNeoLevelEntry;
+  PrevLine: Integer;
   NormalCount, SaveableCount, NeutralCount, ZombieCount: Integer;
   PositionLine, SpecialLemLine, TimeLimitString: String;
   PackName, GroupName, LevelPosition: String;
@@ -510,17 +511,19 @@ begin
   Result[0].Line := Entry.Title;
   Result[0].ColorShift := HueShift;
   Result[0].yPos := 172;
+  PrevLine := 0;
 
   HueShift.HShift := AuthorShift;
-  Result[1].yPos := Result[0].yPos + LINE_Y_SPACING_EXTRA;
+  Result[1].yPos := Result[PrevLine].yPos + LINE_Y_SPACING_EXTRA;
   if Level.Info.Author <> '' then
     Result[1].Line := SPreviewAuthor + Level.Info.Author
   else
     Result[1].Line := '';
   Result[1].ColorShift := HueShift;
+  PrevLine := 1;
 
   HueShift.HShift := GroupShift;
-  Result[2].yPos := Result[1].yPos + LINE_Y_SPACING;
+  Result[2].yPos := Result[PrevLine].yPos + LINE_Y_SPACING;
   GroupName := Entry.Group.Name;
   Result[2].Line := GroupName;
   if Entry.Group.Parent = nil then
@@ -538,26 +541,28 @@ begin
     end;
   end;
   Result[2].ColorShift := HueShift;
+  PrevLine := 2;
 
   HueShift.HShift := RescueLemsShift;
-  Result[3].yPos := Result[2].yPos + LINE_Y_SPACING_EXTRA;
+  Result[3].yPos := Result[PrevLine].yPos + LINE_Y_SPACING_EXTRA;
   Result[3].Line := 'Save ' + IntToStr(Level.Info.RescueCount) + ' of ' +
                     IntToStr(SaveableCount) + ' Lemming' + Pluralize(SaveableCount);
   Result[3].ColorShift := HueShift;
+  PrevLine := IfThen(HasSpecialLemmings, 3, 2);
 
   HueShift.HShift := SpecialLemsShift;
   if HasSpecialLemmings then
   begin
-    Result[4].yPos := Result[3].yPos + LINE_Y_SPACING;
     SpecialLemLine := ResolveString(NormalCount, ' Normal', False) +
                       ResolveString(NeutralCount, ' Neutral') +
                       ResolveString(ZombieCount, ' Zombie');
   end else begin
-    Result[4].yPos := Result[2].yPos + LINE_Y_SPACING;
     SpecialLemLine := '';
   end;
+  Result[4].yPos := Result[PrevLine].yPos + LINE_Y_SPACING;
   Result[4].Line := SpecialLemLine;
   Result[4].ColorShift := HueShift;
+  PrevLine := IfThen(HasSpecialLemmings, 4, 3);
 
 //  HueShift.HShift := ReleaseRateShift;
 //  Result[5].yPos := Result[4].yPos + LINE_Y_SPACING_EXTRA;
@@ -571,7 +576,7 @@ begin
 //  Result[5].ColorShift := HueShift;
 
   HueShift.HShift := TimeLimitShift;
-  Result[5].yPos := Result[4].yPos + LINE_Y_SPACING_EXTRA;
+  Result[5].yPos := Result[PrevLine].yPos + LINE_Y_SPACING_EXTRA;
   TimeLimitString := '';
   if Level.Info.HasTimeLimit then
   begin
