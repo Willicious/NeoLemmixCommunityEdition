@@ -116,7 +116,7 @@ type
     function IsCompilationPack(G: TNeoLevelGroup): Boolean;
 
     procedure DisplayLevelInfo(RefreshLevel: Boolean = False);
-    procedure SetInfo(FormOpening: Boolean = False);
+    procedure UpdateInfo(FormOpening: Boolean = False);
     procedure SetTalismanInfo;
     procedure DrawTalismanButtons;
     procedure ClearTalismanButtons;
@@ -481,7 +481,7 @@ end;
 procedure TFLevelSelect.FormShow(Sender: TObject);
 begin
   LoadNodeLabels;
-  SetInfo(True);
+  UpdateInfo(True);
 end;
 
 function TFLevelSelect.GetCurrentlySelectedPack: String;
@@ -809,7 +809,7 @@ end;
 
 procedure TFLevelSelect.tvLevelSelectClick(Sender: TObject);
 begin
-  SetInfo;
+  UpdateInfo;
 end;
 
 procedure TFLevelSelect.tvLevelSelectExpanded(Sender: TObject; Node: TTreeNode);
@@ -829,7 +829,7 @@ procedure TFLevelSelect.tvLevelSelectKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if Key in [VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT] then
-    SetInfo;
+    UpdateInfo;
 end;
 
 procedure TFLevelSelect.LoadNodeLabels;
@@ -899,7 +899,7 @@ begin
   end;
 end;
 
-procedure TFLevelSelect.SetInfo(FormOpening: Boolean = False);
+procedure TFLevelSelect.UpdateInfo(FormOpening: Boolean = False);
 var
   Obj: TObject;
   G: TNeoLevelGroup;
