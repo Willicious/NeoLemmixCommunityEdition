@@ -6279,7 +6279,7 @@ begin
   begin
     i := Level.Info.SpawnOrder[Level.Info.LemmingsCount - Level.PreplacedLemmings.Count - LemmingsToRelease + ReleaseOffset];
     if i >= 0 then
-      if Gadgets[i].IsPreassignedZombie then
+      if Gadgets[i].IsPreassignedZombie and not UserSetNuking then
         Exit;
   end;
 
