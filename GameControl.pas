@@ -92,6 +92,12 @@ type
   );
 
 type
+  TDefaultReplayMode = (
+    rmStandard,
+    rmInsert
+  );
+
+type
   TMiscOption = (
     moAutoReplaySave,
     moEnableOnline,
@@ -185,7 +191,9 @@ type
     fLoadedWindowWidth: Integer;
     fLoadedWindowHeight: Integer;
 
+    fDefaultReplayMode: TDefaultReplayMode;
     fExitToPostview: TExitToPostview;
+
     fUserName: String;
 
     fAutoSaveReplayPattern: String;
@@ -361,6 +369,8 @@ type
     property CurrentGroupName: String read GetCurrentGroupName;
     property ExitToPostview: TExitToPostview read fExitToPostview write fExitToPostview;
 
+    property DefaultReplayMode: TDefaultReplayMode read fDefaultReplayMode write fDefaultReplayMode;
+
     property SleeperSpriteMissing: Boolean read fSleeperSpriteMissing write fSleeperSpriteMissing;
 
     property Username: String read fUsername write SetUsername;
@@ -533,6 +543,11 @@ begin
     else if (ExitToPostview = etpNever) then
       SaveString('ExitToPostview', 'Never');
 
+    if (DefaultReplayMode = rmStandard) then
+      SaveString('DefaultReplayMode', 'Standard')
+    else if (DefaultReplayMode = rmInsert) then
+      SaveString('DefaultReplayMode', 'Insert');
+
     SaveBoolean('SameLemmingOverwrite', SameLemmingOverwrite);
     SaveBoolean('ReplayAfterBackskip', ReplayAfterBackskip);
     SaveBoolean('ReplayAfterRestart', ReplayAfterRestart);
@@ -693,6 +708,18 @@ var
       fPanelZoomLevel := 1;
   end;
 
+  procedure LoadDefaultReplayMode;
+  var
+    sOption: String;
+  begin
+    sOption := SL.Values['DefaultReplayMode'];
+
+    if (sOption = 'Insert') then
+      DefaultReplayMode := rmInsert
+    else // Set default if the string is anything else
+      DefaultReplayMode := rmStandard;
+  end;
+
   procedure LoadExitToPostviewOptions;
   var
     sOption: String;
@@ -759,6 +786,7 @@ begin
 
     ShowLevelSelectOptions := LoadBoolean('ShowLevelSelectOptions', ShowLevelSelectOptions);
 
+    LoadDefaultReplayMode;
     LoadExitToPostviewOptions;
 
     AutoSaveReplay := LoadBoolean('AutoSaveReplay', AutoSaveReplay);
@@ -1161,6 +1189,8 @@ begin
 
   SoundManager.MusicVolume := 50;
   SoundManager.SoundVolume := 50;
+
+  DefaultReplayMode := rmStandard;
   ExitToPostview := etpIfPassed;
 
   PlaybackOrder := poByLevel;

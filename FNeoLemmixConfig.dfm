@@ -6,7 +6,7 @@ object FormNXConfig: TFormNXConfig
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'NeoLemmix Configuration'
-  ClientHeight = 612
+  ClientHeight = 661
   ClientWidth = 382
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -19,17 +19,18 @@ object FormNXConfig: TFormNXConfig
   OnClick = OptionChanged
   DesignSize = (
     382
-    612)
+    661)
   PixelsPerInch = 96
   TextHeight = 13
   object NXConfigPages: TPageControl
     Left = 0
     Top = 0
     Width = 382
-    Height = 573
+    Height = 622
     ActivePage = TabSheet2
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
+    ExplicitHeight = 573
     object TabSheet1: TTabSheet
       Caption = 'General'
       object lblUserName: TLabel
@@ -193,7 +194,7 @@ object FormNXConfig: TFormNXConfig
       ImageIndex = 2
       object rgWhenNoLemmings: TRadioGroup
         Left = 19
-        Top = 458
+        Top = 506
         Width = 336
         Height = 85
         Caption = 'When No Lemmings Remain'
@@ -208,12 +209,12 @@ object FormNXConfig: TFormNXConfig
         Left = 19
         Top = 346
         Width = 336
-        Height = 95
+        Height = 143
         Caption = 'Replay Options'
         TabOrder = 2
         object cbReplayAfterBackskip: TCheckBox
           Left = 19
-          Top = 20
+          Top = 92
           Width = 234
           Height = 17
           Caption = 'Auto-Replay After Backwards Frameskips'
@@ -222,7 +223,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbReplayAfterRestart: TCheckBox
           Left = 19
-          Top = 43
+          Top = 115
           Width = 177
           Height = 17
           Caption = 'Auto-Replay After Restart'
@@ -231,24 +232,37 @@ object FormNXConfig: TFormNXConfig
         end
         object cbSameLemmingOverwrite: TCheckBox
           Left = 19
-          Top = 66
+          Top = 69
           Width = 294
           Height = 17
-          Caption = 'Allow Same-Lemming-Overwrite in Replay Insert'
+          Caption = 'Allow Same-Lemming-Overwrite in Insert Mode'
           TabOrder = 2
+          OnClick = OptionChanged
+        end
+        object rgDefaultReplayMode: TRadioGroup
+          Left = 19
+          Top = 21
+          Width = 302
+          Height = 41
+          Caption = 'Default Mode'
+          Columns = 2
+          Items.Strings = (
+            'Standard'
+            'Insert')
+          TabOrder = 3
           OnClick = OptionChanged
         end
       end
       object gbHelperOptions: TGroupBox
         Left = 19
-        Top = 212
+        Top = 213
         Width = 336
         Height = 119
         Caption = 'Helper Options'
         TabOrder = 1
         object lblSkillQFrames: TLabel
-          Left = 35
-          Top = 92
+          Left = 19
+          Top = 91
           Width = 158
           Height = 13
           Caption = 'Number of Skill Queue Frames:'
@@ -281,8 +295,8 @@ object FormNXConfig: TFormNXConfig
           OnClick = OptionChanged
         end
         object seSkillQFrames: TSpinEdit
-          Left = 205
-          Top = 89
+          Left = 187
+          Top = 88
           Width = 52
           Height = 22
           MaxValue = 15
@@ -638,17 +652,18 @@ object FormNXConfig: TFormNXConfig
   end
   object btnOK: TButton
     Left = 23
-    Top = 579
+    Top = 628
     Width = 108
     Height = 25
     Anchors = [akLeft, akBottom]
     Caption = 'OK'
     TabOrder = 1
     OnClick = btnOKClick
+    ExplicitTop = 579
   end
   object btnCancel: TButton
     Left = 137
-    Top = 579
+    Top = 628
     Width = 108
     Height = 25
     Anchors = [akLeft, akBottom]
@@ -656,15 +671,17 @@ object FormNXConfig: TFormNXConfig
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 2
+    ExplicitTop = 579
   end
   object btnApply: TButton
     Left = 251
-    Top = 579
+    Top = 628
     Width = 108
     Height = 25
     Anchors = [akLeft, akBottom]
     Caption = 'Apply'
     TabOrder = 3
     OnClick = btnApplyClick
+    ExplicitTop = 579
   end
 end
