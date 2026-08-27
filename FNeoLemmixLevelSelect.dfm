@@ -342,6 +342,7 @@ object FLevelSelect: TFLevelSelect
     Width = 329
     Height = 319
     Cursor = crHandPoint
+    Enabled = False
     ItemHeight = 13
     TabOrder = 0
     Visible = False

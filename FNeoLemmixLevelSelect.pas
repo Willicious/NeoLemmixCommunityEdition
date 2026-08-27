@@ -1503,7 +1503,7 @@ begin
   tvLevelSelect.Visible := False;
   lblSearchResultsInfo.Visible := False;
   lbSearchResults.Visible := False;
-  lbSearchResults.Enabled := True;
+  lbSearchResults.Enabled := False;
   btnCloseSearch.Visible := False;
 
   // Initialize progress bar and counter
@@ -1564,6 +1564,7 @@ begin
   sbSearchLevels.Enabled := True;
   lblSearchResultsInfo.Visible := True;
   lbSearchResults.Visible := True;
+  lbSearchResults.Enabled := True;
   btnCloseSearch.Visible := True;
 
   SearchingLevels := False;
@@ -1635,6 +1636,7 @@ begin
   // Close and reset search panel
   lbSearchResults.Clear;
   lbSearchResults.Visible := False;
+  lbSearchResults.Enabled := False;
   btnCloseSearch.Visible := False;
   sbSearchLevels.Text := '';
 
