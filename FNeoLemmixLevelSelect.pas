@@ -22,6 +22,10 @@ uses
   NeoLemmixCEResources,
   SharedGlobals;
 
+const
+  WM_UPDATE_INFO = WM_USER + 100;
+  WM_EXPAND_TREE = WM_USER + 101;
+
 type
   TFLevelSelect = class(TForm)
     tvLevelSelect: TTreeView;
@@ -104,7 +108,8 @@ type
     fTreeviewImagesLoaded: Boolean;
     fSearchingLevels     : Boolean;
     fUpdatingInfo        : Boolean;
-    fLoadingNodeLabels   : Boolean;
+    fExpandingTree       : Boolean;
+    fActiveNode          : TTreeNode;
 
     procedure InitializeTreeview;
     procedure MakeTreeviewImages;
@@ -112,6 +117,9 @@ type
     procedure UpdateNodeImages(N: TTreeNode);
     procedure UpdateNodeImage(N: TTreeNode);
     procedure LoadNodeLabels;
+
+    procedure WMUpdateInfo(var Msg: TMessage); message WM_UPDATE_INFO;
+    procedure WMExpandTree(var Msg: TMessage); message WM_EXPAND_TREE;
 
     procedure WriteToParams;
 
@@ -138,8 +146,9 @@ type
     procedure WMActivate(var Msg: TWMActivate); message WM_ACTIVATE;
     procedure MaybeReloadLevelInfo;
 
+    property ActiveNode: TTreeNode read fActiveNode write fActiveNode;
     property UpdatingInfo: Boolean read fUpdatingInfo write fUpdatingInfo;
-    property LoadingNodeLabels: Boolean read fLoadingNodeLabels write fLoadingNodeLabels;
+    property ExpandingTree: Boolean read fExpandingTree write fExpandingTree;
     property SearchingLevels: Boolean read fSearchingLevels write fSearchingLevels;
     property TreeviewImagesLoaded: Boolean read fTreeviewImagesLoaded write fTreeviewImagesLoaded;
  public
@@ -812,14 +821,45 @@ begin
     GameParams.SetLevel(L);
 end;
 
+procedure TFLevelSelect.WMUpdateInfo(var Msg: TMessage);
+begin
+  try
+    UpdateInfo;
+  finally
+    UpdatingInfo := False;
+  end;
+end;
+
+procedure TFLevelSelect.WMExpandTree(var Msg: TMessage);
+begin
+  try
+    LoadNodeLabels;
+  finally
+    ExpandingTree := False;
+  end;
+end;
+
 procedure TFLevelSelect.tvLevelSelectClick(Sender: TObject);
 begin
-  UpdateInfo;
+  if ActiveNode = tvLevelSelect.Selected then
+    Exit;
+
+  ActiveNode := tvLevelSelect.Selected;
+
+  if UpdatingInfo then
+    Exit;
+
+  UpdatingInfo := True;
+  PostMessage(Handle, WM_UPDATE_INFO, 0, 0);
 end;
 
 procedure TFLevelSelect.tvLevelSelectExpanded(Sender: TObject; Node: TTreeNode);
 begin
-  LoadNodeLabels;
+  if ExpandingTree then
+    Exit;
+
+  ExpandingTree := True;
+  PostMessage(Handle, WM_EXPAND_TREE, 0, 0);
 end;
 
 // When treeview is active, pressing return loads the currently selected level
@@ -834,7 +874,18 @@ procedure TFLevelSelect.tvLevelSelectKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if Key in [VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT] then
-    UpdateInfo;
+  begin
+    if ActiveNode = tvLevelSelect.Selected then
+      Exit;
+
+    ActiveNode := tvLevelSelect.Selected;
+
+    if UpdatingInfo then
+      Exit;
+
+    UpdatingInfo := True;
+    PostMessage(Handle, WM_UPDATE_INFO, 0, 0);
+  end;
 end;
 
 procedure TFLevelSelect.LoadNodeLabels;
@@ -844,57 +895,48 @@ var
   S: String;
   CurrentNode: Integer;
 begin
-  if LoadingNodeLabels then
-    Exit;
-
-  LoadingNodeLabels := True;
-
   try
     tvLevelSelect.Items.BeginUpdate;
     CurrentNode := 0;
 
-    try
-  //    pbUIProgress.Visible := True;
-  //    pbUIProgress.Max := tvLevelSelect.Items.Count -1;
+//    pbUIProgress.Visible := True;
+//    pbUIProgress.Max := tvLevelSelect.Items.Count -1;
 
-      for i := 0 to tvLevelSelect.Items.Count-1 do
+    for i := 0 to tvLevelSelect.Items.Count-1 do
+    begin
+      if not tvLevelSelect.Items[i].IsVisible then Continue;
+      if tvLevelSelect.Items[i].Text <> '' then Continue;
+
+      if TObject(tvLevelSelect.Items[i].Data) is TNeoLevelEntry then
       begin
-        if not tvLevelSelect.Items[i].IsVisible then Continue;
-        if tvLevelSelect.Items[i].Text <> '' then Continue;
+        L := TNeoLevelEntry(tvLevelSelect.Items[i].Data);
+        S := '';
+        if L.Group.IsOrdered then
+          S := '(' + IntToStr(L.GroupIndex + 1) + ') ';
+        S := S + L.Title;
+        tvLevelSelect.Items[i].Text := S;
 
-        if TObject(tvLevelSelect.Items[i].Data) is TNeoLevelEntry then
-        begin
-          L := TNeoLevelEntry(tvLevelSelect.Items[i].Data);
-          S := '';
-          if L.Group.IsOrdered then
-            S := '(' + IntToStr(L.GroupIndex + 1) + ') ';
-          S := S + L.Title;
-          tvLevelSelect.Items[i].Text := S;
-
-          if (L.UnlockedTalismanList.Count < L.Talismans.Count)
-            and (tvLevelSelect.Items[i].ImageIndex < 4) {just in case}
-              and not SearchingLevels then
-                with tvLevelSelect.Items[i] do
-                begin
-                  ImageIndex := ImageIndex + 4;
-                  SelectedIndex := ImageIndex;
-                end;
-        end;
-
-        // Update progress
-        Inc(CurrentNode);
-        //pbUIProgress.Position := CurrentNode;
-
-        // Call every 50 nodes to ensure UI responsiveness
-        if (CurrentNode mod 50 = 0) then
-          Application.ProcessMessages;
+        if (L.UnlockedTalismanList.Count < L.Talismans.Count)
+          and (tvLevelSelect.Items[i].ImageIndex < 4) {just in case}
+            and not SearchingLevels then
+              with tvLevelSelect.Items[i] do
+              begin
+                ImageIndex := ImageIndex + 4;
+                SelectedIndex := ImageIndex;
+              end;
       end;
-    finally
-      //pbUIProgress.Visible := False;
-      tvLevelSelect.Items.EndUpdate;
+
+      // Update progress
+      Inc(CurrentNode);
+      //pbUIProgress.Position := CurrentNode;
+
+      // Call every 50 nodes to ensure UI responsiveness
+      if (CurrentNode mod 50 = 0) then
+        Application.ProcessMessages;
     end;
   finally
-    LoadingNodeLabels := False;
+    //pbUIProgress.Visible := False;
+    tvLevelSelect.Items.EndUpdate;
   end;
 end;
 
@@ -939,91 +981,82 @@ begin
   if SearchingLevels then
     Exit;
 
-  if UpdatingInfo or LoadingNodeLabels then
-    Exit;
+  N := tvLevelSelect.Selected;
+  if N = nil then Exit;
 
-  UpdatingInfo := True;
+  Obj := TObject(N.Data);
 
-  try
-    N := tvLevelSelect.Selected;
-    if N = nil then Exit;
+  if Obj is TNeoLevelGroup then
+  begin
+    if FormOpening then
+      Exit;
 
-    Obj := TObject(N.Data);
+    G := TNeoLevelGroup(Obj);
 
-    if Obj is TNeoLevelGroup then
+    if IsCompilationPack(G) then
     begin
-      if FormOpening then
-        Exit;
-
-      G := TNeoLevelGroup(Obj);
-
-      if IsCompilationPack(G) then
-      begin
-        lblName.Caption := G.Name;
-        lblPosition.Caption := 'This pack is a compilation. Expand the tree and click an individual pack for more info.';
-        lblAuthor.Caption := '';
-        lblCompletion.Caption := '';
-        ClearTalismanButtons;
-        fInfoForm.Visible := False;
-        fPackTalBox.Visible := False;
-        SetAdvancedOptionsCompilation(G);
-        Exit;
-      end;
-
-      if (G.IsBasePack) then
-      begin
-        lblLoadingInfo.Visible := True;
-        lblPosition.Visible := False;
-        lblAuthor.Caption := '';
-        lblCompletion.Caption := '';
-      end;
-
       lblName.Caption := G.Name;
-      Application.ProcessMessages; // Ensure UI update
-
-      lblPosition.Caption := GetGroupPositionText;
-
-      lblAuthor.Caption := G.Author;
-      if G.PackVersion <> '' then
-        lblAuthor.Caption := lblAuthor.Caption + ' | Version: ' + G.PackVersion;
-
-      lblCompletion.Caption := GetPackResultsString(G);
-      lblCompletion.Visible := True;
-
-      // Set the first unsolved level in the pack as the current level (or first level if pack is completed)
-      WriteToParams;
-      GameParams.LoadCurrentLevel(False);
-
+      lblPosition.Caption := 'This pack is a compilation. Expand the tree and click an individual pack for more info.';
+      lblAuthor.Caption := '';
+      lblCompletion.Caption := '';
       ClearTalismanButtons;
       fInfoForm.Visible := False;
-
-      DisplayPackTalismanInfo(G);
-      SetAdvancedOptionsGroup(G);
-
-      lblLoadingInfo.Visible := False;
-      lblPosition.Visible := True;
-    end else if Obj is TNeoLevelEntry then
-    begin
-      L := TNeoLevelEntry(Obj);
-      lblName.Caption := L.Title;
-      lblPosition.Caption := GetLevelPositionText;
-
-      if L.Author <> '' then
-        lblAuthor.Caption := 'Author: ' + L.Author
-      else
-        lblAuthor.Caption := '';
-
-      lblCompletion.Caption := '';
-      lblCompletion.Visible := False;
-
-      DisplayLevelInfo;
       fPackTalBox.Visible := False;
-
-      SetAdvancedOptionsLevel(L);
-      fCurrentLevelVersion := GameParams.Level.Info.LevelVersion;
+      SetAdvancedOptionsCompilation(G);
+      Exit;
     end;
-  finally
-    UpdatingInfo := False;
+
+    if (G.IsBasePack) then
+    begin
+      lblLoadingInfo.Visible := True;
+      lblPosition.Visible := False;
+      lblAuthor.Caption := '';
+      lblCompletion.Caption := '';
+    end;
+
+    lblName.Caption := G.Name;
+    Application.ProcessMessages; // Ensure UI update
+
+    lblPosition.Caption := GetGroupPositionText;
+
+    lblAuthor.Caption := G.Author;
+    if G.PackVersion <> '' then
+      lblAuthor.Caption := lblAuthor.Caption + ' | Version: ' + G.PackVersion;
+
+    lblCompletion.Caption := GetPackResultsString(G);
+    lblCompletion.Visible := True;
+
+    // Set the first unsolved level in the pack as the current level (or first level if pack is completed)
+    WriteToParams;
+    GameParams.LoadCurrentLevel(False);
+
+    ClearTalismanButtons;
+    fInfoForm.Visible := False;
+
+    DisplayPackTalismanInfo(G);
+    SetAdvancedOptionsGroup(G);
+
+    lblLoadingInfo.Visible := False;
+    lblPosition.Visible := True;
+  end else if Obj is TNeoLevelEntry then
+  begin
+    L := TNeoLevelEntry(Obj);
+    lblName.Caption := L.Title;
+    lblPosition.Caption := GetLevelPositionText;
+
+    if L.Author <> '' then
+      lblAuthor.Caption := 'Author: ' + L.Author
+    else
+      lblAuthor.Caption := '';
+
+    lblCompletion.Caption := '';
+    lblCompletion.Visible := False;
+
+    DisplayLevelInfo;
+    fPackTalBox.Visible := False;
+
+    SetAdvancedOptionsLevel(L);
+    fCurrentLevelVersion := GameParams.Level.Info.LevelVersion;
   end;
 end;
 
