@@ -239,6 +239,15 @@ object FormNXConfig: TFormNXConfig
           Items.Strings = (
             'Standard'
             'Insert')
+          TabOrder = 2
+          OnClick = OptionChanged
+        end
+        object cbClickAirToCutInsert: TCheckBox
+          Left = 19
+          Top = 68
+          Width = 294
+          Height = 17
+          Caption = 'Click Air to Cut Replay in Insert Mode'
           TabOrder = 3
           OnClick = OptionChanged
         end

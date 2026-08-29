@@ -81,6 +81,7 @@ type
     cbCountDownFromSR: TCheckBox;
     cbShowButtonHints: TCheckBox;
     rgDefaultReplayMode: TRadioGroup;
+    cbClickAirToCutInsert: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -278,6 +279,7 @@ begin
     cbPauseAfterBackwards.Checked := GameParams.PauseAfterBackwardsSkip;
     cbReplayAfterBackskip.Checked := GameParams.ReplayAfterBackskip;
     cbReplayAfterRestart.Checked := GameParams.ReplayAfterRestart;
+    cbClickAirToCutInsert.Checked := GameParams.ClickAirToCutInsert;
 
     rgDefaultReplayMode.ItemIndex := Ord(GameParams.DefaultReplayMode);
 
@@ -360,6 +362,7 @@ begin
   GameParams.PauseAfterBackwardsSkip := cbPauseAfterBackwards.Checked;
   GameParams.ReplayAfterBackskip := cbReplayAfterBackskip.Checked;
   GameParams.ReplayAfterRestart := cbReplayAfterRestart.Checked;
+  GameParams.ClickAirToCutInsert := cbClickAirToCutInsert.Checked;
 
   if (rgDefaultReplayMode.ItemIndex >= Ord(Low(TDefaultReplayMode)))
     and (rgDefaultReplayMode.ItemIndex <= Ord(High(TDefaultReplayMode))) then
