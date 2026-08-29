@@ -30,7 +30,6 @@ object FormNXConfig: TFormNXConfig
     ActivePage = TabSheet2
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
-    ExplicitHeight = 573
     object TabSheet1: TTabSheet
       Caption = 'General'
       object lblUserName: TLabel
@@ -228,15 +227,6 @@ object FormNXConfig: TFormNXConfig
           Height = 17
           Caption = 'Auto-Replay After Restart'
           TabOrder = 1
-          OnClick = OptionChanged
-        end
-        object cbSameLemmingOverwrite: TCheckBox
-          Left = 19
-          Top = 69
-          Width = 294
-          Height = 17
-          Caption = 'Allow Same-Lemming-Overwrite in Insert Mode'
-          TabOrder = 2
           OnClick = OptionChanged
         end
         object rgDefaultReplayMode: TRadioGroup
@@ -659,7 +649,6 @@ object FormNXConfig: TFormNXConfig
     Caption = 'OK'
     TabOrder = 1
     OnClick = btnOKClick
-    ExplicitTop = 579
   end
   object btnCancel: TButton
     Left = 137
@@ -671,7 +660,6 @@ object FormNXConfig: TFormNXConfig
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 2
-    ExplicitTop = 579
   end
   object btnApply: TButton
     Left = 251
@@ -682,6 +670,5 @@ object FormNXConfig: TFormNXConfig
     Caption = 'Apply'
     TabOrder = 3
     OnClick = btnApplyClick
-    ExplicitTop = 579
   end
 end

@@ -80,7 +80,6 @@ type
     cbUseSpawnInterval: TCheckBox;
     cbCountDownFromSR: TCheckBox;
     cbShowButtonHints: TCheckBox;
-    cbSameLemmingOverwrite: TCheckBox;
     rgDefaultReplayMode: TRadioGroup;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
@@ -279,7 +278,6 @@ begin
     cbPauseAfterBackwards.Checked := GameParams.PauseAfterBackwardsSkip;
     cbReplayAfterBackskip.Checked := GameParams.ReplayAfterBackskip;
     cbReplayAfterRestart.Checked := GameParams.ReplayAfterRestart;
-    cbSameLemmingOverwrite.Checked := GameParams.SameLemmingOverwrite;
 
     rgDefaultReplayMode.ItemIndex := Ord(GameParams.DefaultReplayMode);
 
@@ -362,7 +360,6 @@ begin
   GameParams.PauseAfterBackwardsSkip := cbPauseAfterBackwards.Checked;
   GameParams.ReplayAfterBackskip := cbReplayAfterBackskip.Checked;
   GameParams.ReplayAfterRestart := cbReplayAfterRestart.Checked;
-  GameParams.SameLemmingOverwrite := cbSameLemmingOverwrite.Checked;
 
   if (rgDefaultReplayMode.ItemIndex >= Ord(Low(TDefaultReplayMode)))
     and (rgDefaultReplayMode.ItemIndex <= Ord(High(TDefaultReplayMode))) then
