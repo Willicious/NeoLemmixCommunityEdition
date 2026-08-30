@@ -91,8 +91,8 @@ type
     procedure btnCloseClick(Sender: TObject);
     procedure tvLevelSelectKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
-    procedure tvLevelSelectClick(Sender: TObject);
     procedure btnResetAllProgressClick(Sender: TObject);
+    procedure tvLevelSelectChange(Sender: TObject; Node: TTreeNode);
   private
     fLastLevelPath: String;
     fLastGroup: TNeoLevelGroup;
@@ -109,7 +109,6 @@ type
     fSearchingLevels     : Boolean;
     fUpdatingInfo        : Boolean;
     fExpandingTree       : Boolean;
-    fActiveNode          : TTreeNode;
 
     procedure InitializeTreeview;
     procedure MakeTreeviewImages;
@@ -146,7 +145,6 @@ type
     procedure WMActivate(var Msg: TWMActivate); message WM_ACTIVATE;
     procedure MaybeReloadLevelInfo;
 
-    property ActiveNode: TTreeNode read fActiveNode write fActiveNode;
     property UpdatingInfo: Boolean read fUpdatingInfo write fUpdatingInfo;
     property ExpandingTree: Boolean read fExpandingTree write fExpandingTree;
     property SearchingLevels: Boolean read fSearchingLevels write fSearchingLevels;
@@ -839,13 +837,8 @@ begin
   end;
 end;
 
-procedure TFLevelSelect.tvLevelSelectClick(Sender: TObject);
+procedure TFLevelSelect.tvLevelSelectChange(Sender: TObject; Node: TTreeNode);
 begin
-  if ActiveNode = tvLevelSelect.Selected then
-    Exit;
-
-  ActiveNode := tvLevelSelect.Selected;
-
   if UpdatingInfo then
     Exit;
 
@@ -875,11 +868,6 @@ procedure TFLevelSelect.tvLevelSelectKeyUp(Sender: TObject; var Key: Word;
 begin
   if Key in [VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT] then
   begin
-    if ActiveNode = tvLevelSelect.Selected then
-      Exit;
-
-    ActiveNode := tvLevelSelect.Selected;
-
     if UpdatingInfo then
       Exit;
 
