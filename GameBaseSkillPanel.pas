@@ -1402,7 +1402,7 @@ var
   New: char;
   CurChar, CharID: integer;
   SpecialCombine: Boolean;
-  Red, Blue, Purple, Teal, Yellow{, Orange}: Single;
+  Red, Blue, {Purple,} Teal, Yellow{, Orange}: Single;
   LemmingKinds: TLemmingKinds;
   SelectedLemming: TLemming;
 begin
