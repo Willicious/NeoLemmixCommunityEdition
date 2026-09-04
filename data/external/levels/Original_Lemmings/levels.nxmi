@@ -1,0 +1,32 @@
+BASE
+
+$GROUP
+  NAME Lemmings
+  FOLDER Lemmings
+$END
+
+$GROUP
+  NAME Oh No! More Lemmings
+  FOLDER OhNoMoreLemmings
+$END
+
+$GROUP
+  NAME Holiday Lemmings
+  FOLDER HolidayLemmings
+$END
+
+$GROUP
+  NAME Prima Lemmings
+  FOLDER PrimaLemmings
+$END
+
+$GROUP
+  NAME Covox Lemmings
+  FOLDER CovoxLemmings
+$END
+
+$GROUP
+  NAME Extra Levels
+  FOLDER ExtraLevels
+$END
+
