@@ -35,7 +35,8 @@ type
       procedure ExitToMenu;
 
       procedure SaveLevelImage;
-      procedure TryLoadReplay;
+      procedure TryLoadReplayFromPreviewScreen;         // wraps LoadReplay function
+      procedure TryLoadPlaytestReplayFromPreviewScreen; // wraps LoadReplay function
 
       procedure DrawLevelPreview;
 
@@ -287,7 +288,7 @@ begin
   if GameParams.PlaybackModeActive then
     Exit;
 
-  R := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay);
+  R := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplayFromPreviewScreen);
 
   R.AddKeysFromFunction(lka_LoadReplay);
 end;
@@ -419,9 +420,13 @@ begin
   TempBitmap.Free;
 end;
 
-procedure TGamePreviewScreen.TryLoadReplay;
+procedure TGamePreviewScreen.TryLoadPlaytestReplayFromPreviewScreen;
 begin
-  // LoadReplay is a function, not a procedure, so this needs to be here as a wraparound.
+  LoadReplay(True);
+end;
+
+procedure TGamePreviewScreen.TryLoadReplayFromPreviewScreen;
+begin
   LoadReplay;
 end;
 
@@ -651,7 +656,7 @@ begin
 
   // Attempt to load the playtest replay if in playtest mode
   if GameParams.IsPlaytesting then
-    TryLoadReplay;
+    TryLoadPlaytestReplayFromPreviewScreen;
 end;
 
 end.

@@ -24,7 +24,7 @@ type
       function GetScreenText: string;
       procedure ToNextScreen;
       procedure ExitToMenu;
-      procedure TryLoadReplay;
+      procedure TryLoadReplayFromTextScreen; // wraps LoadReplay function
     protected
       procedure BuildScreen; override;
       function GetWallpaperSuffix: String; override;
@@ -60,7 +60,7 @@ begin
       MakeHiddenOption(lka_CancelPlayback, CancelPlaybackMode)
     else begin
       if GameParams.IsPreTextScreen then
-        MakeHiddenOption(lka_LoadReplay, TryLoadReplay)
+        MakeHiddenOption(lka_LoadReplay, TryLoadReplayFromTextScreen)
       else
         MakeHiddenOption(lka_SaveReplay, SaveReplay);
     end;
@@ -247,9 +247,8 @@ begin
     CloseScreen(gstPostview);
 end;
 
-procedure TGameTextScreen.TryLoadReplay;
+procedure TGameTextScreen.TryLoadReplayFromTextScreen;
 begin
-  // See comment on TGamePreviewScreen.TryLoadReplay.
   LoadReplay;
 end;
 

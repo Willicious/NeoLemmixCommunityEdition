@@ -37,7 +37,8 @@ type
     property CloseDelay: Integer read fCloseDelay write fCloseDelay;
 
   public
-    function LoadReplay: Boolean;
+    function LoadReplay(UseAutoPlaytest: Boolean = False): Boolean;
+
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
     procedure ShowScreen; override;
@@ -295,7 +296,7 @@ begin
 end;
 
 
-function TGameBaseScreen.LoadReplay: Boolean;
+function TGameBaseScreen.LoadReplay(UseAutoPlaytest: Boolean = False): Boolean;
 var
   Dlg: TOpenDialog;
   s: String;
@@ -329,7 +330,7 @@ begin
   s := '';
   GlobalGame.ReplayManager.ReplayLoadSuccess := False;
 
-  if GameParams.OpenedViaReplay or GameParams.PlaybackModeActive or GameParams.IsPlaytesting then
+  if GameParams.OpenedViaReplay or GameParams.PlaybackModeActive or UseAutoPlaytest then
   begin
     Result := True; // Return True if opened via replay or NLCE is in Playback/Playtest Mode
     s := GameParams.LoadedReplayFile;
