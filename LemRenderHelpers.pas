@@ -83,8 +83,8 @@ type
 
     constructor Create;
     procedure Prepare(aWidth, aHeight: Integer);
-    procedure CombineTo(aDst: TBitmap32; aRegion: TRect; IsPhysicsView: Boolean = False; IsTransparentBackground: Boolean = False); overload;
-    procedure CombineTo(aDst: TBitmap32; IsPhysicsView: Boolean = False); overload;
+    procedure CombineTo(aDst: TBitmap32; aRegion: TRect; aPhysicsView: Boolean = False; aTransparentBackground: Boolean = False); overload;
+    procedure CombineTo(aDst: TBitmap32; aPhysicsView: Boolean = False); overload;
     property Items[Index: TRenderLayer]: TBitmap32 read GetItem; default;
     property Width: Integer read fWidth;
     property Height: Integer read fHeight;
@@ -130,6 +130,7 @@ type
 
   TRenderInterface = class // Used for communication between GameWindow, LemGame and LemRendering.
     private
+      fPhysicsView: Boolean;
       fDisableDrawing: Boolean;
       fLemmingList: TLemmingList;
       fGadgets: TGadgetList;
@@ -173,6 +174,8 @@ type
       procedure SimulateTransitionLem(L: TLemming; NewAction: TBasicLemmingAction);
       function SimulateLem(L: TLemming): TArrayArrayInt;
       function IsStartingSeconds: Boolean;
+
+      property PhysicsView: Boolean read fPhysicsView write fPhysicsView;
       property DisableDrawing: Boolean read fDisableDrawing write fDisableDrawing;
       property LemmingList: TLemmingList read fLemmingList write fLemmingList;
       property Gadgets: TGadgetList read fGadgets write fGadgets;
@@ -555,12 +558,12 @@ begin
   end;
 end;
 
-procedure TRenderBitmaps.CombineTo(aDst: TBitmap32; IsPhysicsView: Boolean = False);
+procedure TRenderBitmaps.CombineTo(aDst: TBitmap32; aPhysicsView: Boolean = False);
 begin
-  CombineTo(aDst, fPhysicsMap.BoundsRect, IsPhysicsView);
+  CombineTo(aDst, fPhysicsMap.BoundsRect, aPhysicsView);
 end;
 
-procedure TRenderBitmaps.CombineTo(aDst: TBitmap32; aRegion: TRect; IsPhysicsView: Boolean = False; IsTransparentBackground: Boolean = False);
+procedure TRenderBitmaps.CombineTo(aDst: TBitmap32; aRegion: TRect; aPhysicsView: Boolean = False; aTransparentBackground: Boolean = False);
 var
   i: TRenderLayer;
   LRRegion: TRect;
@@ -578,7 +581,7 @@ begin
   aRegion.Right := LRRegion.Right * ResMod;
   aRegion.Bottom := LRRegion.Bottom * ResMod;
 
-  if IsTransparentBackground then
+  if aTransparentBackground then
     aDst.Clear($00000000)
   else
     aDst.Clear($FF000000);
@@ -611,13 +614,13 @@ begin
 
   for i := Low(TRenderLayer) to High(TRenderLayer) do
   begin
-    if (not IsPhysicsView) and (i = rlTriggers) then
+    if (not aPhysicsView) and (i = rlTriggers) then
       Continue; // we only want to draw triggers when Physics View is active
 
-    if IsPhysicsView and (i in [rlBackground, rlOnTerrainGadgets, rlGadgetsHigh]) then
+    if aPhysicsView and (i in [rlBackground, rlOnTerrainGadgets, rlGadgetsHigh]) then
       Continue; // we don't want to draw the first two in Physics View; while the latter has special handling
 
-    if IsPhysicsView and (i = rlTerrain) then
+    if aPhysicsView and (i = rlTerrain) then
     begin // we want to draw based on physics map, not graphical map, in this case
       Items[rlGadgetsHigh].DrawTo(aDst, aRegion, aRegion); // we want it behind terrain
       DrawPhysicsViewTerrain(aDst, aRegion);
