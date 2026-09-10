@@ -121,7 +121,7 @@ type
     spbRestart,
     spbBackOneFrame,
     spbDirLeft,
-    spbClearPhysics,
+    spbPhysicsView,
 
     // These three are the bottom part of a vertical split
     spbForwardOneFrame,
@@ -307,7 +307,7 @@ const
     baNone,  // Restart
     baNone,  // -1f
     baNone,  // +1f
-    baNone,  // Clear Physics
+    baNone,  // Physics View
     baNone,  // Dir Sel Left
     baNone,  // Load Replay
     baNone   // Dir Sel Right

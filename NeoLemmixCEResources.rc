@@ -23,6 +23,8 @@ SIGN_LEVEL_SELECT_PNG RCDATA "data\external\gfx\menu\ce-sign_level_select.png"
 SIGN_PLAY_PNG RCDATA "data\external\gfx\menu\ce-sign_play.png"
 SIGN_QUIT_PNG RCDATA "data\external\gfx\menu\ce-sign_quit.png"
 
+ICON_PV_REPLAY_PNG RCDATA "data\external\gfx\panel\ce-icon_pv_replay.png"
+ICON_PV_REPLAY_HR_PNG RCDATA "data\external\gfx\panel-hr\ce-icon_pv_replay.png"
 PANEL_CHARS_PNG RCDATA "data\external\gfx\panel\ce-panel_chars.png"
 PANEL_CHARS_HR_PNG RCDATA "data\external\gfx\panel-hr\ce-panel_chars.png"
 

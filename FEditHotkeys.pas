@@ -138,7 +138,7 @@ begin
     lka_NudgeDown,
     lka_NudgeLeft,
     lka_NudgeRight: ebNudgeAmount.Text := IntToStr(fHotkeys.CheckKeyEffect(i).Modifier);
-    lka_ClearPhysics,
+    lka_PhysicsView,
     lka_ShowUsedSkills: cbHoldKey.Checked := fHotkeys.CheckKeyEffect(i).Modifier = 1;
   end;
 
@@ -267,10 +267,10 @@ begin
                 else
                   s := 'Time Skip: Forward 1 Frame';
               end;
-    lka_ClearPhysics: if Hotkey.Modifier = 0 then
-                        s := 'Clear Physics Mode (toggle)'
+    lka_PhysicsView: if Hotkey.Modifier = 0 then
+                        s := 'Physics View (toggle)'
                       else
-                        s := 'Clear Physics Mode (hold)';
+                        s := 'Physics View (hold)';
     lka_Projection: if Hotkey.Modifier = 0 then
                       s := 'Projection (toggle)'
                     else
@@ -423,7 +423,7 @@ begin
                 ebSkipDuration.Visible := True;
                 ebSkipDuration.Enabled := True;
               end;
-    lka_ClearPhysics,
+    lka_PhysicsView,
     lka_Projection,
     lka_SkillProjection,
     lka_ShowUsedSkills: begin
@@ -469,7 +469,7 @@ begin
                        if cbSpecialSkip.ItemIndex = -1 then cbSpecialSkip.ItemIndex := 0;
                        fHotkeys.SetKeyFunction(i, lka_SpecialSkip, cbSpecialSkip.ItemIndex);
                      end;
-    lka_ClearPhysics,
+    lka_PhysicsView,
     lka_Projection,
     lka_SkillProjection,
     lka_ShowUsedSkills: if cbHoldKey.Checked then
@@ -630,7 +630,7 @@ begin
   i := FindKeyFromList(lvHotkeys.ItemIndex);
   if i = -1 then Exit; // Safety; should never happen
 
-  if not (fHotkeys.CheckKeyEffect(i).Action in [lka_ClearPhysics,
+  if not (fHotkeys.CheckKeyEffect(i).Action in [lka_PhysicsView,
   lka_ShowUsedSkills]) then Exit;
 
   if cbHoldKey.Checked then

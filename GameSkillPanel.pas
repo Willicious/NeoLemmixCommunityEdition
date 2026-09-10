@@ -186,7 +186,7 @@ begin
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 3] := spbRestart;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 4] := spbBackOneFrame; // and below: spbForwardOneFrame
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 5] := spbDirLeft; // and below: spbDirRight
-  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 6] := spbClearPhysics; // and below: spbLoadReplay
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 6] := spbPhysicsView; // and below: spbLoadReplay
 end;
 
 procedure TSkillPanelStandard.ResizeMinimapRegion(MinimapRegion: TBitmap32);

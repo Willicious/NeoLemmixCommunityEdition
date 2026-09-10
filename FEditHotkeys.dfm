@@ -153,7 +153,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Previous Skill'
       'Next Skill'
       'Release Mouse'
-      'Clear Physics Mode'
+      'Physics View'
       'Toggle Shadows'
       'Projection Shadow'
       'Skill Projection Shadow'

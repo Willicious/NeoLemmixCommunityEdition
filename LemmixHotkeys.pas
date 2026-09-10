@@ -55,7 +55,7 @@ type
                          lka_SkillLeft,
                          lka_SkillRight,
                          lka_ReleaseMouse,
-                         lka_ClearPhysics,
+                         lka_PhysicsView,
                          lka_ToggleShadows,
                          lka_Projection,
                          lka_SkillProjection,
@@ -168,7 +168,7 @@ begin
   SetKeyFunction($4A, lka_Scroll);
 
   // Misc ones that need other details set
-  SetKeyFunction($BF, lka_ClearPhysics, 1);
+  SetKeyFunction($BF, lka_PhysicsView, 1);
   SetKeyFunction($DB, lka_SkillProjection, 1);
   SetKeyFunction($DD, lka_Projection, 1);
 
@@ -252,8 +252,8 @@ begin
   SetKeyFunction($30, lka_SlowMotion);
   SetKeyFunction($BE, lka_SlowMotion);
   SetKeyFunction($2E, lka_Cheat);
-  SetKeyFunction($56, lka_ClearPhysics, 1);
-  SetKeyFunction($14, lka_ClearPhysics, 0);
+  SetKeyFunction($56, lka_PhysicsView, 1);
+  SetKeyFunction($14, lka_PhysicsView, 0);
   SetKeyFunction($4C, lka_LoadReplay);
   SetKeyFunction($53, lka_SaveReplay);
   SetKeyFunction($43, lka_CancelReplay);
@@ -323,7 +323,7 @@ begin
   SetKeyFunction($C0, lka_ReleaseMouse);
 
   // Misc ones that need other details set
-  SetKeyFunction($54, lka_ClearPhysics, 1);
+  SetKeyFunction($54, lka_PhysicsView, 1);
   SetKeyFunction($10, lka_SkillProjection, 1);
   SetKeyFunction($12, lka_Projection, 1);
 
@@ -406,7 +406,7 @@ begin
   if s = 'next_skill' then Result := lka_SkillRight;
   if s = 'release_mouse' then Result := lka_ReleaseMouse;
   if s = 'highlight' then Result := lka_Highlight;
-  if s = 'clear_physics' then Result := lka_ClearPhysics;
+  if s = 'physics_view' then Result := lka_PhysicsView;
   if s = 'toggle_shadows' then Result := lka_ToggleShadows;  
   if s = 'projection' then Result := lka_Projection;
   if s = 'skill_projection' then Result := lka_SkillProjection;
@@ -565,7 +565,7 @@ var
       lka_SkillRight:       Result := 'Next_Skill';
       lka_ReleaseMouse:     Result := 'Release_Mouse';
       lka_Highlight:        Result := 'Highlight';
-      lka_ClearPhysics:     Result := 'Clear_Physics';
+      lka_PhysicsView:      Result := 'Physics_View';
       lka_ToggleShadows:    Result := 'Toggle_Shadows';
       lka_Projection:       Result := 'Projection';
       lka_SkillProjection:  Result := 'Skill_Projection';
@@ -630,7 +630,7 @@ begin
     if s = 'Null' then Continue;
     if fKeyFunctions[i].Action in [lka_Skill, lka_SkillButton,
                                    lka_Skip, lka_SpecialSkip,
-                                   lka_ClearPhysics,
+                                   lka_PhysicsView,
                                    lka_Projection, lka_SkillProjection,
                                    lka_ShowUsedSkills] then
       s := s + ':' + InterpretSecondary(fKeyFunctions[i].Modifier, fKeyFunctions[i].Action);

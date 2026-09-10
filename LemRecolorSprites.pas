@@ -13,11 +13,11 @@ uses
   SharedGlobals;
 
 var
-  ClearPhysicsLemmingNormal: TColor32;
-  ClearPhysicsLemmingAthlete: TColor32;
-  ClearPhysicsLemmingNeutral: TColor32;
-  ClearPhysicsLemmingZombie: TColor32;
-  ClearPhysicsLemmingSelected: TColor32;
+  PhysicsViewLemmingNormal: TColor32;
+  PhysicsViewLemmingAthlete: TColor32;
+  PhysicsViewLemmingNeutral: TColor32;
+  PhysicsViewLemmingZombie: TColor32;
+  PhysicsViewLemmingSelected: TColor32;
 
 type
   TColorSwapType = (rcl_Selected,
@@ -40,7 +40,7 @@ type
     private
       fLemming: TLemming;
       fDrawAsSelected: Boolean;
-      fClearPhysics: Boolean;
+      fPhysicsView: Boolean;
       fSwaps: TColorSwapArray;
 
       procedure SwapColors(F: TColor32; var B: TColor32);
@@ -53,11 +53,11 @@ type
       procedure ApplyPaletteSwapping(aColorDict: TColorDict; aShadeDict: TShadeDict; aTheme: TNeoTheme);
       procedure CombineLemmingPixels(F: TColor32; var B: TColor32; M: Cardinal);
       procedure CombineLemmingHighlight(F: TColor32; var B: TColor32; M: Cardinal);
-      procedure LoadClearPhysicsShades;
+      procedure LoadPhysicsViewShades;
 
       property Lemming: TLemming write fLemming;
       property DrawAsSelected: Boolean write fDrawAsSelected;
-      property ClearPhysics: Boolean write fClearPhysics;
+      property PhysicsView: Boolean write fPhysicsView;
 
       class procedure CombineDefaultPixels(F: TColor32; var B: TColor32; M: Cardinal);
   end;
@@ -70,7 +70,7 @@ begin
 
   // Until proper loading exists
   LoadSwaps(SFDefaultStyle);
-  LoadClearPhysicsShades;
+  LoadPhysicsViewShades;
 end;
 
 procedure TRecolorImage.SwapColors(F: TColor32; var B: TColor32);
@@ -82,21 +82,21 @@ begin
   if fLemming = nil then Exit;
   if (F and $FF000000) = 0 then Exit;
 
-  if fClearPhysics then
+  if fPhysicsView then
   begin
     if fLemming.HasPermanentSkills then
-      B := ResolveColor(ClearPhysicsLemmingAthlete)
+      B := ResolveColor(PhysicsViewLemmingAthlete)
     else
-      B := ResolveColor(ClearPhysicsLemmingNormal);
+      B := ResolveColor(PhysicsViewLemmingNormal);
 
     if fLemming.LemIsNeutral then
-      B := ResolveColor(ClearPhysicsLemmingNeutral);
+      B := ResolveColor(PhysicsViewLemmingNeutral);
 
     if fLemming.LemIsZombie then
-      B := ResolveColor(ClearPhysicsLemmingZombie);
+      B := ResolveColor(PhysicsViewLemmingZombie);
 
     if fDrawAsSelected then
-      B := ResolveColor(ClearPhysicsLemmingSelected);
+      B := ResolveColor(PhysicsViewLemmingSelected);
   end else
     for i := 0 to Length(fSwaps)-1 do
     begin
@@ -228,7 +228,7 @@ begin
   end;
 end;
 
-procedure TRecolorImage.LoadClearPhysicsShades;
+procedure TRecolorImage.LoadPhysicsViewShades;
 var
   Nxmi: String;
   Parser: TParser;
@@ -237,11 +237,11 @@ var
   // Default colors, loaded if custom file doesn't exist
   procedure ResetColors;
   begin
-    ClearPhysicsLemmingNormal := $FF7777FF;
-    ClearPhysicsLemmingAthlete := $FF00FFFF;
-    ClearPhysicsLemmingNeutral := $FFAA00FF;
-    ClearPhysicsLemmingZombie := $FF777744;
-    ClearPhysicsLemmingSelected := $FFFFFF77;
+    PhysicsViewLemmingNormal := $FF7777FF;
+    PhysicsViewLemmingAthlete := $FF00FFFF;
+    PhysicsViewLemmingNeutral := $FFAA00FF;
+    PhysicsViewLemmingZombie := $FF777744;
+    PhysicsViewLemmingSelected := $FFFFFF77;
   end;
 
 begin
@@ -249,13 +249,13 @@ begin
 
   Parser := TParser.Create;
   try
-    Nxmi := 'NLCEClearPhysicsColors.nxmi';
+    Nxmi := 'NLCEPhysicsViewColors.nxmi';
 
     if not FileExists(AppPath + SFSaveData + Nxmi) then
     begin
       with TStringList.Create do
       try
-        Text := DEFAULT_CLEAR_PHYSICS_COLORS;
+        Text := DEFAULT_PHYSICS_VIEW_COLORS;
         SaveToFile(AppPath + SFSaveData + Nxmi);
       finally
         Free;
@@ -267,11 +267,11 @@ begin
     Sec := Parser.MainSection.Section['lemmings'];
     if Sec = nil then Exit;
 
-    ClearPhysicsLemmingNormal := ParseColor32(Sec, 'normal', $FF7777FF);
-    ClearPhysicsLemmingAthlete := ParseColor32(Sec, 'athlete', $FF00FFFF);
-    ClearPhysicsLemmingNeutral := ParseColor32(Sec, 'neutral', $FFAA00FF);
-    ClearPhysicsLemmingZombie := ParseColor32(Sec, 'zombie', $FF777744);
-    ClearPhysicsLemmingSelected := ParseColor32(Sec, 'selected', $FFFFFF77);
+    PhysicsViewLemmingNormal := ParseColor32(Sec, 'normal', $FF7777FF);
+    PhysicsViewLemmingAthlete := ParseColor32(Sec, 'athlete', $FF00FFFF);
+    PhysicsViewLemmingNeutral := ParseColor32(Sec, 'neutral', $FFAA00FF);
+    PhysicsViewLemmingZombie := ParseColor32(Sec, 'zombie', $FF777744);
+    PhysicsViewLemmingSelected := ParseColor32(Sec, 'selected', $FFFFFF77);
   finally
     Parser.Free;
   end;

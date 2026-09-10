@@ -217,10 +217,10 @@ const
 
     'empty_slot', 'icon_rr_plus', 'icon_rr_minus', 'icon_pause',
     'icon_nuke', 'icon_ff', 'icon_restart', 'icon_frameskip',
-    'icon_directional', 'icon_cpm_and_replay',
+    'icon_directional', 'icon_pv_replay',
 
     // These ones are placeholders - they're the bottom half of splits
-    'icon_frameskip', 'icon_directional', 'icon_cpm_and_replay'
+    'icon_frameskip', 'icon_directional', 'icon_pv_replay'
     );
 
 
@@ -292,7 +292,7 @@ begin
       spbForwardOneFrame: ButtonHint := 'FRAMESTEP+';
       spbDirLeft:         ButtonHint := 'SELECT LEFT';
       spbDirRight:        ButtonHint := 'SELECT RIGHT';
-      spbClearPhysics:    ButtonHint := 'VIEW PHYSICS';
+      spbPhysicsView:     ButtonHint := 'PHYSICS VIEW';
       spbLoadReplay:      ButtonHint := 'LOAD REPLAY';
       else                ButtonHint := Uppercase(SKILL_NAMES[aButton]);
     end;
@@ -1157,9 +1157,9 @@ begin
     begin
       fButtonRects[spbBackOneFrame] := HalfButtonRect(i, True);
       fButtonRects[spbForwardOneFrame] := HalfButtonRect(i, False);
-    end else if ButtonList[i] in [spbClearPhysics, spbLoadReplay] then
+    end else if ButtonList[i] in [spbPhysicsView, spbLoadReplay] then
     begin
-      fButtonRects[spbClearPhysics] := HalfButtonRect(i, True);
+      fButtonRects[spbPhysicsView] := HalfButtonRect(i, True);
       fButtonRects[spbLoadReplay] := HalfButtonRect(i, False);
     end else if ButtonList[i] > spbNone then
       fButtonRects[ButtonList[i]] := ButtonRect(i);
@@ -1919,7 +1919,7 @@ begin
         else if Button = mbMiddle then
           fGameWindow.SetHyperSpeedTarget(Game.CurrentIteration + 85);
       end;
-    spbClearPhysics: fGameWindow.ClearPhysics := not fGameWindow.ClearPhysics;
+    spbPhysicsView: fGameWindow.PhysicsView := not fGameWindow.PhysicsView;
     spbDirLeft:
       begin
         if fSelectDx = -1 then
