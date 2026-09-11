@@ -85,12 +85,12 @@ end;
 
 function TSkillPanelStandard.PanelWidth: Integer;
 begin
-  Result := 416 * ResMod;
+  Result := 832;
 end;
 
 function TSkillPanelStandard.PanelHeight: Integer;
 begin
-  Result := 40 * ResMod;
+  Result := 80;
 end;
 
 function TSkillPanelStandard.DrawStringLength: Integer;
@@ -126,37 +126,37 @@ end;
 
 function TSkillPanelStandard.MinimapRect: TRect;
 begin
-  Result := Rect(308 * ResMod, 3 * ResMod, 412 * ResMod, 37 * ResMod);
+  Result := Rect(616, 6, 824, 74);
 end;
 
 // Assigns a clickable rectangle to the replay "R" icon
 function TSkillPanelStandard.ReplayIconRect: TRect;
 begin
-  Result := Rect(94 * ResMod, 2 * ResMod, 104 * ResMod, 16 * ResMod);
+  Result := Rect(188, 4, 208, 32);
 end;
 
 // Assigns a non-clickable rectangle to the hatch count icon & digits
 function TSkillPanelStandard.HatchIconRect: TRect;
 begin
-  Result := Rect(112 * ResMod, 2 * ResMod, 156 * ResMod, 16 * ResMod);
+  Result := Rect(224, 4, 312, 32);
 end;
 
 // Assigns a non-clickable rectangle to the alive count icon & digits
 function TSkillPanelStandard.AliveIconRect: TRect;
 begin
-  Result := Rect(160 * ResMod, 2 * ResMod, 204 * ResMod, 16 * ResMod);
+  Result := Rect(320, 4, 408, 32);
 end;
 
 // Assigns a non-clickable rectangle to the exit count icon & digits
 function TSkillPanelStandard.ExitIconRect: TRect;
 begin
-  Result := Rect(208 * ResMod, 2 * ResMod, 252 * ResMod, 16 * ResMod);
+  Result := Rect(416, 4, 504, 32);
 end;
 
 // Assigns a non-clickable rectangle to the timer icon & digits
 function TSkillPanelStandard.TimeIconRect: TRect;
 begin
-  Result := Rect(256 * ResMod, 2 * ResMod, 304 * ResMod, 16 * ResMod);
+  Result := Rect(512, 4, 608, 32);
 end;
 
 procedure TSkillPanelStandard.CreateNewInfoString;
@@ -196,12 +196,12 @@ begin
   TempBmp := TBitmap32.Create;
   TempBmp.Assign(MinimapRegion);
 
-  if (MinimapRegion.Width <> 111 * ResMod) or (MinimapRegion.Height <> 38 * ResMod) then
+  if (MinimapRegion.Width <> 222) or (MinimapRegion.Height <> 76) then
   begin
-    MinimapRegion.SetSize(111 * ResMod, 38 * ResMod);
+    MinimapRegion.SetSize(222, 78);
     MinimapRegion.Clear($FF000000);
     DrawNineSlice(MinimapRegion, MinimapRegion.BoundsRect, TempBmp.BoundsRect,
-                  Rect(8 * ResMod, 8 * ResMod, 8 * ResMod, 8 * ResMod), TempBmp);
+                  Rect(16, 16, 16, 16), TempBmp);
   end;
 
   TempBmp.Free;
@@ -222,12 +222,12 @@ end;
 
 function TSkillPanelCompact.PanelWidth: Integer;
 begin
-  Result := 320 * ResMod;
+  Result := 640;
 end;
 
 function TSkillPanelCompact.PanelHeight: Integer;
 begin
-  Result := 40 * ResMod;
+  Result := 80;
 end;
 
 function TSkillPanelCompact.DrawStringLength: Integer;
@@ -263,37 +263,37 @@ end;
 
 function TSkillPanelCompact.MinimapRect: TRect;
 begin
-  Result := Rect(228 * ResMod, 18 * ResMod, 316 * ResMod, 38 * ResMod)
+  Result := Rect(456, 36, 632, 76)
 end;
 
 // Assigns a clickable rectangle to the replay "R" icon
 function TSkillPanelCompact.ReplayIconRect: TRect;
 begin
-  Result := Rect(94 * ResMod, 2 * ResMod, 104 * ResMod, 16 * ResMod);
+  Result := Rect(188, 4, 208, 32);
 end;
 
 // Assigns a non-clickable rectangle to the hatch count icon & digits
 function TSkillPanelCompact.HatchIconRect: TRect;
 begin
-  Result := Rect(112 * ResMod, 2 * ResMod, 156 * ResMod, 16 * ResMod);
+  Result := Rect(224, 4, 312, 32);
 end;
 
 // Assigns a non-clickable rectangle to the alive count icon & digits
 function TSkillPanelCompact.AliveIconRect: TRect;
 begin
-  Result := Rect(160 * ResMod, 2 * ResMod, 204 * ResMod, 16 * ResMod);
+  Result := Rect(320, 4, 408, 32);
 end;
 
 // Assigns a non-clickable rectangle to the saved count icon & digits
 function TSkillPanelCompact.ExitIconRect: TRect;
 begin
-  Result := Rect(208 * ResMod, 2 * ResMod, 252 * ResMod, 16 * ResMod);
+  Result := Rect(416, 4, 504, 32);
 end;
 
 // Assigns a non-clickable rectangle to the timer icon & digits
 function TSkillPanelCompact.TimeIconRect: TRect;
 begin
-  Result := Rect(256 * ResMod, 2 * ResMod, 304 * ResMod, 16 * ResMod);
+  Result := Rect(512, 4, 608, 32);
 end;
 
 procedure TSkillPanelCompact.CreateNewInfoString;
@@ -328,12 +328,12 @@ begin
   TempBmp := TBitmap32.Create;
   TempBmp.Assign(MinimapRegion);
 
-  if (MinimapRegion.Width <> 95 * ResMod) or (MinimapRegion.Height <> 24 * ResMod) then
+  if (MinimapRegion.Width <> 190) or (MinimapRegion.Height <> 48) then
   begin
-    MinimapRegion.SetSize(95 * ResMod, 24 * ResMod);
+    MinimapRegion.SetSize(190, 48);
     MinimapRegion.Clear($FF000000);
     DrawNineSlice(MinimapRegion, MinimapRegion.BoundsRect, TempBmp.BoundsRect,
-                  Rect(8 * ResMod, 8 * ResMod, 8 * ResMod, 8 * ResMod), TempBmp);
+                  Rect(16, 16, 16, 16), TempBmp);
   end;
 
   TempBmp.Free;

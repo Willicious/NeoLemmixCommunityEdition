@@ -1,5 +1,8 @@
 unit GameBaseSkillPanel;
 
+// TODO - Hi-Res-Only Panel: CE-specific gfx are currently not upscaled in low res
+// TODO - Hi-Res-Only Panel: We need to upscale the low-res lemming animation frames
+
 interface
 
 uses
@@ -524,23 +527,23 @@ end;
 -----------------------------------------}
 function TBaseSkillPanel.FirstButtonRect: TRect;
 begin
-  Result := Rect(1 * ResMod, 16 * ResMod, 15 * ResMod, 38 * ResMod);
+  Result := Rect(2, 32, 30, 76);
 end;
 
 function TBaseSkillPanel.ButtonRect(Index: Integer): TRect;
 begin
   Result := FirstButtonRect;
-  OffsetRect(Result, Index * 16 * ResMod, 0);
+  OffsetRect(Result, Index * 32, 0);
 end;
 
 function TBaseSkillPanel.HalfButtonRect(Index: Integer; IsUpper: Boolean): TRect;
 begin
   Result := FirstButtonRect;
-  OffsetRect(Result, Index * 16 * ResMod, 0);
+  OffsetRect(Result, Index * 32, 0);
   if IsUpper then
-    Result.Bottom := (Result.Top + Result.Bottom) div 2 - ResMod
+    Result.Bottom := (Result.Top + Result.Bottom) div 2 - 2
   else
-    Result.Top := (Result.Top + Result.Bottom) div 2 + ResMod;
+    Result.Top := (Result.Top + Result.Bottom) div 2 + 2;
 end;
 
 function TBaseSkillPanel.FirstSkillButtonIndex: Integer;
@@ -646,6 +649,14 @@ begin
   end else begin
     TPngInterface.LoadPngFile(SrcFile, aDst);
     TPngInterface.MaskImageFromFile(aDst, ChangeFileExt(SrcFile, '_mask.png'), MaskColor);
+
+    UpscaleSettings.Mode := umNearest;
+    UpscaleSettings.LeftSide := uebTransparent;
+    UpscaleSettings.TopSide := uebTransparent;
+    UpscaleSettings.RightSide := uebTransparent;
+    UpscaleSettings.BottomSide := uebTransparent;
+
+    Upscale(aDst, UpscaleSettings);
   end;
 end;
 
@@ -668,15 +679,15 @@ begin
   OffsetRect(DstRect, FirstButtonRect.Left, FirstButtonRect.Top);
 
   // Draw full panels
-  for i := 1 to (NumButtons * (16 * ResMod) - 1) div SrcWidth do
+  for i := 1 to (NumButtons * 32 - 1) div SrcWidth do
   begin
     BlankPanel.DrawTo(fOriginal, DstRect, SrcRect);
     OffsetRect(DstRect, SrcWidth, 0);
   end;
 
   // Draw partial panel at the end
-  DstRect.Right := ButtonRect(NumButtons - 1).Right + ResMod;
-  DstRect.Bottom := ButtonRect(NumButtons - 1).Bottom + ResMod;
+  DstRect.Right := ButtonRect(NumButtons - 1).Right + 2;
+  DstRect.Bottom := ButtonRect(NumButtons - 1).Bottom + 2;
   SrcRect.Right := SrcRect.Left - DstRect.Left + DstRect.Right;
   SrcRect.Bottom := SrcRect.Top - DstRect.Top + DstRect.Bottom;
   BlankPanel.DrawTo(fOriginal, DstRect, SrcRect);
@@ -698,26 +709,26 @@ var
 
   procedure DrawCharacters(aChar: Integer);
   begin
-    fInfoFont[aChar].SetSize(8 * ResMod, 16 * ResMod);
+    fInfoFont[aChar].SetSize(16, 32);
     fIconBmp.DrawTo(fInfoFont[aChar], 0, 0, SrcRect);
-    OffsetRect(SrcRect, 8 * ResMod, 0);
+    OffsetRect(SrcRect, 16, 0);
   end;
 begin
   // Load first the characters
   GetGraphic('panel_font', fIconBmp);
-  SrcRect := Rect(0, 0, 8 * ResMod, 16 * ResMod);
+  SrcRect := Rect(0, 0, 16, 32);
   for i := 0 to 37 do
     DrawCharacters(i);
 
   // Load now the icons for the text panel
   GetGraphic('panel_icons', fIconBmp);
-  SrcRect := Rect(0, 0, 8 * ResMod, 16 * ResMod);
+  SrcRect := Rect(0, 0, 16, 32);
   for i := 38 to 44 do
     DrawCharacters(i);
 
   // Finally, load the CE-specific icons
   GetGraphic('panel_chars', fIconBmp);
-  SrcRect := Rect(0, 0, 8 * ResMod, 16 * ResMod);
+  SrcRect := Rect(0, 0, 16, 32);
   for i := 45 to NUM_FONT_CHARS - 1 do
     DrawCharacters(i);
 end;
@@ -955,46 +966,47 @@ var
   begin
     TempBmp.Clear(0);
     CountStr := LeadZeroStr(aCount, 3); // just in case
-    fSkillFont[CountStr[1], 1].DrawTo(TempBmp, 0, 0, Rect(0, 0, 4 * ResMod, 8 * ResMod));
-    fSkillFont[CountStr[2], 1].DrawTo(TempBmp, 4 * ResMod, 0, Rect(0, 0, 4 * ResMod, 8 * ResMod));
-    fSkillFont[CountStr[3], 1].DrawTo(TempBmp, 8 * ResMod, 0, Rect(0, 0, 4 * ResMod, 8 * ResMod));
+    fSkillFont[CountStr[1], 1].DrawTo(TempBmp,  0, 0, Rect(0, 0, 8, 16));
+    fSkillFont[CountStr[2], 1].DrawTo(TempBmp,  8, 0, Rect(0, 0, 8, 16));
+    fSkillFont[CountStr[3], 1].DrawTo(TempBmp, 16, 0, Rect(0, 0, 8, 16));
   end;
 
 begin
   GetGraphic('skill_count_digits', fIconBmp);
-  SrcRect := Rect(0, 0, 4 * ResMod, 8 * ResMod);
+  SrcRect := Rect(0, 0, 8, 16);
   for c := '0' to '9' do
   begin
     for i := 0 to 1 do
     begin
-      fSkillFont[c, i].SetSize(8 * ResMod, 8 * ResMod);
-      fIconBmp.DrawTo(fSkillFont[c, i], (4 - 4 * i)  * ResMod, 0, SrcRect);
+      fSkillFont[c, i].SetSize(16, 16);
+      fIconBmp.DrawTo(fSkillFont[c, i], (4 - 4 * i) * 2, 0, SrcRect);
 
       fSkillFontInvert[c, i].Assign(fSkillFont[c, i]);
       for y := 0 to fSkillFontInvert[c, i].Height-1 do
         for x := 0 to fSkillFontInvert[c, i].Width-1 do
           fSkillFontInvert[c, i][x, y] := fSkillFontInvert[c,i][x,y] xor $00FFFFFF; // don't invert alpha
     end;
-    OffsetRect(SrcRect, 4 * ResMod, 0);
+
+    OffsetRect(SrcRect, 8, 0);
   end;
 
-  Inc(SrcRect.Right, 4 * ResMod); // Position is correct at this point, but Infinite symbol is 8px wide not 4px
-  fSkillInfinite.SetSize(8 * ResMod, 8 * ResMod);
+  Inc(SrcRect.Right, 8);
+  fSkillInfinite.SetSize(16, 16);
   fIconBmp.DrawTo(fSkillInfinite, 0, 0, SrcRect);
 
-  OffsetRect(SrcRect, 8 * ResMod, 0);
-  fSkillLock.SetSize(8 * ResMod, 8 * ResMod);
+  OffsetRect(SrcRect, 16, 0);
+  fSkillLock.SetSize(16, 16);
   fIconBmp.DrawTo(fSkillLock, 0, 0, SrcRect);
 
   TempBmp := TBitmap32.Create;
   TKernelResampler.Create(TempBmp);
   TKernelResampler(TempBmp.Resampler).Kernel := TCubicKernel.Create;
   try
-    TempBMP.SetSize(12 * ResMod, 8 * ResMod);
+    TempBMP.SetSize(24, 16);
     for i := 100 to MAXIMUM_SI do
     begin
       MakeOvercountImage(i);
-      fSkillOvercount[i].SetSize(9 * ResMod, 8 * ResMod);
+      fSkillOvercount[i].SetSize(18, 16);
       TempBMP.DrawTo(fSkillOvercount[i], fSkillOvercount[i].BoundsRect, TempBMP.BoundsRect);
     end;
   finally
@@ -1053,7 +1065,7 @@ begin
   MinimapRegion := TBitmap32.Create;
   GetGraphic('minimap_region', MinimapRegion);
   ResizeMinimapRegion(MinimapRegion);
-  MinimapRegion.DrawTo(fOriginal, MinimapRect.Left - (3 * ResMod), MinimapRect.Top - (2 * ResMod));
+  MinimapRegion.DrawTo(fOriginal, MinimapRect.Left - 6, MinimapRect.Top - 4);
   MinimapRegion.Free;
 
   // Copy the created bitmap
@@ -1071,8 +1083,7 @@ begin
   // Size of the minimap, style, scaling factor, skills on the panel, ...
   fImage.BeginUpdate;
   try
-
-    Minimap.SetSize(Level.Info.Width div 8 * ResMod, Level.Info.Height div 8 * ResMod);
+    Minimap.SetSize(Level.Info.Width div 4, Level.Info.Height div 4);
 
     ReadBitmapFromStyle;
     SetButtonRects;
@@ -1191,6 +1202,7 @@ var
   ViewRect: TRect;
   InnerViewRect: TRect;
   MinimapMessage: TBitmap32;
+  ViewRectWidth, ViewRectHeight: Integer;
 begin
   if Parent = nil then Exit;
 
@@ -1201,29 +1213,26 @@ begin
   if Game.StateIsUnplayable and not Game.ShouldWeExitBecauseOfOptions then
     DrawMinimapMessage('nolems_message', MinimapMessage)
   else begin
-    // Add some space for when the viewport rect lies on the very edges
-    fMinimapTemp.SetSize(fMinimap.Width + 2 * ResMod, fMinimap.Height + 2 * ResMod);
+    // Add some space for when the view frame lies on the very edges
+    fMinimapTemp.SetSize(fMinimap.Width + 4, fMinimap.Height + 4);
     fMinimapTemp.Clear(0);
 
-    fMinimap.DrawTo(fMinimapTemp, 1 * ResMod, 1 * ResMod);
+    fMinimap.DrawTo(fMinimapTemp, 2, 2);
 
-    BaseOffsetHoriz := fGameWindow.ScreenImage.OffsetHorz / fGameWindow.ScreenImage.Scale / 8;
-    BaseOffsetVert := fGameWindow.ScreenImage.OffsetVert / fGameWindow.ScreenImage.Scale / 8;
+    BaseOffsetHoriz := fGameWindow.ScreenImage.OffsetHorz / fGameWindow.ScreenImage.Scale / (4 * ResMod);
+    BaseOffsetVert := fGameWindow.ScreenImage.OffsetVert / fGameWindow.ScreenImage.Scale / (4 * ResMod);
 
-    // Draw the visible area frame
-    ViewRect := Rect(0, 0, fGameWindow.DisplayWidth div 8 + 2, fGameWindow.DisplayHeight div 8 + 2);
+    // Draw the view frame
+    ViewRectWidth := fGameWindow.DisplayWidth div (4 * ResMod) + 2;
+    ViewRectHeight := fGameWindow.DisplayHeight div (4 * ResMod) + 2;
+
+    ViewRect := Rect(0, 0, ViewRectWidth, ViewRectHeight);
     OffsetRect(ViewRect, -Round(BaseOffsetHoriz), -Round(BaseOffsetVert));
     fMinimapTemp.FrameRectS(ViewRect, fRectColor);
 
-    if GameParams.HighResolution then
-    begin
-      InnerViewRect := ViewRect;
-      Inc(InnerViewRect.Left);
-      Inc(InnerViewRect.Top);
-      Dec(InnerViewRect.Bottom);
-      Dec(InnerViewRect.Right);
-      fMinimapTemp.FrameRectS(InnerViewRect, fRectColor);
-    end;
+    // Thicken the view frame by 1px
+    InnerViewRect := Rect(ViewRect.Left + 1, ViewRect.Top + 1, ViewRect.Right - 1, ViewRect.Bottom - 1);
+    fMinimapTemp.FrameRectS(InnerViewRect, $FFFFFFFF);
   end;
 
   fMinimapImage.Bitmap.Assign(fMinimapTemp);
@@ -1278,10 +1287,10 @@ begin
   end else
     BorderRect := fButtonRects[aButton];
 
-  Inc(BorderRect.Right, ResMod);
-  Inc(BorderRect.Bottom, ResMod * 2);
+  Inc(BorderRect.Right, 2);
+  Inc(BorderRect.Bottom, 4);
 
-  DrawNineSlice(Image.Bitmap, BorderRect, fSkillSelected.BoundsRect, Rect(3 * ResMod, 3 * ResMod, 3 * ResMod, 3 * ResMod), fSkillSelected);
+  DrawNineSlice(Image.Bitmap, BorderRect, fSkillSelected.BoundsRect, Rect(6, 6, 6, 6), fSkillSelected);
 end;
 
 procedure TBaseSkillPanel.RemoveHighlight(aButton: TSkillPanelButton);
@@ -1297,30 +1306,30 @@ begin
   end else
     BorderRect := fButtonRects[aButton];
 
-  Inc(BorderRect.Right, ResMod);
-  Inc(BorderRect.Bottom, 2 * ResMod);
+  Inc(BorderRect.Right, 2);
+  Inc(BorderRect.Bottom, 4);
 
   fOriginal.DrawTo(Image.Bitmap, BorderRect, BorderRect);
   Exit;
 
   // top
   EraseRect := BorderRect;
-  EraseRect.Bottom := EraseRect.Top + 1 * ResMod;
+  EraseRect.Bottom := EraseRect.Top + 2;
   fOriginal.DrawTo(Image.Bitmap, EraseRect, EraseRect);
 
   // left
   EraseRect := BorderRect;
-  EraseRect.Right := EraseRect.Left + 1 * ResMod;
+  EraseRect.Right := EraseRect.Left + 2;
   fOriginal.DrawTo(Image.Bitmap, EraseRect, EraseRect);
 
   // right
   EraseRect := BorderRect;
-  EraseRect.Left := EraseRect.Right - 1 * ResMod;
+  EraseRect.Left := EraseRect.Right - 2;
   fOriginal.DrawTo(Image.Bitmap, EraseRect, EraseRect);
 
   // bottom
   EraseRect := BorderRect;
-  EraseRect.Top := EraseRect.Bottom - 1 * ResMod;
+  EraseRect.Top := EraseRect.Bottom - 2;
   fOriginal.DrawTo(Image.Bitmap, EraseRect, EraseRect);
 end;
 
@@ -1366,21 +1375,21 @@ begin
   if IsRegularSkill and (aNumber = 0) and not fShowUsedSkills then Exit;
 
   if (aButton = spbFaster) and (Level.Info.SpawnIntervalLocked or (Level.Info.SpawnInterval = MINIMUM_SI)) then
-    fSkillLock.DrawTo(fImage.Bitmap, ButtonLeft + 3 * ResMod, ButtonTop + 1 * ResMod)
+    fSkillLock.DrawTo(fImage.Bitmap, ButtonLeft + 6, ButtonTop + 2)
   else if (aNumber > 99) then
   begin
     if (aButton <= LAST_SKILL_BUTTON) then
-      fSkillInfinite.DrawTo(fImage.Bitmap, ButtonLeft + 3 * ResMod, ButtonTop + 1 * ResMod)
+      fSkillInfinite.DrawTo(fImage.Bitmap, ButtonLeft + 6, ButtonTop + 2)
     else
-      fSkillOvercount[aNumber].DrawTo(fImage.Bitmap, ButtonLeft + 3 * ResMod, ButtonTop + 1 * ResMod);
+      fSkillOvercount[aNumber].DrawTo(fImage.Bitmap, ButtonLeft + 6, ButtonTop + 2);
   end else if aNumber < 10 then
   begin
     NumberStr := LeadZeroStr(aNumber, 2);
-    FontBMP[NumberStr[2], 0].DrawTo(fImage.Bitmap, ButtonLeft + 1 * ResMod, ButtonTop + 1 * ResMod);
+    FontBMP[NumberStr[2], 0].DrawTo(fImage.Bitmap, ButtonLeft + 2, ButtonTop + 2);
   end else begin
     NumberStr := LeadZeroStr(aNumber, 2);
-    FontBMP[NumberStr[1], 1].DrawTo(fImage.Bitmap, ButtonLeft + 3 * ResMod, ButtonTop + 1 * ResMod);
-    FontBMP[NumberStr[2], 0].DrawTo(fImage.Bitmap, ButtonLeft + 3 * ResMod, ButtonTop + 1 * ResMod);
+    FontBMP[NumberStr[1], 1].DrawTo(fImage.Bitmap, ButtonLeft + 6, ButtonTop + 2);
+    FontBMP[NumberStr[2], 0].DrawTo(fImage.Bitmap, ButtonLeft + 6, ButtonTop + 2);
   end;
 end;
 
@@ -1418,7 +1427,7 @@ begin
   //Orange := -1 / 4;
 
   // Erase previous text there
-  fImage.Bitmap.FillRectS(0, 0, DrawStringLength * 8 * ResMod, 16 * ResMod, $00000000);
+  fImage.Bitmap.FillRectS(0, 0, DrawStringLength * 16, 32, $00000000);
 
   for CurChar := 1 to DrawStringLength do
   begin
@@ -1495,10 +1504,10 @@ begin
       begin
         fInfoFont[CharID].DrawMode := dmCustom;
         fInfoFont[CharID].OnPixelCombine := CombineShift;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, (CurChar - 1) * 8 * ResMod, 0);
+        fInfoFont[CharID].DrawTo(fImage.Bitmap, (CurChar - 1) * 16, 0);
       end else begin
         fInfoFont[CharID].DrawMode := dmOpaque;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, (CurChar - 1) * 8 * ResMod, 0);
+        fInfoFont[CharID].DrawTo(fImage.Bitmap, (CurChar - 1) * 16, 0);
       end;
     end;
   end;
@@ -1806,7 +1815,8 @@ end;
 
 function TBaseSkillPanel.MousePosMinimap(X, Y: Integer): TPoint;
 begin
-  Result := fMinimapImage.ControlToBitmap(Point(X, Y));
+  var ResModOffset := IfThen(GameParams.HighResolution, 1, 2);
+  Result := fMinimapImage.ControlToBitmap(Point(X div ResModOffset, Y div ResModOffset));
 end;
 
 procedure TBaseSkillPanel.ImgMouseDown(Sender: TObject; Button: TMouseButton;
