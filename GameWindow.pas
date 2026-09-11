@@ -191,7 +191,7 @@ type
     procedure ApplyMouseTrap;
     procedure GotoSaveState(aTargetIteration: Integer; PauseAfterSkip: Integer = 0; aForceBeforeIteration: Integer = -1);
     procedure HandleLoadReplay;
-    procedure SaveReplay;
+    procedure SaveReplay(ForceDialog: Boolean = False);
     procedure RenderMinimap;
     procedure MainFormResized; override;
     procedure SetCurrentCursor(aCursor: Integer = 0); // 0 = autodetect correct graphic
@@ -2149,14 +2149,14 @@ begin
   end;
 end;
 
-procedure TGameWindow.SaveReplay;
+procedure TGameWindow.SaveReplay(ForceDialog: Boolean = False);
 var
   s: String;
 begin
   SuspendGameplay;
   try
     Game.EnsureCorrectReplayDetails;
-    s := Game.ReplayManager.GetSaveFileName(Self, rsoIngame, Game.ReplayManager);
+    s := Game.ReplayManager.GetSaveFileName(Self, rsoIngame, Game.ReplayManager, ForceDialog);
     if s = '' then Exit;
     Game.ReplayManager.SaveToFile(s);
   finally

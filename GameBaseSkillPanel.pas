@@ -293,7 +293,7 @@ begin
       spbDirLeft:         ButtonHint := 'SELECT LEFT';
       spbDirRight:        ButtonHint := 'SELECT RIGHT';
       spbPhysicsView:     ButtonHint := 'PHYSICS VIEW';
-      spbLoadReplay:      ButtonHint := 'LOAD REPLAY';
+      spbLoadReplay:      ButtonHint := 'LOAD-ED-SAVE';
       else                ButtonHint := Uppercase(SKILL_NAMES[aButton]);
     end;
   end;
@@ -1944,7 +1944,14 @@ begin
           DrawButtonSelector(spbDirRight, True);
         end;
       end;
-    spbLoadReplay: fGameWindow.HandleLoadReplay;
+    spbLoadReplay:
+      begin
+        case Button of
+          mbLeft: fGameWindow.HandleLoadReplay;
+          mbRight: fGameWindow.SaveReplay(True);
+          mbMiddle: fGameWindow.ExecuteReplayEdit;
+        end;
+      end;
     spbNone: {nothing};
   else // usual skill buttons
     Game.SetSelectedSkill(i, True, GameParams.Hotkeys.CheckForKey(lka_Highlight));

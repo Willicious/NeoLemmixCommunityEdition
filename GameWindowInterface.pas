@@ -28,7 +28,8 @@ type
     procedure SetHyperSpeedTarget(aValue: Integer);
 
     procedure HandleLoadReplay;
-    procedure SaveReplay;
+    procedure SaveReplay(ForceDialog: Boolean = False);
+    procedure ExecuteReplayEdit;
     procedure GotoSaveState(aTargetIteration: Integer; PauseAfterSkip: Integer = 0; aForceBeforeIteration: Integer = -1);
 
     procedure ApplyMouseTrap;

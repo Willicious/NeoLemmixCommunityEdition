@@ -148,7 +148,7 @@ type
       constructor Create;
       destructor Destroy; override;
       class function EvaluateReplayNamePattern(aPattern: String; aReplay: TReplay = nil): String;
-      class function GetSaveFileName(aOwner: TComponent; aSaveOccasion: TReplaySaveOccasion; aReplay: TReplay = nil): String;
+      class function GetSaveFileName(aOwner: TComponent; aSaveOccasion: TReplaySaveOccasion; aReplay: TReplay = nil; ForceDialog: Boolean = False): String;
       procedure Add(aItem: TBaseReplayItem);
       procedure Clear(EraseLevelInfo: Boolean = False);
       procedure Delete(aItem: TBaseReplayItem);
@@ -299,7 +299,7 @@ begin
     Result := Result + '.nxrp';
 end;
 
-class function TReplay.GetSaveFileName(aOwner: TComponent; aSaveOccasion: TReplaySaveOccasion; aReplay: TReplay = nil): String;
+class function TReplay.GetSaveFileName(aOwner: TComponent; aSaveOccasion: TReplaySaveOccasion; aReplay: TReplay = nil; ForceDialog: Boolean = False): String;
   function GetDefaultSavePath: String;
   begin
     if GameParams.IsPlaytesting or (GameParams.CurrentLevel.Group = GameParams.BaseLevelPack) then
@@ -350,7 +350,7 @@ begin
   end;
 
   UseDialog := False;
-  if LeftStr(SaveName, 1) = '*' then
+  if (LeftStr(SaveName, 1) = '*') or ForceDialog then
   begin
     SaveName := RightStr(SaveName, Length(SaveName) - 1);
     if aSaveOccasion <> rsoAuto then
