@@ -2,6 +2,9 @@ unit GameBaseSkillPanel;
 
 // TODO - Hi-Res-Only Panel: CE-specific gfx are currently not upscaled in low res
 // TODO - Hi-Res-Only Panel: We need to upscale the low-res lemming animation frames
+// TODO - Hi-Res-Only Panel: Completely redo the entire info string
+// TODO - Hi-Res-Only Panel: Show hotkey labels on panel buttons
+// TODO - Hi-Res-Only Panel: Add clickable talisman info button
 
 interface
 
@@ -1409,14 +1412,18 @@ end;
 procedure TBaseSkillPanel.DrawNewStr;
 var
   New: char;
-  CurChar, CharID: integer;
-  SpecialCombine: Boolean;
+  Color: TColor32;
+  CurChar, CharID, TextX, TextY: integer;
+  SpecialCombine, UseSmallFont: Boolean;
   Red, Blue, {Purple,} Teal, Yellow{, Orange}: Single;
   LemmingKinds: TLemmingKinds;
   SelectedLemming: TLemming;
 begin
   LemmingKinds := Game.ActiveLemmingTypes;
   SelectedLemming := Game.RenderInterface.SelectedLemming;
+
+  TextX := 4;
+  TextY := 6;
 
   // Define hue shift colors
   Red    := -1 / 3;
@@ -1432,6 +1439,13 @@ begin
   for CurChar := 1 to DrawStringLength do
   begin
     New := fNewDrawStr[CurChar];
+    UseSmallFont := False;
+
+    if New = ' ' then
+    begin
+      Inc(TextX, 8);
+      Continue;
+    end;
 
     case New of
       // panel font characters
@@ -1485,14 +1499,24 @@ begin
           fCombineHueShift := Yellow;
       end else if (CurChar <= CursorInfoEndIndex) and (CursorOverPanelItem or (SelectedLemming <> nil)) then
       begin
-        SpecialCombine := True;
+        SpecialCombine := False;
+        UseSmallFont := True;
 
         if CursorOverPanelItem then
-          fCombineHueShift := Blue
+          Color := clCornflowerBlue32
         else if (Game.SelectedLemFutureTaskCount > 0) then
-          fCombineHueShift := Teal
+          Color := clTeal32
         else
-          SpecialCombine := False;
+          Color := clLightGreen32;
+
+        with fImage.Bitmap do
+        begin
+          Font.Name := 'Hobo Std';
+          Font.Size := 8;
+
+          RenderText(TextX, TextY, New, Color, True);
+          TextX := TextX + TextWidth(New);
+        end;
       end else if (CurChar = CursorInfoEndIndex + 1) and GameParams.PlaybackModeActive and not IsReplaying then
       begin
         SpecialCombine := True;
@@ -1500,14 +1524,17 @@ begin
       end else
         SpecialCombine := False;
 
-      if SpecialCombine then
+      if not UseSmallFont then
       begin
-        fInfoFont[CharID].DrawMode := dmCustom;
-        fInfoFont[CharID].OnPixelCombine := CombineShift;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, (CurChar - 1) * 16, 0);
-      end else begin
-        fInfoFont[CharID].DrawMode := dmOpaque;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, (CurChar - 1) * 16, 0);
+        if SpecialCombine then
+        begin
+          fInfoFont[CharID].DrawMode := dmCustom;
+          fInfoFont[CharID].OnPixelCombine := CombineShift;
+          fInfoFont[CharID].DrawTo(fImage.Bitmap, (CurChar - 1) * 16, 0);
+        end else begin
+          fInfoFont[CharID].DrawMode := dmOpaque;
+          fInfoFont[CharID].DrawTo(fImage.Bitmap, (CurChar - 1) * 16, 0);
+        end;
       end;
     end;
   end;
