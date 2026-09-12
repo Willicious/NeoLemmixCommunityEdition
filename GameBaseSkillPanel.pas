@@ -1,6 +1,5 @@
 unit GameBaseSkillPanel;
 
-// TODO - Hi-Res-Only Panel: CE-specific gfx are currently not upscaled in low res
 // TODO - Hi-Res-Only Panel: We need to upscale the low-res lemming animation frames
 // TODO - Hi-Res-Only Panel: Show hotkey labels on panel buttons
 // TODO - Hi-Res-Only Panel: Add clickable talisman info button
@@ -584,6 +583,18 @@ begin
   if LoadGraphicWithOverrides(PanelDir, Name, EmbeddedName, aDst) then
   begin
     aDst.DrawMode := dmBlend;
+
+    if not GameParams.HighResolution then
+    begin
+      UpscaleSettings.Mode := umNearest;
+      UpscaleSettings.LeftSide := uebTransparent;
+      UpscaleSettings.TopSide := uebTransparent;
+      UpscaleSettings.RightSide := uebTransparent;
+      UpscaleSettings.BottomSide := uebTransparent;
+
+      Upscale(aDst, UpscaleSettings);
+    end;
+
     Exit;
   end;
 
