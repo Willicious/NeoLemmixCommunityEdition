@@ -144,7 +144,7 @@ end;
 // Assigns a non-clickable rectangle to the alive count icon & digits
 function TSkillPanelStandard.AliveIconRect: TRect;
 begin
-  Result := Rect(320, 4, 408, 32);
+  Result := Rect(320, 0, 408, 32);
 end;
 
 // Assigns a non-clickable rectangle to the exit count icon & digits
@@ -161,7 +161,6 @@ end;
 
 procedure TSkillPanelStandard.CreateNewInfoString;
 begin
-  SetInfoLemAlive(22);
   SetExitIcon(27);
   SetInfoLemIn(28);
   SetTimeLimit(33);
@@ -278,7 +277,7 @@ end;
 // Assigns a non-clickable rectangle to the alive count icon & digits
 function TSkillPanelCompact.AliveIconRect: TRect;
 begin
-  Result := Rect(320, 4, 408, 32);
+  Result := Rect(320, 0, 408, 32);
 end;
 
 // Assigns a non-clickable rectangle to the saved count icon & digits
@@ -295,7 +294,6 @@ end;
 
 procedure TSkillPanelCompact.CreateNewInfoString;
 begin
-  SetInfoLemAlive(22);
   SetExitIcon(27);
   SetInfoLemIn(28);
   SetTimeLimit(33);
