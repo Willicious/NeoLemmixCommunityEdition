@@ -1842,8 +1842,7 @@ end;
 
 function TBaseSkillPanel.MousePosMinimap(X, Y: Integer): TPoint;
 begin
-  var ResModOffset := IfThen(GameParams.HighResolution, 1, 2);
-  Result := fMinimapImage.ControlToBitmap(Point(X div ResModOffset, Y div ResModOffset));
+  Result := fMinimapImage.ControlToBitmap(Point(X, Y));
 end;
 
 procedure TBaseSkillPanel.ImgMouseDown(Sender: TObject; Button: TMouseButton;
