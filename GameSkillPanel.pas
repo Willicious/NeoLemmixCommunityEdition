@@ -138,7 +138,7 @@ end;
 // Assigns a non-clickable rectangle to the hatch count icon & digits
 function TSkillPanelStandard.HatchIconRect: TRect;
 begin
-  Result := Rect(224, 4, 312, 32);
+  Result := Rect(224, 0, 312, 32);
 end;
 
 // Assigns a non-clickable rectangle to the alive count icon & digits
@@ -161,8 +161,6 @@ end;
 
 procedure TSkillPanelStandard.CreateNewInfoString;
 begin
-  SetInfoCursor(1);
-  SetInfoLemHatch(16);
   SetInfoLemAlive(22);
   SetExitIcon(27);
   SetInfoLemIn(28);
@@ -274,7 +272,7 @@ end;
 // Assigns a non-clickable rectangle to the hatch count icon & digits
 function TSkillPanelCompact.HatchIconRect: TRect;
 begin
-  Result := Rect(224, 4, 312, 32);
+  Result := Rect(224, 0, 312, 32);
 end;
 
 // Assigns a non-clickable rectangle to the alive count icon & digits
@@ -297,8 +295,6 @@ end;
 
 procedure TSkillPanelCompact.CreateNewInfoString;
 begin
-  SetInfoCursor(1);
-  SetInfoLemHatch(16);
   SetInfoLemAlive(22);
   SetExitIcon(27);
   SetInfoLemIn(28);

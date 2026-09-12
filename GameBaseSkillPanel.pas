@@ -133,10 +133,12 @@ type
 
     // Refactor =================
     function GetCursorInfoString: String;
+    function GetHatchCountString: String;
 
     procedure DrawCursorInfo;
     procedure DrawPanelIcon(Index, X, Y: Integer);
     procedure DrawReplayIcon;
+    procedure DrawHatchInfo;
     // =========================
 
     procedure DrawNewStr;
@@ -148,7 +150,6 @@ type
       function GetLemReplayTaskString(L: TLemming): String;
       function GetSkillString(L: TLemming): String;
       function GetPickupString(P: TGadget): String;
-    procedure SetInfoLemHatch(Pos: Integer);
     procedure SetInfoLemAlive(Pos: Integer);
     procedure SetInfoLemIn(Pos: Integer);
     procedure SetInfoTime(PosMin, PosSec: Integer);
@@ -1484,18 +1485,26 @@ begin
 
   DrawPanelIcon(Index, ReplayIconRect.Left, ReplayIconRect.Top);
 end;
+
+procedure TBaseSkillPanel.DrawHatchInfo;
+begin
+  DrawPanelIcon(1, HatchIconRect.Left, HatchIconRect.Top);
+
+  with fImage.Bitmap do
+  begin
+    Font.Name := 'Hobo Std';
+    Font.Size := 8;
+    RenderText(HatchIconRect.Left + 20, 6, GetHatchCountString, clLightGreen32, True);
+  end;
+end;
+
 procedure TBaseSkillPanel.DrawNewStr;
 var
   New: char;
   CurChar, CharID: integer;
   SpecialCombine: Boolean;
   Red, {Blue, Purple,} Teal, Yellow{, Orange}: Single;
-  LemmingKinds: TLemmingKinds;
-  SelectedLemming: TLemming;
 begin
-  LemmingKinds := Game.ActiveLemmingTypes;
-  SelectedLemming := Game.RenderInterface.SelectedLemming;
-
   // Define hue shift colors
   Red    := -1 / 3;
   //Blue   :=  1 / 4;
@@ -1515,6 +1524,9 @@ begin
       Continue;
 
     if CurChar = CursorInfoEndIndex + 1 then
+      Continue;
+
+    if (CurChar > LemmingCountStartIndex) and (CurChar <= LemmingCountStartIndex + 5) then
       Continue;
 
     case New of
@@ -1539,19 +1551,7 @@ begin
 
     if (CharID >= 0) then
     begin
-      if (CurChar > LemmingCountStartIndex) and (CurChar <= LemmingCountStartIndex + 5) then
-      begin
-        if Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead < Level.Info.RescueCount - Game.LemmingsSaved then
-        begin
-          SpecialCombine := True;
-          fCombineHueShift := Red;
-        end else if (lkNeutral in LemmingKinds) and not (lkNormal in LemmingKinds) then
-        begin
-          SpecialCombine := True;
-          fCombineHueShift := Teal;
-        end else
-          SpecialCombine := False;
-      end else if (CurChar > SaveCountStartIndex) and (CurChar <= SaveCountStartIndex + 5) then
+      if (CurChar > SaveCountStartIndex) and (CurChar <= SaveCountStartIndex + 5) then
       begin
         if (Game.LemmingsSaved >= Level.Info.RescueCount) then
         begin
@@ -1599,6 +1599,7 @@ begin
     DrawNewStr;
     DrawCursorInfo;
     DrawReplayIcon;
+    DrawHatchInfo;
     fLastDrawnStr := fNewDrawStr;
 
     DrawSkillCount(spbSlower, GetSpawnIntervalValue(Level.Info.SpawnInterval));
@@ -1723,26 +1724,17 @@ begin
   Result := S;
 end;
 
-procedure TBaseSkillPanel.SetInfoLemHatch(Pos: Integer);
+function TBaseSkillPanel.GetHatchCountString: String;
 var
   HatchLems: Integer;
-  S: string;
-const
-  LEN = 4;
 begin
   HatchLems := Game.LemmingsToSpawn - Game.SpawnedDead;
-
   Assert(HatchLems >= 0, 'Negative number of lemmings in hatch displayed');
 
-  if (HatchLems >= 999) then
-    S := ' 999'
+  if HatchLems >= 999 then
+    Result := '999'
   else
-    S := IntToStr(HatchLems);
-
-  if Length(S) < LEN then
-    S := PadL(PadR(S, LEN - 1), LEN);
-
-  ModString(fNewDrawStr, S, Pos);
+    Result := IntToStr(HatchLems);
 end;
 
 procedure TBaseSkillPanel.SetInfoLemAlive(Pos: Integer);
