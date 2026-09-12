@@ -126,13 +126,18 @@ type
     function DrawStringLength: Integer; virtual; abstract;
     function DrawStringTemplate: string; virtual; abstract;
 
+    // Refactor =================
+    function GetCursorInfoString: String;
+
+    procedure DrawCursorInfo;
+    // =========================
+
     procedure DrawNewStr;
       function LemmingCountStartIndex: Integer; virtual; abstract;
       function SaveCountStartIndex: Integer; virtual; abstract;
       function TimeLimitStartIndex: Integer; virtual; abstract;
       function CursorInfoEndIndex: Integer; virtual; abstract;
     procedure CreateNewInfoString; virtual; abstract;
-    procedure SetInfoCursor(Pos: Integer);
       function GetLemReplayTaskString(L: TLemming): String;
       function GetSkillString(L: TLemming): String;
       function GetPickupString(P: TGadget): String;
@@ -299,7 +304,7 @@ begin
       spbDirLeft:         ButtonHint := 'SELECT LEFT';
       spbDirRight:        ButtonHint := 'SELECT RIGHT';
       spbPhysicsView:     ButtonHint := 'PHYSICS VIEW';
-      spbLoadReplay:      ButtonHint := 'LOAD-ED-SAVE';
+      spbLoadReplay:      ButtonHint := 'LOAD-EDIT-SAVE';
       else                ButtonHint := Uppercase(SKILL_NAMES[aButton]);
     end;
   end;
@@ -1409,25 +1414,43 @@ begin
   B := HSVToRGB(H, S, V);
 end;
 
+procedure TBaseSkillPanel.DrawCursorInfo;
+var
+  Color: TColor32;
+begin
+  if not (CursorOverPanelItem or (Game.RenderInterface.SelectedLemming <> nil)) then
+    Exit;
+
+  if CursorOverPanelItem then
+    Color := clCornflowerBlue32
+  else if Game.SelectedLemFutureTaskCount > 0 then
+    Color := clTeal32
+  else
+    Color := clLightGreen32;
+
+  with fImage.Bitmap do
+  begin
+    Font.Name := 'Hobo Std';
+    Font.Size := 8;
+    RenderText(4, 6, GetCursorInfoString, Color, True);
+  end;
+end;
+
 procedure TBaseSkillPanel.DrawNewStr;
 var
   New: char;
-  Color: TColor32;
-  CurChar, CharID, TextX, TextY: integer;
-  SpecialCombine, UseSmallFont: Boolean;
-  Red, Blue, {Purple,} Teal, Yellow{, Orange}: Single;
+  CurChar, CharID: integer;
+  SpecialCombine: Boolean;
+  Red, {Blue, Purple,} Teal, Yellow{, Orange}: Single;
   LemmingKinds: TLemmingKinds;
   SelectedLemming: TLemming;
 begin
   LemmingKinds := Game.ActiveLemmingTypes;
   SelectedLemming := Game.RenderInterface.SelectedLemming;
 
-  TextX := 4;
-  TextY := 6;
-
   // Define hue shift colors
   Red    := -1 / 3;
-  Blue   :=  1 / 4;
+  //Blue   :=  1 / 4;
   //Purple :=  1 / 2;
   Teal   :=  1 / 6;
   Yellow := -1 / 6;
@@ -1439,13 +1462,9 @@ begin
   for CurChar := 1 to DrawStringLength do
   begin
     New := fNewDrawStr[CurChar];
-    UseSmallFont := False;
 
-    if New = ' ' then
-    begin
-      Inc(TextX, 8);
+    if CurChar <= CursorInfoEndIndex then
       Continue;
-    end;
 
     case New of
       // panel font characters
@@ -1497,26 +1516,6 @@ begin
           fCombineHueShift := Red
         else
           fCombineHueShift := Yellow;
-      end else if (CurChar <= CursorInfoEndIndex) and (CursorOverPanelItem or (SelectedLemming <> nil)) then
-      begin
-        SpecialCombine := False;
-        UseSmallFont := True;
-
-        if CursorOverPanelItem then
-          Color := clCornflowerBlue32
-        else if (Game.SelectedLemFutureTaskCount > 0) then
-          Color := clTeal32
-        else
-          Color := clLightGreen32;
-
-        with fImage.Bitmap do
-        begin
-          Font.Name := 'Hobo Std';
-          Font.Size := 8;
-
-          RenderText(TextX, TextY, New, Color, True);
-          TextX := TextX + TextWidth(New);
-        end;
       end else if (CurChar = CursorInfoEndIndex + 1) and GameParams.PlaybackModeActive and not IsReplaying then
       begin
         SpecialCombine := True;
@@ -1524,17 +1523,14 @@ begin
       end else
         SpecialCombine := False;
 
-      if not UseSmallFont then
+      if SpecialCombine then
       begin
-        if SpecialCombine then
-        begin
-          fInfoFont[CharID].DrawMode := dmCustom;
-          fInfoFont[CharID].OnPixelCombine := CombineShift;
-          fInfoFont[CharID].DrawTo(fImage.Bitmap, (CurChar - 1) * 16, 0);
-        end else begin
-          fInfoFont[CharID].DrawMode := dmOpaque;
-          fInfoFont[CharID].DrawTo(fImage.Bitmap, (CurChar - 1) * 16, 0);
-        end;
+        fInfoFont[CharID].DrawMode := dmCustom;
+        fInfoFont[CharID].OnPixelCombine := CombineShift;
+        fInfoFont[CharID].DrawTo(fImage.Bitmap, (CurChar - 1) * 16, 0);
+      end else begin
+        fInfoFont[CharID].DrawMode := dmOpaque;
+        fInfoFont[CharID].DrawTo(fImage.Bitmap, (CurChar - 1) * 16, 0);
       end;
     end;
   end;
@@ -1554,6 +1550,7 @@ begin
     // Text info string
     CreateNewInfoString;
     DrawNewStr;
+    DrawCursorInfo;
     fLastDrawnStr := fNewDrawStr;
 
     DrawSkillCount(spbSlower, GetSpawnIntervalValue(Level.Info.SpawnInterval));
@@ -1643,16 +1640,14 @@ begin
   end;
 end;
 
-procedure TBaseSkillPanel.SetInfoCursor(Pos: Integer);
+function TBaseSkillPanel.GetCursorInfoString: String;
 var
-  S: string;
+  S: String;
   SelectedLemming: TLemming;
   PickupInCursor: TGadget;
 const
   LEN = 12;
 begin
-//  if (Game.StateIsUnplayable and not Game.ShouldExitToPostview) then  // Bookmark - for when panel message is added
-//    Exit;
   SelectedLemming := Game.RenderInterface.SelectedLemming;
   PickupInCursor := Game.RenderInterface.PickupInCursor;
 
@@ -1667,6 +1662,7 @@ begin
       S := Uppercase(GetLemReplayTaskString(SelectedLemming))
     else begin
       S := Uppercase(GetSkillString(SelectedLemming));
+
       if S = '' then
         S := StringOfChar(' ', LEN)
       else if (Game.GetCursorLemmingCount = 0) then
@@ -1676,7 +1672,7 @@ begin
     end;
   end;
 
-  ModString(fNewDrawStr, S, Pos);
+  Result := S;
 end;
 
 procedure TBaseSkillPanel.SetInfoLemHatch(Pos: Integer);
