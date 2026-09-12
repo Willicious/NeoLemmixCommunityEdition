@@ -132,7 +132,7 @@ end;
 // Assigns a clickable rectangle to the replay "R" icon
 function TSkillPanelStandard.ReplayIconRect: TRect;
 begin
-  Result := Rect(188, 4, 208, 32);
+  Result := Rect(190, 0, 208, 32);
 end;
 
 // Assigns a non-clickable rectangle to the hatch count icon & digits
@@ -162,7 +162,6 @@ end;
 procedure TSkillPanelStandard.CreateNewInfoString;
 begin
   SetInfoCursor(1);
-  SetReplayIcon(13);
   SetInfoLemHatch(16);
   SetInfoLemAlive(22);
   SetExitIcon(27);
@@ -269,7 +268,7 @@ end;
 // Assigns a clickable rectangle to the replay "R" icon
 function TSkillPanelCompact.ReplayIconRect: TRect;
 begin
-  Result := Rect(188, 4, 208, 32);
+  Result := Rect(190, 0, 208, 32);
 end;
 
 // Assigns a non-clickable rectangle to the hatch count icon & digits
@@ -299,7 +298,6 @@ end;
 procedure TSkillPanelCompact.CreateNewInfoString;
 begin
   SetInfoCursor(1);
-  SetReplayIcon(13);
   SetInfoLemHatch(16);
   SetInfoLemAlive(22);
   SetExitIcon(27);

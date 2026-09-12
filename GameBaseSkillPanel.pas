@@ -31,6 +31,11 @@ type
   private
     fGame                 : TLemmingGame;
     fIconBmp              : TBitmap32;   // for temporary storage
+
+    // Refactor ====================
+    fPanelIcons           : TBitmap32; // for storing all panel icons
+    // ============================
+
     fShowUsedSkills       : Boolean;
     fRRIsPressed          : Boolean;
 
@@ -130,6 +135,8 @@ type
     function GetCursorInfoString: String;
 
     procedure DrawCursorInfo;
+    procedure DrawPanelIcon(Index, X, Y: Integer);
+    procedure DrawReplayIcon;
     // =========================
 
     procedure DrawNewStr;
@@ -145,7 +152,6 @@ type
     procedure SetInfoLemAlive(Pos: Integer);
     procedure SetInfoLemIn(Pos: Integer);
     procedure SetInfoTime(PosMin, PosSec: Integer);
-    procedure SetReplayIcon(Pos: Integer);
     procedure SetTimeLimit(Pos: Integer);
     procedure SetExitIcon(Pos:Integer);
 
@@ -416,6 +422,10 @@ begin
   fIconBmp.DrawMode := dmBlend;
   fIconBmp.CombineMode := cmMerge;
 
+  fPanelIcons := TBitmap32.Create;
+  fPanelIcons.DrawMode := dmBlend;
+  fPanelIcons.CombineMode := cmMerge;
+
   fMinimapTemp := TBitmap32.Create;
   fMinimap := TBitmap32.Create;
 
@@ -526,6 +536,7 @@ begin
 
   fImage.Free;
   fMinimapImage.Free;
+  fPanelIcons.Free;
   fIconBmp.Free;
   inherited;
 end;
@@ -730,6 +741,8 @@ begin
 
   // Load now the icons for the text panel
   GetGraphic('panel_icons', fIconBmp);
+  fPanelIcons.Assign(fIconBmp);
+
   SrcRect := Rect(0, 0, 16, 32);
   for i := 38 to 44 do
     DrawCharacters(i);
@@ -1436,6 +1449,41 @@ begin
   end;
 end;
 
+procedure TBaseSkillPanel.DrawPanelIcon(Index, X, Y: Integer);
+begin
+  fPanelIcons.DrawTo(fImage.Bitmap, X, Y, Rect(Index * 16, 0, (Index + 1) * 16, 32));
+end;
+
+procedure TBaseSkillPanel.DrawReplayIcon;
+var
+  Index: Integer;
+//var
+  //TickCount: Cardinal;
+  //BlinkIcon: Boolean;
+begin
+  //TickCount := GetTickCount;
+  //BlinkIcon := ((TickCount div 500) mod 2) = 0;
+
+  if Game.StateIsUnplayable or
+     (not GameParams.PlaybackModeActive and not IsReplaying) then
+    Exit;
+
+  if Game.ReplayInsert or (GameParams.PlaybackModeActive and not IsReplaying) then
+    Index := 6
+  else if not RRIsPressed then
+    Index := 0
+  else
+    Exit;
+
+  if GameParams.PlaybackModeActive and not IsReplaying then
+  begin
+    fPanelIcons.DrawMode := dmCustom;
+    fPanelIcons.OnPixelCombine := CombineShift;
+    fCombineHueShift := 1 / 10; // Hue shift to Purple R for Playback Mode
+  end;
+
+  DrawPanelIcon(Index, ReplayIconRect.Left, ReplayIconRect.Top);
+end;
 procedure TBaseSkillPanel.DrawNewStr;
 var
   New: char;
@@ -1464,6 +1512,9 @@ begin
     New := fNewDrawStr[CurChar];
 
     if CurChar <= CursorInfoEndIndex then
+      Continue;
+
+    if CurChar = CursorInfoEndIndex + 1 then
       Continue;
 
     case New of
@@ -1516,10 +1567,6 @@ begin
           fCombineHueShift := Red
         else
           fCombineHueShift := Yellow;
-      end else if (CurChar = CursorInfoEndIndex + 1) and GameParams.PlaybackModeActive and not IsReplaying then
-      begin
-        SpecialCombine := True;
-        fCombineHueShift := 1 / 10; // Shifts Blue "R" to Purple for Playback Mode
       end else
         SpecialCombine := False;
 
@@ -1551,6 +1598,7 @@ begin
     CreateNewInfoString;
     DrawNewStr;
     DrawCursorInfo;
+    DrawReplayIcon;
     fLastDrawnStr := fNewDrawStr;
 
     DrawSkillCount(spbSlower, GetSpawnIntervalValue(Level.Info.SpawnInterval));
@@ -1780,23 +1828,6 @@ begin
   // Seconds
   S := LeadZeroStr(Time mod 60, 2);
   ModString(fNewDrawStr, S, PosSec);
-end;
-
-procedure TBaseSkillPanel.SetReplayIcon(Pos: Integer);
-//var
-  //TickCount: Cardinal;
-  //BlinkIcon: Boolean;
-begin
-  //TickCount := GetTickCount;
-  //BlinkIcon := ((TickCount div 500) mod 2) = 0;
-
-  if //BlinkIcon or
-  Game.StateIsUnplayable or (not GameParams.PlaybackModeActive and not IsReplaying) then
-    fNewDrawStr[Pos] := ' '
-  else if Game.ReplayInsert or (GameParams.PlaybackModeActive and not IsReplaying) then
-    fNewDrawStr[Pos] := #97 // Blue "R"
-  else if not RRIsPressed then
-    fNewDrawStr[Pos] := #91; // Red "R"
 end;
 
 procedure TBaseSkillPanel.SetTimeLimit(Pos: Integer);
