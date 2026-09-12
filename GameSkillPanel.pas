@@ -25,14 +25,6 @@ type
     function AliveIconRect: TRect; override;
     function ExitIconRect: TRect; override;
     function TimeIconRect: TRect; override;
-
-    procedure CreateNewInfoString; override;
-    function DrawStringLength: Integer; override;
-    function DrawStringTemplate: string; override;
-    function TimeLimitStartIndex: Integer; override;
-    function CursorInfoEndIndex: Integer; override;
-    function SaveCountStartIndex: Integer; override;
-    function LemmingCountStartIndex: Integer; override;
   public
     constructor CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow); override;
     destructor Destroy; override;
@@ -53,14 +45,6 @@ type
     function AliveIconRect: TRect; override;
     function ExitIconRect: TRect; override;
     function TimeIconRect: TRect; override;
-
-    procedure CreateNewInfoString; override;
-    function DrawStringLength: Integer; override;
-    function DrawStringTemplate: string; override;
-    function SaveCountStartIndex: Integer; override;
-    function TimeLimitStartIndex: Integer; override;
-    function CursorInfoEndIndex: Integer; override;
-    function LemmingCountStartIndex: Integer; override;
   public
     constructor CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow); override;
     destructor Destroy; override;
@@ -93,37 +77,7 @@ begin
   Result := 80;
 end;
 
-function TSkillPanelStandard.DrawStringLength: Integer;
-begin
-  Result := 38;
-end;
-
-function TSkillPanelStandard.DrawStringTemplate: string;
-begin
-  Result := '............' + '.' + ' ' + #92 + '_...' + ' ' + #93 + '_...' + ' '
-                           + #94 + '_...' + ' ' + #95 +  '_.-..';
-end;
-
-function TSkillPanelStandard.CursorInfoEndIndex: Integer;
-begin
-  Result := 12;
-end;
-
-function TSkillPanelStandard.LemmingCountStartIndex: Integer;
-begin
-  Result := 21;
-end;
-
-function TSkillPanelStandard.SaveCountStartIndex: Integer;
-begin
-  Result := 27;
-end;
-
-function TSkillPanelStandard.TimeLimitStartIndex: Integer;
-begin
-  Result := 33;
-end;
-
+// Assigns a clickable rectangle to the minimap
 function TSkillPanelStandard.MinimapRect: TRect;
 begin
   Result := Rect(616, 6, 824, 74);
@@ -156,13 +110,7 @@ end;
 // Assigns a non-clickable rectangle to the timer icon & digits
 function TSkillPanelStandard.TimeIconRect: TRect;
 begin
-  Result := Rect(512, 4, 608, 32);
-end;
-
-procedure TSkillPanelStandard.CreateNewInfoString;
-begin
-  SetTimeLimit(33);
-  SetInfoTime(34, 37);
+  Result := Rect(512, 0, 608, 32);
 end;
 
 function TSkillPanelStandard.GetButtonList: TPanelButtonArray;
@@ -224,37 +172,7 @@ begin
   Result := 80;
 end;
 
-function TSkillPanelCompact.DrawStringLength: Integer;
-begin
-  Result := 38;
-end;
-
-function TSkillPanelCompact.DrawStringTemplate: string;
-begin
-  Result := '............' + '.' + ' ' + #92 + '_...' + ' ' + #93 + '_...' + ' '
-                           + #94 + '_...' + ' ' + #95 +  '_.-..';
-end;
-
-function TSkillPanelCompact.CursorInfoEndIndex: Integer;
-begin
-  Result := 12;
-end;
-
-function TSkillPanelCompact.LemmingCountStartIndex: Integer;
-begin
-  Result := 21;
-end;
-
-function TSkillPanelCompact.SaveCountStartIndex: Integer;
-begin
-  Result := 27;
-end;
-
-function TSkillPanelCompact.TimeLimitStartIndex: Integer;
-begin
-  Result := 33;
-end;
-
+// Assigns a clickable rectangle to the minimap
 function TSkillPanelCompact.MinimapRect: TRect;
 begin
   Result := Rect(456, 36, 632, 76)
@@ -287,13 +205,7 @@ end;
 // Assigns a non-clickable rectangle to the timer icon & digits
 function TSkillPanelCompact.TimeIconRect: TRect;
 begin
-  Result := Rect(512, 4, 608, 32);
-end;
-
-procedure TSkillPanelCompact.CreateNewInfoString;
-begin
-  SetTimeLimit(33);
-  SetInfoTime(34, 37);
+  Result := Rect(512, 0, 608, 32);
 end;
 
 function TSkillPanelCompact.GetButtonList: TPanelButtonArray;

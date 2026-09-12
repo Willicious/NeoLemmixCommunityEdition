@@ -2,7 +2,6 @@ unit GameBaseSkillPanel;
 
 // TODO - Hi-Res-Only Panel: CE-specific gfx are currently not upscaled in low res
 // TODO - Hi-Res-Only Panel: We need to upscale the low-res lemming animation frames
-// TODO - Hi-Res-Only Panel: Completely redo the entire info string
 // TODO - Hi-Res-Only Panel: Show hotkey labels on panel buttons
 // TODO - Hi-Res-Only Panel: Add clickable talisman info button
 
@@ -30,9 +29,9 @@ type
   TBaseSkillPanel = class(TCustomControl)
   private
     fGame                 : TLemmingGame;
-    fIconBmp              : TBitmap32;   // for temporary storage
 
     // Refactor ====================
+    fPanelButtons         : TBitmap32; // for storing panel buttons & button text
     fPanelIcons           : TBitmap32; // for storing all panel icons
     // ============================
 
@@ -50,7 +49,7 @@ type
 
     function CheckFrameSkip: Integer; // Checks the duration since the last click on the panel.
 
-    procedure LoadPanelFont;
+    procedure LoadPanelIcons;
     procedure LoadSkillIcons;
     procedure LoadSkillFont;
 
@@ -83,7 +82,6 @@ type
     fSkillInfinite        : TBitmap32;
     fSkillSelected        : TBitmap32;
     fSkillIcons           : array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of TBitmap32;
-    fInfoFont             : array of TBitmap32; {%} { 0..9} {A..Z} // make one of this!
 
     fHighlitSkill         : TSkillPanelButton;
     fLastHighlitSkill     : TSkillPanelButton; // to avoid sounds when shouldn't be played
@@ -128,14 +126,11 @@ type
     procedure RemoveHighlight(aButton: TSkillPanelButton); virtual;
 
     // Drawing routines for the info string at the top
-    function DrawStringLength: Integer; virtual; abstract;
-    function DrawStringTemplate: string; virtual; abstract;
-
-    // Refactor =================
     function GetCursorInfoString: String;
     function GetHatchCountString: String;
     function GetLemsAliveString: String;
     function GetLemsSavedString: String;
+    function GetTimeString: String;
 
     procedure DrawCursorInfo;
     procedure DrawPanelIcon(Index, X, Y: Integer);
@@ -143,19 +138,11 @@ type
     procedure DrawHatchInfo;
     procedure DrawLemsAliveInfo;
     procedure DrawLemsSavedInfo;
-    // =========================
+    procedure DrawTimeInfo;
 
-    procedure DrawNewStr;
-      function LemmingCountStartIndex: Integer; virtual; abstract;
-      function SaveCountStartIndex: Integer; virtual; abstract;
-      function TimeLimitStartIndex: Integer; virtual; abstract;
-      function CursorInfoEndIndex: Integer; virtual; abstract;
-    procedure CreateNewInfoString; virtual; abstract;
-      function GetLemReplayTaskString(L: TLemming): String;
-      function GetSkillString(L: TLemming): String;
-      function GetPickupString(P: TGadget): String;
-    procedure SetInfoTime(PosMin, PosSec: Integer);
-    procedure SetTimeLimit(Pos: Integer);
+    function GetLemReplayTaskString(L: TLemming): String;
+    function GetSkillString(L: TLemming): String;
+    function GetPickupString(P: TGadget): String;
 
     // Event handlers for user interaction and related routines.
     function MousePos(X, Y: Integer): TPoint;
@@ -184,6 +171,7 @@ type
     destructor Destroy; override;
 
     procedure PrepareForGame;
+    procedure ClearInfo;
     procedure RefreshInfo;
     procedure SetCursor(aCursor: TCursor);
     procedure SetOnMinimapClick(const Value: TMinimapClickEvent);
@@ -420,9 +408,9 @@ begin
   fMinimapImage.ScaleMode := smScale;
   fMinimapImage.BitmapAlign := baCustom;
 
-  fIconBmp := TBitmap32.Create;
-  fIconBmp.DrawMode := dmBlend;
-  fIconBmp.CombineMode := cmMerge;
+  fPanelButtons := TBitmap32.Create;
+  fPanelButtons.DrawMode := dmBlend;
+  fPanelButtons.CombineMode := cmMerge;
 
   fPanelIcons := TBitmap32.Create;
   fPanelIcons.DrawMode := dmBlend;
@@ -441,13 +429,6 @@ begin
   fMinimapImage.OnMouseDown := MinimapMouseDown;
   fMinimapImage.OnMouseMove := MinimapMouseMove;
   fMinimapImage.OnMouseUp := MinimapMouseUp;
-
-  // Create font and skill panel images (but do not yet load them)
-  SetLength(fInfoFont, NUM_FONT_CHARS);
-  for i := 0 to NUM_FONT_CHARS - 1 do
-  begin
-    fInfoFont[i] := TBitmap32.Create;
-  end;
 
   for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
   begin
@@ -488,11 +469,6 @@ begin
   fSkillLock.DrawMode := dmBlend;
   fSkillLock.CombineMode := cmMerge;
 
-  fLastDrawnStr := StringOfChar(' ', DrawStringLength);
-  fNewDrawStr := DrawStringTemplate;
-
-  CustomAssert(Length(fNewDrawStr) = DrawStringLength, 'SkillPanel.Create: InfoString has not the correct length.');
-
   fRectColor := $FFF0D0D0;
   fHighlitSkill := spbNone;
   fLastHighlitSkill := spbNone;
@@ -509,9 +485,6 @@ var
   i: Integer;
   Button: TSkillPanelButton;
 begin
-  for i := 0 to NUM_FONT_CHARS - 1 do
-    fInfoFont[i].Free;
-
   for c := '0' to '9' do
     for i := 0 to 1 do
     begin
@@ -531,15 +504,13 @@ begin
   fSkillCountEraseInvert.Free;
   fSkillLock.Free;
 
+  fImage.Free;
+  fOriginal.Free;
   fMinimapTemp.Free;
   fMinimap.Free;
-
-  fOriginal.Free;
-
-  fImage.Free;
   fMinimapImage.Free;
+  fPanelButtons.Free;
   fPanelIcons.Free;
-  fIconBmp.Free;
   inherited;
 end;
 
@@ -719,41 +690,44 @@ end;
 procedure TBaseSkillPanel.AddButtonImage(ButtonName: string; Index: Integer);
 begin
   if (Index >= FirstSkillButtonIndex) and (Index <= LastSkillButtonIndex) then Exit; // otherwise, "empty_slot.png" placeholder causes some graphical glitches
-  GetGraphic(ButtonName, fIconBmp);
-  fIconBmp.DrawTo(fOriginal, ButtonRect(Index).Left, ButtonRect(Index).Top);
+  GetGraphic(ButtonName, fPanelButtons);
+  fPanelButtons.DrawTo(fOriginal, ButtonRect(Index).Left, ButtonRect(Index).Top);
 end;
 
-procedure TBaseSkillPanel.LoadPanelFont;
+procedure TBaseSkillPanel.LoadPanelIcons;
 var
-  SrcRect: TRect;
-  i: Integer;
+  Width: Integer;
 
-  procedure DrawCharacters(aChar: Integer);
+  procedure AddGraphic(const Name: String);
+  var
+    Bitmap: TBitmap32;
+    Combined: TBitmap32;
   begin
-    fInfoFont[aChar].SetSize(16, 32);
-    fIconBmp.DrawTo(fInfoFont[aChar], 0, 0, SrcRect);
-    OffsetRect(SrcRect, 16, 0);
+    Bitmap := TBitmap32.Create;
+    Bitmap.DrawMode := dmBlend;
+    try
+      GetGraphic(Name, Bitmap);
+
+      Combined := TBitmap32.Create;
+      try
+        Width := fPanelIcons.Width;
+        Combined.SetSize(Width + Bitmap.Width, Max(fPanelIcons.Height, Bitmap.Height));
+        fPanelIcons.DrawTo(Combined, 0, 0);
+
+        Bitmap.DrawTo(Combined, Width, 0);
+        fPanelIcons.Assign(Combined);
+      finally
+        Combined.Free;
+      end;
+    finally
+      Bitmap.Free;
+    end;
   end;
 begin
-  // Load first the characters
-  GetGraphic('panel_font', fIconBmp);
-  SrcRect := Rect(0, 0, 16, 32);
-  for i := 0 to 37 do
-    DrawCharacters(i);
+  fPanelIcons := TBitmap32.Create;
 
-  // Load now the icons for the text panel
-  GetGraphic('panel_icons', fIconBmp);
-  fPanelIcons.Assign(fIconBmp);
-
-  SrcRect := Rect(0, 0, 16, 32);
-  for i := 38 to 44 do
-    DrawCharacters(i);
-
-  // Finally, load the CE-specific icons
-  GetGraphic('panel_chars', fIconBmp);
-  SrcRect := Rect(0, 0, 16, 32);
-  for i := 45 to NUM_FONT_CHARS - 1 do
-    DrawCharacters(i);
+  AddGraphic('panel_icons');
+  AddGraphic('panel_chars');
 end;
 
 procedure TBaseSkillPanel.LoadSkillIcons;
@@ -995,14 +969,14 @@ var
   end;
 
 begin
-  GetGraphic('skill_count_digits', fIconBmp);
+  GetGraphic('skill_count_digits', fPanelButtons);
   SrcRect := Rect(0, 0, 8, 16);
   for c := '0' to '9' do
   begin
     for i := 0 to 1 do
     begin
       fSkillFont[c, i].SetSize(16, 16);
-      fIconBmp.DrawTo(fSkillFont[c, i], (4 - 4 * i) * 2, 0, SrcRect);
+      fPanelButtons.DrawTo(fSkillFont[c, i], (4 - 4 * i) * 2, 0, SrcRect);
 
       fSkillFontInvert[c, i].Assign(fSkillFont[c, i]);
       for y := 0 to fSkillFontInvert[c, i].Height-1 do
@@ -1015,11 +989,11 @@ begin
 
   Inc(SrcRect.Right, 8);
   fSkillInfinite.SetSize(16, 16);
-  fIconBmp.DrawTo(fSkillInfinite, 0, 0, SrcRect);
+  fPanelButtons.DrawTo(fSkillInfinite, 0, 0, SrcRect);
 
   OffsetRect(SrcRect, 16, 0);
   fSkillLock.SetSize(16, 16);
-  fIconBmp.DrawTo(fSkillLock, 0, 0, SrcRect);
+  fPanelButtons.DrawTo(fSkillLock, 0, 0, SrcRect);
 
   TempBmp := TBitmap32.Create;
   TKernelResampler.Create(TempBmp);
@@ -1095,7 +1069,7 @@ begin
   fImage.Bitmap.Assign(fOriginal);
 
   // Load the remaining graphics for icons, ...
-  LoadPanelFont;
+  LoadPanelIcons;
   LoadSkillIcons;
   LoadSkillFont;
 end;
@@ -1530,7 +1504,7 @@ begin
   if (Game.LemmingsSaved >= Level.Info.RescueCount) then
   begin
     Color := clTeal32;
-    Icon := 3; // TODO - We need to put CE icons into fPanelIcons
+    Icon := 8;
   end else begin
     Color := clLightGreen32;
     Icon := 3;
@@ -1546,85 +1520,52 @@ begin
   end;
 end;
 
-procedure TBaseSkillPanel.DrawNewStr;
+procedure TBaseSkillPanel.DrawTimeInfo;
 var
-  New: char;
-  CurChar, CharID: integer;
-  SpecialCombine: Boolean;
-  Red, {Blue, Purple,} Teal, Yellow{, Orange}: Single;
-begin
-  // Define hue shift colors
-  Red    := -1 / 3;
-  //Blue   :=  1 / 4;
-  //Purple :=  1 / 2;
-  Teal   :=  1 / 6;
-  Yellow := -1 / 6;
-  //Orange := -1 / 4;
+  Icon: Integer;
+  Color: TColor32;
 
-  // Erase previous text there
-  fImage.Bitmap.FillRectS(0, 0, DrawStringLength * 16, 32, $00000000);
-
-  for CurChar := 1 to DrawStringLength do
+  function IsTimeRemainingPercent(aPercent: Integer): Boolean;
   begin
-    New := fNewDrawStr[CurChar];
-
-    if CurChar <= CursorInfoEndIndex then
-      Continue;
-
-    if CurChar = CursorInfoEndIndex + 1 then
-      Continue;
-
-    if (CurChar > LemmingCountStartIndex) and (CurChar <= LemmingCountStartIndex + 5) then
-      Continue;
-
-    if (CurChar > SaveCountStartIndex) and (CurChar <= SaveCountStartIndex + 5) then
-      Continue;
-
-    case New of
-      // panel font characters
-      '%':        CharID := 0;
-      '0'..'9':   CharID := ord(New) - ord('0') + 1;
-      '-':        CharID := 11;
-      'A'..'Z':   CharID := ord(New) - ord('A') + 12;
-
-      // panel icons
-      #91 .. #97: CharID := ord(New) - ord('A') + 12;
-
-      // ce-specific icons/characters
-      '+':        CharID := 45;
-      #98:        CharID := 46;
-      #99:        CharID := 47;
-      #100:       CharID := 48;
-      #101:       CharID := 49;
-      #102:       CharID := 50;
-    else CharID := -1;
-    end;
-
-    if (CharID >= 0) then
-    begin
-
-      if Level.Info.HasTimeLimit and (CurChar > TimeLimitStartIndex) and (CurChar <= TimeLimitStartIndex + 5) then
-      begin
-        SpecialCombine := True;
-
-        if Game.IsOutOfTime then
-          fCombineHueShift := Red
-        else
-          fCombineHueShift := Yellow;
-      end else
-        SpecialCombine := False;
-
-      if SpecialCombine then
-      begin
-        fInfoFont[CharID].DrawMode := dmCustom;
-        fInfoFont[CharID].OnPixelCombine := CombineShift;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, (CurChar - 1) * 16, 0);
-      end else begin
-        fInfoFont[CharID].DrawMode := dmOpaque;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, (CurChar - 1) * 16, 0);
-      end;
-    end;
+    Result := ((Level.Info.TimeLimit * 17) - Game.CurrentIteration <=
+               (Level.Info.TimeLimit * 17 * aPercent) div 100);
   end;
+begin
+  if Level.Info.HasTimeLimit then
+  begin
+    Color := clYellow32;
+
+    if Game.IsOutOfTime then
+    begin
+      Color := clRed32;
+      Icon := 9;
+    end else if IsTimeRemainingPercent(35) then
+      Icon := 10
+    else if IsTimeRemainingPercent(70) then
+      Icon := 11
+    else
+      Icon := 12;
+  end else begin
+    Color := clLightGreen32;
+    Icon := 4;
+  end;
+
+  DrawPanelIcon(Icon, TimeIconRect.Left, TimeIconRect.Top);
+
+  with fImage.Bitmap do
+  begin
+    Font.Name := 'Hobo Std';
+    Font.Size := 8;
+    RenderText(TimeIconRect.Left + 20, 6, GetTimeString, Color, True);
+  end;
+end;
+
+procedure TBaseSkillPanel.ClearInfo;
+var
+  PanelInfoEnd: Integer;
+begin
+  PanelInfoEnd := TimeIconRect.Right;
+  fImage.Bitmap.FillRectS(0, 0, PanelInfoEnd, 32, $00000000);
 end;
 
 procedure TBaseSkillPanel.RefreshInfo;
@@ -1639,13 +1580,13 @@ begin
       GetButtonHints(i);
 
     // Text info string
-    CreateNewInfoString;
-    DrawNewStr;
+    ClearInfo;
     DrawCursorInfo;
     DrawReplayIcon;
     DrawHatchInfo;
     DrawLemsAliveInfo;
     DrawLemsSavedInfo;
+    DrawTimeInfo;
     fLastDrawnStr := fNewDrawStr;
 
     DrawSkillCount(spbSlower, GetSpawnIntervalValue(Level.Info.SpawnInterval));
@@ -1829,12 +1770,10 @@ begin
     Result := ' 999';
 end;
 
-procedure TBaseSkillPanel.SetInfoTime(PosMin, PosSec: Integer);
+function TBaseSkillPanel.GetTimeString: String;
 var
   Time : Integer;
-  S: string;
-const
-  LEN = 2;
+  Prefix, Minutes, Seconds: String;
 begin
   if Level.Info.HasTimeLimit then
   begin
@@ -1844,34 +1783,15 @@ begin
   end else
     Time := Game.CurrentIteration div 17;
 
-  // Minutes
-  S := PadL(IntToStr(Time div 60), 2);
-  ModString(fNewDrawStr, S, PosMin);
+  if Game.IsOutOfTime and (Time <> 0) then
+    Prefix := '-'
+  else
+    Prefix := ' ';
 
-  // Seconds
-  S := LeadZeroStr(Time mod 60, 2);
-  ModString(fNewDrawStr, S, PosSec);
-end;
+  Minutes := PadL(IntToStr(Time div 60), 2);
+  Seconds := LeadZeroStr(Time mod 60, 2);
 
-procedure TBaseSkillPanel.SetTimeLimit(Pos: Integer);
-  function IsTimeRemainingPercent(aPercent: Integer): Boolean;
-  begin
-    Result := ((Level.Info.TimeLimit * 17) - Game.CurrentIteration <=
-               (Level.Info.TimeLimit * 17 * aPercent) div 100);
-  end;
-begin
-  if Level.Info.HasTimeLimit then
-  begin
-    if Game.IsOutOfTime then
-      fNewDrawStr[Pos] := #99
-    else if IsTimeRemainingPercent(35) then
-      fNewDrawStr[Pos] := #100
-    else if IsTimeRemainingPercent(70) then
-      fNewDrawStr[Pos] := #101
-    else
-      fNewDrawStr[Pos] := #102;
-  end else
-    fNewDrawStr[Pos] := #95;
+  Result := Prefix + Minutes + ':' + Seconds;
 end;
 
 {-----------------------------------------
