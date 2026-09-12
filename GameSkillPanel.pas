@@ -150,7 +150,7 @@ end;
 // Assigns a non-clickable rectangle to the exit count icon & digits
 function TSkillPanelStandard.ExitIconRect: TRect;
 begin
-  Result := Rect(416, 4, 504, 32);
+  Result := Rect(416, 0, 504, 32);
 end;
 
 // Assigns a non-clickable rectangle to the timer icon & digits
@@ -161,8 +161,6 @@ end;
 
 procedure TSkillPanelStandard.CreateNewInfoString;
 begin
-  SetExitIcon(27);
-  SetInfoLemIn(28);
   SetTimeLimit(33);
   SetInfoTime(34, 37);
 end;
@@ -283,7 +281,7 @@ end;
 // Assigns a non-clickable rectangle to the saved count icon & digits
 function TSkillPanelCompact.ExitIconRect: TRect;
 begin
-  Result := Rect(416, 4, 504, 32);
+  Result := Rect(416, 0, 504, 32);
 end;
 
 // Assigns a non-clickable rectangle to the timer icon & digits
@@ -294,8 +292,6 @@ end;
 
 procedure TSkillPanelCompact.CreateNewInfoString;
 begin
-  SetExitIcon(27);
-  SetInfoLemIn(28);
   SetTimeLimit(33);
   SetInfoTime(34, 37);
 end;
