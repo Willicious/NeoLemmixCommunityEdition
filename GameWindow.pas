@@ -1230,12 +1230,8 @@ begin
   Img.BitmapAlign := baCustom;
   Img.ScaleMode := smScale;
 
-  // create toolbar
-  if GameParams.CompactSkillPanel then
-    SkillPanel := TSkillPanelCompact.CreateWithWindow(Self, Self)
-  else
-    SkillPanel := TSkillPanelStandard.CreateWithWindow(Self, Self);
-
+  // create skill panel
+  SkillPanel := TSkillPanel.CreateWithWindow(Self, Self);
   SkillPanel.Parent := Self;
 
   Self.KeyPreview := True;
