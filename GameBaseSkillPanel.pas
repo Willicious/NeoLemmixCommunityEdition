@@ -28,10 +28,8 @@ type
   private
     fGame                 : TLemmingGame;
 
-    // Refactor ====================
     fPanelButtons         : TBitmap32; // for storing panel buttons & button text
     fPanelIcons           : TBitmap32; // for storing all panel icons
-    // ============================
 
     fShowUsedSkills       : Boolean;
     fRRIsPressed          : Boolean;
@@ -1422,6 +1420,11 @@ begin
   B := HSVToRGB(H, S, V);
 end;
 
+procedure TBaseSkillPanel.DrawPanelIcon(Index, X, Y: Integer);
+begin
+  fPanelIcons.DrawTo(fImage.Bitmap, X, Y, Rect(Index * 16, 0, (Index + 1) * 16, 32));
+end;
+
 procedure TBaseSkillPanel.DrawCursorInfo;
 var
   Color: TColor32;
@@ -1442,11 +1445,6 @@ begin
     Font.Size := 8;
     RenderText(4, 6, GetCursorInfoString, Color, True);
   end;
-end;
-
-procedure TBaseSkillPanel.DrawPanelIcon(Index, X, Y: Integer);
-begin
-  fPanelIcons.DrawTo(fImage.Bitmap, X, Y, Rect(Index * 16, 0, (Index + 1) * 16, 32));
 end;
 
 procedure TBaseSkillPanel.DrawReplayIcon;
@@ -1807,8 +1805,14 @@ begin
   else
     Prefix := ' ';
 
-  Minutes := PadL(IntToStr(Time div 60), 2);
-  Seconds := LeadZeroStr(Time mod 60, 2);
+  if Time div 60 >= 100 then
+  begin
+    Minutes := '99';
+    Seconds := '59';
+  end else begin
+    Minutes := PadL(IntToStr(Time div 60), 2);
+    Seconds := LeadZeroStr(Time mod 60, 2);
+  end;
 
   Result := Prefix + Minutes + ':' + Seconds;
 end;
