@@ -32,9 +32,7 @@ type
     cbLinearResampleMenu: TCheckBox;
     cbLinearResampleGame: TCheckBox;
     cbFullScreen: TCheckBox;
-    cbMinimapHighQuality: TCheckBox;
     cbIncreaseZoom: TCheckBox;
-    cbCompactSkillPanel: TCheckBox;
     cbEdgeScrolling: TCheckBox;
     btnHotkeys: TButton;
     cbReplayAfterBackskip: TCheckBox;
@@ -67,7 +65,6 @@ type
     gbVisualOptions: TGroupBox;
     gbWindowOptions: TGroupBox;
     btnResetWindow: TButton;
-    rgExitSound: TRadioGroup;
     gbSoundOptions: TGroupBox;
     gbMusicOptions: TGroupBox;
     lblSkillQFrames: TLabel;
@@ -80,8 +77,17 @@ type
     cbUseSpawnInterval: TCheckBox;
     cbCountDownFromSR: TCheckBox;
     cbShowButtonHints: TCheckBox;
-    rgDefaultReplayMode: TRadioGroup;
     cbClickAirToCutInsert: TCheckBox;
+    lblDefaultReplayMode: TLabel;
+    rbReplayModeStandard: TRadioButton;
+    rbReplayModeInsert: TRadioButton;
+    lblExitSound: TLabel;
+    rbYippee: TRadioButton;
+    rbBoing: TRadioButton;
+    gbSkillPanelGraphics: TGroupBox;
+    cbCompactSkillPanel: TCheckBox;
+    cbMinimapHighQuality: TCheckBox;
+    cbLegacyPanelInfo: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -280,7 +286,8 @@ begin
     cbReplayAfterRestart.Checked := GameParams.ReplayAfterRestart;
     cbClickAirToCutInsert.Checked := GameParams.ClickAirToCutInsert;
 
-    rgDefaultReplayMode.ItemIndex := Ord(GameParams.DefaultReplayMode);
+    rbReplayModeStandard.Checked := GameParams.DefaultReplayMode = rmStandard;
+    rbReplayModeInsert.Checked := GameParams.DefaultReplayMode = rmInsert;
 
     cbShowDecorations.Checked := GameParams.ShowDecorations;
     cbForceDefaultLemmings.Checked := GameParams.ForceDefaultLemmings;
@@ -289,11 +296,12 @@ begin
     cbShowHelpers.Checked := GameParams.ShowHelpers;
     seSkillQFrames.Value := GameParams.SkillQFrames;
 
+    cbInvertMouseWheelFramesteps.Checked := GameParams.InvertMouseWheelFramesteps;
     cbEdgeScrolling.Checked := GameParams.EdgeScroll;
     cbUseSpawnInterval.Checked := GameParams.UseSpawnInterval;
     cbCountDownFromSR.Checked := GameParams.CountDownFromSR;
     cbShowButtonHints.Checked := GameParams.ShowButtonHints;
-    cbInvertMouseWheelFramesteps.Checked := GameParams.InvertMouseWheelFramesteps;
+    cbLegacyPanelInfo.Checked := GameParams.LegacyPanelInfo;
 
     rgWhenNoLemmings.ItemIndex := Ord(GameParams.ExitToPostview);
 
@@ -327,10 +335,8 @@ begin
     cbDisableTestplayMusic.Checked := GameParams.DisableMusicInTestplay;
     cbPostviewJingles.Checked := GameParams.PostviewJingles;
 
-    if GameParams.PreferYippee then
-      rgExitSound.ItemIndex := 0
-    else
-      rgExitSound.ItemIndex := 1;
+    rbYippee.Checked := GameParams.PreferYippee;
+    rbBoing.Checked := not GameParams.PreferYippee;
 
     btnApply.Enabled := False;
   finally
@@ -363,9 +369,10 @@ begin
   GameParams.ReplayAfterRestart := cbReplayAfterRestart.Checked;
   GameParams.ClickAirToCutInsert := cbClickAirToCutInsert.Checked;
 
-  if (rgDefaultReplayMode.ItemIndex >= Ord(Low(TDefaultReplayMode)))
-    and (rgDefaultReplayMode.ItemIndex <= Ord(High(TDefaultReplayMode))) then
-      GameParams.DefaultReplayMode := TDefaultReplayMode(rgDefaultReplayMode.ItemIndex);
+  if rbReplayModeInsert.Checked then
+    GameParams.DefaultReplayMode := rmInsert
+  else
+    GameParams.DefaultReplayMode := rmStandard;
 
   GameParams.ShowDecorations := cbShowDecorations.Checked;
   GameParams.ForceDefaultLemmings := cbForceDefaultLemmings.Checked;
@@ -374,11 +381,12 @@ begin
   GameParams.ShowHelpers := cbShowHelpers.Checked;
   GameParams.SkillQFrames := seSkillQFrames.Value;
 
+  GameParams.InvertMouseWheelFramesteps := cbInvertMouseWheelFramesteps.Checked;
   GameParams.EdgeScroll := cbEdgeScrolling.Checked;
   GameParams.UseSpawnInterval := cbUseSpawnInterval.Checked;
   GameParams.CountDownFromSR := cbCountDownFromSR.Checked;
   GameParams.ShowButtonHints := cbShowButtonHints.Checked;
-  GameParams.InvertMouseWheelFramesteps := cbInvertMouseWheelFramesteps.Checked;
+  GameParams.LegacyPanelInfo := cbLegacyPanelInfo.Checked;
 
   if (rgWhenNoLemmings.ItemIndex >= Ord(Low(TExitToPostview)))
     and (rgWhenNoLemmings.ItemIndex <= Ord(High(TExitToPostview))) then
@@ -409,7 +417,7 @@ begin
 
   GameParams.DisableMusicInTestplay := cbDisableTestplayMusic.Checked;
   GameParams.PostviewJingles := cbPostviewJingles.Checked;
-  GameParams.PreferYippee := rgExitSound.ItemIndex = 0;
+  GameParams.PreferYippee := rbYippee.Checked;
 
   btnApply.Enabled := False;
 end;

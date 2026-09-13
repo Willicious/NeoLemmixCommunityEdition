@@ -15,6 +15,9 @@ uses
   NeoLemmixCEResources,
   SharedGlobals;
 
+const
+  NUM_FONT_CHARS = 39;
+
 type
   TMinimapClickEvent = procedure(Sender: TObject; const P: TPoint) of object;
 
@@ -30,6 +33,8 @@ type
 
     fPanelButtons         : TBitmap32; // for storing panel buttons & button text
     fPanelIcons           : TBitmap32; // for storing all panel icons
+    fPanelFontSource      : TBitmap32; // for loading the legacy font
+    fPanelFont: array[0..NUM_FONT_CHARS - 1] of TBitmap32;
 
     fShowUsedSkills       : Boolean;
     fRRIsPressed          : Boolean;
@@ -48,6 +53,7 @@ type
     procedure LoadPanelIcons;
     procedure LoadSkillIcons;
     procedure LoadSkillFont;
+    procedure LoadLegacyFont;
 
     function GetLevel: TLevel;
     function GetZoom: Integer;
@@ -122,19 +128,22 @@ type
     procedure RemoveHighlight(aButton: TSkillPanelButton); virtual;
 
     // Drawing routines for the info string at the top
+    procedure DrawPanelIcon(Index, X, Y: Integer);
+    procedure DrawCursorInfo;
+    procedure DrawReplayIcon;
+    procedure DrawHatchInfo;
+    procedure DrawLemsAliveInfo;
+    procedure DrawLemsSavedInfo;
+    procedure DrawTimeInfo;
+
     function GetCursorInfoString: String;
     function GetHatchCountString: String;
     function GetLemsAliveString: String;
     function GetLemsSavedString: String;
     function GetTimeString: String;
 
-    procedure DrawCursorInfo;
-    procedure DrawPanelIcon(Index, X, Y: Integer);
-    procedure DrawReplayIcon;
-    procedure DrawHatchInfo;
-    procedure DrawLemsAliveInfo;
-    procedure DrawLemsSavedInfo;
-    procedure DrawTimeInfo;
+    function GetLegacyFontIndex(C: Char): Integer; // legacy font support
+    procedure DrawLegacyString(const S: String; X, Y: Integer; TargetColor: TColor32 = clLightGreen32);
 
     function GetLemReplayTaskString(L: TLemming): String;
     function GetSkillString(L: TLemming): String;
@@ -202,9 +211,6 @@ type
   end;
 
   procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
-
-const
-  NUM_FONT_CHARS = 51;
 
 const
   // WARNING: The order of the strings has to correspond to the one
@@ -412,6 +418,10 @@ begin
   fPanelIcons.DrawMode := dmBlend;
   fPanelIcons.CombineMode := cmMerge;
 
+  fPanelFontSource := TBitmap32.Create;
+  fPanelFontSource.DrawMode := dmBlend;
+  fPanelFontSource.CombineMode := cmMerge;
+
   fMinimapTemp := TBitmap32.Create;
   fMinimap := TBitmap32.Create;
 
@@ -488,6 +498,9 @@ begin
       fSkillFontInvert[c, i].Free;
     end;
 
+  for i := Low(fPanelFont) to High(fPanelFont) do
+    fPanelFont[i].Free;
+
   for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     fSkillIcons[Button].Free;
 
@@ -507,6 +520,7 @@ begin
   fMinimapImage.Free;
   fPanelButtons.Free;
   fPanelIcons.Free;
+  fPanelFontSource.Free;
   inherited;
 end;
 
@@ -736,6 +750,76 @@ begin
 
   AddGraphic('panel_icons');
   AddGraphic('panel_chars');
+end;
+
+procedure TBaseSkillPanel.LoadLegacyFont;
+var
+  i: Integer;
+  SrcRect: TRect;
+
+  procedure AddGraphic(const Name: String);
+  var
+    Bitmap: TBitmap32;
+    Combined: TBitmap32;
+  begin
+    Bitmap := TBitmap32.Create;
+    try
+      Bitmap.DrawMode := dmBlend;
+      GetGraphic(Name, Bitmap);
+
+      if fPanelFontSource.Width = 0 then
+      begin
+        fPanelFontSource.Assign(Bitmap);
+        Exit;
+      end;
+
+      Combined := TBitmap32.Create;
+      try
+        Combined.SetSize(
+          fPanelFontSource.Width + Bitmap.Width,
+          Max(fPanelFontSource.Height, Bitmap.Height)
+        );
+        Combined.DrawMode := dmBlend;
+
+        fPanelFontSource.DrawTo(Combined, 0, 0);
+        Bitmap.DrawTo(Combined, fPanelFontSource.Width, 0);
+
+        fPanelFontSource.Assign(Combined);
+      finally
+        Combined.Free;
+      end;
+    finally
+      Bitmap.Free;
+    end;
+  end;
+begin
+  AddGraphic('panel_font');
+  AddGraphic('panel_chars');
+
+  SrcRect := Rect(0, 0, 16, 32);
+
+  for i := Low(fPanelFont) to High(fPanelFont) do
+  begin
+    fPanelFont[i] := TBitmap32.Create;
+    fPanelFont[i].DrawMode := dmBlend;
+    fPanelFont[i].SetSize(16, 32);
+
+    fPanelFontSource.DrawTo(fPanelFont[i], 0, 0, SrcRect);
+    OffsetRect(SrcRect, 16, 0);
+  end;
+end;
+
+function TBaseSkillPanel.GetLegacyFontIndex(C: Char): Integer;
+begin
+  case C of
+    '%':        Result := 0;
+    '0'..'9':   Result := Ord(C) - Ord('0') + 1;
+    '-':        Result := 11;
+    'A'..'Z':   Result := Ord(C) - Ord('A') + 12;
+    '+':        Result := 38;
+  else
+    Result := -1;
+  end;
 end;
 
 procedure TBaseSkillPanel.LoadSkillIcons;
@@ -1089,6 +1173,7 @@ begin
   LoadPanelIcons;
   LoadSkillIcons;
   LoadSkillFont;
+  LoadLegacyFont;
 end;
 
 procedure TBaseSkillPanel.PrepareForGame;
@@ -1420,6 +1505,40 @@ begin
   B := HSVToRGB(H, S, V);
 end;
 
+procedure TBaseSkillPanel.DrawLegacyString(const S: String; X, Y: Integer; TargetColor: TColor32 = clLightGreen32);
+var
+  i: Integer;
+  CharID: Integer;
+begin
+  for i := 1 to Length(S) do
+  begin
+    CharID := GetLegacyFontIndex(S[i]);
+
+    if CharID >= 0 then
+    begin
+      if (TargetColor <> clLightGreen32) then
+      begin
+        fPanelFont[CharID].DrawMode := dmCustom;
+        fPanelFont[CharID].OnPixelCombine := CombineShift;
+
+        case TargetColor of
+          clRed32:              fCombineHueShift := -1 / 3;
+          clCornflowerBlue32:   fCombineHueShift :=  1 / 4;
+          //clPurple32:         fCombineHueShift :=  1 / 2;
+          clTeal32:             fCombineHueShift :=  1 / 6;
+          clYellow32:           fCombineHueShift := -1 / 6;
+        end;
+
+        fPanelFont[CharID].DrawTo(fImage.Bitmap, X + (i - 1) * 16, Y);
+
+        fPanelFont[CharID].DrawMode := dmBlend;
+        fPanelFont[CharID].OnPixelCombine := nil;
+      end else
+        fPanelFont[CharID].DrawTo(fImage.Bitmap, X + (i - 1) * 16, Y);
+    end;
+  end;
+end;
+
 procedure TBaseSkillPanel.DrawPanelIcon(Index, X, Y: Integer);
 begin
   fPanelIcons.DrawTo(fImage.Bitmap, X, Y, Rect(Index * 16, 0, (Index + 1) * 16, 32));
@@ -1439,6 +1558,10 @@ begin
   else
     Color := clLightGreen32;
 
+  if GameParams.LegacyPanelInfo then
+  begin
+    DrawLegacyString(GetCursorInfoString, 0, 0, Color);
+  end else
   with fImage.Bitmap do
   begin
     Font.Name := 'Hobo Std';
@@ -1482,6 +1605,10 @@ procedure TBaseSkillPanel.DrawHatchInfo;
 begin
   DrawPanelIcon(1, HatchIconRect.Left, HatchIconRect.Top);
 
+  if GameParams.LegacyPanelInfo then
+  begin
+    DrawLegacyString(GetHatchCountString, HatchIconRect.Left + 24, 0);
+  end else
   with fImage.Bitmap do
   begin
     Font.Name := 'Hobo Std';
@@ -1505,6 +1632,10 @@ begin
   else
     Color := clLightGreen32;
 
+  if GameParams.LegacyPanelInfo then
+  begin
+    DrawLegacyString(GetLemsAliveString, AliveIconRect.Left + 24, 0, Color);
+  end else
   with fImage.Bitmap do
   begin
     Font.Name := 'Hobo Std';
@@ -1529,6 +1660,10 @@ begin
 
   DrawPanelIcon(Icon, ExitIconRect.Left, ExitIconRect.Top);
 
+  if GameParams.LegacyPanelInfo then
+  begin
+    DrawLegacyString(GetLemsSavedString, ExitIconRect.Left + 24, 0, Color);
+  end else
   with fImage.Bitmap do
   begin
     Font.Name := 'Hobo Std';
@@ -1569,6 +1704,10 @@ begin
 
   DrawPanelIcon(Icon, TimeIconRect.Left, TimeIconRect.Top);
 
+  if GameParams.LegacyPanelInfo then
+  begin
+    DrawLegacyString(GetTimeString, TimeIconRect.Left, 0, Color);
+  end else
   with fImage.Bitmap do
   begin
     Font.Name := 'Hobo Std';
@@ -1789,8 +1928,8 @@ end;
 
 function TBaseSkillPanel.GetTimeString: String;
 var
-  Time : Integer;
-  Prefix, Minutes, Seconds: String;
+  Time: Integer;
+  Prefix, Separator, Minutes, Seconds: String;
 begin
   if Level.Info.HasTimeLimit then
   begin
@@ -1800,10 +1939,16 @@ begin
   end else
     Time := Game.CurrentIteration div 17;
 
-  if Game.IsOutOfTime and (Time <> 0) then
+  if Game.IsOutOfTime and (Time <> 0) and not GameParams.LegacyPanelInfo
+  then
     Prefix := '-'
   else
     Prefix := ' ';
+
+  if GameParams.LegacyPanelInfo then
+    Separator := '-'
+  else
+    Separator := ':';
 
   if Time div 60 >= 100 then
   begin
@@ -1814,7 +1959,7 @@ begin
     Seconds := LeadZeroStr(Time mod 60, 2);
   end;
 
-  Result := Prefix + Minutes + ':' + Seconds;
+  Result := Prefix + Minutes + Separator + Seconds;
 end;
 
 {-----------------------------------------

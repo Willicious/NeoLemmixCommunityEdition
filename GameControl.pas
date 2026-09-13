@@ -125,6 +125,7 @@ type
     moUseSpawnInterval,
     moCountDownFromSR,
     moShowButtonHints,
+    moLegacyPanelInfo,
     moInvertMouseWheelFramesteps,
     moShowLevelSelectOptions,
     moFileCaching,
@@ -318,6 +319,7 @@ type
     property UseSpawnInterval: Boolean Index moUseSpawnInterval read GetOptionFlag write SetOptionFlag;
     property CountDownFromSR: Boolean Index moCountDownFromSR read GetOptionFlag write SetOptionFlag;
     property ShowButtonHints: Boolean Index moShowButtonHints read GetOptionFlag write SetOptionFlag;
+    property LegacyPanelInfo: Boolean Index moLegacyPanelInfo read GetOptionFlag write SetOptionFlag;
     property InvertMouseWheelFramesteps: Boolean Index moInvertMouseWheelFramesteps read GetOptionFlag write SetOptionFlag;
     property ForceDefaultLemmings: Boolean Index moForceDefaultLemmings read GetOptionFlag write SetOptionFlag;
     property DisableMusicInTestplay: Boolean Index moDisableMusicInTestplay read GetOptionFlag write SetOptionFlag;
@@ -563,6 +565,7 @@ begin
     SaveBoolean('UseSpawnInterval', UseSpawnInterval);
     SaveBoolean('CountDownFromSR', CountDownFromSR);
     SaveBoolean('ShowButtonHints', ShowButtonHints);
+    SaveBoolean('LegacyPanelInfo', LegacyPanelInfo);
     SaveBoolean('InvertMouseWheelFramesteps', InvertMouseWheelFramesteps);
 
     SL.Add('SkillQFrames=' + IntToStr(SkillQFrames));
@@ -813,6 +816,7 @@ begin
     UseSpawnInterval := LoadBoolean('UseSpawnInterval', UseSpawnInterval);
     CountDownFromSR := LoadBoolean('CountDownFromSR', CountDownFromSR);
     ShowButtonHints := LoadBoolean('ShowButtonHints', ShowButtonHints);
+    LegacyPanelInfo := LoadBoolean('LegacyPanelInfo', LegacyPanelInfo);
     InvertMouseWheelFramesteps := LoadBoolean('InvertMouseWheelFramesteps', InvertMouseWheelFramesteps);
 
     SetCurrentLevelToBestMatch(SL.Values['LastActiveLevel']);
