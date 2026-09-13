@@ -1,6 +1,5 @@
 unit GameBaseSkillPanel;
 
-// TODO - Hi-Res-Only Panel: We need to upscale the low-res lemming animation frames
 // TODO - Hi-Res-Only Panel: Show hotkey labels on panel buttons
 // TODO - Hi-Res-Only Panel: Add clickable talisman info button
 
@@ -755,7 +754,9 @@ var
     Ani: TBaseAnimationSet;
     Meta: TMetaLemmingAnimation;
     SrcRect: TRect;
+    X, Y: Integer;
     OldDrawMode: TDrawMode;
+    UpscaleSettings: TUpscaleSettings;
   begin
     Ani := GameParams.Renderer.LemmingAnimations;
     Meta := Ani.MetaLemmingAnimations[aAnimationIndex];
@@ -764,10 +765,27 @@ var
     SrcRect.Bottom := SrcRect.Bottom div Meta.FrameCount;
     SrcRect.Offset(0, SrcRect.Height * aFrame);
 
+    X := footX * ResMod - Meta.FootX;
+    Y := footY * ResMod - Meta.FootY;
+
     OldDrawMode := Ani.LemmingAnimations[aAnimationIndex].DrawMode;
     Ani.LemmingAnimations[aAnimationIndex].DrawMode := dmBlend;
-    Ani.LemmingAnimations[aAnimationIndex].DrawTo(dst, footX * ResMod - Meta.FootX, footY * ResMod - Meta.FootY, SrcRect);
-    Ani.LemmingAnimations[aAnimationIndex].DrawMode := OldDrawMode;
+    try
+      Ani.LemmingAnimations[aAnimationIndex].DrawTo(dst, X, Y, SrcRect);
+    finally
+      Ani.LemmingAnimations[aAnimationIndex].DrawMode := OldDrawMode;
+    end;
+
+    if not GameParams.HighResolution then
+    begin
+      UpscaleSettings.Mode := umNearest;
+      UpscaleSettings.LeftSide := uebTransparent;
+      UpscaleSettings.TopSide := uebTransparent;
+      UpscaleSettings.RightSide := uebTransparent;
+      UpscaleSettings.BottomSide := uebTransparent;
+
+      Upscale(dst, UpscaleSettings);
+    end;
   end;
 
   procedure DrawAnimationFrameResized(dst: TBitmap32; aAnimationIndex: Integer; aFrame: Integer; dstRect: TRect);
@@ -777,14 +795,6 @@ var
     SrcRect: TRect;
     OldDrawMode: TDrawMode;
   begin
-    if GameParams.HighResolution then
-    begin
-      dstRect.Left := dstRect.Left * 2 + 1;
-      dstRect.Top := dstRect.Top * 2;
-      dstRect.Right := dstRect.Right * 2 + 1;
-      dstRect.Bottom := dstRect.Bottom * 2;
-    end;
-
     Ani := GameParams.Renderer.LemmingAnimations;
     Meta := Ani.MetaLemmingAnimations[aAnimationIndex];
 
@@ -798,19 +808,17 @@ var
     Ani.LemmingAnimations[aAnimationIndex].DrawMode := OldDrawMode;
   end;
 
-  procedure DrawBrick(dst: TBitmap32; X, Y: Integer; W: Integer = 2);
+  procedure DrawBrick(dst: TBitmap32; X, Y: Integer);
   var
     oX: Integer;
   begin
-    for oX := 0 to W-1 do
-      if GameParams.HighResolution then
+    for oX := 0 to 2 do
       begin
-        dst.PixelS[(X + oX) * ResMod, Y * ResMod] := BrickColor;
-        dst.PixelS[(X + oX) * ResMod + 1, Y * ResMod] := BrickColor;
-        dst.PixelS[(X + oX) * ResMod, Y * ResMod + 1] := BrickColor;
-        dst.PixelS[(X + oX) * ResMod + 1, Y * ResMod + 1] := BrickColor;
-      end else
-        dst.PixelS[X + oX, Y] := BrickColor;
+        dst.PixelS[(X + oX)    , Y    ] := BrickColor;
+        dst.PixelS[(X + oX) + 1, Y    ] := BrickColor;
+        dst.PixelS[(X + oX)    , Y + 1] := BrickColor;
+        dst.PixelS[(X + oX) + 1, Y + 1] := BrickColor;
+      end;
   end;
 
   procedure Outline(dst: TBitmap32; isRecursive: Boolean = False);
@@ -848,7 +856,7 @@ var
 
     TempBmp.DrawTo(dst);
 
-    if GameParams.HighResolution and not isRecursive then
+    if not isRecursive then
       Outline(dst, True);
   end;
 begin
@@ -873,7 +881,7 @@ begin
 
     // Set image sizes
     for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-      fSkillIcons[Button].SetSize(15 * ResMod, 23 * ResMod);
+      fSkillIcons[Button].SetSize(30, 46);
 
     //////////////////////////////////////////////////////////
     ///  This code is mostly copied to LemGadgetAnimation. ///
@@ -891,8 +899,8 @@ begin
     Outline(fSkillIcons[spbSwimmer]);
     TempBmp.Assign(fSkillIcons[spbSwimmer]);
     fSkillIcons[spbSwimmer].Clear(0);
-    fSkillIcons[spbSwimmer].FillRect(0, 17 * ResMod, 15 * ResMod, 23 * ResMod, $FF000000);
-    fSkillIcons[spbSwimmer].FillRect(0, 18 * ResMod, 15 * ResMod, 23 * ResMod, $FF0000FF);
+    fSkillIcons[spbSwimmer].FillRect(0, 34, 30, 46, $FF000000);
+    fSkillIcons[spbSwimmer].FillRect(0, 36, 30, 46, $FF0000FF);
     TempBmp.DrawTo(fSkillIcons[spbSwimmer]);
 
     // Floater, Glider, Disarmer - all simple
@@ -901,14 +909,14 @@ begin
     DrawAnimationFrame(fSkillIcons[spbDisarmer], FIXING, 6, 4, 21);
 
     // Bomber is drawn resized
-    DrawAnimationFrameResized(fSkillIcons[spbBomber], EXPLOSION, 0, Rect(-2, 7, 15, 24));
+    DrawAnimationFrameResized(fSkillIcons[spbBomber], EXPLOSION, 0, Rect(-3, 14, 31, 48));
 
     // Stoner is tricky - the goal is an outlined stoned lemming over a stoner explosion graphic
     DrawAnimationFrame(fSkillIcons[spbStoner], STONED, 0, 8, 21);
     Outline(fSkillIcons[spbStoner]);
     TempBmp.Assign(fSkillIcons[spbStoner]);
     fSkillIcons[spbStoner].Clear(0);
-    DrawAnimationFrameResized(fSkillIcons[spbStoner], STONEEXPLOSION, 0, Rect(-2, 7, 15, 24));
+    DrawAnimationFrameResized(fSkillIcons[spbStoner], STONEEXPLOSION, 0, Rect(-3, 14, 31, 48));
     TempBmp.DrawTo(fSkillIcons[spbStoner], 0, 0);
 
     // Blocker is simple
@@ -917,23 +925,23 @@ begin
     // Platformer, Builder and Stacker have bricks drawn to clarify the direction of building.
     // Platformer additionally has some extra black pixels drawn in to make the outline nicer.
     DrawAnimationFrame(fSkillIcons[spbPlatformer], PLATFORMING, 1, 7, 20);
-    fSkillIcons[spbPlatformer].FillRect(2 * ResMod, 21 * ResMod, 12 * ResMod, 22 * ResMod, $FF000000);
-    DrawBrick(fSkillIcons[spbPlatformer], 2, 21);
-    DrawBrick(fSkillIcons[spbPlatformer], 5, 21);
-    DrawBrick(fSkillIcons[spbPlatformer], 8, 21);
-    DrawBrick(fSkillIcons[spbPlatformer], 11, 21);
+    fSkillIcons[spbPlatformer].FillRect(4, 42, 24, 44, $FF000000);
+    DrawBrick(fSkillIcons[spbPlatformer],  4, 42);
+    DrawBrick(fSkillIcons[spbPlatformer], 10, 42);
+    DrawBrick(fSkillIcons[spbPlatformer], 16, 42);
+    DrawBrick(fSkillIcons[spbPlatformer], 22, 42);
 
     DrawAnimationFrame(fSkillIcons[spbBuilder], BRICKLAYING, 1, 7, 20);
-    DrawBrick(fSkillIcons[spbBuilder], 4, 22);
-    DrawBrick(fSkillIcons[spbBuilder], 6, 21);
-    DrawBrick(fSkillIcons[spbBuilder], 8, 20);
-    DrawBrick(fSkillIcons[spbBuilder], 10, 19);
+    DrawBrick(fSkillIcons[spbBuilder],  8, 44);
+    DrawBrick(fSkillIcons[spbBuilder], 12, 42);
+    DrawBrick(fSkillIcons[spbBuilder], 16, 40);
+    DrawBrick(fSkillIcons[spbBuilder], 20, 38);
 
     DrawAnimationFrame(fSkillIcons[spbStacker], STACKING, 0, 7, 21);
-    DrawBrick(fSkillIcons[spbStacker], 10, 20);
-    DrawBrick(fSkillIcons[spbStacker], 10, 19);
-    DrawBrick(fSkillIcons[spbStacker], 10, 18);
-    DrawBrick(fSkillIcons[spbStacker], 10, 17);
+    DrawBrick(fSkillIcons[spbStacker], 20, 40);
+    DrawBrick(fSkillIcons[spbStacker], 20, 38);
+    DrawBrick(fSkillIcons[spbStacker], 20, 36);
+    DrawBrick(fSkillIcons[spbStacker], 20, 34);
 
     // Laserer, Basher, Fencer, Miner are all simple - we do have to take care to avoid frames with destruction particles
     // For Digger, we just have to accept some particles.
