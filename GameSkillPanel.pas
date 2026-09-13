@@ -5,33 +5,14 @@ interface
 
 uses
   LemTypes,
-  Classes, GR32,
+  Math, Classes, GR32,
   GameWindowInterface, GameBaseSkillPanel,
   SharedGlobals;
 
 type
-  TSkillPanelStandard = class(TBaseSkillPanel)
+  TSkillPanel = class(TBaseSkillPanel)
   protected
-    function GetButtonList: TPanelButtonArray; override;
-
-    function PanelWidth: Integer; override;
-    function PanelHeight: Integer; override;
-
-    procedure ResizeMinimapRegion(MinimapRegion: TBitmap32); override;
-    function MinimapRect: TRect; override;
-
-    function ReplayIconRect: TRect; override;
-    function HatchIconRect: TRect; override;
-    function AliveIconRect: TRect; override;
-    function ExitIconRect: TRect; override;
-    function TimeIconRect: TRect; override;
-  public
-    constructor CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow); override;
-    destructor Destroy; override;
-  end;
-
-  TSkillPanelCompact = class(TBaseSkillPanel)
-  protected
+    function CompactSkillPanel: Boolean;
     function GetButtonList: TPanelButtonArray; override;
 
     function PanelWidth: Integer; override;
@@ -57,73 +38,97 @@ uses
 
 { TSkillPanelStandard }
 
-constructor TSkillPanelStandard.CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow);
+constructor TSkillPanel.CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow);
 begin
   inherited;
 end;
 
-destructor TSkillPanelStandard.Destroy;
+destructor TSkillPanel.Destroy;
 begin
   inherited;
 end;
 
-function TSkillPanelStandard.PanelWidth: Integer;
+function TSkillPanel.CompactSkillPanel: Boolean;
 begin
-  Result := 832;
+  Result := GameParams.CompactSkillPanel;
 end;
 
-function TSkillPanelStandard.PanelHeight: Integer;
+function TSkillPanel.PanelWidth: Integer;
+begin
+  if CompactSkillPanel then
+    Result := 640
+  else
+    Result := 832;
+end;
+
+function TSkillPanel.PanelHeight: Integer;
 begin
   Result := 80;
 end;
 
-// Assigns a clickable rectangle to the minimap
-function TSkillPanelStandard.MinimapRect: TRect;
+function TSkillPanel.MinimapRect: TRect;
 begin
-  Result := Rect(616, 6, 824, 74);
+  if CompactSkillPanel then
+    Result := Rect(456, 36, 632, 76)
+  else
+    Result := Rect(616, 6, 824, 74);
 end;
 
-// Assigns a clickable rectangle to the replay "R" icon
-function TSkillPanelStandard.ReplayIconRect: TRect;
+function TSkillPanel.ReplayIconRect: TRect;
 begin
-  Result := Rect(190, 0, 208, 32);
+  if CompactSkillPanel then
+    Result := Rect(190, 0, 208, 32)
+  else
+    Result := Rect(190, 0, 208, 32);
 end;
 
-// Assigns a non-clickable rectangle to the hatch count icon & digits
-function TSkillPanelStandard.HatchIconRect: TRect;
+function TSkillPanel.HatchIconRect: TRect;
 begin
-  Result := Rect(224, 0, 312, 32);
+  if CompactSkillPanel then
+    Result := Rect(224, 0, 312, 32)
+  else
+    Result := Rect(224, 0, 312, 32);
 end;
 
-// Assigns a non-clickable rectangle to the alive count icon & digits
-function TSkillPanelStandard.AliveIconRect: TRect;
+function TSkillPanel.AliveIconRect: TRect;
 begin
-  Result := Rect(320, 0, 408, 32);
+  if CompactSkillPanel then
+    Result := Rect(320, 0, 408, 32)
+  else
+    Result := Rect(320, 0, 408, 32);
 end;
 
-// Assigns a non-clickable rectangle to the exit count icon & digits
-function TSkillPanelStandard.ExitIconRect: TRect;
+function TSkillPanel.ExitIconRect: TRect;
 begin
-  Result := Rect(416, 0, 504, 32);
+  if CompactSkillPanel then
+    Result := Rect(416, 0, 504, 32)
+  else
+    Result := Rect(416, 0, 504, 32);
 end;
 
-// Assigns a non-clickable rectangle to the timer icon & digits
-function TSkillPanelStandard.TimeIconRect: TRect;
+function TSkillPanel.TimeIconRect: TRect;
 begin
-  Result := Rect(512, 0, 608, 32);
+  if CompactSkillPanel then
+    Result := Rect(512, 0, 608, 32)
+  else
+    Result := Rect(512, 0, 608, 32);
 end;
 
-function TSkillPanelStandard.GetButtonList: TPanelButtonArray;
+function TSkillPanel.GetButtonList: TPanelButtonArray;
 var
   i : Integer;
 begin
-  SetLength(Result, 19);
+  SetLength(Result, IfThen(CompactSkillPanel, 14, 19));
   Result[0] := spbSlower;
   Result[1] := spbFaster;
   for i := 2 to (2 + MAX_SKILL_TYPES_PER_LEVEL -1) do
     Result[i] := Low(TSkillPanelButton); // placeholder for any skill
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL] := spbPause;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 1] := spbNuke;
+
+  if CompactSkillPanel then
+    Exit;
+
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 2] := spbFastForward;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 3] := spbRestart;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 4] := spbBackOneFrame; // and below: spbForwardOneFrame
@@ -131,16 +136,26 @@ begin
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 6] := spbPhysicsView; // and below: spbLoadReplay
 end;
 
-procedure TSkillPanelStandard.ResizeMinimapRegion(MinimapRegion: TBitmap32);
+procedure TSkillPanel.ResizeMinimapRegion(MinimapRegion: TBitmap32);
 var
   TempBmp: TBitmap32;
+  AllocatedWidth, AllocatedHeight: Integer;
 begin
   TempBmp := TBitmap32.Create;
   TempBmp.Assign(MinimapRegion);
 
-  if (MinimapRegion.Width <> 222) or (MinimapRegion.Height <> 76) then
+  if CompactSkillPanel then
   begin
-    MinimapRegion.SetSize(222, 78);
+    AllocatedWidth := 190;
+    AllocatedHeight := 48;
+  end else begin
+    Width := 222;
+    AllocatedHeight := 76;
+  end;
+
+  if (MinimapRegion.Width <> AllocatedWidth) or (MinimapRegion.Height <> AllocatedHeight) then
+  begin
+    MinimapRegion.SetSize(AllocatedWidth, AllocatedHeight);
     MinimapRegion.Clear($FF000000);
     DrawNineSlice(MinimapRegion, MinimapRegion.BoundsRect, TempBmp.BoundsRect,
                   Rect(16, 16, 16, 16), TempBmp);
@@ -148,97 +163,5 @@ begin
 
   TempBmp.Free;
 end;
-
-
-{ TSkillPanelCompact }
-
-constructor TSkillPanelCompact.CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow);
-begin
-  inherited;
-end;
-
-destructor TSkillPanelCompact.Destroy;
-begin
-  inherited;
-end;
-
-function TSkillPanelCompact.PanelWidth: Integer;
-begin
-  Result := 640;
-end;
-
-function TSkillPanelCompact.PanelHeight: Integer;
-begin
-  Result := 80;
-end;
-
-// Assigns a clickable rectangle to the minimap
-function TSkillPanelCompact.MinimapRect: TRect;
-begin
-  Result := Rect(456, 36, 632, 76)
-end;
-
-// Assigns a clickable rectangle to the replay "R" icon
-function TSkillPanelCompact.ReplayIconRect: TRect;
-begin
-  Result := Rect(190, 0, 208, 32);
-end;
-
-// Assigns a non-clickable rectangle to the hatch count icon & digits
-function TSkillPanelCompact.HatchIconRect: TRect;
-begin
-  Result := Rect(224, 0, 312, 32);
-end;
-
-// Assigns a non-clickable rectangle to the alive count icon & digits
-function TSkillPanelCompact.AliveIconRect: TRect;
-begin
-  Result := Rect(320, 0, 408, 32);
-end;
-
-// Assigns a non-clickable rectangle to the saved count icon & digits
-function TSkillPanelCompact.ExitIconRect: TRect;
-begin
-  Result := Rect(416, 0, 504, 32);
-end;
-
-// Assigns a non-clickable rectangle to the timer icon & digits
-function TSkillPanelCompact.TimeIconRect: TRect;
-begin
-  Result := Rect(512, 0, 608, 32);
-end;
-
-function TSkillPanelCompact.GetButtonList: TPanelButtonArray;
-var
-  i : Integer;
-begin
-  SetLength(Result, 14);
-  Result[0] := spbSlower;
-  Result[1] := spbFaster;
-  for i := 2 to (2 + MAX_SKILL_TYPES_PER_LEVEL - 1) do
-    Result[i] := Low(TSkillPanelButton); // placeholder for any skill
-  Result[2 + MAX_SKILL_TYPES_PER_LEVEL] := spbPause;
-  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 1] := spbNuke;
-end;
-
-procedure TSkillPanelCompact.ResizeMinimapRegion(MinimapRegion: TBitmap32);
-var
-  TempBmp: TBitmap32;
-begin
-  TempBmp := TBitmap32.Create;
-  TempBmp.Assign(MinimapRegion);
-
-  if (MinimapRegion.Width <> 190) or (MinimapRegion.Height <> 48) then
-  begin
-    MinimapRegion.SetSize(190, 48);
-    MinimapRegion.Clear($FF000000);
-    DrawNineSlice(MinimapRegion, MinimapRegion.BoundsRect, TempBmp.BoundsRect,
-                  Rect(16, 16, 16, 16), TempBmp);
-  end;
-
-  TempBmp.Free;
-end;
-
 
 end.
-
