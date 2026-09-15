@@ -81,6 +81,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 
     procedure SearchLevels;
+    procedure ResetSearchBar;
     procedure CloseSearchResultsPanel;
     procedure sbSearchLevelsKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure sbSearchLevelsInvokeSearch(Sender: TObject);
@@ -93,6 +94,7 @@ type
       Shift: TShiftState);
     procedure btnResetAllProgressClick(Sender: TObject);
     procedure tvLevelSelectChange(Sender: TObject; Node: TTreeNode);
+    procedure sbSearchLevelsClick(Sender: TObject);
   private
     fLastLevelPath: String;
     fLastGroup: TNeoLevelGroup;
@@ -458,6 +460,8 @@ procedure TFLevelSelect.FormCreate(Sender: TObject);
 begin
   lblName.Font.Name := 'Hobo Std';
   lblName.Font.Style := [];
+
+  ResetSearchBar;
 
   fTalismanButtons := TObjectList<TSpeedButton>.Create;
 
@@ -1450,6 +1454,12 @@ begin
   end;
 end;
 
+procedure TFLevelSelect.sbSearchLevelsClick(Sender: TObject);
+begin
+  sbSearchLevels.Clear;
+  sbSearchLevels.Font.Color := clWindowText;
+end;
+
 procedure TFLevelSelect.sbSearchLevelsInvokeSearch(Sender: TObject);
 begin
   SearchLevels;
@@ -1475,8 +1485,9 @@ var
     begin
       L := aGroup.Levels[i];
 
-      if AnsiContainsText(L.Title, SearchText) then
-        lbSearchResults.Items.AddObject(L.Title, L.TreeNode);
+      if AnsiContainsText(L.Title, SearchText) or
+         AnsiContainsText(L.Author, SearchText) then
+           lbSearchResults.Items.AddObject(L.Title, L.TreeNode);
 
       Inc(Progress);
 
@@ -1576,6 +1587,12 @@ begin
   tvLevelSelect.SetFocus;
 end;
 
+procedure TFLevelSelect.ResetSearchBar;
+begin
+  sbSearchLevels.Font.Color := clActiveCaption;
+  sbSearchLevels.Text := 'Search for a title or author';
+end;
+
 procedure TFLevelSelect.CloseSearchResultsPanel;
 begin
   // Close and reset search panel
@@ -1583,7 +1600,8 @@ begin
   lbSearchResults.Visible := False;
   lbSearchResults.Enabled := False;
   btnCloseSearch.Visible := False;
-  sbSearchLevels.Text := '';
+
+  ResetSearchBar;
 
   tvLevelSelect.Visible := True;
   lblSearchResultsInfo.Visible := False;
