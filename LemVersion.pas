@@ -9,8 +9,8 @@ uses
 
 const
   MAJOR_VERSION = 1;
-  MINOR_VERSION = 1;
-  HOTFIX_VERSION = 3;
+  MINOR_VERSION = 2;
+  HOTFIX_VERSION = 0;
   RC_VERSION = 0;
 
   STYLE_VERSION = '12.11/'; // For server usage - a new style version should only be used when backwards compatibility breaks.
@@ -18,8 +18,8 @@ const
 
   function COMMIT_ID: String;
 
-function MakeVersionString(aFormat, aCore, aFeature, aHotfix: Integer): String;
-function MakeVersionID(aFormat, aCore, aFeature, aHotfix: Integer): Int64;
+function MakeVersionString(Major, Minor, Hotfix, RC: Integer): String;
+function MakeVersionID(Major, Minor, Hotfix, RC: Integer): Int64;
 function CurrentVersionString: String;
 function CurrentVersionID: Int64;
 
@@ -43,7 +43,7 @@ begin
   Result := MakeVersionID(MAJOR_VERSION, MINOR_VERSION, HOTFIX_VERSION, RC_VERSION);
 end;
 
-function MakeVersionString(aFormat, aCore, aFeature, aHotfix: Integer): String;
+function MakeVersionString(Major, Minor, Hotfix, RC: Integer): String;
   function NumberToLetters(aValue: Integer): String;
   var
     n: Integer;
@@ -56,23 +56,23 @@ function MakeVersionString(aFormat, aCore, aFeature, aHotfix: Integer): String;
     until aValue = 0;
   end;
 begin
-  Result := IntToStr(aFormat);
-  Result := Result + '.' + IntToStr(aCore);
-  Result := Result + '.' + IntToStr(aFeature);
+  Result := IntToStr(Major);
+  Result := Result + '.' + IntToStr(Minor);
+
+  if Hotfix > 0 then
+    Result := Result + '.' + IntToStr(Hotfix);
+
   {$ifdef rc}
-  Result := Result + '-RC' + IntToStr(aHotfix);
-  {$else}
-  if aHotfix > 0 then
-    Result := Result + '-' + NumberToLetters(aHotfix);
+  Result := Result + '-RC' + IntToStr(RC);
   {$endif}
 end;
 
-function MakeVersionID(aFormat, aCore, aFeature, aHotfix: Integer): Int64;
+function MakeVersionID(Major, Minor, Hotfix, RC: Integer): Int64;
 begin
-  Result := aFormat;
-  Result := (Result * 1000) + aCore;
-  Result := (Result * 1000) + aFeature;
-  Result := (Result * 1000) {$ifndef rc}+ aHotfix{$endif};
+  Result := Major;
+  Result := (Result * 1000) + Minor;
+  Result := (Result * 1000) + Hotfix;
+  Result := (Result * 1000) {$ifndef rc}+ RC{$endif};
 end;
 
 end.
