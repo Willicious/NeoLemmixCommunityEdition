@@ -5,13 +5,14 @@ interface
 
 uses
   LemTypes,
-  Classes, GR32,
+  Math, Classes, GR32,
   GameWindowInterface, GameBaseSkillPanel,
   SharedGlobals;
 
 type
-  TSkillPanelStandard = class(TBaseSkillPanel)
+  TSkillPanel = class(TBaseSkillPanel)
   protected
+    function CompactSkillPanel: Boolean;
     function GetButtonList: TPanelButtonArray; override;
 
     function PanelWidth: Integer; override;
@@ -25,42 +26,6 @@ type
     function AliveIconRect: TRect; override;
     function ExitIconRect: TRect; override;
     function TimeIconRect: TRect; override;
-
-    procedure CreateNewInfoString; override;
-    function DrawStringLength: Integer; override;
-    function DrawStringTemplate: string; override;
-    function TimeLimitStartIndex: Integer; override;
-    function CursorInfoEndIndex: Integer; override;
-    function SaveCountStartIndex: Integer; override;
-    function LemmingCountStartIndex: Integer; override;
-  public
-    constructor CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow); override;
-    destructor Destroy; override;
-  end;
-
-  TSkillPanelCompact = class(TBaseSkillPanel)
-  protected
-    function GetButtonList: TPanelButtonArray; override;
-
-    function PanelWidth: Integer; override;
-    function PanelHeight: Integer; override;
-
-    procedure ResizeMinimapRegion(MinimapRegion: TBitmap32); override;
-    function MinimapRect: TRect; override;
-
-    function ReplayIconRect: TRect; override;
-    function HatchIconRect: TRect; override;
-    function AliveIconRect: TRect; override;
-    function ExitIconRect: TRect; override;
-    function TimeIconRect: TRect; override;
-
-    procedure CreateNewInfoString; override;
-    function DrawStringLength: Integer; override;
-    function DrawStringTemplate: string; override;
-    function SaveCountStartIndex: Integer; override;
-    function TimeLimitStartIndex: Integer; override;
-    function CursorInfoEndIndex: Integer; override;
-    function LemmingCountStartIndex: Integer; override;
   public
     constructor CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow); override;
     destructor Destroy; override;
@@ -73,115 +38,82 @@ uses
 
 { TSkillPanelStandard }
 
-constructor TSkillPanelStandard.CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow);
+constructor TSkillPanel.CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow);
 begin
   inherited;
 end;
 
-destructor TSkillPanelStandard.Destroy;
+destructor TSkillPanel.Destroy;
 begin
   inherited;
 end;
 
-function TSkillPanelStandard.PanelWidth: Integer;
+function TSkillPanel.CompactSkillPanel: Boolean;
 begin
-  Result := 416 * ResMod;
+  Result := GameParams.CompactSkillPanel;
 end;
 
-function TSkillPanelStandard.PanelHeight: Integer;
+function TSkillPanel.PanelWidth: Integer;
 begin
-  Result := 40 * ResMod;
+  if CompactSkillPanel then
+    Result := 640
+  else
+    Result := 832;
 end;
 
-function TSkillPanelStandard.DrawStringLength: Integer;
+function TSkillPanel.PanelHeight: Integer;
 begin
-  Result := 38;
+  Result := 80;
 end;
 
-function TSkillPanelStandard.DrawStringTemplate: string;
+function TSkillPanel.MinimapRect: TRect;
 begin
-  Result := '............' + '.' + ' ' + #92 + '_...' + ' ' + #93 + '_...' + ' '
-                           + #94 + '_...' + ' ' + #95 +  '_.-..';
+  if CompactSkillPanel then
+    Result := Rect(456, 36, 632, 76)
+  else
+    Result := Rect(616, 6, 824, 74);
 end;
 
-function TSkillPanelStandard.CursorInfoEndIndex: Integer;
+function TSkillPanel.ReplayIconRect: TRect;
 begin
-  Result := 12;
+  Result := Rect(190, 0, 208, 32);
 end;
 
-function TSkillPanelStandard.LemmingCountStartIndex: Integer;
+function TSkillPanel.HatchIconRect: TRect;
 begin
-  Result := 21;
+  Result := Rect(224, 0, 312, 32);
 end;
 
-function TSkillPanelStandard.SaveCountStartIndex: Integer;
+function TSkillPanel.AliveIconRect: TRect;
 begin
-  Result := 27;
+  Result := Rect(320, 0, 408, 32);
 end;
 
-function TSkillPanelStandard.TimeLimitStartIndex: Integer;
+function TSkillPanel.ExitIconRect: TRect;
 begin
-  Result := 33;
+  Result := Rect(416, 0, 504, 32);
 end;
 
-function TSkillPanelStandard.MinimapRect: TRect;
+function TSkillPanel.TimeIconRect: TRect;
 begin
-  Result := Rect(308 * ResMod, 3 * ResMod, 412 * ResMod, 37 * ResMod);
+  Result := Rect(512, 0, 608, 32);
 end;
 
-// Assigns a clickable rectangle to the replay "R" icon
-function TSkillPanelStandard.ReplayIconRect: TRect;
-begin
-  Result := Rect(94 * ResMod, 2 * ResMod, 104 * ResMod, 16 * ResMod);
-end;
-
-// Assigns a non-clickable rectangle to the hatch count icon & digits
-function TSkillPanelStandard.HatchIconRect: TRect;
-begin
-  Result := Rect(112 * ResMod, 2 * ResMod, 156 * ResMod, 16 * ResMod);
-end;
-
-// Assigns a non-clickable rectangle to the alive count icon & digits
-function TSkillPanelStandard.AliveIconRect: TRect;
-begin
-  Result := Rect(160 * ResMod, 2 * ResMod, 204 * ResMod, 16 * ResMod);
-end;
-
-// Assigns a non-clickable rectangle to the exit count icon & digits
-function TSkillPanelStandard.ExitIconRect: TRect;
-begin
-  Result := Rect(208 * ResMod, 2 * ResMod, 252 * ResMod, 16 * ResMod);
-end;
-
-// Assigns a non-clickable rectangle to the timer icon & digits
-function TSkillPanelStandard.TimeIconRect: TRect;
-begin
-  Result := Rect(256 * ResMod, 2 * ResMod, 304 * ResMod, 16 * ResMod);
-end;
-
-procedure TSkillPanelStandard.CreateNewInfoString;
-begin
-  SetInfoCursor(1);
-  SetReplayIcon(13);
-  SetInfoLemHatch(16);
-  SetInfoLemAlive(22);
-  SetExitIcon(27);
-  SetInfoLemIn(28);
-  SetTimeLimit(33);
-  SetInfoTime(34, 37);
-end;
-
-function TSkillPanelStandard.GetButtonList: TPanelButtonArray;
+function TSkillPanel.GetButtonList: TPanelButtonArray;
 var
   i : Integer;
 begin
-  SetLength(Result, 19);
+  SetLength(Result, IfThen(CompactSkillPanel, 14, 19));
   Result[0] := spbSlower;
   Result[1] := spbFaster;
   for i := 2 to (2 + MAX_SKILL_TYPES_PER_LEVEL -1) do
     Result[i] := Low(TSkillPanelButton); // placeholder for any skill
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL] := spbPause;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 1] := spbNuke;
+
+  if CompactSkillPanel then
+    Exit;
+
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 2] := spbFastForward;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 3] := spbRestart;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 4] := spbBackOneFrame; // and below: spbForwardOneFrame
@@ -189,156 +121,32 @@ begin
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 6] := spbPhysicsView; // and below: spbLoadReplay
 end;
 
-procedure TSkillPanelStandard.ResizeMinimapRegion(MinimapRegion: TBitmap32);
+procedure TSkillPanel.ResizeMinimapRegion(MinimapRegion: TBitmap32);
 var
   TempBmp: TBitmap32;
+  AllocatedWidth, AllocatedHeight: Integer;
 begin
   TempBmp := TBitmap32.Create;
   TempBmp.Assign(MinimapRegion);
 
-  if (MinimapRegion.Width <> 111 * ResMod) or (MinimapRegion.Height <> 38 * ResMod) then
+  if CompactSkillPanel then
   begin
-    MinimapRegion.SetSize(111 * ResMod, 38 * ResMod);
+    AllocatedWidth := 190;
+    AllocatedHeight := 48;
+  end else begin
+    AllocatedWidth := 222;
+    AllocatedHeight := 76;
+  end;
+
+  if (MinimapRegion.Width <> AllocatedWidth) or (MinimapRegion.Height <> AllocatedHeight) then
+  begin
+    MinimapRegion.SetSize(AllocatedWidth, AllocatedHeight);
     MinimapRegion.Clear($FF000000);
     DrawNineSlice(MinimapRegion, MinimapRegion.BoundsRect, TempBmp.BoundsRect,
-                  Rect(8 * ResMod, 8 * ResMod, 8 * ResMod, 8 * ResMod), TempBmp);
+                  Rect(16, 16, 16, 16), TempBmp);
   end;
 
   TempBmp.Free;
 end;
-
-
-{ TSkillPanelCompact }
-
-constructor TSkillPanelCompact.CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow);
-begin
-  inherited;
-end;
-
-destructor TSkillPanelCompact.Destroy;
-begin
-  inherited;
-end;
-
-function TSkillPanelCompact.PanelWidth: Integer;
-begin
-  Result := 320 * ResMod;
-end;
-
-function TSkillPanelCompact.PanelHeight: Integer;
-begin
-  Result := 40 * ResMod;
-end;
-
-function TSkillPanelCompact.DrawStringLength: Integer;
-begin
-  Result := 38;
-end;
-
-function TSkillPanelCompact.DrawStringTemplate: string;
-begin
-  Result := '............' + '.' + ' ' + #92 + '_...' + ' ' + #93 + '_...' + ' '
-                           + #94 + '_...' + ' ' + #95 +  '_.-..';
-end;
-
-function TSkillPanelCompact.CursorInfoEndIndex: Integer;
-begin
-  Result := 12;
-end;
-
-function TSkillPanelCompact.LemmingCountStartIndex: Integer;
-begin
-  Result := 21;
-end;
-
-function TSkillPanelCompact.SaveCountStartIndex: Integer;
-begin
-  Result := 27;
-end;
-
-function TSkillPanelCompact.TimeLimitStartIndex: Integer;
-begin
-  Result := 33;
-end;
-
-function TSkillPanelCompact.MinimapRect: TRect;
-begin
-  Result := Rect(228 * ResMod, 18 * ResMod, 316 * ResMod, 38 * ResMod)
-end;
-
-// Assigns a clickable rectangle to the replay "R" icon
-function TSkillPanelCompact.ReplayIconRect: TRect;
-begin
-  Result := Rect(94 * ResMod, 2 * ResMod, 104 * ResMod, 16 * ResMod);
-end;
-
-// Assigns a non-clickable rectangle to the hatch count icon & digits
-function TSkillPanelCompact.HatchIconRect: TRect;
-begin
-  Result := Rect(112 * ResMod, 2 * ResMod, 156 * ResMod, 16 * ResMod);
-end;
-
-// Assigns a non-clickable rectangle to the alive count icon & digits
-function TSkillPanelCompact.AliveIconRect: TRect;
-begin
-  Result := Rect(160 * ResMod, 2 * ResMod, 204 * ResMod, 16 * ResMod);
-end;
-
-// Assigns a non-clickable rectangle to the saved count icon & digits
-function TSkillPanelCompact.ExitIconRect: TRect;
-begin
-  Result := Rect(208 * ResMod, 2 * ResMod, 252 * ResMod, 16 * ResMod);
-end;
-
-// Assigns a non-clickable rectangle to the timer icon & digits
-function TSkillPanelCompact.TimeIconRect: TRect;
-begin
-  Result := Rect(256 * ResMod, 2 * ResMod, 304 * ResMod, 16 * ResMod);
-end;
-
-procedure TSkillPanelCompact.CreateNewInfoString;
-begin
-  SetInfoCursor(1);
-  SetReplayIcon(13);
-  SetInfoLemHatch(16);
-  SetInfoLemAlive(22);
-  SetExitIcon(27);
-  SetInfoLemIn(28);
-  SetTimeLimit(33);
-  SetInfoTime(34, 37);
-end;
-
-function TSkillPanelCompact.GetButtonList: TPanelButtonArray;
-var
-  i : Integer;
-begin
-  SetLength(Result, 14);
-  Result[0] := spbSlower;
-  Result[1] := spbFaster;
-  for i := 2 to (2 + MAX_SKILL_TYPES_PER_LEVEL - 1) do
-    Result[i] := Low(TSkillPanelButton); // placeholder for any skill
-  Result[2 + MAX_SKILL_TYPES_PER_LEVEL] := spbPause;
-  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 1] := spbNuke;
-end;
-
-procedure TSkillPanelCompact.ResizeMinimapRegion(MinimapRegion: TBitmap32);
-var
-  TempBmp: TBitmap32;
-begin
-  TempBmp := TBitmap32.Create;
-  TempBmp.Assign(MinimapRegion);
-
-  if (MinimapRegion.Width <> 95 * ResMod) or (MinimapRegion.Height <> 24 * ResMod) then
-  begin
-    MinimapRegion.SetSize(95 * ResMod, 24 * ResMod);
-    MinimapRegion.Clear($FF000000);
-    DrawNineSlice(MinimapRegion, MinimapRegion.BoundsRect, TempBmp.BoundsRect,
-                  Rect(8 * ResMod, 8 * ResMod, 8 * ResMod, 8 * ResMod), TempBmp);
-  end;
-
-  TempBmp.Free;
-end;
-
 
 end.
-

@@ -346,15 +346,15 @@ begin
     SkillPanel.Zoom := Min(GameParams.PanelZoomLevel, GameParams.MainForm.ClientWidth div 416 div ResMod);
 
   Img.Width := Min(ClientWidth, GameParams.Level.Info.Width * fInternalZoom * ResMod);
-  Img.Height := Min(ClientHeight - (SkillPanel.Zoom * 40 * ResMod), GameParams.Level.Info.Height * fInternalZoom * ResMod);
+  Img.Height := Min(ClientHeight - (SkillPanel.Zoom * 80), GameParams.Level.Info.Height * fInternalZoom * ResMod);
   Img.Left := (ClientWidth - Img.Width) div 2;
   SkillPanel.ClientWidth := ClientWidth;
   // tops are calculated later
 
-  VertOffset := (ClientHeight - ((SkillPanel.Zoom * 40 * ResMod) + Img.Height)) div 2;
+  VertOffset := ((ClientHeight - (SkillPanel.Zoom * 80) - Img.Height) div 2);
   Img.Top := VertOffset;
   SkillPanel.Top := Img.Top + Img.Height;
-  SkillPanel.Height := Max(SkillPanel.Zoom * 40 * ResMod, ClientHeight - SkillPanel.Top);
+  SkillPanel.Height := Max(SkillPanel.Zoom * 80, ClientHeight - SkillPanel.Top);
   SkillPanel.Image.Left := (SkillPanel.ClientWidth - SkillPanel.Image.Width) div 2;
   SkillPanel.Image.Update;
   SkillPanel.ResetMinimapPosition;
@@ -489,6 +489,7 @@ begin
     fRenderer.RenderMinimap(SkillPanel.Minimap, True);
   end else
     fRenderer.RenderMinimap(SkillPanel.Minimap, False);
+
   SkillPanel.DrawMinimap;
 end;
 
@@ -1229,12 +1230,8 @@ begin
   Img.BitmapAlign := baCustom;
   Img.ScaleMode := smScale;
 
-  // create toolbar
-  if GameParams.CompactSkillPanel then
-    SkillPanel := TSkillPanelCompact.CreateWithWindow(Self, Self)
-  else
-    SkillPanel := TSkillPanelStandard.CreateWithWindow(Self, Self);
-
+  // create skill panel
+  SkillPanel := TSkillPanel.CreateWithWindow(Self, Self);
   SkillPanel.Parent := Self;
 
   Self.KeyPreview := True;
@@ -2035,13 +2032,13 @@ procedure TGameWindow.SkillPanel_MinimapClick(Sender: TObject; const P: TPoint);
 var
   O: Single;
 begin
-  O := -P.X * 8 * fInternalZoom;
+  O := -P.X * (4 * ResMod) * fInternalZoom;
   O :=  O + Img.Width div 2;
   if O < MinScroll then O := MinScroll;
   if O > MaxScroll then O := MaxScroll;
   Img.OffSetHorz := O;
 
-  O := -P.Y * 8 * fInternalZoom;
+  O := -P.Y * (4 * ResMod) * fInternalZoom;
   O :=  O + Img.Height div 2;
   if O < MinVScroll then O := MinVScroll;
   if O > MaxVScroll then O := MaxVScroll;
