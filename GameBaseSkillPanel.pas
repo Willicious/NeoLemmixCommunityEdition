@@ -746,8 +746,6 @@ var
     end;
   end;
 begin
-  fPanelIcons := TBitmap32.Create;
-
   AddGraphic('panel_icons');
   AddGraphic('panel_chars');
 end;
