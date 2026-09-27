@@ -100,7 +100,8 @@ type
       procedure SetDefaultsFunctional;
       procedure SetDefaultsAdvanced;
 
-      procedure SetKeyFunction(aKey: Word; aFunc: TLemmixHotkeyAction; aMod: Integer = 0);
+      procedure SetKeyByName(const aKeyName: String; aFunc: TLemmixHotkeyAction; aMod: Integer = 0);
+      procedure SetKeyByCode(aKey: Word; aFunc: TLemmixHotkeyAction; aMod: Integer = 0);
       function CheckKeyEffect(aKey: Word): TLemmixHotkey;
       function CheckForKey(aFunc: TLemmixHotkeyAction): Boolean; overload;
       function CheckForKey(aFunc: TLemmixHotkeyAction; aMod: Integer): Boolean; overload;
@@ -108,6 +109,7 @@ type
       class function InterpretMain(s: String): TLemmixHotkeyAction;
       class function InterpretSecondary(s: String): Integer;
       class function GetKeyNames(aUseHardcoded: Boolean): TKeyNameArray;
+      class function GetKeyCode(const aKeyName: String): Word;
   end;
 
 implementation
@@ -135,237 +137,217 @@ procedure TLemmixHotkeyManager.SetDefaultsFunctional;
 begin
   ClearAllKeys;
 
-  // Here's the simple ones that don't need further settings.
-  SetKeyFunction($08, lka_ToggleShadows);
-  SetKeyFunction($53, lka_DirLeft);
-  SetKeyFunction($46, lka_DirRight);
-  SetKeyFunction($25, lka_DirLeft);
-  SetKeyFunction($27, lka_DirRight);
-  SetKeyFunction($20, lka_Pause);
-  SetKeyFunction($70, lka_Restart);
-  SetKeyFunction($71, lka_LoadState);
-  SetKeyFunction($72, lka_SaveState);
-  SetKeyFunction($34, lka_FastForward);
-  SetKeyFunction($35, lka_FastForward);
-  SetKeyFunction($04, lka_Pause);
-  SetKeyFunction($05, lka_ZoomIn);
-  SetKeyFunction($06, lka_ZoomOut);
-  SetKeyFunction($1B, lka_Exit);
-  SetKeyFunction($02, lka_Scroll);
-  SetKeyFunction($75, lka_SaveReplay);
-  SetKeyFunction($76, lka_LoadReplay);
-  SetKeyFunction($11, lka_Highlight);
-  SetKeyFunction($19, lka_Highlight);
-  SetKeyFunction($4D, lka_Music);
-  SetKeyFunction($4E, lka_Sound);
-  SetKeyFunction($73, lka_ReleaseRateDown);
-  SetKeyFunction($74, lka_ReleaseRateUp);
-  SetKeyFunction($49, lka_FallDistance);
-  SetKeyFunction($50, lka_EditReplay);
-  SetKeyFunction($4F, lka_ReplayInsert);
-  SetKeyFunction($59, lka_CancelPlayback);
-  SetKeyFunction($0D, lka_SaveImage);
-  SetKeyFunction($4A, lka_Scroll);
-
-  // Misc ones that need other details set
-  SetKeyFunction($BF, lka_PhysicsView, 1);
-  SetKeyFunction($DB, lka_SkillProjection, 1);
-  SetKeyFunction($DD, lka_Projection, 1);
-
-  // Skips
-  SetKeyFunction($31, lka_Skip, -17);
-  SetKeyFunction($32, lka_Skip, -1);
-  SetKeyFunction($33, lka_Skip, 1);
-  SetKeyFunction($36, lka_Skip, 170);
-  SetKeyFunction($37, lka_SpecialSkip, 0);
-  SetKeyFunction($38, lka_SpecialSkip, 1);
-  SetKeyFunction($39, lka_SpecialSkip, 2);
-
-  // Skills
-  SetKeyFunction($10, lka_SkillLeft);                      // <previous skill>, shift
-  SetKeyFunction($42, lka_SkillRight);                     // <next skill>, B
-  SetKeyFunction($44, lka_Skill, Integer(spbWalker));      // walker, D
-  SetKeyFunction($52, lka_Skill, Integer(spbJumper));      // jumper, R
-  SetKeyFunction($12, lka_Skill, Integer(spbShimmier));    // shimmier, alt
-  SetKeyFunction($48, lka_Skill, Integer(spbSlider));      // slider, H
-  SetKeyFunction($5A, lka_Skill, Integer(spbClimber));     // climber, Z
-                                                           // swimmer, <none>
-  SetKeyFunction($51, lka_Skill, Integer(spbFloater));     // floater, Q
-  SetKeyFunction($09, lka_Skill, Integer(spbGlider));      // glider, tab
-                                                           // disarmer, <none>
-  SetKeyFunction($56, lka_Skill, Integer(spbBomber));      // bomber, V
-                                                           // stoner, <none>
-  SetKeyFunction($58, lka_Skill, Integer(spbBlocker));     // blocker, X
-  SetKeyFunction($54, lka_Skill, Integer(spbPlatformer));  // platformer, T
-  SetKeyFunction($41, lka_Skill, Integer(spbBuilder));     // builder, A
-                                                           // stacker, <none>
-  SetKeyFunction($59, lka_Skill, Integer(spbLaserer));     // laserer, Y
-  SetKeyFunction($45, lka_Skill, Integer(spbBasher));      // basher, E
-  SetKeyFunction($43, lka_Skill, Integer(spbFencer));      // fencer, C
-  SetKeyFunction($47, lka_Skill, Integer(spbMiner));       // miner, G
-  SetKeyFunction($57, lka_Skill, Integer(spbDigger));      // digger, W
-                                                           // cloner, <none>
-  SetKeyFunction($68, lka_NudgeUp, 160);
-  SetKeyFunction($62, lka_NudgeDown, 160);
-  SetKeyFunction($64, lka_NudgeLeft, 160);
-  SetKeyFunction($66, lka_NudgeRight, 160);
+  SetKeyByName('Backspace', lka_ToggleShadows);
+  SetKeyByName('S', lka_DirLeft);
+  SetKeyByName('F', lka_DirRight);
+  SetKeyByName('Left Arrow', lka_DirLeft);
+  SetKeyByName('Right Arrow', lka_DirRight);
+  SetKeyByName('Space', lka_Pause);
+  SetKeyByName('F1', lka_Restart);
+  SetKeyByName('F2', lka_LoadState);
+  SetKeyByName('F3', lka_SaveState);
+  SetKeyByName('4', lka_FastForward);
+  SetKeyByName('5', lka_FastForward);
+  SetKeyByName('Middle-Click', lka_Pause);
+  SetKeyByName('Wheel Up', lka_ZoomIn);
+  SetKeyByName('Wheel Down', lka_ZoomOut);
+  SetKeyByName('Esc', lka_Exit);
+  SetKeyByName('Right-Click', lka_Scroll);
+  SetKeyByName('F6', lka_SaveReplay);
+  SetKeyByName('F7', lka_LoadReplay);
+  SetKeyByName('Ctrl (Left)', lka_Highlight);
+  SetKeyByName('Ctrl (Right)', lka_Highlight);
+  SetKeyByName('M', lka_Music);
+  SetKeyByName('N', lka_Sound);
+  SetKeyByName('F4', lka_ReleaseRateDown);
+  SetKeyByName('F5', lka_ReleaseRateUp);
+  SetKeyByName('I', lka_FallDistance);
+  SetKeyByName('P', lka_EditReplay);
+  SetKeyByName('O', lka_ReplayInsert);
+  SetKeyByName('Y', lka_CancelPlayback);
+  SetKeyByName('Enter', lka_SaveImage);
+  SetKeyByName('J', lka_Scroll);
+  SetKeyByName('/', lka_PhysicsView, 1);
+  SetKeyByName('[', lka_SkillProjection, 1);
+  SetKeyByName(']', lka_Projection, 1);
+  SetKeyByName('1', lka_Skip, -17);
+  SetKeyByName('2', lka_Skip, -1);
+  SetKeyByName('3', lka_Skip, 1);
+  SetKeyByName('6', lka_Skip, 170);
+  SetKeyByName('7', lka_SpecialSkip, 0);
+  SetKeyByName('8', lka_SpecialSkip, 1);
+  SetKeyByName('9', lka_SpecialSkip, 2);
+  SetKeyByName('Shift', lka_SkillLeft);
+  SetKeyByName('B', lka_SkillRight);
+  SetKeyByName('D', lka_Skill, Integer(spbWalker));
+  SetKeyByName('R', lka_Skill, Integer(spbJumper));
+  SetKeyByName('Alt', lka_Skill, Integer(spbShimmier));
+  SetKeyByName('H', lka_Skill, Integer(spbSlider));
+  SetKeyByName('Z', lka_Skill, Integer(spbClimber));
+  SetKeyByName('Q', lka_Skill, Integer(spbFloater));
+  SetKeyByName('Tab', lka_Skill, Integer(spbGlider));
+  SetKeyByName('V', lka_Skill, Integer(spbBomber));
+  SetKeyByName('X', lka_Skill, Integer(spbBlocker));
+  SetKeyByName('T', lka_Skill, Integer(spbPlatformer));
+  SetKeyByName('A', lka_Skill, Integer(spbBuilder));
+  SetKeyByName('Y', lka_Skill, Integer(spbLaserer));
+  SetKeyByName('E', lka_Skill, Integer(spbBasher));
+  SetKeyByName('C', lka_Skill, Integer(spbFencer));
+  SetKeyByName('G', lka_Skill, Integer(spbMiner));
+  SetKeyByName('W', lka_Skill, Integer(spbDigger));
+  SetKeyByName('NumPad 8', lka_NudgeUp, 160);
+  SetKeyByName('NumPad 2', lka_NudgeDown, 160);
+  SetKeyByName('NumPad 4', lka_NudgeLeft, 160);
+  SetKeyByName('NumPad 6', lka_NudgeRight, 160);
 end;
 
 procedure TLemmixHotkeyManager.SetDefaultsAdvanced;
 begin
   ClearAllKeys;
 
-  SetKeyFunction($02, lka_Skip, -1);
-  SetKeyFunction($04, lka_Pause);
-  SetKeyFunction($50, lka_Pause);
-  SetKeyFunction($4E, lka_Nuke);
-  SetKeyFunction($52, lka_Restart);
-  SetKeyFunction($46, lka_FastForward);
-//  SetKeyFunction($54, lka_Turbo);
-  SetKeyFunction($1B, lka_Exit);
-  SetKeyFunction($05, lka_ZoomIn);
-  SetKeyFunction($06, lka_ZoomOut);
-  SetKeyFunction($4D, lka_Music);
-  SetKeyFunction($58, lka_Sound);
-  SetKeyFunction($41, lka_ShowAthleteInfo);
-  SetKeyFunction($BB, lka_ReleaseRateUp);
-  SetKeyFunction($BD, lka_ReleaseRateDown);
-  SetKeyFunction($6B, lka_ReleaseRateMax);
-  SetKeyFunction($6D, lka_ReleaseRateMin);
-  SetKeyFunction($48, lka_Highlight);
-  SetKeyFunction($19, lka_ForceWalker);
-  SetKeyFunction($57, lka_ForceWalker);
-  SetKeyFunction($25, lka_DirLeft);
-  SetKeyFunction($27, lka_DirRight);
-  SetKeyFunction($28, lka_SkillLeft);
-  SetKeyFunction($26, lka_SkillRight);
-  SetKeyFunction($49, lka_FallDistance);
-  SetKeyFunction($0D, lka_ReleaseMouse);
-  SetKeyFunction($BA, lka_ShowUsedSkills);
-  SetKeyFunction($08, lka_Skip, -25);
-  SetKeyFunction($4A, lka_Skip, 20);
-  SetKeyFunction($60, lka_Skip, 100);
-  SetKeyFunction($20, lka_Skip, 1000);
-  SetKeyFunction($5A, lka_SpecialSkip, 0);
-  SetKeyFunction($09, lka_SpecialSkip, 1);
-  SetKeyFunction($10, lka_SpecialSkip, 1);
-  SetKeyFunction($30, lka_SlowMotion);
-  SetKeyFunction($BE, lka_SlowMotion);
-  SetKeyFunction($2E, lka_Cheat);
-  SetKeyFunction($56, lka_PhysicsView, 1);
-  SetKeyFunction($14, lka_PhysicsView, 0);
-  SetKeyFunction($4C, lka_LoadReplay);
-  SetKeyFunction($53, lka_SaveReplay);
-  SetKeyFunction($43, lka_CancelReplay);
-  SetKeyFunction($45, lka_EditReplay);
-  SetKeyFunction($4F, lka_ReplayInsert);
-  SetKeyFunction($7A, lka_SaveState);
-  SetKeyFunction($7B, lka_LoadState);
-  SetKeyFunction($59, lka_CancelPlayback);
-  SetKeyFunction($79, lka_SaveImage);
-  SetKeyFunction($31, lka_SkillButton, 1);
-  SetKeyFunction($32, lka_SkillButton, 2);
-  SetKeyFunction($33, lka_SkillButton, 3);
-  SetKeyFunction($34, lka_SkillButton, 4);
-  SetKeyFunction($35, lka_SkillButton, 5);
-  SetKeyFunction($36, lka_SkillButton, 6);
-  SetKeyFunction($37, lka_SkillButton, 7);
-  SetKeyFunction($38, lka_SkillButton, 8);
-  SetKeyFunction($39, lka_SkillButton, 9);
-  SetKeyFunction($30, lka_SkillButton, 10);
-  SetKeyFunction($70, lka_SkillButton, 11);
-  SetKeyFunction($71, lka_SkillButton, 12);
-  SetKeyFunction($72, lka_SkillButton, 13);
-  SetKeyFunction($73, lka_SkillButton, 14);
-  SetKeyFunction($68, lka_NudgeUp, 160);
-  SetKeyFunction($62, lka_NudgeDown, 160);
-  SetKeyFunction($64, lka_NudgeLeft, 160);
-  SetKeyFunction($66, lka_NudgeRight, 160);
+  SetKeyByName('Right-Click', lka_Skip, -1);
+  SetKeyByName('Middle-Click', lka_Pause);
+  SetKeyByName('P', lka_Pause);
+  SetKeyByName('N', lka_Nuke);
+  SetKeyByName('R', lka_Restart);
+  SetKeyByName('F', lka_FastForward);
+//SetKeyByName('T', lka_Turbo);
+  SetKeyByName('Esc', lka_Exit);
+  SetKeyByName('Wheel Up', lka_ZoomIn);
+  SetKeyByName('Wheel Down', lka_ZoomOut);
+  SetKeyByName('M', lka_Music);
+  SetKeyByName('Z', lka_Sound);
+  SetKeyByName('A', lka_ShowAthleteInfo);
+  SetKeyByName('+', lka_ReleaseRateUp);
+  SetKeyByName('-', lka_ReleaseRateDown);
+  SetKeyByName('NumPad +', lka_ReleaseRateMax);
+  SetKeyByName('NumPad -', lka_ReleaseRateMin);
+  SetKeyByName('H', lka_Highlight);
+  SetKeyByName('Ctrl (Right)', lka_ForceWalker);
+  SetKeyByName('W', lka_ForceWalker);
+  SetKeyByName('Left Arrow', lka_DirLeft);
+  SetKeyByName('Right Arrow', lka_DirRight);
+  SetKeyByName('Down Arrow', lka_SkillLeft);
+  SetKeyByName('Up Arrow', lka_SkillRight);
+  SetKeyByName('I', lka_FallDistance);
+  SetKeyByName('Enter', lka_ReleaseMouse);
+  SetKeyByName(';', lka_ShowUsedSkills);
+  SetKeyByName('Backspace', lka_Skip, -25);
+  SetKeyByName('J', lka_Skip, 20);
+  SetKeyByName('NumPad 0', lka_Skip, 100);
+  SetKeyByName('Space', lka_Skip, 1000);
+  SetKeyByName('Z', lka_SpecialSkip, 0);
+  SetKeyByName('Tab', lka_SpecialSkip, 1);
+  SetKeyByName('Shift', lka_SpecialSkip, 1);
+  SetKeyByName('0', lka_SlowMotion);
+  SetKeyByName('.', lka_SlowMotion);
+  SetKeyByName('Delete', lka_Cheat);
+  SetKeyByName('V', lka_PhysicsView, 1);
+  SetKeyByName('Caps Lock', lka_PhysicsView, 0);
+  SetKeyByName('L', lka_LoadReplay);
+  SetKeyByName('S', lka_SaveReplay);
+  SetKeyByName('C', lka_CancelReplay);
+  SetKeyByName('E', lka_EditReplay);
+  SetKeyByName('O', lka_ReplayInsert);
+  SetKeyByName('F11', lka_SaveState);
+  SetKeyByName('F12', lka_LoadState);
+  SetKeyByName('Y', lka_CancelPlayback);
+  SetKeyByName('F10', lka_SaveImage);
+  SetKeyByName('1', lka_SkillButton, 1);
+  SetKeyByName('2', lka_SkillButton, 2);
+  SetKeyByName('3', lka_SkillButton, 3);
+  SetKeyByName('4', lka_SkillButton, 4);
+  SetKeyByName('5', lka_SkillButton, 5);
+  SetKeyByName('6', lka_SkillButton, 6);
+  SetKeyByName('7', lka_SkillButton, 7);
+  SetKeyByName('8', lka_SkillButton, 8);
+  SetKeyByName('9', lka_SkillButton, 9);
+  SetKeyByName('0', lka_SkillButton, 10);
+  SetKeyByName('F1', lka_SkillButton, 11);
+  SetKeyByName('F2', lka_SkillButton, 12);
+  SetKeyByName('F3', lka_SkillButton, 13);
+  SetKeyByName('F4', lka_SkillButton, 14);
+  SetKeyByName('NumPad 8', lka_NudgeUp, 160);
+  SetKeyByName('NumPad 2', lka_NudgeDown, 160);
+  SetKeyByName('NumPad 4', lka_NudgeLeft, 160);
+  SetKeyByName('NumPad 6', lka_NudgeRight, 160);
 end;
 
 procedure TLemmixHotkeyManager.SetDefaultsTraditional;
 begin
   ClearAllKeys;
 
-  // Here's the simple ones that don't need further settings.
-  SetKeyFunction($02, lka_Highlight);
-  SetKeyFunction($04, lka_Pause);
-  SetKeyFunction($05, lka_ZoomIn);
-  SetKeyFunction($06, lka_ZoomOut);
-  SetKeyFunction($08, lka_LoadState);
-  SetKeyFunction($0D, lka_SaveState);
-  SetKeyFunction($11, lka_ForceWalker);
-  SetKeyFunction($19, lka_ForceWalker);
-  SetKeyFunction($1B, lka_Exit);
-  SetKeyFunction($25, lka_DirLeft);
-  SetKeyFunction($27, lka_DirRight);
-  SetKeyFunction($41, lka_Scroll);
-  SetKeyFunction($43, lka_CancelReplay);
-  SetKeyFunction($59, lka_CancelPlayback);
-  SetKeyFunction($44, lka_FallDistance);
-  SetKeyFunction($45, lka_EditReplay);
-  SetKeyFunction($46, lka_FastForward);
-  SetKeyFunction($48, lka_ToggleShadows);
-  SetKeyFunction($49, lka_SaveImage);
-  SetKeyFunction($4C, lka_LoadReplay);
-  SetKeyFunction($4D, lka_Music);
-  SetKeyFunction($50, lka_Pause);
-  SetKeyFunction($52, lka_Restart);
-  SetKeyFunction($53, lka_Sound);
-  SetKeyFunction($55, lka_SaveReplay);
-  SetKeyFunction($57, lka_ReplayInsert);
-  SetKeyFunction($58, lka_SkillRight);
-  SetKeyFunction($5A, lka_SkillLeft);
-  SetKeyFunction($70, lka_ReleaseRateDown);
-  SetKeyFunction($71, lka_ReleaseRateUp);
-  SetKeyFunction($7A, lka_Pause);
-  SetKeyFunction($7B, lka_BypassNuke);
-  SetKeyFunction($C0, lka_ReleaseMouse);
-
-  // Misc ones that need other details set
-  SetKeyFunction($54, lka_PhysicsView, 1);
-  SetKeyFunction($10, lka_SkillProjection, 1);
-  SetKeyFunction($12, lka_Projection, 1);
-
-  // Here's the frameskip ones; these need a number of *frames* to skip (forwards or backwards).
-  SetKeyFunction($20, lka_Skip, 17 * 10);
-  SetKeyFunction($42, lka_Skip, -1);
-  SetKeyFunction($4E, lka_Skip, 1);
-  SetKeyFunction($6D, lka_Skip, -17);
-  SetKeyFunction($BC, lka_Skip, -17 * 5);
-  SetKeyFunction($BD, lka_Skip, -17);
-  SetKeyFunction($BE, lka_Skip, 17 * 5);
-  SetKeyFunction($DB, lka_SpecialSkip, 0);
-  SetKeyFunction($DD, lka_SpecialSkip, 1);
-  SetKeyFunction($DC, lka_SpecialSkip, 2);
-
-  // And here's the skill ones; these ones need the skill specified seperately
-  SetKeyFunction($09, lka_Skill, Integer(spbSlider));
-  SetKeyFunction($31, lka_Skill, Integer(spbWalker));
-  SetKeyFunction($32, lka_Skill, Integer(spbShimmier));
-  SetKeyFunction($33, lka_Skill, Integer(spbSwimmer));
-  SetKeyFunction($34, lka_Skill, Integer(spbGlider));
-  SetKeyFunction($35, lka_Skill, Integer(spbDisarmer));
-  SetKeyFunction($36, lka_Skill, Integer(spbStoner));
-  SetKeyFunction($37, lka_Skill, Integer(spbPlatformer));
-  SetKeyFunction($38, lka_Skill, Integer(spbStacker));
-  SetKeyFunction($39, lka_Skill, Integer(spbFencer));
-  SetKeyFunction($30, lka_Skill, Integer(spbCloner));
-  SetKeyFunction($51, lka_Skill, Integer(spbLaserer));
-  SetKeyFunction($72, lka_Skill, Integer(spbClimber));
-  SetKeyFunction($73, lka_Skill, Integer(spbFloater));
-  SetKeyFunction($74, lka_Skill, Integer(spbBomber));
-  SetKeyFunction($75, lka_Skill, Integer(spbBlocker));
-  SetKeyFunction($76, lka_Skill, Integer(spbBuilder));
-  SetKeyFunction($77, lka_Skill, Integer(spbBasher));
-  SetKeyFunction($78, lka_Skill, Integer(spbMiner));
-  SetKeyFunction($79, lka_Skill, Integer(spbDigger));
-  SetKeyFunction($BB, lka_Skill, Integer(spbJumper));
-
-  SetKeyFunction($68, lka_NudgeUp, 160);
-  SetKeyFunction($62, lka_NudgeDown, 160);
-  SetKeyFunction($64, lka_NudgeLeft, 160);
-  SetKeyFunction($66, lka_NudgeRight, 160);
+  SetKeyByName('Right-Click', lka_Highlight);
+  SetKeyByName('Middle-Click', lka_Pause);
+  SetKeyByName('Wheel Up', lka_ZoomIn);
+  SetKeyByName('Wheel Down', lka_ZoomOut);
+  SetKeyByName('Backspace', lka_LoadState);
+  SetKeyByName('Enter', lka_SaveState);
+  SetKeyByName('Shift', lka_ForceWalker);
+  SetKeyByName('Ctrl (Right)', lka_ForceWalker);
+  SetKeyByName('Esc', lka_Exit);
+  SetKeyByName('Left Arrow', lka_DirLeft);
+  SetKeyByName('Right Arrow', lka_DirRight);
+  SetKeyByName('A', lka_Scroll);
+  SetKeyByName('C', lka_CancelReplay);
+  SetKeyByName('Y', lka_CancelPlayback);
+  SetKeyByName('D', lka_FallDistance);
+  SetKeyByName('E', lka_EditReplay);
+  SetKeyByName('F', lka_FastForward);
+  SetKeyByName('H', lka_ToggleShadows);
+  SetKeyByName('I', lka_SaveImage);
+  SetKeyByName('L', lka_LoadReplay);
+  SetKeyByName('M', lka_Music);
+  SetKeyByName('P', lka_Pause);
+  SetKeyByName('R', lka_Restart);
+  SetKeyByName('S', lka_Sound);
+  SetKeyByName('U', lka_SaveReplay);
+  SetKeyByName('W', lka_ReplayInsert);
+  SetKeyByName('Z', lka_SkillRight);
+  SetKeyByName('X', lka_SkillLeft);
+  SetKeyByName('F1', lka_ReleaseRateDown);
+  SetKeyByName('F2', lka_ReleaseRateUp);
+  SetKeyByName('F11', lka_Pause);
+  SetKeyByName('F12', lka_BypassNuke);
+  SetKeyByName('~', lka_ReleaseMouse);
+  SetKeyByName('T', lka_PhysicsView, 1);
+  SetKeyByName('Shift', lka_SkillProjection, 1);
+  SetKeyByName('Alt', lka_Projection, 1);
+  SetKeyByName('Space', lka_Skip, 17 * 10);
+  SetKeyByName('B', lka_Skip, -1);
+  SetKeyByName('N', lka_Skip, 1);
+  SetKeyByName('NumPad -', lka_Skip, -17);
+  SetKeyByName(',', lka_Skip, -17 * 5);
+  SetKeyByName('-', lka_Skip, -17);
+  SetKeyByName('.', lka_Skip, 17 * 5);
+  SetKeyByName('[', lka_SpecialSkip, 0);
+  SetKeyByName(']', lka_SpecialSkip, 1);
+  SetKeyByName('\', lka_SpecialSkip, 2);
+  SetKeyByName('Tab', lka_Skill, Integer(spbSlider));
+  SetKeyByName('1', lka_Skill, Integer(spbWalker));
+  SetKeyByName('2', lka_Skill, Integer(spbShimmier));
+  SetKeyByName('3', lka_Skill, Integer(spbSwimmer));
+  SetKeyByName('4', lka_Skill, Integer(spbGlider));
+  SetKeyByName('5', lka_Skill, Integer(spbDisarmer));
+  SetKeyByName('6', lka_Skill, Integer(spbStoner));
+  SetKeyByName('7', lka_Skill, Integer(spbPlatformer));
+  SetKeyByName('8', lka_Skill, Integer(spbStacker));
+  SetKeyByName('9', lka_Skill, Integer(spbFencer));
+  SetKeyByName('0', lka_Skill, Integer(spbCloner));
+  SetKeyByName('Q', lka_Skill, Integer(spbLaserer));
+  SetKeyByName('F3', lka_Skill, Integer(spbClimber));
+  SetKeyByName('F4', lka_Skill, Integer(spbFloater));
+  SetKeyByName('F5', lka_Skill, Integer(spbBomber));
+  SetKeyByName('F6', lka_Skill, Integer(spbBlocker));
+  SetKeyByName('F7', lka_Skill, Integer(spbBuilder));
+  SetKeyByName('F8', lka_Skill, Integer(spbBasher));
+  SetKeyByName('F9', lka_Skill, Integer(spbMiner));
+  SetKeyByName('F10', lka_Skill, Integer(spbDigger));
+  SetKeyByName('F11', lka_Skill, Integer(spbJumper));
+  SetKeyByName('NumPad 8', lka_NudgeUp, 160);
+  SetKeyByName('NumPad 2', lka_NudgeDown, 160);
+  SetKeyByName('NumPad 4', lka_NudgeLeft, 160);
+  SetKeyByName('NumPad 6', lka_NudgeRight, 160);
 end;
 
 class function TLemmixHotkeyManager.InterpretMain(s: String): TLemmixHotkeyAction;
@@ -698,8 +680,6 @@ begin
   for i := 0 to MAX_KEY do
     Result[i] := '';
 
-  // Too lazy to include them in an interally-included file. So I just
-  // coded them in here. xD
   if aUseHardcoded then
   begin
     Result[$02] := 'Right-Click';
@@ -758,6 +738,7 @@ begin
   end;
 
   P := StrAlloc(20);
+
   for i := 0 to MAX_KEY do
   begin
     ScanCode := MapVirtualKeyEx(i, 0, GetKeyboardLayout(0)) shl 16;
@@ -766,12 +747,40 @@ begin
     else if Result[i] = '' then
       Result[i] := IntToHex(i, 4);
   end;
+
   StrDispose(P);
 end;
 
-procedure TLemmixHotkeyManager.SetKeyFunction(aKey: Word; aFunc: TLemmixHotkeyAction; aMod: Integer = 0);
+class function TLemmixHotkeyManager.GetKeyCode(const aKeyName: String): Word;
+var
+  KeyNames: TKeyNameArray;
+  i: Integer;
+begin
+  KeyNames := GetKeyNames(True);
+
+  for i := 0 to MAX_KEY do
+    if SameText(KeyNames[i], aKeyName) then
+    begin
+      Result := i;
+      Exit;
+    end;
+
+  raise Exception.CreateFmt('Unknown key name: "%s"', [aKeyName]);
+end;
+
+procedure TLemmixHotkeyManager.SetKeyByName(const aKeyName: String; aFunc: TLemmixHotkeyAction; aMod: Integer = 0);
+var
+  KeyCode: Word;
+begin
+  KeyCode := GetKeyCode(aKeyName);
+  fKeyFunctions[KeyCode].Action := aFunc;
+  fKeyFunctions[KeyCode].Modifier := aMod;
+end;
+
+procedure TLemmixHotkeyManager.SetKeyByCode(aKey: Word; aFunc: TLemmixHotkeyAction; aMod: Integer = 0);
 begin
   fKeyFunctions[aKey].Action := aFunc;
-  fKeyFunctions[aKey].Modifier := aMod;end;
+  fKeyFunctions[aKey].Modifier := aMod;
+end;
 
 end.
