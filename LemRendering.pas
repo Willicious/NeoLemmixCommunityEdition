@@ -671,7 +671,7 @@ procedure TRenderer.DrawLemmingCountdown(L: TLemming);
 var
   ShowCountdown, ShowHighlight, ShowCameraLock: Boolean;
   SrcRect: TRect;
-  n: Integer;
+  n, DXOffset: Integer;
 begin
   if L.LemRemoved then Exit;
 
@@ -682,18 +682,17 @@ begin
   if ShowCountdown and (ShowHighlight or ShowCameraLock) then
     ShowCountdown := (GetTickCount mod 1000 < 500);
 
+  DXOffset := IfThen(L.LemDX < 0, 1, 0);
+
   if ShowCountdown then
   begin
     n := (L.LemExplosionTimer div 17) + 1;
     SrcRect := SizedRect(n * 4 * ResMod, 0, 4 * ResMod, 5 * ResMod);
-    if L.LemDX < 0 then
-      fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlLemmings], (L.LemX - 2) * ResMod, (L.LemY - 17) * ResMod, SrcRect)
-    else
-      fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlLemmings], (L.LemX - 1) * ResMod, (L.LemY - 17) * ResMod, SrcRect);
+    fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlLemmings], (L.LemX - (1 + DXOffset)) * ResMod, (L.LemY - 17) * ResMod, SrcRect);
   end else if ShowHighlight then
-    fAni.HighlightBitmap.DrawTo(fLayers[rlLemmings], (L.LemX - 2) * ResMod, (L.LemY - 20) * ResMod)
+    fAni.HighlightBitmap.DrawTo(fLayers[rlLemmings], (L.LemX - (2 + DXOffset)) * ResMod, (L.LemY - 20) * ResMod)
   else if ShowCameraLock then
-    fAni.CameraLockBitmap.DrawTo(fLayers[rlLemmings], (L.LemX - 2) * ResMod, (L.LemY - 20) * ResMod);
+    fAni.CameraLockBitmap.DrawTo(fLayers[rlLemmings], (L.LemX - (3 + DXOffset)) * ResMod, (L.LemY - 20) * ResMod);
 end;
 
 procedure TRenderer.DrawLemmingParticles(L: TLemming);
