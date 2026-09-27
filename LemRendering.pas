@@ -680,7 +680,9 @@ begin
   ShowCameraLock := (L = fRenderInterface.CameraLockLemming);
 
   if ShowCountdown and (ShowHighlight or ShowCameraLock) then
-    ShowCountdown := (GetTickCount mod 1000 < 500);
+    ShowCountdown := (GetTickCount mod 1000 < 500)
+  else if ShowHighlight and ShowCameraLock then
+    ShowHighlight := (GetTickCount mod 1000 < 500);
 
   DXOffset := IfThen(L.LemDX < 0, 1, 0);
 
