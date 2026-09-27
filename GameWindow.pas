@@ -1666,7 +1666,7 @@ procedure TGameWindow.Img_MouseDown(Sender: TObject; Button: TMouseButton;
 
 var
   PassKey: Word;
-  OldHighlightLemming: TLemming;
+  OldHighlitLemming: TLemming;
 begin
   if (not fMouseTrapped) and (not fSuspendCursor) and GameParams.EdgeScroll then
     ApplyMouseTrap;
@@ -1717,9 +1717,10 @@ begin
 
     if Game.IsHighlightHotkey then
     begin
-      OldHighlightLemming := fRenderInterface.HighlitLemming;
-      Game.ProcessHighlightAssignment;
-      if fRenderInterface.HighlitLemming <> OldHighlightLemming then
+      OldHighlitLemming := fRenderInterface.HighlitLemming;
+      Game.HighlightSelectedLemming;
+
+      if fRenderInterface.HighlitLemming <> OldHighlitLemming then
         SoundManager.PlaySound(SFX_SKILLBUTTON);
     end;
 
