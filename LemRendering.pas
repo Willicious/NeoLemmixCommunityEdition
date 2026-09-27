@@ -157,9 +157,9 @@ type
 
     // Lemming rendering
     procedure DrawLemmings;
-    procedure DrawLemmingLaser(aLemming: TLemming);
-    procedure DrawThisLemming(aLemming: TLemming);
-    procedure DrawLemmingCountdown(aLemming: TLemming);
+    procedure DrawLemmingLaser(L: TLemming);
+    procedure DrawThisLemming(L: TLemming);
+    procedure DrawLemmingCountdown(L: TLemming);
     procedure DrawLemmingParticles(L: TLemming);
 
     procedure DrawShadows(L: TLemming; SkillButton: TSkillPanelButton; SelectedSkill: TSkillPanelButton; IsCloneShadow: Boolean);
@@ -346,7 +346,7 @@ begin
     DrawThisLemming(LemmingList[i]);
 end;
 
-procedure TRenderer.DrawThisLemming(aLemming: TLemming);
+procedure TRenderer.DrawThisLemming(L: TLemming);
 var
   SrcRect, DstRect: TRect;
   SrcAnim: TBitmap32;
@@ -363,7 +363,7 @@ var
     with Result do
     begin
       Left := 0;
-      Top := aLemming.LemFrame * SrcMetaAnim.Height;
+      Top := L.LemFrame * SrcMetaAnim.Height;
       Right := SrcMetaAnim.Width;
       Bottom := Top + SrcMetaAnim.Height;
     end;
@@ -373,8 +373,8 @@ var
   begin
     with Result do
     begin
-      Left := (aLemming.LemX * ResMod) - SrcMetaAnim.FootX;
-      Top := (aLemming.LemY * ResMod) - SrcMetaAnim.FootY;
+      Left := (L.LemX * ResMod) - SrcMetaAnim.FootX;
+      Top := (L.LemY * ResMod) - SrcMetaAnim.FootY;
       Right := Left + SrcMetaAnim.Width;
       Bottom := Top + SrcMetaAnim.Height;
     end;
@@ -385,8 +385,8 @@ var
     bX, bY: Integer;
     xo, yo: Integer;
   begin
-    bX := aLemming.LemX * ResMod;
-    bY := aLemming.LemY * ResMod;
+    bX := L.LemX * ResMod;
+    bY := L.LemY * ResMod;
 
     for yo := 0 to ResMod-1 do
       for xo := 0 to ResMod-1 do
@@ -400,61 +400,61 @@ var
   end;
 
 begin
-  if aLemming.LemRemoved then Exit;
-  if aLemming.LemTeleporting then Exit;
+  if L.LemRemoved then Exit;
+  if L.LemTeleporting then Exit;
 
   if fRenderInterface <> nil then
   begin
-    Selected := aLemming = fRenderInterface.SelectedLemming;
+    Selected := L = fRenderInterface.SelectedLemming;
     RenderPhysicsView := fRenderInterface.PhysicsView;
   end else begin
     Selected := False;
     RenderPhysicsView := False;
   end;
 
-  Recolorer.Lemming := aLemming;
+  Recolorer.Lemming := L;
   Recolorer.DrawAsSelected := Selected;
   Recolorer.ApplyPhysicsViewColors := RenderPhysicsView;
 
   // Get the animation and meta-animation
-  if aLemming.LemDX > 0 then
-    i := AnimationIndices[aLemming.LemAction, False]
+  if L.LemDX > 0 then
+    i := AnimationIndices[L.LemAction, False]
   else
-    i := AnimationIndices[aLemming.LemAction, True];
+    i := AnimationIndices[L.LemAction, True];
   SrcAnim := fAni.LemmingAnimations[i];
   SrcMetaAnim := fAni.MetaLemmingAnimations[i];
 
-  if aLemming.LemMaxFrame = -1 then
+  if L.LemMaxFrame = -1 then
   begin
-    aLemming.LemMaxFrame := SrcMetaAnim.FrameCount - 1;
-    aLemming.LemFrameDiff := SrcMetaAnim.FrameDiff;
+    L.LemMaxFrame := SrcMetaAnim.FrameCount - 1;
+    L.LemFrameDiff := SrcMetaAnim.FrameDiff;
   end;
 
-  if (aLemming.LemAction = baJumping) then
+  if (L.LemAction = baJumping) then
   begin
-    case aLemming.LemJumpProgress of
-      0..5: if aLemming.LemFrame >= aLemming.LemMaxFrame - aLemming.LemFrameDiff then aLemming.LemFrame := 0;
-      6: aLemming.LemFrame := aLemming.LemMaxFrame - aLemming.LemFrameDiff + 1;
-      7..12: if aLemming.LemFrame > aLemming.LemMaxFrame then aLemming.LemFrame := aLemming.LemMaxFrame - aLemming.LemFrameDiff + 2;
+    case L.LemJumpProgress of
+      0..5: if L.LemFrame >= L.LemMaxFrame - L.LemFrameDiff then L.LemFrame := 0;
+      6: L.LemFrame := L.LemMaxFrame - L.LemFrameDiff + 1;
+      7..12: if L.LemFrame > L.LemMaxFrame then L.LemFrame := L.LemMaxFrame - L.LemFrameDiff + 2;
     end;
   end else
-    while aLemming.LemFrame > aLemming.LemMaxFrame do
-      Dec(aLemming.LemFrame, aLemming.LemFrameDiff);
+    while L.LemFrame > L.LemMaxFrame do
+      Dec(L.LemFrame, L.LemFrameDiff);
 
   SrcRect := GetFrameBounds;
   DstRect := GetLocationBounds;
 
-  if (aLemming.LemPortalWarpFrame < 3) or (aLemming.LemPortalWarpFrame > 4) then
+  if (L.LemPortalWarpFrame < 3) or (L.LemPortalWarpFrame > 4) then
   begin
     SrcAnim.DrawMode := dmCustom;
     SrcAnim.OnPixelCombine := Recolorer.CombineLemmingPixels;
     SrcAnim.DrawTo(fLayers[rlLemmings], DstRect, SrcRect);
   end;
 
-  if (aLemming.LemPortalWarpFrame > 0) then
+  if (L.LemPortalWarpFrame > 0) then
   begin
     WarpWidth := fAni.WarpBitmap.Width div 3;
-    SrcRect := SizedRect(WarpWidth * ((aLemming.LemPortalWarpFrame + 2) mod 3), 0,
+    SrcRect := SizedRect(WarpWidth * ((L.LemPortalWarpFrame + 2) mod 3), 0,
                          WarpWidth, fAni.WarpBitmap.Height);
     DstRect := SizedRect(
                            DstRect.Left + SrcMetaAnim.FootX - (WarpWidth div 2) + 1,
@@ -466,18 +466,18 @@ begin
   end;
 
   ShowHelpersAtStart := (fRenderInterface <> nil) and fRenderInterface.IsStartingSeconds and GameParams.ShowHelpers;
-  if (Selected and aLemming.CannotReceiveSkills) or RenderPhysicsView or ShowHelpersAtStart then
+  if (Selected and L.CannotReceiveSkills) or RenderPhysicsView or ShowHelpersAtStart then
   begin
-    DrawLemmingHelpers(fLayers[rlObjectHelpers], aLemming);
+    DrawLemmingHelpers(fLayers[rlObjectHelpers], L);
     fLayers.fIsEmpty[rlObjectHelpers] := False;
   end;
 
   // Draw blocker areas on the triggerLayer
-  if (aLemming.LemAction = baBlocking) then
+  if (L.LemAction = baBlocking) then
   begin
-    TriggerLeft := aLemming.LemX - 6;
-    if (aLemming.LemDX = 1) then Inc(TriggerLeft);
-    TriggerTop := aLemming.LemY - 6;
+    TriggerLeft := L.LemX - 6;
+    if (L.LemDX = 1) then Inc(TriggerLeft);
+    TriggerTop := L.LemY - 6;
     TriggerRect := Rect(TriggerLeft, TriggerTop, TriggerLeft + 4, TriggerTop + 11);
     DrawTriggerAreaRectOnLayer(TriggerRect);
     TriggerRect := Rect(TriggerLeft + 8, TriggerTop, TriggerLeft + 12, TriggerTop + 11);
@@ -492,7 +492,7 @@ begin
   end;
 end;
 
-procedure TRenderer.DrawLemmingLaser(aLemming: TLemming);
+procedure TRenderer.DrawLemmingLaser(L: TLemming);
 var
   //InnerC, OuterC: TColor32;
   LaserColors: array[0..4] of TColor32;
@@ -508,8 +508,8 @@ const
   BLAST_COLORS: array[0..2] of TColor32 =
     ( $00000000, RED_COLOR, YELLOW_COLOR );
 begin
-  Origin := Point(aLemming.LemX + aLemming.LemDX, aLemming.LemY - 4);
-  Target := aLemming.LemLaserHitPoint;
+  Origin := Point(L.LemX + L.LemDX, L.LemY - 4);
+  Target := L.LemLaserHitPoint;
 
   if GameParams.HighResolution then
   begin
@@ -518,7 +518,7 @@ begin
     Target.X := Target.X * 2;
     Target.Y := Target.Y * 2;
 
-    if aLemming.LemDX > 0 then
+    if L.LemDX > 0 then
     begin
       Origin.X := Origin.X - 1;
       Target.X := Target.X + 1;
@@ -530,7 +530,7 @@ begin
 
     LaserColors[0] := WHITE_COLOR;
 
-    case aLemming.LemPhysicsFrame mod 4 of
+    case L.LemPhysicsFrame mod 4 of
       0, 2:
         begin
           LaserColors[1] := WHITE_COLOR;
@@ -560,40 +560,40 @@ begin
       Target.X, Target.Y,
       LaserColors[0], True);
     fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 1,
-      Target.X - aLemming.LemDX, Target.Y,
+      Target.X - L.LemDX, Target.Y,
       LaserColors[0], True);
-    fLayers[rlLemmings].LineS(Origin.X + aLemming.LemDX, Origin.Y,
+    fLayers[rlLemmings].LineS(Origin.X + L.LemDX, Origin.Y,
       Target.X, Target.Y + 1,
       LaserColors[0], True);
     fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 2,
-      Target.X - (aLemming.LemDX * 2), Target.Y,
+      Target.X - (L.LemDX * 2), Target.Y,
       LaserColors[1], True);
-    fLayers[rlLemmings].LineS(Origin.X + (aLemming.LemDX * 2), Origin.Y,
+    fLayers[rlLemmings].LineS(Origin.X + (L.LemDX * 2), Origin.Y,
       Target.X, Target.Y + 2,
       LaserColors[1], True);
     fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 3,
-      Target.X - (aLemming.LemDX * 3), Target.Y,
+      Target.X - (L.LemDX * 3), Target.Y,
       LaserColors[2], True);
-    fLayers[rlLemmings].LineS(Origin.X + (aLemming.LemDX * 3), Origin.Y,
+    fLayers[rlLemmings].LineS(Origin.X + (L.LemDX * 3), Origin.Y,
       Target.X, Target.Y + 3,
       LaserColors[2], True);
     fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 4,
-      Target.X - (aLemming.LemDX * 4), Target.Y,
+      Target.X - (L.LemDX * 4), Target.Y,
       LaserColors[3], True);
-    fLayers[rlLemmings].LineS(Origin.X + (aLemming.LemDX * 4), Origin.Y,
+    fLayers[rlLemmings].LineS(Origin.X + (L.LemDX * 4), Origin.Y,
       Target.X, Target.Y + 4,
       LaserColors[3], True);
     fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 5,
-      Target.X - (aLemming.LemDX * 5), Target.Y,
+      Target.X - (L.LemDX * 5), Target.Y,
       LaserColors[4], True);
-    fLayers[rlLemmings].LineS(Origin.X + (aLemming.LemDX * 5), Origin.Y,
+    fLayers[rlLemmings].LineS(Origin.X + (L.LemDX * 5), Origin.Y,
       Target.X, Target.Y + 5,
       LaserColors[4], True);
   end else begin
 
     LaserColors[0] := WHITE_COLOR;
 
-    case aLemming.LemPhysicsFrame mod 4 of
+    case L.LemPhysicsFrame mod 4 of
       0, 1:
         begin
           LaserColors[1] := RED_COLOR;
@@ -613,22 +613,22 @@ begin
       Target.X, Target.Y,
       LaserColors[0], True);
     fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 1,
-      Target.X - aLemming.LemDX, Target.Y,
+      Target.X - L.LemDX, Target.Y,
       LaserColors[1], True);
-    fLayers[rlLemmings].LineS(Origin.X + aLemming.LemDX, Origin.Y,
+    fLayers[rlLemmings].LineS(Origin.X + L.LemDX, Origin.Y,
       Target.X, Target.Y + 1,
       LaserColors[1], True);
     fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 2,
-      Target.X - (aLemming.LemDX * 2), Target.Y,
+      Target.X - (L.LemDX * 2), Target.Y,
       LaserColors[2], True);
-    fLayers[rlLemmings].LineS(Origin.X + (aLemming.LemDX * 2), Origin.Y,
+    fLayers[rlLemmings].LineS(Origin.X + (L.LemDX * 2), Origin.Y,
       Target.X, Target.Y + 2,
       LaserColors[2], True);
   end;
 
-  if aLemming.LemLaserHit then
+  if L.LemLaserHit then
   begin
-    Target := aLemming.LemLaserHitPoint; // undo high-res modifications from above, if any
+    Target := L.LemLaserHitPoint; // undo high-res modifications from above, if any
 
     Src := Rect(48, 0, 61, 13);
     Dst := Rect(Target.X - 6, Target.Y - 6, Target.X + 6 + 1, Target.Y + 6 + 1);
@@ -646,7 +646,7 @@ begin
       Dst.Bottom := Dst.Bottom * 2;
     end;
 
-    CIndex := aLemming.LemPhysicsFrame mod 3;
+    CIndex := L.LemPhysicsFrame mod 3;
     for n := 0 to 2 do
     begin
       if BLAST_COLORS[CIndex] <> $00000000 then
@@ -667,33 +667,33 @@ begin
   end;
 end;
 
-procedure TRenderer.DrawLemmingCountdown(aLemming: TLemming);
+procedure TRenderer.DrawLemmingCountdown(L: TLemming);
 var
   ShowCountdown, ShowHighlight, ShowCameraLock: Boolean;
   SrcRect: TRect;
   n: Integer;
 begin
-  if aLemming.LemRemoved then Exit;
+  if L.LemRemoved then Exit;
 
-  ShowCountdown := (aLemming.LemExplosionTimer > 0) and not aLemming.LemHideCountdown;
-  ShowHighlight := (aLemming = fRenderInterface.HighlitLemming);
-  ShowCameraLock := (aLemming = fRenderInterface.CameraLockLemming);
+  ShowCountdown := (L.LemExplosionTimer > 0) and not L.LemHideCountdown;
+  ShowHighlight := (L = fRenderInterface.HighlitLemming);
+  ShowCameraLock := (L = fRenderInterface.CameraLockLemming);
 
   if ShowCountdown and (ShowHighlight or ShowCameraLock) then
     ShowCountdown := (GetTickCount mod 1000 < 500);
 
   if ShowCountdown then
   begin
-    n := (aLemming.LemExplosionTimer div 17) + 1;
+    n := (L.LemExplosionTimer div 17) + 1;
     SrcRect := SizedRect(n * 4 * ResMod, 0, 4 * ResMod, 5 * ResMod);
-    if aLemming.LemDX < 0 then
-      fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlLemmings], (aLemming.LemX - 2) * ResMod, (aLemming.LemY - 17) * ResMod, SrcRect)
+    if L.LemDX < 0 then
+      fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlLemmings], (L.LemX - 2) * ResMod, (L.LemY - 17) * ResMod, SrcRect)
     else
-      fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlLemmings], (aLemming.LemX - 1) * ResMod, (aLemming.LemY - 17) * ResMod, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlLemmings], (L.LemX - 1) * ResMod, (L.LemY - 17) * ResMod, SrcRect);
   end else if ShowHighlight then
-    fAni.HighlightBitmap.DrawTo(fLayers[rlLemmings], (aLemming.LemX - 2) * ResMod, (aLemming.LemY - 20) * ResMod)
+    fAni.HighlightBitmap.DrawTo(fLayers[rlLemmings], (L.LemX - 2) * ResMod, (L.LemY - 20) * ResMod)
   else if ShowCameraLock then
-    fAni.CameraLockBitmap.DrawTo(fLayers[rlLemmings], (aLemming.LemX - 2) * ResMod, (aLemming.LemY - 20) * ResMod);
+    fAni.CameraLockBitmap.DrawTo(fLayers[rlLemmings], (L.LemX - 2) * ResMod, (L.LemY - 20) * ResMod);
 end;
 
 procedure TRenderer.DrawLemmingParticles(L: TLemming);
