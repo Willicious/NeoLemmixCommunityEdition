@@ -172,6 +172,7 @@ type
     fIsSelectUnassignedHotkey  : Boolean;
     fIsShowAthleteInfo         : Boolean;
     fIsHighlightHotkey         : Boolean;
+    fIsCameraLockHotkey        : Boolean;
     fPlayTimeUpSound           : Boolean;
     TimePlay                   : Integer; // positive when time limit
                                           // negative when just counting time used
@@ -207,6 +208,7 @@ type
     fPauseOnHyperSpeedExit     : Boolean; // to maintain pause state before invoking a savestate
     fHitTestAutoFail           : Boolean;
     fHighlightLemmingID        : Integer;
+    fCameraLockLemmingID       : Integer;
     fTargetLemmingID           : Integer; // for replay skill assignments
     fCancelReplayAfterSkip     : Boolean;
 
@@ -433,6 +435,7 @@ type
     procedure UpdateSelectedLemFutureTaskCount;
     function ProcessSkillAssignment(IsHighlight: Boolean = False): Boolean;
     function HighlightSelectedLemming: Boolean;
+    function CameraLockSelectedLemming: Boolean;
     procedure RegainControl(Force: Boolean = False);
     procedure EnsureCorrectReplayDetails;
     procedure SetGameResult;
@@ -442,6 +445,7 @@ type
     function Checkpass: Boolean;
     function CheckFinishedTest: Boolean;
     function GetHighlitLemming: TLemming;
+    function GetCameraLockLemming: TLemming;
     function GetTargetLemming: TLemming;
     procedure CheckForNewShadow(aForceRedraw: Boolean = False);
     function LemIsInCursor(L: TLemming; MousePos: TPoint): Boolean;
@@ -474,6 +478,7 @@ type
     property IsSelectUnassignedHotkey: Boolean read fIsSelectUnassignedHotkey write fIsSelectUnassignedHotkey;
     property IsShowAthleteInfo: Boolean read fIsShowAthleteInfo write fIsShowAthleteInfo;
     property IsHighlightHotkey: Boolean read fIsHighlightHotkey write fIsHighlightHotkey;
+    property IsCameraLockHotkey: Boolean read fIsCameraLockHotkey write fIsCameraLockHotkey;
     property TargetIteration: Integer read fTargetIteration write fTargetIteration;
     property LastDisplayedIteration: Integer read fLastDisplayedIteration write fLastDisplayedIteration;
     property CancelReplayAfterSkip: Boolean read fCancelReplayAfterSkip write fCancelReplayAfterSkip;
@@ -924,6 +929,7 @@ begin
   fRenderInterface.ReplayLemming := nil;
   fRenderInterface.SetSimulateLemRoutine(SimulateLem, SimulateTransition);
   fRenderInterface.SetGetHighlitRoutine(GetHighlitLemming);
+  fRenderInterface.SetGetCameraLockRoutine(GetCameraLockLemming);
   fRenderInterface.SetIsStartingSecondsRoutine(IsStartingSeconds);
 
   LemmingMethods[baNone]       := nil;
@@ -1091,6 +1097,7 @@ begin
   Level := GameParams.Level;
 
   fHighlightLemmingID := -1;
+  fCameraLockLemmingID := -1;
 
   if not fMasksLoaded then
   begin
@@ -1149,6 +1156,7 @@ begin
   IsSelectUnassignedHotkey := False;
   IsShowAthleteInfo := False;
   IsHighlightHotkey := False;
+  IsCameraLockHotkey := False;
   fCurrentIteration := 0;
   fClockFrame := 0;
   HatchesOpened := False;
@@ -5960,6 +5968,17 @@ begin
     fHighlightLemmingID := -1;
 end;
 
+function TLemmingGame.CameraLockSelectedLemming: Boolean;
+var
+  L: TLemming;
+begin
+  Result := False;
+  if GetPriorityLemming(L, baNone, CursorPoint) > 0 then
+    fCameraLockLemmingID := L.LemIndex
+  else
+    fCameraLockLemmingID := -1;
+end;
+
 procedure TLemmingGame.ReplaySkillAssignment(aReplayItem: TReplaySkillAssignment);
 var
   L: TLemming;
@@ -6237,6 +6256,16 @@ begin
   if LemmingList[fHighlightLemmingID].LemRemoved then Exit;
   if LemmingList[fHighlightLemmingID].LemTeleporting then Exit;
   Result := LemmingList[fHighlightLemmingID];
+end;
+
+function TLemmingGame.GetCameraLockLemming: TLemming;
+begin
+  Result := nil;
+  if fCameraLockLemmingID < 0 then Exit;
+  if fCameraLockLemmingID >= LemmingList.Count then Exit;
+  if LemmingList[fCameraLockLemmingID].LemRemoved then Exit;
+  if LemmingList[fCameraLockLemmingID].LemTeleporting then Exit;
+  Result := LemmingList[fCameraLockLemmingID];
 end;
 
 function TLemmingGame.GetTargetLemming: TLemming;

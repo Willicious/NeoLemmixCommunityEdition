@@ -669,7 +669,7 @@ end;
 
 procedure TRenderer.DrawLemmingCountdown(aLemming: TLemming);
 var
-  ShowCountdown, ShowHighlight: Boolean;
+  ShowCountdown, ShowHighlight, ShowCameraLock: Boolean;
   SrcRect: TRect;
   n: Integer;
 begin
@@ -677,8 +677,9 @@ begin
 
   ShowCountdown := (aLemming.LemExplosionTimer > 0) and not aLemming.LemHideCountdown;
   ShowHighlight := (aLemming = fRenderInterface.HighlitLemming);
+  ShowCameraLock := (aLemming = fRenderInterface.CameraLockLemming);
 
-  if ShowCountdown and ShowHighlight then
+  if ShowCountdown and (ShowHighlight or ShowCameraLock) then
     ShowCountdown := (GetTickCount mod 1000 < 500);
 
   if ShowCountdown then
@@ -690,7 +691,9 @@ begin
     else
       fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlLemmings], (aLemming.LemX - 1) * ResMod, (aLemming.LemY - 17) * ResMod, SrcRect);
   end else if ShowHighlight then
-    fAni.HighlightBitmap.DrawTo(fLayers[rlLemmings], (aLemming.LemX - 2) * ResMod, (aLemming.LemY - 20) * ResMod);
+    fAni.HighlightBitmap.DrawTo(fLayers[rlLemmings], (aLemming.LemX - 2) * ResMod, (aLemming.LemY - 20) * ResMod)
+  else if ShowCameraLock then
+    fAni.CameraLockBitmap.DrawTo(fLayers[rlLemmings], (aLemming.LemX - 2) * ResMod, (aLemming.LemY - 20) * ResMod);
 end;
 
 procedure TRenderer.DrawLemmingParticles(L: TLemming);

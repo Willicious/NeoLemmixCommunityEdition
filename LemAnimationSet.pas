@@ -148,6 +148,7 @@ type
     fWarpBitmap             : TBitmap32;
     fCountDownDigitsBitmap  : TBitmap32;
     fHighlightBitmap        : TBitmap32;
+    fCameraLockBitmap       : TBitmap32;
     fTheme                  : TNeoTheme;
 
     fHasZombieColor         : Boolean;
@@ -164,6 +165,7 @@ type
     destructor Destroy; override;
 
     procedure PrepareAnimations;
+    procedure LoadCameraLockBitmap;
     procedure ClearData;
 
     property Theme                 : TNeoTheme read fTheme write fTheme;
@@ -173,6 +175,7 @@ type
     property WarpBitmap            : TBitmap32 read fWarpBitmap;
     property CountDownDigitsBitmap : TBitmap32 read fCountDownDigitsBitmap;
     property HighlightBitmap       : TBitmap32 read fHighlightBitmap;
+    property CameraLockBitmap      : TBitmap32 read fCameraLockBitmap;
     property Recolorer             : TRecolorImage read fRecolorer;
 
     property HasZombieColor: Boolean read fHasZombieColor;
@@ -547,6 +550,9 @@ begin
     fHighlightBitmap.DrawMode := dmBlend;
     fHighlightBitmap.CombineMode := cmMerge;
 
+    fCameraLockBitmap.DrawMode := dmBlend;
+    fCameraLockBitmap.CombineMode := cmMerge;
+
     if GameParams.HighResolution then
     begin
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'stoner-hr.png', fLemmingAnimations[STONED]);
@@ -559,6 +565,8 @@ begin
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'highlight.png', fHighlightBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'countdown.png', fCountdownDigitsBitmap);
     end;
+
+    LoadCameraLockBitmap;
 
     fMetaLemmingAnimations[STONED].Width := fLemmingAnimations[STONED].Width;
     fMetaLemmingAnimations[STONED].Height := fLemmingAnimations[STONED].Height;
@@ -578,6 +586,7 @@ begin
   fCountDownDigitsBitmap.Clear;
   fWarpBitmap.Clear;
   fHighlightBitmap.Clear;
+  fCameraLockBitmap.Clear;
   fHasZombieColor := False;
   fHasNeutralColor := False;
   fTheme := nil;
@@ -592,6 +601,7 @@ begin
   fWarpBitmap := TBitmap32.Create;
   fCountDownDigitsBitmap := TBitmap32.Create;
   fHighlightBitmap := TBitmap32.Create;
+  fCameraLockBitmap := TBitmap32.Create;
 end;
 
 destructor TBaseAnimationSet.Destroy;
@@ -601,6 +611,7 @@ begin
   fCountDownDigitsBitmap.Free;
   fWarpBitmap.Free;
   fHighlightBitmap.Free;
+  fCameraLockBitmap.Free;
   fRecolorer.Free;
   inherited Destroy;
 end;
@@ -652,6 +663,39 @@ begin
     fRecolorer.ApplyPaletteSwapping(aColorDict, aShadeDict, fTheme);
   finally
     Template.Free;
+  end;
+end;
+
+procedure TBaseAnimationSet.LoadCameraLockBitmap;
+var
+  CameraLock, Highlight, EmbeddedName: String;
+  i: Integer;
+  C: TColor32;
+begin
+  if GameParams.HighResolution then
+  begin
+    CameraLock := 'cameralock-hr.png';
+    EmbeddedName := 'CAMERALOCK_HR_PNG';
+    Highlight := 'highlight-hr.png';
+  end else begin
+    CameraLock := 'cameralock.png';
+    EmbeddedName := 'CAMERALOCK_PNG';
+    Highlight := 'highlight.png';
+  end;
+
+  // Try to load the camera lock icon from masks...
+  if not LoadGraphicWithOverrides(SFGraphicsMasks, CameraLock, EmbeddedName, fCameraLockBitmap) then
+  begin
+    // ...paint the highlight arrow yellow if not found
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + Highlight, fCameraLockBitmap);
+
+    for i := 0 to fCameraLockBitmap.Width * fCameraLockBitmap.Height - 1 do
+    begin
+      C := fCameraLockBitmap.Bits[i];
+
+      if AlphaComponent(C) > 0 then
+        fCameraLockBitmap.Bits[i] := Color32(255, 255, 0, AlphaComponent(C));
+    end;
   end;
 end;
 

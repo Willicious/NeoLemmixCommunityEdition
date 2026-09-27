@@ -152,6 +152,9 @@ type
     procedure SuspendGameplay;
     procedure ResumeGameplay;
 
+    procedure RecenterOnCameraLockLemming(Instant: Boolean);
+    function UpdateCameraLock: Boolean;
+
     function CheckHighlitLemmingChange: Boolean;
     procedure SetRedraw(aRedraw: TRedrawOption);
   protected
@@ -320,6 +323,9 @@ begin
     fInternalZoom := aNewZoom;
 
     ApplyResize(False);
+
+    if Assigned(fRenderInterface) and Assigned(fRenderInterface.CameraLockLemming) then
+      RecenterOnCameraLockLemming(True);
 
     SetRedraw(rdRedraw);
     CheckResetCursor(True);
@@ -631,7 +637,8 @@ begin
     if TimeForScroll then
     begin
       PrevScrollTime := CurrTime;
-      if CheckScroll then
+
+      if UpdateCameraLock or CheckScroll then
       begin
         if GameParams.MinimapHighQuality then
           SetRedraw(rdRefresh)
@@ -964,6 +971,7 @@ begin
   Game.IsSelectWalkerHotkey := GameParams.Hotkeys.CheckForKey(lka_ForceWalker);
   Game.IsSelectUnassignedHotkey := GameParams.Hotkeys.CheckForKey(lka_ForceUnassigned);
   Game.IsHighlightHotkey := GameParams.Hotkeys.CheckForKey(lka_Highlight);
+  Game.IsCameraLockHotkey := GameParams.Hotkeys.CheckForKey(lka_CameraLock);
   Game.IsShowAthleteInfo := GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo);
 
   SDir := 0;
@@ -1163,6 +1171,9 @@ function TGameWindow.CheckScroll: Boolean;
 begin
   Result := False;
 
+  if Assigned(fRenderInterface) and Assigned(fRenderInterface.CameraLockLemming) then
+    Exit;
+
   if fHoldScrollData.Active then
   begin
     if GameParams.Hotkeys.CheckForKey(lka_Scroll) then
@@ -1324,6 +1335,7 @@ const
                          lka_SaveState,
                          lka_LoadState,
                          lka_Highlight,
+                         lka_CameraLock,
                          lka_DirLeft,
                          lka_DirRight,
                          lka_ForceWalker,
@@ -1493,7 +1505,6 @@ begin
       lka_SkillButton: begin
                          ButtonIndex := func.Modifier -1;
                          AssignToHighlit := GameParams.Hotkeys.CheckForKey(lka_Highlight);
-
                          SetSelectedSkill(fActiveSkills[ButtonIndex], True, AssignToHighlit);
                        end;
       lka_Skip: if Game.Playing then
@@ -1666,7 +1677,7 @@ procedure TGameWindow.Img_MouseDown(Sender: TObject; Button: TMouseButton;
 
 var
   PassKey: Word;
-  OldHighlitLemming: TLemming;
+  OldHighlitLemming, OldCameraLockLemming: TLemming;
 begin
   if (not fMouseTrapped) and (not fSuspendCursor) and GameParams.EdgeScroll then
     ApplyMouseTrap;
@@ -1708,7 +1719,7 @@ begin
     if PassKey <> 0 then
       Form_KeyDown(Sender, PassKey, Shift);
 
-    if (Button = mbLeft) and not Game.IsHighlightHotkey then
+    if (Button = mbLeft) and not (Game.IsHighlightHotkey or Game.IsCameraLockHotkey) then
     begin
       Game.RegainControl;
       Game.ProcessSkillAssignment;
@@ -1721,6 +1732,15 @@ begin
       Game.HighlightSelectedLemming;
 
       if fRenderInterface.HighlitLemming <> OldHighlitLemming then
+        SoundManager.PlaySound(SFX_SKILLBUTTON);
+    end;
+
+    if Game.IsCameraLockHotkey then
+    begin
+      OldCameraLockLemming := fRenderInterface.CameraLockLemming;
+      Game.CameraLockSelectedLemming;
+
+      if fRenderInterface.CameraLockLemming <> OldCameraLockLemming then
         SoundManager.PlaySound(SFX_SKILLBUTTON);
     end;
 
@@ -2316,6 +2336,62 @@ procedure TGameWindow.SetRedraw(aRedraw: TRedrawOption);
 begin
   if (fNeedRedraw = rdNone) or (aRedraw = rdRedraw) then
     fNeedRedraw := aRedraw;
+end;
+
+procedure TGameWindow.RecenterOnCameraLockLemming(Instant: Boolean);
+const
+  CAMERA_LOCK_SMOOTHING = 0.2;
+  SNAP_EPSILON = 0.5;
+var
+  LockLem: TLemming;
+  TargetH, TargetV: Single;
+begin
+  if not Assigned(fRenderInterface) then
+    Exit;
+
+  LockLem := fRenderInterface.CameraLockLemming;
+
+  if not Assigned(LockLem) then
+    Exit;
+
+  TargetH := -LockLem.LemX * ResMod * fInternalZoom;
+  TargetH :=  TargetH + Img.Width div 2;
+
+  if TargetH < MinScroll then TargetH := MinScroll;
+  if TargetH > MaxScroll then TargetH := MaxScroll;
+
+  TargetV := -LockLem.LemY * ResMod * fInternalZoom;
+  TargetV :=  TargetV + Img.Height div 2;
+
+  if TargetV < MinVScroll then TargetV := MinVScroll;
+  if TargetV > MaxVScroll then TargetV := MaxVScroll;
+
+  if Instant or (Abs(TargetH - Img.OffsetHorz) <= SNAP_EPSILON) then
+    Img.OffsetHorz := TargetH
+  else
+    Img.OffsetHorz := Img.OffsetHorz + (TargetH - Img.OffsetHorz) * CAMERA_LOCK_SMOOTHING;
+
+  if Instant or (Abs(TargetV - Img.OffsetVert) <= SNAP_EPSILON) then
+    Img.OffsetVert := TargetV
+  else
+    Img.OffsetVert := Img.OffsetVert + (TargetV - Img.OffsetVert) * CAMERA_LOCK_SMOOTHING;
+end;
+
+function TGameWindow.UpdateCameraLock: Boolean;
+var
+  OldHorz, OldVert: Single;
+begin
+  Result := False;
+
+  if not Assigned(fRenderInterface) then Exit;
+  if not Assigned(fRenderInterface.CameraLockLemming) then Exit;
+
+  OldHorz := Img.OffsetHorz;
+  OldVert := Img.OffsetVert;
+
+  RecenterOnCameraLockLemming(False);
+
+  Result := (Img.OffsetHorz <> OldHorz) or (Img.OffsetVert <> OldVert);
 end;
 
 end.
