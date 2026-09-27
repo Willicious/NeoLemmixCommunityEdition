@@ -688,7 +688,7 @@ begin
   begin
     n := (L.LemExplosionTimer div 17) + 1;
     SrcRect := SizedRect(n * 4 * ResMod, 0, 4 * ResMod, 5 * ResMod);
-    fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlLemmings], (L.LemX - (1 + DXOffset)) * ResMod, (L.LemY - 17) * ResMod, SrcRect);
+    fAni.CountDownBitmap.DrawTo(fLayers[rlLemmings], (L.LemX - (1 + DXOffset)) * ResMod, (L.LemY - 17) * ResMod, SrcRect);
   end else if ShowHighlight then
     fAni.HighlightBitmap.DrawTo(fLayers[rlLemmings], (L.LemX - (2 + DXOffset)) * ResMod, (L.LemY - 20) * ResMod)
   else if ShowCameraLock then
@@ -2452,16 +2452,16 @@ var
       Digit := StrToInt(aDigitString[n]);
       SrcRect := SizedRect(Digit * 4 * ResMod, 0, 4 * ResMod, 5 * ResMod);
 
-      fAni.CountDownDigitsBitmap.DrawMode := dmCustom;
-      fAni.CountDownDigitsBitmap.OnPixelCombine := CombineFixedColor;
+      fAni.CountDownBitmap.DrawMode := dmCustom;
+      fAni.CountDownBitmap.OnPixelCombine := CombineFixedColor;
       fFixedDrawColor := $FF202020;
-      fAni.CountDownDigitsBitmap.DrawTo(LocalDst, CurX * ResMod - 1, Y * ResMod + 1, SrcRect);
-      fAni.CountDownDigitsBitmap.DrawTo(LocalDst, CurX * ResMod, Y * ResMod, SrcRect);
-      fAni.CountDownDigitsBitmap.DrawTo(LocalDst, CurX * ResMod, Y * ResMod + 1, SrcRect);
+      fAni.CountDownBitmap.DrawTo(LocalDst, CurX * ResMod - 1, Y * ResMod + 1, SrcRect);
+      fAni.CountDownBitmap.DrawTo(LocalDst, CurX * ResMod, Y * ResMod, SrcRect);
+      fAni.CountDownBitmap.DrawTo(LocalDst, CurX * ResMod, Y * ResMod + 1, SrcRect);
 
-      fAni.CountDownDigitsBitmap.DrawMode := dmBlend;
-      fAni.CountDownDigitsBitmap.CombineMode := cmMerge;
-      fAni.CountDownDigitsBitmap.DrawTo(LocalDst, CurX * ResMod - 1, Y * ResMod, SrcRect);
+      fAni.CountDownBitmap.DrawMode := dmBlend;
+      fAni.CountDownBitmap.CombineMode := cmMerge;
+      fAni.CountDownBitmap.DrawTo(LocalDst, CurX * ResMod - 1, Y * ResMod, SrcRect);
       CurX := CurX + 5;
     end;
 

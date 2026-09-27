@@ -146,7 +146,7 @@ type
     fLemmingAnimations     : TBitmaps; // the list of lemmings bitmaps
 
     fWarpBitmap             : TBitmap32;
-    fCountDownDigitsBitmap  : TBitmap32;
+    fCountDownBitmap        : TBitmap32;
     fHighlightBitmap        : TBitmap32;
     fCameraLockBitmap       : TBitmap32;
     fTheme                  : TNeoTheme;
@@ -173,7 +173,7 @@ type
     property LemmingAnimations     : TBitmaps read fLemmingAnimations;
     property MetaLemmingAnimations : TMetaLemmingAnimations read fMetaLemmingAnimations;
     property WarpBitmap            : TBitmap32 read fWarpBitmap;
-    property CountDownDigitsBitmap : TBitmap32 read fCountDownDigitsBitmap;
+    property CountDownBitmap       : TBitmap32 read fCountDownBitmap;
     property HighlightBitmap       : TBitmap32 read fHighlightBitmap;
     property CameraLockBitmap      : TBitmap32 read fCameraLockBitmap;
     property Recolorer             : TRecolorImage read fRecolorer;
@@ -544,8 +544,8 @@ begin
     fWarpBitmap.DrawMode := dmBlend;
     fWarpBitmap.CombineMode := cmMerge;
 
-    fCountDownDigitsBitmap.DrawMode := dmBlend;
-    fCountDownDigitsBitmap.CombineMode := cmMerge;
+    fCountDownBitmap.DrawMode := dmBlend;
+    fCountDownBitmap.CombineMode := cmMerge;
 
     fHighlightBitmap.DrawMode := dmBlend;
     fHighlightBitmap.CombineMode := cmMerge;
@@ -558,12 +558,12 @@ begin
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'stoner-hr.png', fLemmingAnimations[STONED]);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'warp-hr.png', fWarpBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'highlight-hr.png', fHighlightBitmap);
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'countdown-hr.png', fCountdownDigitsBitmap);
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'countdown-hr.png', fCountDownBitmap);
     end else begin
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'stoner.png', fLemmingAnimations[STONED]);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'warp.png', fWarpBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'highlight.png', fHighlightBitmap);
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'countdown.png', fCountdownDigitsBitmap);
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'countdown.png', fCountDownBitmap);
     end;
 
     LoadCameraLockBitmap;
@@ -583,7 +583,7 @@ procedure TBaseAnimationSet.ClearData;
 begin
   fLemmingAnimations.Clear;
   fMetaLemmingAnimations.Clear;
-  fCountDownDigitsBitmap.Clear;
+  fCountDownBitmap.Clear;
   fWarpBitmap.Clear;
   fHighlightBitmap.Clear;
   fCameraLockBitmap.Clear;
@@ -599,7 +599,7 @@ begin
   fLemmingAnimations := TBitmaps.Create;
   fRecolorer := TRecolorImage.Create;
   fWarpBitmap := TBitmap32.Create;
-  fCountDownDigitsBitmap := TBitmap32.Create;
+  fCountDownBitmap := TBitmap32.Create;
   fHighlightBitmap := TBitmap32.Create;
   fCameraLockBitmap := TBitmap32.Create;
 end;
@@ -608,7 +608,7 @@ destructor TBaseAnimationSet.Destroy;
 begin
   fMetaLemmingAnimations.Free;
   fLemmingAnimations.Free;
-  fCountDownDigitsBitmap.Free;
+  fCountDownBitmap.Free;
   fWarpBitmap.Free;
   fHighlightBitmap.Free;
   fCameraLockBitmap.Free;
