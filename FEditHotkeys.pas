@@ -20,7 +20,6 @@ type
     ebSkipDuration: TEdit;
     btnFindKey: TButton;
     lblFindKey: TLabel;
-    cbHardcodedNames: TCheckBox;
     cbHoldKey: TCheckBox;
     cbSpecialSkip: TComboBox;
     lblSkip: TLabel;
@@ -43,7 +42,6 @@ type
       Selected: Boolean);
     procedure btnFindKeyKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnFindKeyClick(Sender: TObject);
-    procedure cbHardcodedNamesClick(Sender: TObject);
     procedure cbHoldKeyClick(Sender: TObject);
     procedure SetVisibleModifier(aKeyType: TLemmixHotkeyAction);
     procedure cbSpecialSkipChange(Sender: TObject);
@@ -82,7 +80,7 @@ implementation
 procedure TFLemmixHotkeys.FormCreate(Sender: TObject);
 begin
   SetWindowPosition;
-  fKeyNames := TLemmixHotkeyManager.GetKeyNames(True);
+  fKeyNames := TLemmixHotkeyManager.GetKeyNames;
   fEditingKey := False;
   HandleCaptions(Self);
 end;
@@ -338,6 +336,9 @@ begin
     if (Hotkey.Action = lka_Null) and not cbShowUnassigned.Checked then
       Continue;
 
+    if cbShowUnassigned.Checked and (fKeyNames[i] = '') then
+      Continue;
+
     if e < lvHotkeys.Items.Count then
       with lvHotkeys.Items[e] do
       begin
@@ -350,6 +351,7 @@ begin
         Caption := fKeyNames[i];
         SubItems.Add(GetHotkeyDescription(i));
       end;
+
     Inc(e);
   end;
 
@@ -614,12 +616,6 @@ procedure TFLemmixHotkeys.btnClearAllKeysClick(Sender: TObject);
 begin
   fHotkeys.ClearAllKeys;
   cbShowUnassigned.Checked := True;
-  RefreshList;
-end;
-
-procedure TFLemmixHotkeys.cbHardcodedNamesClick(Sender: TObject);
-begin
-  fKeyNames := TLemmixHotkeyManager.GetKeyNames(cbHardcodedNames.Checked);
   RefreshList;
 end;
 

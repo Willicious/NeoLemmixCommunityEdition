@@ -109,7 +109,7 @@ type
 
       class function InterpretMain(s: String): TLemmixHotkeyAction;
       class function InterpretSecondary(s: String): Integer;
-      class function GetKeyNames(aUseHardcoded: Boolean): TKeyNameArray;
+      class function GetKeyNames: TKeyNameArray;
       class function GetKeyCode(const aKeyName: String): Word;
   end;
 
@@ -677,84 +677,66 @@ begin
   end;
 end;
 
-class function TLemmixHotkeyManager.GetKeyNames(aUseHardcoded: Boolean): TKeyNameArray;
+class function TLemmixHotkeyManager.GetKeyNames: TKeyNameArray;
 var
   i: Integer;
-  P: PChar;
-  ScanCode: UInt;
 begin
   for i := 0 to MAX_KEY do
     Result[i] := '';
 
-  if aUseHardcoded then
-  begin
-    Result[$02] := 'Right-Click';
-    Result[$04] := 'Middle-Click';
-    Result[$05] := 'Wheel Up';
-    Result[$06] := 'Wheel Down';
-    Result[$08] := 'Backspace';
-    Result[$09] := 'Tab';
-    Result[$0D] := 'Enter';
-    Result[$10] := 'Shift';
-    Result[$11] := 'Ctrl (Left)';
-    Result[$12] := 'Alt';
-    Result[$13] := 'Pause';
-    Result[$14] := 'Caps Lock';
-    Result[$19] := 'Ctrl (Right)';
-    Result[$1B] := 'Esc';
-    Result[$20] := 'Space';
-    Result[$21] := 'Page Up';
-    Result[$22] := 'Page Down';
-    Result[$23] := 'End';
-    Result[$24] := 'Home';
-    Result[$25] := 'Left Arrow';
-    Result[$26] := 'Up Arrow';
-    Result[$27] := 'Right Arrow';
-    Result[$28] := 'Down Arrow';
-    Result[$2D] := 'Insert';
-    Result[$2E] := 'Delete';
-    // Shortcut time!
-    for i := 0 to 9 do
-      Result[$30 + i] := IntToStr(i);
-    for i := 0 to 25 do
-      Result[$41 + i] := Char(i + 65);
-    Result[$5B] := 'Windows';
-    for i := 0 to 9 do
-      Result[$60 + i] := 'NumPad ' + IntToStr(i);
-    Result[$6A] := 'NumPad *';
-    Result[$6B] := 'NumPad +';
-    Result[$6D] := 'NumPad -';
-    Result[$6E] := 'NumPad .';
-    Result[$6F] := 'NumPad /';
-    for i := 0 to 11 do
-      Result[$70 + i] := 'F' + IntToStr(i+1);
-    Result[$90] := 'NumLock';
-    Result[$91] := 'Scroll Lock';
-    Result[$BA] := ';';
-    Result[$BB] := '+';
-    Result[$BC] := ',';
-    Result[$BD] := '-';
-    Result[$BE] := '.';
-    Result[$BF] := '/';
-    Result[$C0] := '~';
-    Result[$DB] := '[';
-    Result[$DC] := '\';
-    Result[$DD] := ']';
-    Result[$DE] := '''';
-  end;
-
-  P := StrAlloc(20);
-
-  for i := 0 to MAX_KEY do
-  begin
-    ScanCode := MapVirtualKeyEx(i, 0, GetKeyboardLayout(0)) shl 16;
-    if (GetKeyNameText(ScanCode, P, 20) > 0) and (not aUseHardcoded) then
-      Result[i] := StrPas(P)
-    else if Result[i] = '' then
-      Result[i] := IntToHex(i, 4);
-  end;
-
-  StrDispose(P);
+  Result[$02] := 'Right-Click';
+  Result[$04] := 'Middle-Click';
+  Result[$05] := 'Wheel Up';
+  Result[$06] := 'Wheel Down';
+  Result[$08] := 'Backspace';
+  Result[$09] := 'Tab';
+  Result[$0D] := 'Enter';
+  Result[$10] := 'Shift';
+  Result[$11] := 'Ctrl (Left)';
+  Result[$12] := 'Alt';
+  Result[$13] := 'Pause';
+  Result[$14] := 'Caps Lock';
+  Result[$19] := 'Ctrl (Right)';
+  Result[$1B] := 'Esc';
+  Result[$20] := 'Space';
+  Result[$21] := 'Page Up';
+  Result[$22] := 'Page Down';
+  Result[$23] := 'End';
+  Result[$24] := 'Home';
+  Result[$25] := 'Left Arrow';
+  Result[$26] := 'Up Arrow';
+  Result[$27] := 'Right Arrow';
+  Result[$28] := 'Down Arrow';
+  Result[$2D] := 'Insert';
+  Result[$2E] := 'Delete';
+  // Shortcut time!
+  for i := 0 to 9 do
+    Result[$30 + i] := IntToStr(i);
+  for i := 0 to 25 do
+    Result[$41 + i] := Char(i + 65);
+  Result[$5B] := 'Windows';
+  for i := 0 to 9 do
+    Result[$60 + i] := 'NumPad ' + IntToStr(i);
+  Result[$6A] := 'NumPad *';
+  Result[$6B] := 'NumPad +';
+  Result[$6D] := 'NumPad -';
+  Result[$6E] := 'NumPad .';
+  Result[$6F] := 'NumPad /';
+  for i := 0 to 11 do
+    Result[$70 + i] := 'F' + IntToStr(i+1);
+  Result[$90] := 'NumLock';
+  Result[$91] := 'Scroll Lock';
+  Result[$BA] := ';';
+  Result[$BB] := '+';
+  Result[$BC] := ',';
+  Result[$BD] := '-';
+  Result[$BE] := '.';
+  Result[$BF] := '/';
+  Result[$C0] := '~';
+  Result[$DB] := '[';
+  Result[$DC] := '\';
+  Result[$DD] := ']';
+  Result[$DE] := '''';
 end;
 
 class function TLemmixHotkeyManager.GetKeyCode(const aKeyName: String): Word;
@@ -762,7 +744,7 @@ var
   KeyNames: TKeyNameArray;
   i: Integer;
 begin
-  KeyNames := GetKeyNames(True);
+  KeyNames := GetKeyNames;
 
   for i := 0 to MAX_KEY do
     if SameText(KeyNames[i], aKeyName) then

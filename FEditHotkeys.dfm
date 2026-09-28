@@ -21,7 +21,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   TextHeight = 13
   object lblSkill: TLabel
     Left = 343
-    Top = 257
+    Top = 276
     Width = 24
     Height = 13
     Caption = 'Skill:'
@@ -29,7 +29,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object lblDuration: TLabel
     Left = 322
-    Top = 314
+    Top = 333
     Width = 114
     Height = 13
     Caption = 'Skip Amount (Frames):'
@@ -37,7 +37,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object lblSkip: TLabel
     Left = 344
-    Top = 372
+    Top = 391
     Width = 25
     Height = 13
     Caption = 'Skip:'
@@ -45,7 +45,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object lblFindKey: TLabel
     Left = 325
-    Top = 204
+    Top = 223
     Width = 61
     Height = 13
     Alignment = taCenter
@@ -59,7 +59,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object lblSkillButton: TLabel
     Left = 368
-    Top = 284
+    Top = 303
     Width = 63
     Height = 13
     Caption = 'Skill Button:'
@@ -67,7 +67,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object lblNudgeAmount: TLabel
     Left = 322
-    Top = 341
+    Top = 360
     Width = 119
     Height = 13
     Caption = 'Nudge Amount (Pixels):'
@@ -107,7 +107,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object cbFunctions: TComboBox
     Left = 318
-    Top = 223
+    Top = 242
     Width = 197
     Height = 21
     Style = csDropDownList
@@ -181,7 +181,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object cbSkill: TComboBox
     Left = 373
-    Top = 254
+    Top = 273
     Width = 142
     Height = 21
     Style = csDropDownList
@@ -224,7 +224,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object ebSkipDuration: TEdit
     Left = 442
-    Top = 311
+    Top = 330
     Width = 73
     Height = 21
     Enabled = False
@@ -233,38 +233,25 @@ object FLemmixHotkeys: TFLemmixHotkeys
     OnChange = ebSkipDurationChange
     OnClick = ebClick
   end
-  object cbHardcodedNames: TCheckBox
-    Left = 347
-    Top = 434
-    Width = 145
-    Height = 17
-    Caption = 'Use Hardcoded Names'
-    Checked = True
-    Enabled = False
-    State = cbChecked
-    TabOrder = 7
-    Visible = False
-    OnClick = cbHardcodedNamesClick
-  end
   object cbHoldKey: TCheckBox
     Left = 382
-    Top = 409
+    Top = 428
     Width = 97
     Height = 17
     Caption = 'Hold Key'
-    TabOrder = 8
+    TabOrder = 7
     Visible = False
     OnClick = cbHoldKeyClick
   end
   object cbSpecialSkip: TComboBox
     Left = 375
-    Top = 369
+    Top = 388
     Width = 129
     Height = 21
     Style = csDropDownList
     DropDownCount = 10
     Enabled = False
-    TabOrder = 9
+    TabOrder = 8
     Visible = False
     OnChange = cbSpecialSkipChange
     Items.Strings = (
@@ -278,7 +265,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Width = 174
     Height = 30
     Caption = 'Set to Functional Layout'
-    TabOrder = 10
+    TabOrder = 9
     OnClick = btnFunctionalLayoutClick
   end
   object btnTraditionalLayout: TButton
@@ -287,7 +274,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Width = 174
     Height = 30
     Caption = 'Set to Traditional Layout'
-    TabOrder = 11
+    TabOrder = 10
     OnClick = btnTraditionalLayoutClick
   end
   object btnAdvancedLayout: TButton
@@ -296,7 +283,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Width = 174
     Height = 30
     Caption = 'Set to Advanced Layout'
-    TabOrder = 13
+    TabOrder = 12
     OnClick = btnAdvancedLayoutClick
   end
   object btnClearAllKeys: TButton
@@ -305,7 +292,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Width = 174
     Height = 28
     Caption = 'Clear All Keys'
-    TabOrder = 12
+    TabOrder = 11
     OnClick = btnClearAllKeysClick
   end
   object btnCancel: TBitBtn
@@ -315,7 +302,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Height = 30
     Caption = 'Cancel'
     ModalResult = 2
-    TabOrder = 14
+    TabOrder = 13
     OnClick = btnCancelClick
   end
   object btnReset: TBitBtn
@@ -327,29 +314,29 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Caption = 'Restore'
     ParentShowHint = False
     ShowHint = True
-    TabOrder = 15
+    TabOrder = 14
     OnClick = btnResetClick
   end
   object seSkillButton: TSpinEdit
     Left = 437
-    Top = 281
+    Top = 300
     Width = 41
     Height = 22
     Enabled = False
     MaxValue = 14
     MinValue = 1
-    TabOrder = 16
+    TabOrder = 15
     Value = 1
     Visible = False
     OnChange = seSkillButtonChange
   end
   object ebNudgeAmount: TEdit
     Left = 447
-    Top = 338
+    Top = 357
     Width = 68
     Height = 21
     Enabled = False
-    TabOrder = 17
+    TabOrder = 16
     Visible = False
     OnChange = ebNudgeAmountChange
     OnClick = ebClick
