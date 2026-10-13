@@ -285,6 +285,7 @@ const
 type
   // This isn't the list that must match LemGadgetsConstants - see below for that
   TTriggerTypes = (
+    trNone,
     trExit,
     trForceLeft,
     trForceRight,
@@ -315,17 +316,14 @@ type
 
 const
   // This must match the list of objects in LemGadgetsConstants
-
-  // All objects that don't have trigger areas got mapped to trZombie
-  // This only works as long as there are no object types that create Zombie fields!!!
   ObjectTypeToTrigger: array[-1..33] of TTriggerTypes = (
-    trZombie,        // -1 DOM_NOOBJECT
-    trZombie,        //  0 DOM_NONE
-    trZombie,        //  1 DOM_WINDOW
+    trNone,          // -1 DOM_NOOBJECT
+    trNone,          //  0 DOM_NONE
+    trNone,          //  1 DOM_WINDOW
     trExit,          //  2 DOM_EXIT
     trExit,          //  3 DOM_LOCKEXIT
     trButton,        //  4 DOM_BUTTON
-    trZombie,        //  5 DOM_BLOCKER
+    trNone,          //  5 DOM_BLOCKER
     trForceLeft,     //  6 DOM_FORCELEFT
     trForceRight,    //  7 DOM_FORCERIGHT
     trTrap,          //  8 DOM_TRAP
@@ -337,7 +335,7 @@ const
     trOWUp,          // 14 DOM_ONEWAYUP
     trOWDown,        // 15 DOM_ONEWAYDOWN
     trTeleport,      // 16 DOM_TELEPORT
-    trZombie,        // 17 DOM_RECEIVER
+    trNone,          // 17 DOM_RECEIVER
     trPickup,        // 18 DOM_PICKUP
     trUpdraft,       // 19 DOM_UPDRAFT
     trFlipper,       // 20 DOM_FLIPPER
@@ -349,13 +347,13 @@ const
     trRemoveSkills,  // 26 DOM_REMOVESKILLS
     trPortal,        // 27 DOM_PORTAL
 
-    trZombie,        // 28 DOM_BACKGROUND
-    trZombie,        // 29 DOM_PAINT
+    trNone,          // 28 DOM_BACKGROUND
+    trNone,          // 29 DOM_PAINT
     trAnim,          // 30 DOM_ANIMATION
     trAnim,          // 31 DOM_ANIMONCE
 
     trSteel,         // 32 DOM_STEEL
-    trZombie         // 33 DOM_LEMMING
+    trNone           // 33 DOM_LEMMING
   );
 
 type
