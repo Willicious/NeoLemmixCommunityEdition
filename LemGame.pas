@@ -535,52 +535,6 @@ const
   );
 
 const
-  // Values for DOM_TRIGGERTYPE are defined in LemGadgetsConstants.pas!
-  // Here only for refence.
-(*DOM_NOOBJECT         = 65535;
-  DOM_NONE             = 0;
-  DOM_EXIT             = 1;
-  DOM_FORCELEFT        = 2; // left arm of blocker
-  DOM_FORCERIGHT       = 3; // right arm of blocker
-  DOM_TRAP             = 4; // triggered trap
-  DOM_WATER            = 5; // causes drowning
-  DOM_FIRE             = 6; // causes vaporizing
-  DOM_ONEWAYLEFT       = 7;
-  DOM_ONEWAYRIGHT      = 8;
-  DOM_STEEL            = 9;
-  DOM_BLOCKER          = 10; // the middle part of blocker
-  DOM_TELEPORT         = 11;
-  DOM_RECEIVER         = 12;
-  DOM_LEMMING          = 13;
-  DOM_PICKUP           = 14;
-  DOM_LOCKEXIT         = 15;
-  DOM_SECRET           = 16; // no longer used!!
-  DOM_SKETCH           = 16;
-  DOM_BUTTON           = 17;
-  DOM_RADIATION        = 18; // no longer used!!
-  DOM_ONEWAYDOWN       = 19;
-  DOM_UPDRAFT          = 20;
-  DOM_FLIPPER          = 21;
-  DOM_SLOWFREEZE       = 22; // no longer used!!
-  DOM_WINDOW           = 23;
-  DOM_ANIMATION        = 24; // no longer used!!
-  DOM_HINT             = 25;
-  DOM_NOSPLAT          = 26;
-  DOM_SPLAT            = 27;
-  DOM_TWOWAYTELE       = 28; // no longer used!!
-  DOM_SINGLETELE       = 29; // no longer used!!
-  DOM_BACKGROUND       = 30;
-  DOM_TRAPONCE         = 31;
-  DOM_BGIMAGE          = 32; // no longer used!!
-  DOM_ONEWAYUP         = 33;
-  DOM_PAINT            = 34;
-  DOM_ANIMONCE         = 35;
-  DOM_NEUTRALIZER      = 36;
-  DOM_DENEUTRALIZER    = 37;
-  DOM_ADDSKILL         = 38;
-  DOM_REMOVESKILLS     = 39;
-  DOM_PORTAL           = 40; *)
-
   // removal modes
   RM_NEUTRAL           = 0;
   RM_SAVE              = 1;
