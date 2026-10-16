@@ -151,7 +151,7 @@ end;
 
 function LoadGraphicWithOverrides(const aFolder, aFileName, aEmbeddedName: String; aDst: TBitmap32; BypassLevelPack: Boolean = False): Boolean;
 var
-  FilePath, PackPath: String;
+  Name, FilePath, PackPath: String;
   Stream: TMemoryStream;
 begin
   Result := False;
@@ -161,10 +161,15 @@ begin
   if (GameParams.CurrentLevel <> nil) and (GameParams.CurrentLevel.Group <> nil)
   and not BypassLevelPack then
   begin
-    PackPath := GameParams.CurrentLevel.Group.FindFile(aFileName);
+    if GameParams.HighResolution then
+      Name := aFileName + '-hr.png'
+    else
+      Name := aFileName + '.png';
+
+    PackPath := GameParams.CurrentLevel.Group.FindFile(Name);
 
     if PackPath = '' then
-      PackPath := GameParams.CurrentLevel.Group.FindFile(SFCEPrefix + aFileName);
+      PackPath := GameParams.CurrentLevel.Group.FindFile(SFCEPrefix + Name);
 
     if PackPath <> '' then
     begin
@@ -175,7 +180,7 @@ begin
   end;
 
   // 2) File system fallback
-  FilePath := AppPath + aFolder + SFCEPrefix + aFileName;
+  FilePath := AppPath + aFolder + SFCEPrefix + aFileName + '.png';
   if FileExists(FilePath) then
   begin
     TPngInterface.LoadPngFile(FilePath, aDst);

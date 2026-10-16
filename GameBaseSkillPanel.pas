@@ -589,9 +589,7 @@ begin
     PanelDir := SFGraphicsPanel;
   end;
 
-  Name := aName + '.png';
-
-  if LoadGraphicWithOverrides(PanelDir, Name, EmbeddedName, aDst) then
+  if LoadGraphicWithOverrides(PanelDir, aName, EmbeddedName, aDst) then
   begin
     aDst.DrawMode := dmBlend;
 
@@ -611,6 +609,7 @@ begin
 
   // 2) Fallback to legacy logic
   Target := GameParams.CurrentLevel.Group;
+  Name := aName + '.png';
 
   SrcFile := Target.Path + Name;
   if GameParams.HighResolution then
