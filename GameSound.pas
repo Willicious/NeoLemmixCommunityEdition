@@ -118,7 +118,7 @@ type
 
       function FindExtension(const aName: String; aIsMusic: Boolean): String; overload;
       function FindExtension(const aName: String; aBasePath: String; aIsMusic: Boolean): String; overload;
-      function DoesSoundExist(const aName: String): Boolean;
+      function SoundExists(aSound, aPath: String): Boolean;
 
       property SoundVolume: Integer read fSoundVolume write SetSoundVolume;
       property MusicVolume: Integer read fMusicVolume write SetMusicVolume;
@@ -378,6 +378,16 @@ begin
   Get('zombie');
 end;
 
+function TSoundManager.SoundExists(aSound, aPath: String): Boolean;
+begin
+  Result := False;
+  for var i := 0 to MUSIC_EXT_COUNT do
+  begin
+    if FileExists(aPath + aSound + MUSIC_EXTENSIONS[i]) then
+      Exit(True);
+  end;
+end;
+
 function TSoundManager.FindSoundIndex(aName: String): Integer;
 begin
   Result := -1;
@@ -387,14 +397,6 @@ begin
     if fSoundEffects[Result].Name = aName then
       Exit;
   Result := -1;
-end;
-
-function TSoundManager.DoesSoundExist(const aName: String): Boolean;
-begin
-  if not fIsBassLoaded then
-    Result := False
-  else
-    Result := FindSoundIndex(aName) <> -1;
 end;
 
 procedure TSoundManager.PurgeNonDefaultSounds;

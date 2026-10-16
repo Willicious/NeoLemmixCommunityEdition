@@ -45,6 +45,7 @@ type
       procedure MakeSaveReplayClickable;
       procedure MakeLevelSelectClickable;
       procedure MakeExitToMenuClickable;
+      procedure HandlePostviewJingles;
     protected
       procedure PrepareGameParams; override;
       procedure BuildScreen; override;
@@ -285,8 +286,34 @@ begin
     // Draw clickables only if (AutoSkip + PlaybackMode) isn't active
     if not (GameParams.AutoSkipPreviewPostview and GameParams.PlaybackModeActive) then
       DrawAllClickables;
+
+    HandlePostviewJingles;
   finally
     ScreenImg.EndUpdate;
+  end;
+end;
+
+procedure TGamePostviewScreen.HandlePostviewJingles;
+var
+  PackPath: String;
+begin
+  if not GameParams.PostviewJingles then
+    Exit;
+
+  SoundManager.PurgePackSounds;
+  PackPath := AppPath + SFLevels + GameParams.CurrentLevel.Group.ParentBasePack.Name + '\';
+
+  if GameParams.GameResult.gRescued >= GameParams.Level.Info.RescueCount then
+  begin
+    if SoundManager.SoundExists(SFX_SUCCESS, PackPath) then
+      SoundManager.PlayPackSound(SFX_SUCCESS, PackPath)
+    else
+      SoundManager.PlaySound(SFX_SUCCESS);
+  end else begin
+    if SoundManager.SoundExists(SFX_FAILURE, PackPath) then
+      SoundManager.PlayPackSound(SFX_FAILURE, PackPath)
+    else
+      SoundManager.PlaySound(SFX_FAILURE);
   end;
 end;
 
@@ -422,16 +449,6 @@ begin
       gSuccess := False;
       gCheated := False;
       fLevelOverride := $0000;
-    end;
-
-    if PostviewJingles then
-    begin
-      SoundManager.PurgePackSounds;
-
-      if gRescued >= Level.Info.RescueCount then
-        SoundManager.PlaySound(SFX_SUCCESS)
-      else
-        SoundManager.PlaySound(SFX_FAILURE);
     end;
   end;
 
