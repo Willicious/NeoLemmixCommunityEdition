@@ -457,34 +457,57 @@ end;
 
 procedure TGameMenuScreen.LoadScrollerGraphics;
 var
-  BMP: TBitmap32;
+  LemBMP, SegBMP: TBitmap32;
+  DstRect, SrcRect: TRect;
   x: Integer;
+  SrcHeight: Integer;
   EraseSrcRect: TRect;
   MaxHeight: Integer;
 begin
-  BMP := TBitmap32.Create;
+  SegBMP := TBitmap32.Create;
+  LemBMP := TBitmap32.Create;
   try
-    GetGraphic('scroller_lemmings.png', ScrollerLemmings);
-    GetGraphic('scroller_segment.png', BMP);
+    GetGraphic('scroller_lemmings.png', LemBMP);
+    GetGraphic('scroller_segment.png', SegBMP);
 
-    ScrollerReelSegmentWidth := BMP.Width;
-    ScrollerReel.SetSize(LayoutInfo.ScrollerWidth + ScrollerReelSegmentWidth, BMP.Height);
+    LemBMP.DrawMode := dmOpaque;
+    SegBMP.DrawMode := dmOpaque;
+
+    ScrollerLemmings.SetSize(LemBMP.Width, LayoutInfo.ScrollerLemmingFrames * 26);
+    ScrollerLemmings.DrawMode := dmBlend;
+
+    SrcHeight := LemBMP.Height div LayoutInfo.ScrollerLemmingFrames;
+
+    for x := 0 to LayoutInfo.ScrollerLemmingFrames - 1 do
+    begin
+      DstRect := Rect(0, x * 26, LemBMP.Width, (x + 1) * 26);
+      SrcRect := Rect(0, x * SrcHeight, LemBMP.Width, (x + 1) * SrcHeight);
+
+      LemBMP.DrawTo(ScrollerLemmings, DstRect, SrcRect);
+    end;
+
+    ScrollerReelSegmentWidth := SegBMP.Width;
+    ScrollerReel.SetSize(LayoutInfo.ScrollerWidth + ScrollerReelSegmentWidth, 26);
+    ScrollerReel.DrawMode := dmBlend;
 
     x := 0;
     while x < ScrollerReel.Width do
     begin
-      BMP.DrawTo(ScrollerReel, x, 0);
-      x := x + BMP.Width;
+      DstRect := Rect(x, 0, x + SegBMP.Width, 26);
+      SrcRect := Rect(0, 0, SegBMP.Width, SegBMP.Height);
+
+      SegBMP.DrawTo(ScrollerReel, DstRect, SrcRect);
+      x := x + SegBMP.Width;
     end;
 
-    MaxHeight := Max(BMP.Height, ScrollerLemmings.Height div LayoutInfo.ScrollerLemmingFrames);
-    MaxHeight := Max(MaxHeight, CHARACTER_HEIGHT);
+    MaxHeight := Max(26, CHARACTER_HEIGHT);
 
     EraseSrcRect := Rect(0, LayoutInfo.ScrollerY, ScreenImg.Width, LayoutInfo.ScrollerY + MaxHeight);
     ScrollerEraseBuffer.SetSize(EraseSrcRect.Width, EraseSrcRect.Height);
     ScreenImg.Bitmap.DrawTo(ScrollerEraseBuffer, 0, 0, EraseSrcRect);
   finally
-    BMP.Free;
+    LemBMP.Free;
+    SegBMP.Free;
   end;
 end;
 
