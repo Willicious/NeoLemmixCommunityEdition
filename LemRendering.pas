@@ -241,10 +241,10 @@ begin
   if fRenderInterface.DisableDrawing then
     Exit;
 
-  Dst.Clear(fTheme.Colors[BACKGROUND_COLOR]);
-
   if not LemmingsOnly then
   begin
+    Dst.Clear(fTheme.Colors[BACKGROUND_COLOR]);
+
     if fRenderInterface <> nil then
     begin
       if fRenderInterface.Gadgets <> nil then
