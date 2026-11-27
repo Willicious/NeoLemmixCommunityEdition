@@ -27,7 +27,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 382
     Height = 593
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
     object TabSheet1: TTabSheet
@@ -150,13 +150,25 @@ object FormNXConfig: TFormNXConfig
           OnClick = OptionChanged
         end
         object btnStyleManager: TButton
-          Left = 12
+          Left = 171
           Top = 50
-          Width = 309
+          Width = 150
           Height = 42
           Caption = 'Style Manager'
           TabOrder = 2
           OnClick = btnStyleManagerClick
+        end
+        object btnCheckForUpdates: TButton
+          Left = 12
+          Top = 50
+          Width = 153
+          Height = 42
+          Hint = 'Check online for an available update to SuperLemmix'
+          Caption = 'Check For Updates'
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          OnClick = btnCheckForUpdatesClick
         end
       end
       object btnHotkeys: TButton

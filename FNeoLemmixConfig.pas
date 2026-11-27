@@ -3,9 +3,11 @@ unit FNeoLemmixConfig;
 interface
 
 uses
-  GameControl, GameSound, FEditHotkeys, FStyleManager, Math,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, Vcl.ExtCtrls, Vcl.Samples.Spin,
+  Dialogs, ComCtrls, StdCtrls, Vcl.WinXCtrls, Vcl.ExtCtrls, Vcl.Samples.Spin,
+  Math,
+  GameControl, GameSound, FEditHotkeys, FStyleManager,
+  NeoLemmixCEOnlineUpdater,
   SharedGlobals;
 
 type
@@ -40,6 +42,7 @@ type
     lblUserName: TLabel;
     ebUserName: TEdit;
     cbHighResolution: TCheckBox;
+    btnCheckForUpdates: TButton;
     btnStyleManager: TButton;
     cbResetWindowSize: TCheckBox;
     cbResetWindowPosition: TCheckBox;
@@ -99,6 +102,7 @@ type
     procedure cbAutoSaveReplayClick(Sender: TObject);
     procedure cbReplayPatternEnter(Sender: TObject);
     procedure btnResetWindowClick(Sender: TObject);
+    procedure btnCheckForUpdatesClick(Sender: TObject);
   private
     fIsSetting: Boolean;
     fResetWindowSize: Boolean;
@@ -250,6 +254,11 @@ procedure TFormNXConfig.btnResetWindowClick(Sender: TObject);
 begin
   cbResetWindowSize.Checked := True;
   cbResetWindowPosition.Checked := True;
+end;
+
+procedure TFormNXConfig.btnCheckForUpdatesClick(Sender: TObject);
+begin
+  PerformOnlineUpdate(False);
 end;
 
 procedure TFormNXConfig.SetFromParams;
@@ -510,6 +519,7 @@ begin
     if not cbEnableOnline.Checked then
       cbUpdateCheck.Checked := False;
 
+    btnCheckForUpdates.Enabled := cbEnableOnline.Checked;
     btnStyleManager.Enabled := cbEnableOnline.Checked;
 
     OptionChanged(Sender);
