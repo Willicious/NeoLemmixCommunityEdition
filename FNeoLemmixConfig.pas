@@ -28,7 +28,6 @@ type
     cbPostviewJingles: TCheckBox;
     gbInternetOptions: TGroupBox;
     cbEnableOnline: TCheckBox;
-    cbUpdateCheck: TCheckBox;
     cbZoom: TComboBox;
     Label1: TLabel;
     cbLinearResampleMenu: TCheckBox;
@@ -278,8 +277,6 @@ begin
     SetReplayPatternDropdown(cbPostviewSaveReplayPattern, GameParams.PostviewSaveReplayPattern);
 
     cbEnableOnline.Checked := GameParams.EnableOnline;
-    cbUpdateCheck.Checked := GameParams.CheckUpdates and GameParams.EnableOnline;
-    cbUpdateCheck.Enabled := GameParams.EnableOnline;
     btnStyleManager.Enabled := GameParams.EnableOnline;
 
     if GameParams.LoadNextUnsolvedLevel then
@@ -367,7 +364,6 @@ begin
   GameParams.PostviewSaveReplayPattern := GetReplayPattern(cbPostviewSaveReplayPattern);
 
   GameParams.EnableOnline := cbEnableOnline.Checked;
-  GameParams.CheckUpdates := cbUpdateCheck.Checked;
 
   GameParams.LoadNextUnsolvedLevel := rgGameLoadingOptions.ItemIndex = 0;
 
@@ -514,11 +510,6 @@ procedure TFormNXConfig.cbEnableOnlineClick(Sender: TObject);
 begin
   if not fIsSetting then
   begin
-    cbUpdateCheck.Enabled := cbEnableOnline.Checked;
-
-    if not cbEnableOnline.Checked then
-      cbUpdateCheck.Checked := False;
-
     btnCheckForUpdates.Enabled := cbEnableOnline.Checked;
     btnStyleManager.Enabled := cbEnableOnline.Checked;
 

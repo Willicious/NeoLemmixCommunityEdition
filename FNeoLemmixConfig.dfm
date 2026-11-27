@@ -140,22 +140,13 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 0
           OnClick = cbEnableOnlineClick
         end
-        object cbUpdateCheck: TCheckBox
-          Left = 171
-          Top = 23
-          Width = 169
-          Height = 17
-          Caption = 'Enable Update Check'
-          TabOrder = 1
-          OnClick = OptionChanged
-        end
         object btnStyleManager: TButton
           Left = 171
           Top = 50
           Width = 150
           Height = 42
           Caption = 'Style Manager'
-          TabOrder = 2
+          TabOrder = 1
           OnClick = btnStyleManagerClick
         end
         object btnCheckForUpdates: TButton
@@ -167,7 +158,7 @@ object FormNXConfig: TFormNXConfig
           Caption = 'Check For Updates'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 3
+          TabOrder = 2
           OnClick = btnCheckForUpdatesClick
         end
       end

@@ -101,7 +101,6 @@ type
   TMiscOption = (
     moAutoReplaySave,
     moEnableOnline,
-    moCheckUpdates,
     moLoadNextUnsolvedLevel,
     moClickAirToCutInsert,
     moReplayAfterBackskip,
@@ -139,6 +138,7 @@ type
 
 const
   DEF_MISCOPTIONS = [
+    moEnableOnline,
     moShowShadows,
     moShowHelpers,
     moAutoReplaySave,
@@ -296,7 +296,6 @@ type
 
     property AutoSaveReplay: Boolean Index moAutoReplaySave read GetOptionFlag write SetOptionFlag;
     property EnableOnline: Boolean Index moEnableOnline read GetOptionFlag write SetOptionFlag;
-    property CheckUpdates: Boolean Index moCheckUpdates read GetOptionFlag write SetOptionFlag;
     property LoadNextUnsolvedLevel: Boolean Index moLoadNextUnsolvedLevel read GetOptionFlag write SetOptionFlag;
     property ClickAirToCutInsert: Boolean Index moClickAirToCutInsert read GetOptionFlag write SetOptionFlag;
     property ReplayAfterBackskip: Boolean Index moReplayAfterBackskip read GetOptionFlag write SetOptionFlag;
@@ -624,7 +623,6 @@ begin
     SL.Add('');
     SL.Add('# Online Options');
     SaveBoolean('EnableOnline', EnableOnline);
-    SaveBoolean('UpdateCheck', CheckUpdates);
     SaveBoolean('LoadNextUnsolvedLevel', LoadNextUnsolvedLevel);
 
     SL.Add('');
@@ -830,7 +828,6 @@ begin
     SetCurrentLevelToBestMatch(SL.Values['LastActiveLevel']);
 
     EnableOnline := LoadBoolean('EnableOnline', EnableOnline);
-    CheckUpdates := LoadBoolean('UpdateCheck', CheckUpdates);
     LoadNextUnsolvedLevel := LoadBoolean('LoadNextUnsolvedLevel', LoadNextUnsolvedLevel);
 
     DisableWineWarnings := LoadBoolean('DisableWineWarnings', DisableWineWarnings);

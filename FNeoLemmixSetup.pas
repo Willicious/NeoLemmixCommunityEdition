@@ -83,8 +83,7 @@ begin
   if GameParams.HighResolution then
     GameParams.ZoomLevel := Max(GameParams.ZoomLevel div 2, 1);
 
-  GameParams.EnableOnline := cbOnline.ItemIndex >= 1;
-  GameParams.CheckUpdates := cbOnline.ItemIndex >= 2;
+  GameParams.EnableOnline := cbOnline.ItemIndex <= 0;
 
   Close;
 end;

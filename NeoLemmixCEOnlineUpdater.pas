@@ -37,6 +37,14 @@ var
   UpdateDialog: TForm;
   UpdateLabel: TLabel;
 begin
+  if not GameParams.EnableOnline then
+  begin
+    if not Auto then
+      ShowMessage('Please enable online features to check for updates');
+
+    Exit;
+  end;
+
   BaseFolder := ExtractFilePath(ParamStr(0));
   TempFolder := TPath.Combine(BaseFolder, 'updates');
 

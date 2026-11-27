@@ -9,7 +9,6 @@ uses
   GameBaseMenuScreen,
   GameControl,
   LemNeoLevelPack,
-  LemNeoOnline,
   LemNeoParser,
   LemStrings,
   LemTypes,
@@ -214,7 +213,7 @@ begin
     ShowSetupMenu;
 
     EnableIdle;
-  end else if fUpdateCheckPending then
+  end else if fUpdateCheckPending and GameParams.EnableOnline then
   begin
     DisableIdle;
     fUpdateCheckPending := False;

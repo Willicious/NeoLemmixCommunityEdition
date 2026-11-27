@@ -184,11 +184,10 @@ object FNLSetup: TFNLSetup
         Style = csDropDownList
         ItemIndex = 0
         TabOrder = 3
-        Text = 'Online functions disabled'
+        Text = 'Online functions enabled'
         Items.Strings = (
-          'Online functions disabled'
           'Online functions enabled'
-          'Online + update check enabled')
+          'Online functions disabled')
       end
     end
   end
