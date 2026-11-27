@@ -81,6 +81,7 @@ const
 resourcestring
   SProgramName = 'NeoLemmix CE';
   SProgramNameFull = 'NeoLemmix Community Edition';
+  SProgramEXE = 'NeoLemmixCE.exe';
   SDummyString = '';
 
 

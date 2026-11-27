@@ -173,7 +173,7 @@ type
     fDumpMode : Boolean;
     fShownText: Boolean;
     fOneLevelMode: Boolean;
-    fDoneUpdateCheck: Boolean;
+    fLastUpdateCheck: TDateTime;
     fCurrentLevel: TNeoLevelEntry;
     fSleeperSpriteMissing: Boolean;
     fReplaysFolder: string;
@@ -342,7 +342,7 @@ type
     property DumpMode: Boolean read fDumpMode write fDumpMode;
     property OneLevelMode: Boolean read fOneLevelMode write fOneLevelMode;
     property ShownText: Boolean read fShownText write fShownText;
-    property DoneUpdateCheck: Boolean read fDoneUpdateCheck write fDoneUpdateCheck;
+    property LastUpdateCheck: TDateTime read fLastUpdateCheck write fLastUpdateCheck;
 
     property Directory: string read fDirectory write fDirectory;
     property ReplaysFolder: string read fReplaysFolder write fReplaysFolder;
@@ -517,6 +517,11 @@ var
   begin
     SL.Add(aLabel + '=' + aValue);
   end;
+
+  procedure SaveDateTime(aLabel: String; aValue: TDateTime);
+  begin
+    SL.Add(aLabel + '=' + FloatToStr(aValue));
+  end;
 begin
   SL := TStringList.Create;
   SL2 := TStringList.Create;
@@ -612,6 +617,9 @@ begin
       SaveString('PlaybackOrder', 'ByLevel')
     else if (PlaybackOrder = poRandom) then
       SaveString('PlaybackOrder', 'Random');
+
+    SL.Add('');
+    SaveDateTime('LastUpdateCheck', LastUpdateCheck);
 
     SL.Add('');
     SL.Add('# Online Options');
@@ -872,6 +880,8 @@ begin
     SoundManager.SoundVolume := StrToIntDef(SL.Values['SoundVolume'], 50);
     SoundManager.MuteMusic := not LoadBoolean('MusicEnabled', not SoundManager.MuteMusic);
     SoundManager.MusicVolume := StrToIntDef(SL.Values['MusicVolume'], 50);
+
+    LastUpdateCheck := StrToFloatDef(SL.Values['LastUpdateCheck'], 0);
   except
     on E: Exception do
     begin

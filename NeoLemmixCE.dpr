@@ -74,7 +74,9 @@ uses
   FReplayManager in 'FReplayManager.pas' {FReplayManager},
   FLevelListDialog in 'FLevelListDialog.pas' {FLevelListDialog},
   FPlaybackMode in 'FPlaybackMode.pas' {FPlaybackMode},
-  NeoLemmixCEResources in 'NeoLemmixCEResources.pas';
+  NeoLemmixCEResources in 'NeoLemmixCEResources.pas',
+  NeoLemmixCEManifest in 'NeoLemmixCEManifest.pas',
+  NeoLemmixCEOnlineUpdater in 'NeoLemmixCEOnlineUpdater.pas';
 
 {$R *.res}
 

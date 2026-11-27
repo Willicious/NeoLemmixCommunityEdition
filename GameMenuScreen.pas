@@ -3,7 +3,8 @@ unit GameMenuScreen;
 interface
 
 uses
-  StrUtils, Classes, SysUtils, Dialogs, Controls, ExtCtrls, Forms, Windows, ShellApi,
+  StrUtils, Classes, SysUtils, Dialogs, Controls, ExtCtrls, Forms, Windows,
+  DateUtils, ShellApi,
   Types, UMisc, Math,
   GameBaseMenuScreen,
   GameControl,
@@ -12,6 +13,7 @@ uses
   LemNeoParser,
   LemStrings,
   LemTypes,
+  NeoLemmixCEManifest, NeoLemmixCEOnlineUpdater,
   NeoLemmixCEResources,
   GR32, GR32_Resamplers,
   SharedGlobals;
@@ -62,8 +64,7 @@ type
       fReelForceDirection: Integer;
 
       fCleanInstallFail: Boolean;
-      fUpdateCheckThread: TDownloadThread;
-      fVersionInfo: TStringList;
+      fUpdateCheckPending: Boolean;
 
       fGroupSignCenter: TPoint;
       fGroupGraphic: TBitmap32;
@@ -102,8 +103,8 @@ type
 
       procedure ShowSetupMenu;
       procedure DoCleanInstallCheck;
-      procedure InitiateUpdateCheck;
-      procedure HandleUpdateCheckResult;
+      procedure DoOnlineUpdate;
+      procedure HandleStylesUpdateCheck;
 
       procedure ApplicationIdle(Sender: TObject; var Done: Boolean);
       procedure DisableIdle;
@@ -147,8 +148,6 @@ begin
   ScrollerReel := TBitmap32.Create;
   ScrollerText := TBitmap32.Create;
 
-  fVersionInfo := TStringList.Create;
-
   fGroupGraphic := TBitmap32.Create;
 
   fScrollerTextList := TStringList.Create;
@@ -162,8 +161,6 @@ begin
   ScrollerLemmings.Free;
   ScrollerReel.Free;
   ScrollerText.Free;
-
-  fVersionInfo.Free;
 
   fGroupGraphic.Free;
 
@@ -217,15 +214,13 @@ begin
     ShowSetupMenu;
 
     EnableIdle;
-  end else if (fUpdateCheckThread <> nil) and (fUpdateCheckThread.Complete) then
+  end else if fUpdateCheckPending then
   begin
     DisableIdle;
+    fUpdateCheckPending := False;
 
-    if fUpdateCheckThread.Success then
-      HandleUpdateCheckResult;
-
-    fUpdateCheckThread.Free;
-    fUpdateCheckThread := nil;
+    PerformOnlineUpdate(True);
+    HandleStylesUpdateCheck;
 
     EnableIdle;
   end else if not fDisableScroller then
@@ -248,12 +243,6 @@ end;
 
 procedure TGameMenuScreen.CloseScreen(aNextScreen: TGameScreenType);
 begin
-  if fUpdateCheckThread <> nil then
-  begin
-    fUpdateCheckThread.Kill;
-    FreeAndNil(fUpdateCheckThread);
-  end;
-
   inherited;
 end;
 
@@ -280,9 +269,6 @@ begin
 
   DoCleanInstallCheck;
 
-  if not GameParams.DoneUpdateCheck then
-    InitiateUpdateCheck;
-
   if (GameParams.CurrentLevel <> nil) and
      (fScrollerTextList.Count > 0) then
   begin
@@ -292,6 +278,8 @@ begin
     fDisableScroller := True;
 
   EnableIdle;
+
+  fUpdateCheckPending := HoursBetween(GameParams.LastUpdateCheck, Now) >= (7 * 24);
 end;
 
 procedure TGameMenuScreen.CleanupIngameStuff;
@@ -407,8 +395,11 @@ begin
   NLInfoText := SProgramName + ' ' + CurrentVersionString;
   {$ifdef exp}if COMMIT_ID <> '' then NLInfoText := NLInfoText + ':' + Uppercase(COMMIT_ID);{$endif}
 
+  var Point := System.Types.Point(INTERNAL_SCREEN_WIDTH div 2, LayoutInfo.FooterTextY + (3 * CHARACTER_HEIGHT));
+
   MenuFont.DrawTextCentered(ScreenImg.Bitmap, PackInfoText, LayoutInfo.FooterTextY);
-  MenuFont.DrawTextCentered(ScreenImg.Bitmap, NLInfoText, LayoutInfo.FooterTextY + (3 * CHARACTER_HEIGHT));
+  MakeClickableText(Point, NLInfoText, DoOnlineUpdate);
+  DrawAllClickables;
 end;
 
 procedure TGameMenuScreen.LoadLayoutData;
@@ -894,82 +885,36 @@ begin
   end;
 end;
 
-procedure TGameMenuScreen.InitiateUpdateCheck;
+procedure TGameMenuScreen.DoOnlineUpdate;
 begin
-  GameParams.DoneUpdateCheck := True;
-  if not GameParams.CheckUpdates then Exit;
-
-  fUpdateCheckThread := DownloadInThread(VERSION_FILE, fVersionInfo);
+  PerformOnlineUpdate(False);
+  HandleStylesUpdateCheck;
 end;
 
-procedure TGameMenuScreen.HandleUpdateCheckResult;
+procedure TGameMenuScreen.HandleStylesUpdateCheck;
 var
-//  NewVersionStr, OrigVersionStr: String;
-//  SL: TStringList;
-//  n: Integer;
-//  NewestID: Int64;
-//  URL: String;
   F: TFManageStyles;
 begin
-//  NewVersionStr := fVersionInfo.Values['game'];
-//  if LeftStr(NewVersionStr, 1) = 'V' then
-//    NewVersionStr := RightStr(NewVersionStr, Length(NewVersionStr)-1);
-//
-//  OrigVersionStr := NewVersionStr;
-//  NewVersionStr := StringReplace(NewVersionStr, '-', '.', [rfReplaceAll]);
-//
-//  SL := TStringList.Create;
-//  try
-    try
-//      SL.Delimiter := '.';
-//      SL.StrictDelimiter := True;
-//      SL.DelimitedText := NewVersionStr;
-//
-//      if SL.Count < 4 then
-//        SL.Add('A');
-//
-//      SL[3] := Char(Ord(SL[3][1]) - 65);
-//
-//      NewestID := 0;
-//      for n := 0 to 3 do
-//        NewestID := (NewestID * 1000) + StrToIntDef(SL[n], 0);
-//
-//      if (NewestID > CurrentVersionID){$ifdef exp} or (NewestID = CurrentVersionID){$endif} then
-//      begin
-//        case RunCustomPopup(Self, 'Update', 'A NeoLemmix update, V' + OrigVersionStr + ', is available. Do you want to download it?',
-//          'Go to NeoLemmix website|Remind me later') of
-//          1: begin
-//               URL := 'https://www.neolemmix.com/?page=neolemmix';
-//               ShellExecute(0, 'open', PChar(URL), nil, nil, SW_SHOWNORMAL);
-//               CloseScreen(gstExit);
-//             end;
-//           // 2: do nothing;
-//        end;
-//      end else
-      if CheckStyleUpdates then
-      begin
-        // Add cursor stuff here
-
-        case RunCustomPopup(Self, 'Styles Update', 'Styles updates are available. Do you want to download them?',
-          'Open Style Manager|Remind me later') of
-          1: begin
-               F := TFManageStyles.Create(Self);
-               try
-                 F.ShowModal;
-               finally
-                 F.Free;
-               end;
+  try
+    if CheckStyleUpdates then
+    begin
+      case RunCustomPopup(Self, 'Styles Update', 'Styles updates are available. Do you want to download them?',
+        'Open Style Manager|Remind me later') of
+        1: begin
+             F := TFManageStyles.Create(Self);
+             try
+               F.ShowModal;
+             finally
+               F.Free;
              end;
-          // 2: do nothing;
-        end;
+           end;
+        // 2: do nothing;
       end;
-
-    except
-      // Fail silently.
     end;
-//  finally
-//    SL.Free;
-//  end;
+
+  except
+    // Fail silently.
+  end;
 end;
 
 end.

@@ -311,6 +311,8 @@ $(PreBuildEvent)]]></PreBuildEvent>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="NeoLemmixCEResources.pas"/>
+        <DCCReference Include="NeoLemmixCEManifest.pas"/>
+        <DCCReference Include="NeoLemmixCEOnlineUpdater.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

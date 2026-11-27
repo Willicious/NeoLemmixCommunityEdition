@@ -5,7 +5,8 @@ unit LemVersion;
 interface
 
 uses
-  UMisc, Classes, SysUtils, SharedGlobals;
+  UMisc, Classes, SysUtils, RegularExpressions,
+  SharedGlobals;
 
 const
   MAJOR_VERSION = 1;
@@ -22,6 +23,7 @@ function MakeVersionString(Major, Minor, Hotfix, RC: Integer): String;
 function MakeVersionID(Major, Minor, Hotfix, RC: Integer): Int64;
 function CurrentVersionString: String;
 function CurrentVersionID: Int64;
+function IsNewerVersion(const AvailableVersion: string): Boolean;
 
 implementation
 
@@ -73,6 +75,25 @@ begin
   Result := (Result * 1000) + Minor;
   Result := (Result * 1000) + Hotfix;
   Result := (Result * 1000) {$ifndef rc}+ RC{$endif};
+end;
+
+function IsNewerVersion(const AvailableVersion: string): Boolean;
+var
+  Match: TMatch;
+  MajorVersion, MinorVersion, HotfixVersion: Integer;
+begin
+  Match := TRegEx.Match(AvailableVersion, '^(\d+)\.(\d+)\.(\d+)$');
+
+  if not Match.Success then
+    raise Exception.Create(
+      'Invalid release version: ' + AvailableVersion);
+
+  MajorVersion := StrToInt(Match.Groups[1].Value);
+  MinorVersion := StrToInt(Match.Groups[2].Value);
+  HotfixVersion := StrToInt(Match.Groups[3].Value);
+
+  Result := MakeVersionID(
+    MajorVersion, MinorVersion, HotfixVersion, 0) > CurrentVersionID;
 end;
 
 end.
