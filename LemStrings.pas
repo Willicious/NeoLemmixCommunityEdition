@@ -82,6 +82,7 @@ resourcestring
   SProgramName = 'NeoLemmix CE';
   SProgramNameFull = 'NeoLemmix Community Edition';
   SProgramEXE = 'NeoLemmixCE.exe';
+  SBassDLL = 'bass.dll';
   SDummyString = '';
 
 
